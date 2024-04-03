@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import CustomInput from "../utils/CustomInput";
 import CustomButtom from "../utils/CustomButtom";
@@ -50,9 +51,7 @@ const Register = ({ toggleView }: any) => {
         />
       </div>
       <div className="w-1/2 border shadow-md bg-white">
-        <p className="flex pl-10 mt-2 text-[20px] font-bold">
-          Create your account
-        </p>
+        <p className="flex pl-10 mt-2 text-[20px] font-bold">Apply for quote</p>
         <div className="pt-4 px-10 flex flex-col gap-2 text-[14px]">
           <CustomInput
             name={"Email"}
@@ -65,31 +64,28 @@ const Register = ({ toggleView }: any) => {
             className={"h-[40px] border rounded-md"}
           />
           <CustomInput
+            name={"Phone Number"}
+            value=""
+            className={"h-[40px] border rounded-md"}
+          />
+          <CustomInput
+            name={"Address"}
+            value=""
+            className={"h-[40px] border rounded-md"}
+          />
+          <CustomInput
             name={"Password"}
             value=""
             className={"h-[40px] border rounded-md"}
           />
-          <div className="mt-2 flex items-center ">
-            <input type="checkbox" />
-            <p className="text-[13px] pt-4 p-2">
-              Get emails from app about product updates, industry news, and
-              events. You can unsubscribe at any time.
-            </p>
-          </div>
         </div>
-        <div className="flex justify-center">
+        <div className="flex justify-center my-2">
           <CustomButtom
-            name={"Create Account"}
+            name={"Get Quote"}
             className={
               "h-[40px] flex justify-center border items-center w-[85%] rounded-md bg-[#cb7529] text-white"
             }
           />
-        </div>
-        <div className="flex justify-center mt-2 text-[14px] gap-1">
-          <span>Have an account</span>
-          <span className="text-blue-800 cursor-pointer" onClick={toggleView}>
-            Sign in
-          </span>
         </div>
       </div>
     </div>

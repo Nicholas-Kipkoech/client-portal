@@ -1,22 +1,21 @@
 "use client";
-import { useState } from "react";
-import Login from "./components/Login";
-import Register from "./components/Register";
+
+import CustomButton from "./utils/CustomButtom";
 
 export default function Home() {
-  const [isLogin, setIsLogin] = useState(true);
-
-  const handleTogle = () => {
-    setIsLogin((prev) => !prev);
-  };
-
   return (
-    <div className="flex  justify-center items-center">
-      {isLogin ? (
-        <Login toggleView={handleTogle} />
-      ) : (
-        <Register toggleView={handleTogle} />
-      )}
+    <div className="container m-10 flex">
+      <div className="flex flex-col justify-start gap-10">
+        <p className="text-[40px]">
+          A better kind of manufactured home insurance.
+        </p>
+
+        <CustomButton
+          name={"Get Quote"}
+          className={"h-[50px] bg-[#cb7529] rounded-md w-[20rem] text-white"}
+        />
+      </div>
+      <div className="w-1/2"></div>
     </div>
   );
 }
