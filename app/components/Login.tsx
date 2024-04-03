@@ -1,8 +1,16 @@
+"use client";
 import React from "react";
 import CustomInput from "../utils/CustomInput";
 import CustomButton from "../utils/CustomButtom";
+import { useRouter } from "next/navigation";
 
 const Login = ({ toggleView }: any) => {
+  const router = useRouter();
+
+  const handleLogin = async () => {
+    router.push("/dashboard");
+  };
+
   return (
     <div className="border w-[40%] h-screen">
       <span className="flex justify-center py-10 text-[24px] font-bold">

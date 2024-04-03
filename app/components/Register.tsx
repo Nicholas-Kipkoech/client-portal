@@ -81,7 +81,7 @@ const Register = ({ toggleView }: any) => {
           <CustomButtom
             name={"Create Account"}
             className={
-              "h-[40px] flex justify-center border items-center w-[80%] rounded-md bg-[#cb7529] text-white"
+              "h-[40px] flex justify-center border items-center w-[85%] rounded-md bg-[#cb7529] text-white"
             }
           />
         </div>
