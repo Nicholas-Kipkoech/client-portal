@@ -32,6 +32,7 @@ const Login = ({ toggleView }: any) => {
         </div>
 
         <CustomButton
+          onClick={handleLogin}
           name={"Continue"}
           className={
             "h-[40px] flex justify-center border items-center w-[100%] rounded-md bg-[#cb7529] text-white"
