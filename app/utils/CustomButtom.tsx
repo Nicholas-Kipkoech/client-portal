@@ -4,8 +4,8 @@ interface Button {
   className: string;
 }
 
-const CustomButtom = ({ name, className }: Button) => {
+const CustomButton = ({ name, className }: Button) => {
   return <button className={className}>{name}</button>;
 };
 
-export default CustomButtom;
+export default CustomButton;
