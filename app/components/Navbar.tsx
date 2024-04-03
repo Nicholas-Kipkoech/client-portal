@@ -10,7 +10,13 @@ const Navbar = () => {
           <span>Claims</span>
           <span>About Us</span>
           <span>Help</span>
-          <span>Get Covered</span>
+          <p
+            className={
+              "h-[40px] bg-[#cb7529] rounded-md shadow-md flex items-center w-[150px] justify-center text-white cursor-pointer"
+            }
+          >
+            Get Covered
+          </p>
         </div>
       </div>
     </div>
