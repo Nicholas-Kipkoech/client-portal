@@ -23,7 +23,7 @@ const CustomInput = ({
       <input
         name={name}
         type={type}
-        className={`outline-[#cb7529] ${className}`}
+        className={`outline-[#cb7529] p-[5px] ${className}`}
         onChange={onChange}
         disabled={disabled}
         value={value}

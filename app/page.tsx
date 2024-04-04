@@ -12,7 +12,9 @@ export default function Home() {
   return (
     <div className="container m-10 flex">
       <div className="flex flex-col justify-start gap-10">
-        <p className="text-[40px]">A better kind of manufactured insurance.</p>
+        <p className="text-[40px] font-[700] font-sans">
+          A better kind of manufactured insurance.
+        </p>
 
         <CustomButton
           onClick={handleOpenQuote}

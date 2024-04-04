@@ -76,7 +76,7 @@ const Register = ({ toggleView }: any) => {
           <CustomInput
             name={"Password"}
             value=""
-            className={"h-[40px] border rounded-md"}
+            className={"h-[40px]  border rounded-md"}
           />
         </div>
         <div className="flex justify-center my-2">
