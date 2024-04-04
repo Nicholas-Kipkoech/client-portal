@@ -7,6 +7,7 @@ import Register from "./Register";
 const Navbar = () => {
   const [openLogin, setOpenLogin] = useState(false);
   const [openRegister, setOpenRegister] = useState(false);
+
   return (
     <div className="sticky top-0 bg-[#F7F5FD] z-10 border h-[auto]">
       <div className="flex mx-10 my-10 gap-10 justify-between">
@@ -14,10 +15,10 @@ const Navbar = () => {
           CLIENT PORTAL
         </span>
         <div className="flex gap-10">
-          <span>Insurance</span>
-          <span>Claims</span>
-          <span>About Us</span>
-          <span>Help</span>
+          <span className="cursor-pointer">Insurance</span>
+          <span className="cursor-pointer">Claims</span>
+          <span className="cursor-pointer">About Us</span>
+          <span className="cursor-pointer">Help</span>
           <p
             className={
               "h-[40px] bg-[#cb7529] rounded-md shadow-md flex items-center w-[150px] justify-center text-white cursor-pointer"

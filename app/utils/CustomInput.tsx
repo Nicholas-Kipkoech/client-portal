@@ -3,7 +3,9 @@ import React from "react";
 interface Input {
   name: string;
   disabled?: boolean;
-  onChange?: (e: React.FormEvent<HTMLInputElement>) => void;
+  onChange?: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
   value: string;
   className: string;
   type?: string;
