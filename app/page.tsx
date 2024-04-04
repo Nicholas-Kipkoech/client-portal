@@ -9,6 +9,7 @@ export default function Home() {
   const handleOpenQuote = () => {
     setModalOpen(true);
   };
+
   return (
     <div className="container m-10 flex">
       <div className="flex flex-col justify-start gap-10">

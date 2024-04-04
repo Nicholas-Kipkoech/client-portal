@@ -1,8 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
+import Login from "./Login";
+import Register from "./Register";
 
 const Navbar = () => {
+  const [openLogin, setOpenLogin] = useState(false);
+  const [openRegister, setOpenRegister] = useState(false);
   return (
     <div className="sticky top-0 bg-[#F7F5FD] z-10 border h-[auto]">
       <div className="flex mx-10 my-10 gap-10 justify-between">
@@ -22,10 +26,26 @@ const Navbar = () => {
             Get Covered
           </p>
         </div>
-        <div>
-          <p>Account</p>
+        <div className="flex gap-2">
+          <p
+            onClick={() => setOpenRegister(true)}
+            className="bg-blue-950 cursor-pointer text-white flex justify-center items-center h-[30px] p-2 rounded-sm"
+          >
+            Register
+          </p>
+          <p
+            onClick={() => setOpenLogin(true)}
+            className="bg-blue-950 cursor-pointer text-white flex justify-center items-center h-[30px] p-2 rounded-sm"
+          >
+            Sign In
+          </p>
         </div>
       </div>
+      <Login open={openLogin} handleClose={() => setOpenLogin(false)} />
+      <Register
+        open={openRegister}
+        handleClose={() => setOpenRegister(false)}
+      />
     </div>
   );
 };

@@ -3,8 +3,10 @@ import React from "react";
 import CustomInput from "../utils/CustomInput";
 import CustomButton from "../utils/CustomButtom";
 import { useRouter } from "next/navigation";
+import { Modal } from "antd";
+import { useContextApi } from "../context/context";
 
-const Login = ({ toggleView }: any) => {
+const Login = ({ open, handleClose }: any) => {
   const router = useRouter();
 
   const handleLogin = async () => {
@@ -12,13 +14,12 @@ const Login = ({ toggleView }: any) => {
   };
 
   return (
-    <div className="border w-[40%] h-screen">
-      <span className="flex justify-center py-10 text-[24px] font-bold">
-        CLIENT PORTAL
-      </span>
-      <div className="bg-white shadow-md   p-10">
-        <span className="text-[20px] font-bold">Sign in to your account</span>
-        <div className="py-10">
+    <Modal open={open} footer centered onCancel={handleClose}>
+      <div className="  p-10">
+        <p className="text-[18px] font-bold flex justify-center">
+          Login to your account
+        </p>
+        <div className="py-8">
           <CustomInput
             name={"Email"}
             className="h-[40px] border rounded-md"
@@ -38,14 +39,8 @@ const Login = ({ toggleView }: any) => {
             "h-[40px] flex justify-center border items-center w-[100%] rounded-md bg-[#cb7529] text-white"
           }
         />
-        <div className="flex gap-1 justify-center my-2 text-[13px]">
-          <span>Dont have an account?</span>
-          <span className="text-blue-800 cursor-pointer" onClick={toggleView}>
-            Sign up
-          </span>
-        </div>
       </div>
-    </div>
+    </Modal>
   );
 };
 
