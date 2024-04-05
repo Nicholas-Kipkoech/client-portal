@@ -3,10 +3,8 @@ import React from "react";
 interface Input {
   name: string;
   disabled?: boolean;
-  onChange?: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => void;
-  value: string;
+  onChange?: (e: any) => void;
+  value: string | number;
   className: string;
   type?: string;
 }
@@ -20,7 +18,7 @@ const CustomInput = ({
   type,
 }: Input) => {
   return (
-    <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-1 mt-1">
       <label htmlFor={name}>{name}</label>
       <input
         name={name}

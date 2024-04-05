@@ -13,100 +13,127 @@ interface IModal {
 
 const QuoteModal = ({ open, handleClose }: IModal) => {
   const [address, setAddress] = useState("");
+  const [car_reg, setCarReg] = useState("");
+  const [year, setYear] = useState(2000);
   const [city, setCity] = useState("");
   const [purpose, setPurpose] = useState("");
+  const [model, setModel] = useState("");
+  const [product, setProduct] = useState("");
+  const [use, setUse] = useState("");
   const [motor, setMotor] = useState(false);
   const [non_motor, setNonMotor] = useState(false);
+  const [active, setActive] = useState("motor");
 
   return (
-    <Modal
-      centered
-      title="Apply for quote"
-      open={open}
-      footer
-      onCancel={handleClose}
-    >
-      <div>
-        <CustomInput
-          type="text"
-          name={"Address"}
-          value={address}
-          className={"h-[40px] border rounded-md"}
-          onChange={(e) => setAddress(e.target.value)}
-        />
-        <CustomSelect
-          name={"City"}
-          options={[
-            {
-              label: "Nairobi",
-              value: "Nairobi",
-            },
-          ]}
-          onChange={(value: React.SetStateAction<string>) => setCity(value)}
-        />
-        <CustomSelect
-          name={"Purpose"}
-          options={[
-            {
-              label: "Purpose1",
-              value: "Purpose1",
-            },
-          ]}
-          onChange={(value: React.SetStateAction<string>) => setPurpose(value)}
-        />
-        <div className="my-2">
-          <p className="text-[16px]">Type of Insurance</p>
+    <Modal centered open={open} footer onCancel={handleClose}>
+      <div className="h-auto">
+        <div className="flex  my-8">
+          <p
+            onClick={() => setActive("motor")}
+            className={`${
+              active === "motor" ? "bg-[#cb7529]" : "bg-[#094b6a]"
+            } w-1/2 h-[30px] flex items-center cursor-pointer justify-center border rounded-l-md text-white `}
+          >
+            Motor
+          </p>
+          <p
+            onClick={() => setActive("non_motor")}
+            className={`${
+              active === "non_motor" ? "bg-[#cb7529]" : "bg-[#094b6a]"
+            } w-1/2 h-[30px] items-center flex  cursor-pointer justify-center border  text-white rounded-r-md`}
+          >
+            Non-Motor
+          </p>
         </div>
-        <div className="flex gap-1 ">
-          <input
-            type="radio"
-            name="motor"
-            checked={motor}
-            onChange={() => {
-              setMotor(true);
-              setNonMotor(false);
-            }}
-          />
-          <label htmlFor="motor">Motor</label>
-          <input
-            type="radio"
-            name="non-motor"
-            checked={non_motor}
-            onChange={() => {
-              setNonMotor(true);
-              setMotor(false);
-            }}
-          />
-          <label htmlFor="non-motor">Non-motor</label>
-        </div>
-        {motor && (
-          <div className="my-5">
+        {active === "motor" && (
+          <>
             <CustomInput
-              name="Make"
-              className="border rounded-md p-[5px]"
-              value=""
+              type="text"
+              name={"Address"}
+              value={address}
+              className={"h-[40px] border rounded-md"}
+              onChange={(e) => setAddress(e.target.value)}
             />
-            <CustomInput
-              name="Model"
-              className="border rounded-md p-[5px]"
-              value=""
+            <CustomSelect
+              name={"City"}
+              options={[
+                {
+                  label: "Nairobi",
+                  value: "Nairobi",
+                },
+              ]}
+              onChange={(value: React.SetStateAction<string>) => setCity(value)}
             />
-          </div>
+            <CustomSelect
+              name={"Purpose"}
+              options={[
+                {
+                  label: "Purpose1",
+                  value: "Purpose1",
+                },
+              ]}
+              onChange={(value: React.SetStateAction<string>) =>
+                setPurpose(value)
+              }
+            />
+            <div className="flex flex-wrap items-center justify-between mt-2">
+              <CustomSelect
+                name={"Model"}
+                placeholder="Select model...."
+                options={[
+                  {
+                    label: "Model1",
+                    value: "Model2",
+                  },
+                ]}
+                onChange={(value: React.SetStateAction<string>) =>
+                  setModel(value)
+                }
+              />
+              <CustomInput
+                type="text"
+                name={"Reg number"}
+                value={car_reg}
+                className={"h-[40px] w-[140px] border rounded-md"}
+                onChange={(e) => setCarReg(e.target.value)}
+              />
+              <CustomInput
+                type="number"
+                name={"Year"}
+                value={year}
+                className={"h-[40px] border w-[140px] rounded-md"}
+                onChange={(e) => setYear(e.target.value)}
+              />
+            </div>
+            <CustomSelect
+              name={"Use"}
+              placeholder="Select use..."
+              options={[
+                {
+                  label: "Use1",
+                  value: "use1",
+                },
+              ]}
+              onChange={(value: React.SetStateAction<string>) => setUse(value)}
+            />
+          </>
         )}
-
-        {non_motor && (
-          <div className="my-5">
-            <CustomInput
-              name="name"
-              className="border rounded-md p-[5px]"
-              value=""
+        {active === "non_motor" && (
+          <>
+            <CustomSelect
+              name={"Products"}
+              placeholder="Select product..."
+              options={[
+                {
+                  label: "Product1",
+                  value: "Product1",
+                },
+              ]}
+              onChange={(value: React.SetStateAction<string>) =>
+                setProduct(value)
+              }
             />
-            <CustomInput
-              name="name"
-              className="border rounded-md p-[5px]"
-              value=""
-            />
-          </div>
+          </>
         )}
       </div>
       <div className="flex justify-center my-5">
