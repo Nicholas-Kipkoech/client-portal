@@ -10,7 +10,7 @@ const Navbar = () => {
   const [openRegister, setOpenRegister] = useState(false);
 
   return (
-    <div className="sticky top-0 bg-[#F7F5FD] z-10  h-[auto]">
+    <div className="sticky top-0 bg-[#F7F5FD] z-10 py-[1px] h-[auto]">
       <div className="flex  my-10 gap-10 justify-between">
         <span className="flex text-[18px] font-bold cursor-auto">
           CLIENT PORTAL
