@@ -2,6 +2,7 @@
 
 import Covers from "./components/Covers";
 import HomePage from "./components/Home";
+import Products from "./components/Products";
 import TestimonialCarousel from "./components/TestimonialCarousel";
 
 export default function Home() {
@@ -10,6 +11,7 @@ export default function Home() {
       <HomePage />
       <TestimonialCarousel />
       <Covers />
+      <Products />
     </div>
   );
 }

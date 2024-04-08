@@ -60,7 +60,7 @@ const TestimonialCarousel = () => {
         }}
         className="p-2 mt-[15rem] flex justify-between"
       >
-        <div className="w-[25rem] bg-[#4D3C34] opacity-[0.8] p-2 rounded-lg flex flex-col gap-5">
+        <div className="w-[25rem] bg-[#092332] opacity-[0.8] p-2 rounded-lg flex flex-col gap-5">
           <p style={{ color: "white" }}>
             “{Testimonials[currentIndex].content}”
           </p>
