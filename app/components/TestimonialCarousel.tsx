@@ -38,7 +38,7 @@ const TestimonialCarousel = () => {
     <div
       style={{
         position: "relative",
-        height: 300, // Set the height of the container
+        height: "30rem", // Set the height of the container
       }}
     >
       <div
@@ -58,9 +58,9 @@ const TestimonialCarousel = () => {
           position: "relative",
           zIndex: 1,
         }}
-        className="p-2 mt-[100px] flex justify-between"
+        className="p-2 mt-[15rem] flex justify-between"
       >
-        <div className="w-[300px] bg-[#4D3C34] opacity-[0.8] p-2 rounded-lg flex flex-col gap-5">
+        <div className="w-[25rem] bg-[#4D3C34] opacity-[0.8] p-2 rounded-lg flex flex-col gap-5">
           <p style={{ color: "white" }}>
             “{Testimonials[currentIndex].content}”
           </p>
