@@ -1,8 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import CustomButton from "./utils/CustomButtom";
-import QuoteModal from "./components/QuoteModal";
+import Covers from "./components/Covers";
 import HomePage from "./components/Home";
 import TestimonialCarousel from "./components/TestimonialCarousel";
 
@@ -11,6 +9,7 @@ export default function Home() {
     <div className="flex flex-col gap-2 my-10">
       <HomePage />
       <TestimonialCarousel />
+      <Covers />
     </div>
   );
 }
