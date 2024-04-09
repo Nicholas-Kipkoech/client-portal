@@ -1,6 +1,7 @@
 "use client";
 
 import Covers from "./components/Covers";
+import Footer from "./components/Footer";
 import HomePage from "./components/Home";
 import Products from "./components/Products";
 import TestimonialCarousel from "./components/TestimonialCarousel";
@@ -12,6 +13,7 @@ export default function Home() {
       <TestimonialCarousel />
       <Covers />
       <Products />
+      <Footer />
     </div>
   );
 }

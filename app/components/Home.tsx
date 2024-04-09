@@ -13,7 +13,7 @@ const HomePage = () => {
   return (
     <div className="flex gap-10 justify-between items-center">
       <div className="flex flex-col justify-start gap-10">
-        <p className="text-[40px] font-[700] font-sans">
+        <p className="text-[2rem] font-[700] 2xl:text-[4rem] font-sans">
           We keep you covered, wherever you’re planted.
         </p>
 
@@ -37,7 +37,7 @@ const HomePage = () => {
       <Image
         src={house}
         alt="house"
-        className="rounded-[20px] h-[20rem] 2xl:h-[30rem] w-[40rem]  2xl:w-[50rem]"
+        className="rounded-[20px] h-[20rem] 2xl:h-[30rem] w-[40rem]  2xl:w-[100rem]"
       />
 
       <QuoteModal open={modalOpen} handleClose={() => setModalOpen(false)} />
