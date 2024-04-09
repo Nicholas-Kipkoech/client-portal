@@ -37,7 +37,7 @@ const HomePage = () => {
       <Image
         src={house}
         alt="house"
-        className="rounded-[20px] h-[20rem] 2xl:h-[30rem] w-[40rem]  2xl:w-[100rem]"
+        className="rounded-[20px] h-[20rem] 2xl:h-[25rem] w-[40rem]  2xl:w-[80rem]"
       />
 
       <QuoteModal open={modalOpen} handleClose={() => setModalOpen(false)} />

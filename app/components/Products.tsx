@@ -33,12 +33,12 @@ const ProductsData = [
 const CustomProduct = ({ image, name, content }: IProduct) => {
   // eslint-disable-next-line @next/next/no-img-element
   return (
-    <div className="flex flex-col border w-[22rem] 2xl:w-[36rem] rounded-md shadow-xl bg-slate-200">
+    <div className="flex flex-col border w-[22rem] 2xl:w-[29rem] rounded-md shadow-xl bg-slate-200">
       {image && (
         <img
           src={image}
           alt=""
-          className="h-[18rem]  2xl:h-[24rem] 2xl:w-[36rem] w-[22rem] rounded-lg"
+          className="h-[18rem]  2xl:h-[20rem] 2xl:w-[29rem] w-[22rem] rounded-lg"
         />
       )}
 

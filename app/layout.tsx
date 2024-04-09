@@ -23,7 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={robotoFont.className}>
         <ContextProvider>
-          <div className="mx-[5rem]">
+          <div className="mx-[5rem] 2xl:mx-[15rem]">
             <Navbar />
             {children}
           </div>

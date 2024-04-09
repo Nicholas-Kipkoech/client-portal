@@ -38,8 +38,8 @@ const TestimonialCarousel = () => {
     <div
       style={{
         position: "relative",
-        height: "30rem", // Set the height of the container
       }}
+      className="h-[28rem]"
     >
       <div
         style={{
@@ -51,7 +51,7 @@ const TestimonialCarousel = () => {
           backgroundImage: `url(${Testimonials[currentIndex].backgroundUrl})`,
           backgroundSize: "contain",
         }}
-        className="rounded-lg"
+        className="rounded-lg "
       />
       <div
         style={{
