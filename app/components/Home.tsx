@@ -11,7 +11,7 @@ const HomePage = () => {
     setModalOpen(true);
   };
   return (
-    <div className="flex gap-10 justify-between">
+    <div className="flex gap-10 justify-between items-center">
       <div className="flex flex-col justify-start gap-10">
         <p className="text-[40px] font-[700] font-sans">
           We keep you covered, wherever you’re planted.
@@ -28,7 +28,7 @@ const HomePage = () => {
             onClick={handleOpenQuote}
             name={"Get a Quote"}
             className={
-              "h-[40px] bg-[#cb7529] rounded-[30px] w-[10rem] text-white"
+              "h-[3rem] bg-[#cb7529] rounded-[30px] w-[10rem] 2xl:w-[15rem] text-white"
             }
           />
         </div>
@@ -37,7 +37,7 @@ const HomePage = () => {
       <Image
         src={house}
         alt="house"
-        className="rounded-[20px] h-[20rem]  w-[40rem]"
+        className="rounded-[20px] h-[20rem] 2xl:h-[30rem] w-[40rem]  2xl:w-[50rem]"
       />
 
       <QuoteModal open={modalOpen} handleClose={() => setModalOpen(false)} />

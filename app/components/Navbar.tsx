@@ -15,7 +15,7 @@ const Navbar = () => {
         <span className="flex text-[18px] font-bold cursor-auto">
           CLIENT PORTAL
         </span>
-        <div className="flex gap-10">
+        <div className="flex gap-10 2xl:text-[18px]">
           <span className="cursor-pointer">Enterprise suite</span>
           <span className="cursor-pointer">Claims</span>
           <span className="cursor-pointer">Reviews</span>

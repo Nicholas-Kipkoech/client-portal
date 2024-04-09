@@ -43,18 +43,18 @@ interface Toggle {
 
 const CustomToggle = ({ name, content, active, onClick }: Toggle) => {
   return (
-    <div className="p-1 rounded h-auto w-[38rem]">
+    <div className="p-1 rounded h-auto  2xl:w-[50rem] w-[38rem]">
       <div
         className="flex justify-between items-center cursor-pointer"
         onClick={onClick}
       >
         <div className="flex gap-2 items-center">
           <MdDone className="bg-[#092332] h-[2rem] w-[2rem] text-white rounded-[50%] p-1" />
-          <p className="text-[20px] font-[500]">{name}</p>
+          <p className="text-[20px] 2xl:text-[25px] font-[500]">{name}</p>
         </div>
         {active ? <FaMinus size={25} /> : <FaPlus size={25} />}
       </div>
-      <p className="mx-10">{active ? content : ""}</p>
+      <p className="mx-10 2xl:text-[20px]">{active ? content : ""}</p>
     </div>
   );
 };
@@ -72,11 +72,11 @@ const Covers = () => {
         We cover more than you think
       </p>
 
-      <div className="flex gap-2 items-center">
+      <div className="flex gap-2 2xl:justify-between items-center">
         <Image
           src={house}
           alt="house"
-          className="h-[20rem] w-[35rem] rounded-lg"
+          className="h-[20rem] 2xl:h-[25rem] 2xl:w-[45rem] w-[35rem] rounded-lg"
         />
         <div className="flex flex-col gap-1 divide-y divide-gray-300">
           {CoversData.map((cover, index) => (

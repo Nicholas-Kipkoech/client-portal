@@ -4,7 +4,7 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import ContextProvider from "./context/context";
 
-const inter = Roboto({
+const robotoFont = Roboto({
   weight: "400",
   subsets: ["latin"],
 });
@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={robotoFont.className}>
         <ContextProvider>
           <div className="mx-[5rem]">
             <Navbar />

@@ -31,11 +31,15 @@ const CustomProduct = ({ image, name, content }: IProduct) => {
   return (
     <div className="flex flex-col ">
       {image && (
-        <img src={image} alt="" className="h-[20rem] w-[22rem] rounded-lg" />
+        <img
+          src={image}
+          alt=""
+          className="h-[20rem]  2xl:h-[22rem] 2xl:w-[38rem] w-[22rem] rounded-lg"
+        />
       )}
 
-      <p className="text-[20px] font-bold">{name}</p>
-      <p className="text-slate-500">{content}</p>
+      <p className="text-[20px] 2xl:text-[25px] font-bold">{name}</p>
+      <p className="text-slate-600 text-[16px]">{content}</p>
     </div>
   );
 };
@@ -47,7 +51,7 @@ const Products = () => {
         Different products for different needs
       </p>
 
-      <div className="flex">
+      <div className="flex gap-2">
         {ProductsData.map((product, index) => (
           <CustomProduct
             key={index}

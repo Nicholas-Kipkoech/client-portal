@@ -60,7 +60,7 @@ const TestimonialCarousel = () => {
         }}
         className="p-2 mt-[15rem] flex justify-between"
       >
-        <div className="w-[25rem] bg-[#092332] opacity-[0.8] p-2 rounded-lg flex flex-col gap-5">
+        <div className="w-[25rem] 2xl:w-[40rem] bg-[#092332] opacity-[0.8] p-2 2xl:p-5 rounded-lg flex flex-col gap-5">
           <p style={{ color: "white" }}>
             “{Testimonials[currentIndex].content}”
           </p>
@@ -74,10 +74,10 @@ const TestimonialCarousel = () => {
         <div className="text-white mt-[100px] flex gap-2 mr-4">
           <GrLinkPrevious
             onClick={handlePrevious}
-            className="bg-white rounded-[50%] cursor-pointer text-[#cb7529] h-[40px] p-2 w-[40px]"
+            className="bg-white rounded-[50%] cursor-pointer text-[#cb7529] h-[40px] 2xl:h-[50px] 2xl:w-[50px] p-2 w-[40px]"
           />
           <GrLinkNext
-            className="bg-white rounded-[50%] text-[#cb7529] cursor-pointer h-[40px] p-2 w-[40px]"
+            className="bg-white rounded-[50%] text-[#cb7529] cursor-pointer h-[40px] 2xl:h-[50px] 2xl:w-[50px] p-2 w-[40px]"
             onClick={handleNext}
           />
         </div>
