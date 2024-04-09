@@ -32,7 +32,7 @@ const CustomProduct = ({ image, name, content }: IProduct) => {
     <div className="flex flex-col ">
       {image && (
         <img
-          src={image}
+          src={image ? image : ""}
           alt=""
           className="h-[20rem]  2xl:h-[22rem] 2xl:w-[38rem] w-[22rem] rounded-lg"
         />
