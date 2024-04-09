@@ -47,6 +47,49 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
         </div>
         {active === "motor" && (
           <>
+            <CustomSelect
+              name={"Model"}
+              placeholder="Select model...."
+              options={[
+                {
+                  label: "Model1",
+                  value: "Model2",
+                },
+              ]}
+              onChange={(value: React.SetStateAction<string>) =>
+                setModel(value)
+              }
+            />
+            <CustomInput
+              type="text"
+              name={"Reg number"}
+              value={car_reg}
+              className={"h-[40px]  border rounded-md"}
+              onChange={(e) => setCarReg(e.target.value)}
+            />
+            <CustomInput
+              type="number"
+              name={"Year"}
+              value={year}
+              className={"h-[40px] border  rounded-md"}
+              onChange={(e) => setYear(e.target.value)}
+            />
+
+            <CustomSelect
+              name={"Use"}
+              placeholder="Select use..."
+              options={[
+                {
+                  label: "Use1",
+                  value: "use1",
+                },
+              ]}
+              onChange={(value: React.SetStateAction<string>) => setUse(value)}
+            />
+          </>
+        )}
+        {active === "non_motor" && (
+          <>
             <CustomInput
               type="text"
               name={"Address"}
@@ -76,50 +119,6 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
                 setPurpose(value)
               }
             />
-            <div className="flex flex-wrap items-center justify-between mt-2">
-              <CustomSelect
-                name={"Model"}
-                placeholder="Select model...."
-                options={[
-                  {
-                    label: "Model1",
-                    value: "Model2",
-                  },
-                ]}
-                onChange={(value: React.SetStateAction<string>) =>
-                  setModel(value)
-                }
-              />
-              <CustomInput
-                type="text"
-                name={"Reg number"}
-                value={car_reg}
-                className={"h-[40px] w-[140px] border rounded-md"}
-                onChange={(e) => setCarReg(e.target.value)}
-              />
-              <CustomInput
-                type="number"
-                name={"Year"}
-                value={year}
-                className={"h-[40px] border w-[140px] rounded-md"}
-                onChange={(e) => setYear(e.target.value)}
-              />
-            </div>
-            <CustomSelect
-              name={"Use"}
-              placeholder="Select use..."
-              options={[
-                {
-                  label: "Use1",
-                  value: "use1",
-                },
-              ]}
-              onChange={(value: React.SetStateAction<string>) => setUse(value)}
-            />
-          </>
-        )}
-        {active === "non_motor" && (
-          <>
             <CustomSelect
               name={"Products"}
               placeholder="Select product..."
