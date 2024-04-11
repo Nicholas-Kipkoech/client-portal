@@ -23,7 +23,7 @@ const Testimonials = [
 ];
 
 const TestimonialCarousel = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   const handleNext = () => {
     setCurrentIndex((index) => {
