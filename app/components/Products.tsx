@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import Image from "next/image";
-import React, { useState } from "react";
+import React from "react";
 import CustomButton from "../utils/CustomButtom";
 
 interface IProduct {
@@ -66,13 +65,12 @@ const Products = () => {
 
       <div className="flex justify-between">
         {ProductsData.map((product, index) => (
-          <div key={index}>
-            <CustomProduct
-              image={product.image}
-              name={product.name}
-              content={product.content}
-            />
-          </div>
+          <CustomProduct
+            key={index}
+            image={product.image}
+            name={product.name}
+            content={product.content}
+          />
         ))}
       </div>
     </div>

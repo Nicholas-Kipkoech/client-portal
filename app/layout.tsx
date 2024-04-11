@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Inter, Roboto } from "next/font/google";
+import { Roboto, Nunito_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import ContextProvider from "./context/context";
 
-const robotoFont = Roboto({
+const nunitoSans = Nunito_Sans({
   weight: "400",
   subsets: ["latin"],
 });
@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={robotoFont.className}>
+      <body className={nunitoSans.className}>
         <ContextProvider>
           <div className="mx-[5rem] 2xl:mx-[15rem]">
             <Navbar />
