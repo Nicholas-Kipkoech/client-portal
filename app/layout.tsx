@@ -3,6 +3,7 @@ import { Roboto, Nunito_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import ContextProvider from "./context/context";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const nunitoSans = Nunito_Sans({
   weight: "400",
@@ -26,6 +27,7 @@ export default function RootLayout({
           <div className="mx-[5rem] 2xl:mx-[15rem]">
             <Navbar />
             {children}
+            <SpeedInsights />
           </div>
         </ContextProvider>
       </body>
