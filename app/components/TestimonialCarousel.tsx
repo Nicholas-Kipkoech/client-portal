@@ -26,12 +26,16 @@ const TestimonialCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % Testimonials.length);
+    setCurrentIndex((index) => {
+      if (index === Testimonials.length - 1) return 0;
+      return index + 1;
+    });
   };
   const handlePrevious = () => {
-    setCurrentIndex(
-      (prev) => (prev - 1 + Testimonials.length) % Testimonials.length
-    );
+    setCurrentIndex((index) => {
+      if (index === 0) return Testimonials.length - 1;
+      return index - 1;
+    });
   };
 
   return (

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Roboto, Nunito_Sans } from "next/font/google";
+import { Nunito_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import ContextProvider from "./context/context";
