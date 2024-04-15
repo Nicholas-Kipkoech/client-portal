@@ -7,12 +7,7 @@ interface OptionType {
 }
 
 interface ICustomSelect {
-  options: [
-    {
-      label: string;
-      value: string;
-    }
-  ];
+  options: any;
   className?: string;
   name: string;
   onChange: any;

@@ -14,6 +14,8 @@ interface IModal {
 const QuoteModal = ({ open, handleClose }: IModal) => {
   const [address, setAddress] = useState("");
   const [car_reg, setCarReg] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [year, setYear] = useState(2000);
   const [city, setCity] = useState("");
   const [purpose, setPurpose] = useState("");
@@ -23,6 +25,17 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
   const [motor, setMotor] = useState(false);
   const [non_motor, setNonMotor] = useState(false);
   const [active, setActive] = useState("motor");
+
+  const useOptions = [
+    {
+      label: "Commercial",
+      value: "commercial",
+    },
+    {
+      label: "Private",
+      value: "private",
+    },
+  ];
 
   return (
     <Modal centered open={open} footer onCancel={handleClose}>
@@ -67,9 +80,25 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
               className={"h-[40px]  border rounded-md"}
               onChange={(e) => setCarReg(e.target.value)}
             />
+            <div className="flex gap-2">
+              <CustomInput
+                type="date"
+                name={"Start Date"}
+                value={startDate}
+                className={"h-[40px] w-[232px] border rounded-md"}
+                onChange={(e) => setStartDate(e.target.value)}
+              />
+              <CustomInput
+                type="date"
+                name={"End Date"}
+                value={endDate}
+                className={"h-[40px] w-[232px] border rounded-md"}
+                onChange={(e) => setEndDate(e.target.value)}
+              />
+            </div>
             <CustomInput
               type="number"
-              name={"Year"}
+              name={"Year of Manufacture"}
               value={year}
               className={"h-[40px] border  rounded-md"}
               onChange={(e) => setYear(e.target.value)}
@@ -78,12 +107,7 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
             <CustomSelect
               name={"Use"}
               placeholder="Select use..."
-              options={[
-                {
-                  label: "Use1",
-                  value: "use1",
-                },
-              ]}
+              options={useOptions}
               onChange={(value: React.SetStateAction<string>) => setUse(value)}
             />
           </>
