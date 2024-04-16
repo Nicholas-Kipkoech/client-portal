@@ -6,6 +6,8 @@ import CustomInput from "../utils/CustomInput";
 import CustomButton from "../utils/CustomButtom";
 import CustomSelect from "../utils/CustomSelect";
 import { requestMotorQuote } from "../services/apiServices";
+import { useRouter } from "next/navigation";
+import { useContextApi } from "../context/context";
 
 interface IModal {
   open: boolean;
@@ -48,6 +50,8 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
       value: "mazda",
     },
   ];
+  const router = useRouter();
+  const { setQuotes }: any = useContextApi();
 
   const handleRequestQuote = async () => {
     try {
@@ -61,7 +65,11 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
           value: motorValue,
         });
         setLoading(false);
-        console.log("res....", res?.response);
+        if (res.success === true) {
+          setQuotes(res.response);
+          handleClose();
+          router.push("/dashboard");
+        }
       }
     } catch (error) {
       setLoading(false);
