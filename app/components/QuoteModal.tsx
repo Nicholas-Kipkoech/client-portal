@@ -66,8 +66,9 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
           yearOfManufacture: year,
           value: motorValue,
         });
+        showToast("Motor details submitted successfully");
         if (res.success === true) {
-          showToast("Motor details submitted successfully");
+          setLoading(false);
           setQuotes(res.response);
           handleClose();
           router.push("/dashboard");
