@@ -5,6 +5,7 @@ import { Modal } from "antd";
 import CustomInput from "../utils/CustomInput";
 import CustomButton from "../utils/CustomButtom";
 import CustomSelect from "../utils/CustomSelect";
+import { requestMotorQuote } from "../services/apiServices";
 
 interface IModal {
   open: boolean;
@@ -14,9 +15,9 @@ interface IModal {
 const QuoteModal = ({ open, handleClose }: IModal) => {
   const [address, setAddress] = useState("");
   const [car_reg, setCarReg] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [year, setYear] = useState(2000);
+  const [motorValue, setMotorValue] = useState<number | any>(null);
+
+  const [year, setYear] = useState<number | any>(null);
   const [city, setCity] = useState("");
   const [purpose, setPurpose] = useState("");
   const [model, setModel] = useState("");
@@ -25,6 +26,7 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
   const [motor, setMotor] = useState(false);
   const [non_motor, setNonMotor] = useState(false);
   const [active, setActive] = useState("motor");
+  const [loading, setLoading] = useState(false);
 
   const useOptions = [
     {
@@ -36,6 +38,36 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
       value: "private",
     },
   ];
+  const makeOptions = [
+    {
+      label: "Audi",
+      value: "audi",
+    },
+    {
+      label: "Mazda",
+      value: "mazda",
+    },
+  ];
+
+  const handleRequestQuote = async () => {
+    try {
+      if (active === "motor") {
+        setLoading(true);
+        const res = await requestMotorQuote({
+          model: model,
+          reqNumber: car_reg,
+          use: use,
+          yearOfManufacture: year,
+          value: motorValue,
+        });
+        setLoading(false);
+        console.log("res....", res?.response);
+      }
+    } catch (error) {
+      setLoading(false);
+      console.error(error);
+    }
+  };
 
   return (
     <Modal centered open={open} footer onCancel={handleClose}>
@@ -61,41 +93,26 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
         {active === "motor" && (
           <>
             <CustomSelect
-              name={"Model"}
-              placeholder="Select model...."
-              options={[
-                {
-                  label: "Model1",
-                  value: "Model2",
-                },
-              ]}
-              onChange={(value: React.SetStateAction<string>) =>
-                setModel(value)
-              }
+              name={"Model/Make"}
+              placeholder="Select model/make...."
+              options={makeOptions}
+              onChange={(value: any) => setModel(value.value)}
+            />
+            <CustomInput
+              type="number"
+              name={"Car Value"}
+              value={motorValue}
+              className={"h-[40px]  border rounded-md"}
+              onChange={(e) => setMotorValue(e.target.value)}
             />
             <CustomInput
               type="text"
-              name={"Reg number"}
+              name={"Car Registration"}
               value={car_reg}
               className={"h-[40px]  border rounded-md"}
               onChange={(e) => setCarReg(e.target.value)}
             />
-            <div className="flex gap-2">
-              <CustomInput
-                type="date"
-                name={"Start Date"}
-                value={startDate}
-                className={"h-[40px] w-[232px] border rounded-md"}
-                onChange={(e) => setStartDate(e.target.value)}
-              />
-              <CustomInput
-                type="date"
-                name={"End Date"}
-                value={endDate}
-                className={"h-[40px] w-[232px] border rounded-md"}
-                onChange={(e) => setEndDate(e.target.value)}
-              />
-            </div>
+
             <CustomInput
               type="number"
               name={"Year of Manufacture"}
@@ -108,7 +125,7 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
               name={"Use"}
               placeholder="Select use..."
               options={useOptions}
-              onChange={(value: React.SetStateAction<string>) => setUse(value)}
+              onChange={(value: any) => setUse(value.value)}
             />
           </>
         )}
@@ -161,11 +178,12 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
       </div>
       <div className="flex justify-center my-5">
         <CustomButton
-          name={"Request Quote"}
+          disabled={loading}
+          name={loading ? "Requesting quote...." : "Request Quote"}
           className={
             "h-[40px] bg-[#cb7529] flex justify-center items-center w-[100%] rounded-md text-white "
           }
-          onClick={() => {}}
+          onClick={handleRequestQuote}
         />
       </div>
     </Modal>

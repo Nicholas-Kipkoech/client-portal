@@ -4,7 +4,7 @@ interface Input {
   name: string;
   disabled?: boolean;
   onChange?: (e: any) => void;
-  value: string | number;
+  value: string | number | any;
   className: string;
   type?: string;
 }
