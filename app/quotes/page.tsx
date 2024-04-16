@@ -3,6 +3,7 @@ import React from "react";
 import { useContextApi } from "../context/context";
 import { IQuotes } from "../types";
 import CustomButton from "../utils/CustomButtom";
+
 const CustomProduct = ({
   model,
   premium,
@@ -39,14 +40,14 @@ const CustomProduct = ({
   );
 };
 
-const Dashboard = () => {
+const QuotesPage = () => {
   const { quotes }: any = useContextApi();
 
   return (
     <div className="bg-[white] py-4 px-4 h-[100vh]">
       <p className="text-[1.8rem] font-bold">Requested Quotes</p>
 
-      <div className="flex flex-wrap gap-4">
+      <div className="flex flex-wrap justify-center gap-4">
         {quotes.map((quote: IQuotes, index: number) => (
           <CustomProduct
             key={index}
@@ -65,4 +66,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default QuotesPage;

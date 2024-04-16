@@ -52,7 +52,6 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
     },
   ];
   const router = useRouter();
-  const { setQuotes }: any = useContextApi();
   const showToast = useCustomToast();
 
   const handleRequestQuote = async () => {
@@ -69,9 +68,13 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
         showToast("Motor details submitted successfully");
         if (res.success === true) {
           setLoading(false);
-          setQuotes(res.response);
+          const existingQuotes = JSON.parse(
+            localStorage.getItem("quotes") || "[]"
+          );
+          const updatedQuotes = [...existingQuotes, ...res.response];
+          localStorage.setItem("quotes", JSON.stringify(updatedQuotes));
           handleClose();
-          router.push("/dashboard");
+          router.push("/quotes");
         }
       }
     } catch (error: any) {

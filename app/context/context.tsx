@@ -6,7 +6,9 @@ const Context = createContext({});
 
 const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [page, setPage] = useState("Home");
-  const [quotes, setQuotes] = useState<IQuotes[]>([]);
+
+  const quotesString = localStorage.getItem("quotes");
+  const quotes = quotesString ? JSON.parse(quotesString) : [];
 
   return (
     <Context.Provider
@@ -14,7 +16,6 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
         page,
         setPage,
         quotes,
-        setQuotes,
       }}
     >
       {children}
