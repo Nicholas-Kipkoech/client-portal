@@ -7,6 +7,7 @@ interface Input {
   value: string | number | any;
   className: string;
   type?: string;
+  maxLength?: number;
 }
 
 const CustomInput = ({
@@ -16,6 +17,7 @@ const CustomInput = ({
   value,
   className,
   type,
+  maxLength,
 }: Input) => {
   return (
     <div className="flex flex-col gap-1 mt-1">
@@ -27,6 +29,7 @@ const CustomInput = ({
         onChange={onChange}
         disabled={disabled}
         value={value}
+        maxLength={maxLength}
       />
     </div>
   );

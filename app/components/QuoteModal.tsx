@@ -20,7 +20,7 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
   const [car_reg, setCarReg] = useState("");
   const [motorValue, setMotorValue] = useState<number | any>(null);
 
-  const [year, setYear] = useState<number | any>(null);
+  const [year, setYear] = useState(null);
   const [city, setCity] = useState("");
   const [purpose, setPurpose] = useState("");
   const [model, setModel] = useState("");
@@ -63,7 +63,7 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
           model: model,
           reqNumber: car_reg,
           use: use,
-          yearOfManufacture: year,
+          yearOfManufacture: Number(year),
           value: motorValue,
         });
         showToast("Motor details submitted successfully");
@@ -126,10 +126,11 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
             />
 
             <CustomInput
-              type="number"
+              type="text"
               name={"Year of Manufacture"}
               value={year}
               className={"h-[40px] border  rounded-md"}
+              maxLength={4}
               onChange={(e) => setYear(e.target.value)}
             />
 
