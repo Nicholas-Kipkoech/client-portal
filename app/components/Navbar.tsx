@@ -48,9 +48,11 @@ const Navbar = () => {
             <p>Get a Quote</p>
             <GoArrowRight size={30} />
           </div>
-          <div className="bg-[#092332] text-white h-[40px] w-[40px] rounded-[50%] flex justify-center items-center">
-            {userInitials}
-          </div>
+          {Object.keys(user).length > 1 && (
+            <div className="bg-[#092332] text-white h-[40px] w-[40px] rounded-[50%] flex justify-center items-center">
+              {userInitials}
+            </div>
+          )}
         </div>
       </div>
       <Login open={openLogin} handleClose={() => setOpenLogin(false)} />
