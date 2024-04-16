@@ -34,8 +34,10 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const accessTokenJson: any = localStorage.getItem("accessToken");
-      const decodedToken: any = jwtDecode(accessTokenJson);
-      setUser(decodedToken.payload);
+      if (accessTokenJson) {
+        const decodedToken: any = jwtDecode(accessTokenJson);
+        setUser(decodedToken.payload);
+      }
     }
   }, []);
 
