@@ -1,14 +1,20 @@
 "use client";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { IQuotes } from "../types";
 
 const Context = createContext({});
 
 const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [page, setPage] = useState("Home");
+  const [quotes, setQuotes] = useState([]);
 
-  const quotesString = localStorage.getItem("quotes");
-  const quotes = quotesString ? JSON.parse(quotesString) : [];
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const quotesString = localStorage.getItem("quotes");
+      const quotes = quotesString ? JSON.parse(quotesString) : [];
+      setQuotes(quotes);
+    }
+  }, []);
 
   return (
     <Context.Provider

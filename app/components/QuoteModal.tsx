@@ -50,6 +50,10 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
       label: "Mazda",
       value: "mazda",
     },
+    {
+      label: "Nissan",
+      value: "nissan",
+    },
   ];
   const router = useRouter();
   const showToast = useCustomToast();
