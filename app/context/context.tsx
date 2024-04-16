@@ -19,12 +19,14 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   function isUserAuthenticated(): boolean {
-    const accessTokenJson = localStorage.getItem("accessToken");
-    if (!accessTokenJson) return false;
-    const decodedToken: any = jwtDecode(accessTokenJson);
-    const currentTime = Date.now() / 1000;
-    if (currentTime >= decodedToken?.exp) {
-      return false;
+    if (typeof window !== "undefined") {
+      const accessTokenJson = localStorage.getItem("accessToken");
+      if (!accessTokenJson) return false;
+      const decodedToken: any = jwtDecode(accessTokenJson);
+      const currentTime = Date.now() / 1000;
+      if (currentTime >= decodedToken?.exp) {
+        return false;
+      }
     }
     return true;
   }
