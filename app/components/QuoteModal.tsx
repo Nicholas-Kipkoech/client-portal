@@ -74,9 +74,10 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
           router.push("/dashboard");
         }
       }
-    } catch (error) {
+    } catch (error: any) {
       setLoading(false);
-      console.error(error);
+      console.error(error.response.data.error);
+      showToast(error.response.data.error, "error");
     }
   };
 
