@@ -6,7 +6,7 @@ import { IQuotes } from "../types";
 const Dashboard = () => {
   const { quotes }: any = useContextApi();
   return (
-    <div className="h-screen bg-[white] py-4 px-4">
+    <div className="bg-[white] py-4 px-4 h-[100vh]">
       <p className="text-[1.8rem] font-bold">Requested Quotes</p>
 
       <div>

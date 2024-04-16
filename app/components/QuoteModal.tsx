@@ -8,6 +8,7 @@ import CustomSelect from "../utils/CustomSelect";
 import { requestMotorQuote } from "../services/apiServices";
 import { useRouter } from "next/navigation";
 import { useContextApi } from "../context/context";
+import { useCustomToast } from "../constants/useToast";
 
 interface IModal {
   open: boolean;
@@ -52,6 +53,7 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
   ];
   const router = useRouter();
   const { setQuotes }: any = useContextApi();
+  const showToast = useCustomToast();
 
   const handleRequestQuote = async () => {
     try {
@@ -64,8 +66,8 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
           yearOfManufacture: year,
           value: motorValue,
         });
-        setLoading(false);
         if (res.success === true) {
+          showToast("Motor details submitted successfully");
           setQuotes(res.response);
           handleClose();
           router.push("/dashboard");
