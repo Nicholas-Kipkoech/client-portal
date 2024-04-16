@@ -2,43 +2,64 @@
 import React from "react";
 import { useContextApi } from "../context/context";
 import { IQuotes } from "../types";
+import CustomButton from "../utils/CustomButtom";
+const CustomProduct = ({
+  model,
+  premium,
+  yearOfManufacture,
+  PHCfund,
+  use,
+  stamp_duty,
+  trainning_levy,
+  reqNumber,
+}: Partial<IQuotes>) => {
+  return (
+    <div className="w-[46%] border rounded-md shadow-2xl hover:border-[#cb7529] cursor-pointer">
+      <div className="py-5 px-5 flex justify-between">
+        <div>
+          <p>Model: {model}</p>
+          <p>Premium: KES {premium?.toLocaleString()}</p>
+          <p>Year: {yearOfManufacture}</p>
+          <p>Use: {use}</p>
+        </div>
+        <div>
+          <p>Stamp Duty: KES {stamp_duty}</p>
+          <p>PHC Fund: KES {PHCfund?.toLocaleString()}</p>
+          <p>Training Levy: KES {trainning_levy?.toLocaleString()}</p>
+          <p>Reg Number: {reqNumber}</p>
+        </div>
+      </div>
+      <div className="flex justify-center px-5 py-5">
+        <CustomButton
+          name={"Select Quote"}
+          className=" h-[40px] border w-[20rem] rounded-md bg-[#cb7529] text-white"
+        />
+      </div>
+    </div>
+  );
+};
 
 const Dashboard = () => {
   const { quotes }: any = useContextApi();
+
   return (
     <div className="bg-[white] py-4 px-4 h-[100vh]">
       <p className="text-[1.8rem] font-bold">Requested Quotes</p>
 
-      <div>
-        <table>
-          {quotes.map((quote: IQuotes) => (
-            <>
-              <tr>
-                <th>Model</th>
-                <th>Registration Number</th>
-                <th>Use</th>
-                <th>Year of Manufacture</th>
-                <th>Premium (KES)</th>
-                <th>Stamp Duty (KES)</th>
-                <th>Training Levy (KES)</th>
-                <th>PHC Fund (KES)</th>
-              </tr>
-              <tr
-                className="cursor-pointer"
-                onClick={() => alert(`Quote ${JSON.stringify(quote)}`)}
-              >
-                <td>{quote.model}</td>
-                <td>{quote.reqNumber}</td>
-                <td>{quote.use}</td>
-                <td>{quote.yearOfManufacture}</td>
-                <td>{quote.premium.toLocaleString()}</td>
-                <td>{quote.stamp_duty.toLocaleString()}</td>
-                <td>{quote.trainning_levy.toLocaleString()}</td>
-                <td>{quote.PHCfund.toLocaleString()}</td>
-              </tr>
-            </>
-          ))}
-        </table>
+      <div className="flex flex-wrap gap-4">
+        {quotes.map((quote: IQuotes, index: number) => (
+          <CustomProduct
+            key={index}
+            model={quote.model}
+            premium={quote.premium}
+            yearOfManufacture={quote.yearOfManufacture}
+            PHCfund={quote.PHCfund}
+            use={quote.use}
+            trainning_levy={quote.trainning_levy}
+            reqNumber={quote.reqNumber}
+            stamp_duty={quote.stamp_duty}
+          />
+        ))}
       </div>
     </div>
   );

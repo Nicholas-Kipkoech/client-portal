@@ -64,7 +64,7 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
           reqNumber: car_reg,
           use: use,
           yearOfManufacture: Number(year),
-          value: motorValue,
+          value: Number(motorValue),
         });
         showToast("Motor details submitted successfully");
         if (res.success === true) {
@@ -111,8 +111,8 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
               onChange={(value: any) => setModel(value.value)}
             />
             <CustomInput
-              type="number"
-              name={"Car Value"}
+              type="text"
+              name={"Car Value (KES)"}
               value={motorValue}
               className={"h-[40px]  border rounded-md"}
               onChange={(e) => setMotorValue(e.target.value)}
