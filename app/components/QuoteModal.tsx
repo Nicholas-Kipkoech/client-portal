@@ -16,6 +16,7 @@ interface IModal {
 }
 
 const QuoteModal = ({ open, handleClose }: IModal) => {
+  const { years }: any = useContextApi();
   const [address, setAddress] = useState("");
   const [car_reg, setCarReg] = useState("");
   const [motorValue, setMotorValue] = useState<number | any>(null);
@@ -30,6 +31,15 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
   const [non_motor, setNonMotor] = useState(false);
   const [active, setActive] = useState("motor");
   const [loading, setLoading] = useState(false);
+
+  const yearsOptions = years
+    .sort((a: number, b: number) => b - a)
+    .map((year: number) => {
+      return {
+        label: year,
+        value: year,
+      };
+    });
 
   const useOptions = [
     {
@@ -71,7 +81,6 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
         });
         showToast("Motor details submitted successfully");
         if (res.success === true) {
-          console.log(res.response);
           setLoading(false);
           const existingQuotes = JSON.parse(
             localStorage.getItem("quotes") || "[]"
@@ -137,12 +146,11 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
               onChange={(e) => setCarReg(e.target.value.toUpperCase())}
             />
 
-            <CustomInput
-              type="number"
+            <CustomSelect
               name={"Year of Manufacture"}
-              value={year}
-              className={"h-[40px] border  rounded-md"}
-              onChange={(e) => setYear(e.target.value)}
+              placeholder="Select model/make...."
+              options={yearsOptions}
+              onChange={(value: any) => setYear(value.value)}
             />
 
             <CustomSelect

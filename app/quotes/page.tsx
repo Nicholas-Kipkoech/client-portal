@@ -4,36 +4,24 @@ import { useContextApi } from "../context/context";
 import { IQuotes } from "../types";
 import CustomButton from "../utils/CustomButtom";
 import Login from "../components/Login";
+import { useRouter } from "next/navigation";
 
 interface QuoteInterface extends IQuotes {
   data: any;
 }
 
 const QuotesPage = () => {
-  const { quotes, isUserAuthenticated }: any = useContextApi();
+  const router = useRouter();
+  const { quotes, isUserAuthenticated, setSelectedQuote }: any =
+    useContextApi();
   const [openLogin, setOpenLogin] = useState(false);
-  const [days, setDays] = useState(0);
-
-  useEffect(() => {
-    function checkLeapYear() {
-      const currentYear = new Date(Date.now()).getFullYear();
-      let days = 0;
-
-      if (currentYear % 4 === 0) {
-        days += 366;
-      } else {
-        days += 365;
-      }
-      setDays(days);
-    }
-    checkLeapYear();
-  }, []);
 
   const handleSelectQuote = (data: any) => {
     if (!isUserAuthenticated()) {
       setOpenLogin(true);
     } else {
-      alert(JSON.stringify(data));
+      setSelectedQuote(data);
+      router.push("/payments");
     }
   };
 
@@ -47,8 +35,9 @@ const QuotesPage = () => {
     trainning_levy,
     reqNumber,
     data,
+    totalPremium,
+    days,
   }: QuoteInterface) => {
-    const totalPremium = premium + stamp_duty + PHCfund + trainning_levy;
     return (
       <div className="w-[46%]  border rounded-md shadow-2xl hover:border-[#cb7529] cursor-pointer">
         <div className="py-4 px-4 flex justify-between">
@@ -97,6 +86,7 @@ const QuotesPage = () => {
             reqNumber={quote.reqNumber}
             stamp_duty={quote.stamp_duty}
             totalPremium={quote.totalPremium}
+            days={quote.days}
             data={quote}
           />
         ))}

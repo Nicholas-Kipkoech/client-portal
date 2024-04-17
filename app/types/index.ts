@@ -16,4 +16,5 @@ export interface IQuotes {
   trainning_levy: number;
   PHCfund: number;
   totalPremium: number;
+  days: number;
 }

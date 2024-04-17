@@ -9,6 +9,21 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [page, setPage] = useState("Home");
   const [quotes, setQuotes] = useState([]);
   const [user, setUser] = useState<any>({});
+  const [years, setYears] = useState<number[]>([]);
+  const [selectedQuote, setSelectedQuote] = useState({});
+
+  useEffect(() => {
+    const years: number[] = [];
+    const currentYear = new Date(Date.now()).getFullYear();
+
+    function getYears() {
+      for (let i = currentYear - 15; i <= currentYear; i++) {
+        years.push(i);
+      }
+    }
+    setYears(years);
+    getYears();
+  }, []);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -58,6 +73,9 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
         isUserAuthenticated,
         user,
         userInitials,
+        years,
+        selectedQuote,
+        setSelectedQuote,
       }}
     >
       {children}
