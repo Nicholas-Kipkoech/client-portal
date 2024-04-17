@@ -33,7 +33,7 @@ const QuotesPage = () => {
     data,
   }: Partial<QuoteInterface>) => {
     return (
-      <div className="w-[46%] border rounded-md shadow-2xl hover:border-[#cb7529] cursor-pointer">
+      <div className="w-[46%]  border rounded-md shadow-2xl hover:border-[#cb7529] cursor-pointer">
         <div className="py-5 px-5 flex justify-between">
           <div>
             <p>Model: {model}</p>
@@ -60,7 +60,7 @@ const QuotesPage = () => {
   };
 
   return (
-    <div className="bg-[white] py-4 px-4 h-[100vh]">
+    <div className="bg-[white] py-4 px-4 h-auto">
       <p className="text-[1.8rem] font-bold">Requested Quotes</p>
 
       <div className="flex flex-wrap justify-center gap-4">
