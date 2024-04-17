@@ -129,15 +129,14 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
               name={"Car Registration"}
               value={car_reg}
               className={"h-[40px]  border rounded-md"}
-              onChange={(e) => setCarReg(e.target.value)}
+              onChange={(e) => setCarReg(e.target.value.toUpperCase())}
             />
 
             <CustomInput
-              type="text"
+              type="number"
               name={"Year of Manufacture"}
               value={year}
               className={"h-[40px] border  rounded-md"}
-              maxLength={4}
               onChange={(e) => setYear(e.target.value)}
             />
 
