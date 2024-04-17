@@ -43,7 +43,7 @@ const TestimonialCarousel = () => {
       style={{
         position: "relative",
       }}
-      className="h-[28rem]"
+      className="h-[28rem] sm:h-[12rem] sm:hidden"
     >
       <div
         style={{
@@ -55,17 +55,17 @@ const TestimonialCarousel = () => {
           backgroundImage: `url(${Testimonials[currentIndex].backgroundUrl})`,
           backgroundSize: "contain",
         }}
-        className="rounded-lg "
+        className="rounded-lg sm:w-[20rem] "
       />
       <div
         style={{
           position: "relative",
           zIndex: 1,
         }}
-        className="p-2 mt-[15rem] flex justify-between"
+        className="p-2  mt-[15rem] flex justify-between"
       >
         <div className="w-[25rem] 2xl:w-[40rem] bg-[#092332] opacity-[0.8] p-2 2xl:p-5 rounded-lg flex flex-col gap-5">
-          <p style={{ color: "white" }}>
+          <p style={{ color: "white" }} className="sm:text-[11px]">
             “{Testimonials[currentIndex].content}”
           </p>
           <p
