@@ -50,13 +50,13 @@ const CustomToggle = ({ name, content, active, onClick }: Toggle) => {
       >
         <div className="flex gap-2 items-center">
           <MdDone className="bg-[#092332] h-[2rem] w-[2rem] text-white rounded-[50%] p-1" />
-          <p className="sm:text-[14px] text-[20px] 2xl:text-[25px] font-[500]">
+          <p className="sm:text-[14px] md:text-[20px] 2xl:text-[25px] font-[500]">
             {name}
           </p>
         </div>
         {active ? <FaMinus size={25} /> : <FaPlus size={25} />}
       </div>
-      <p className="mx-10 2xl:text-[20px] sm:mx-5 sm:text-[14px] sm:w-[22rem]">
+      <p className="md:mx-10 2xl:text-[20px] sm:mx-5 sm:text-[14px] sm:w-[22rem]">
         {active ? content : ""}
       </p>
     </div>
@@ -72,7 +72,7 @@ const Covers = () => {
 
   return (
     <div>
-      <p className="text-[2rem] font-semibold my-5 sm:text-[1.5rem]">
+      <p className="md:text-[2rem] font-semibold my-5 sm:text-[1.5rem]">
         We cover more than you think
       </p>
 
@@ -80,7 +80,7 @@ const Covers = () => {
         <Image
           src={house}
           alt="house"
-          className="sm:hidden h-[20rem] 2xl:h-[25rem] 2xl:w-[45rem] w-[35rem] rounded-lg"
+          className="sm:hidden md:block h-[20rem] 2xl:h-[25rem] 2xl:w-[45rem] md:w-[35rem] rounded-lg"
         />
         <div className="flex flex-col gap-1 divide-y divide-gray-300">
           {CoversData.map((cover, index) => (

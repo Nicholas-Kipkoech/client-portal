@@ -32,12 +32,12 @@ const ProductsData = [
 const CustomProduct = ({ image, name, content }: IProduct) => {
   // eslint-disable-next-line @next/next/no-img-element
   return (
-    <div className="flex flex-col border w-[22rem] 2xl:w-[29rem] rounded-md shadow-xl bg-slate-200">
+    <div className="flex flex-col  border md:w-[22rem] sm:my-2 sm:w-[21rem] sm:text-[14px] 2xl:w-[29rem] rounded-md shadow-xl bg-slate-200">
       {image && (
         <img
           src={image}
           alt=""
-          className="h-[18rem]  2xl:h-[20rem] 2xl:w-[29rem] w-[22rem] rounded-lg"
+          className="md:h-[18rem]  md:block 2xl:h-[20rem] 2xl:w-[29rem] md:w-[22rem] sm:hidden rounded-lg"
         />
       )}
 
@@ -58,12 +58,12 @@ const CustomProduct = ({ image, name, content }: IProduct) => {
 
 const Products = () => {
   return (
-    <div>
-      <p className="text-[2rem] font-semibold my-5">
+    <div className="sm:flex sm:flex-col sm:justify-center sm:items-center">
+      <p className="md:text-[2rem] font-semibold my-5 sm:text-[1.5rem]">
         Different products for different needs
       </p>
 
-      <div className="flex justify-between">
+      <div className=" md:justify-between  sm:h-[30rem] sm:justify-center sm:flex-col  md:flex md:flex-row md:gap-2  sm:overflow-auto">
         {ProductsData.map((product, index) => (
           <CustomProduct
             key={index}

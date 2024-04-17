@@ -2,22 +2,26 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div className="divide-y divide-gray-300 border p-5 rounded-md bg-[#092332] text-white opacity-[0.9]">
+    <div className="divide-y divide-gray-300 border p-5 rounded-md bg-[#092332] text-white opacity-[0.9] sm:p-2 sm:m-2">
       <div>
-        <p className="text-[2rem] 2xl:text-[3rem]">
+        <p className="text-[2rem] 2xl:text-[3rem] sm:text-[1.3rem]">
           Get covered in minutes. <br /> Everything should be this easy.
         </p>
       </div>
 
-      <div className="flex justify-between">
+      <div className="flex justify-between sm:flex-wrap sm:gap-3">
         <div>
-          <p className="font-bold">{"Inquiries".toUpperCase()}</p>
+          <p className="font-bold sm:text-[0.8rem]">
+            {"Inquiries".toUpperCase()}
+          </p>
           <ul className="text-[15px] 2xl:text-[18px]">
             <li>team@mail.com</li>
           </ul>
         </div>
         <div>
-          <p className="font-bold">{"Services".toUpperCase()}</p>
+          <p className="font-bold sm:text-[0.8rem]">
+            {"Services".toUpperCase()}
+          </p>
           <ul className="text-[15px] 2xl:text-[18px]">
             <li>Get a Quote</li>
             <li>File a claim</li>
@@ -29,7 +33,9 @@ const Footer = () => {
           </ul>
         </div>
         <div>
-          <p className="font-bold">{"Company".toUpperCase()}</p>
+          <p className="font-bold sm:text-[0.8rem]">
+            {"Company".toUpperCase()}
+          </p>
           <ul className="text-[15px] 2xl:text-[18px]">
             <li>About Us</li>
             <li>Contact</li>
@@ -41,7 +47,7 @@ const Footer = () => {
           </ul>
         </div>
         <div>
-          <p className="font-bold">{"Social".toUpperCase()}</p>
+          <p className="font-bold sm:text-[0.8rem]">{"Social".toUpperCase()}</p>
           <ul className="text-[15px] 2xl:text-[18px]">
             <li>Facebook</li>
             <li>Instagram</li>

@@ -44,7 +44,7 @@ const Navbar = () => {
         <span className="flex md:text-[18px] sm:text-[12px] font-bold cursor-auto">
           CLIENT PORTAL
         </span>
-        <div className="flex gap-8 2xl:text-[18px] sm:text-[12px] items-center">
+        <div className="flex gap-8 md:text-[18px] sm:text-[12px] items-center">
           <span className="cursor-pointer">Claims</span>
           {!isLoggedIn && (
             <div className="cursor-pointer" onClick={() => setOpenLogin(true)}>
@@ -54,7 +54,7 @@ const Navbar = () => {
           <div
             onClick={() => setOpenModal(true)}
             className={
-              "h-[2rem] sm:h-[1.4rem] gap-1  bg-[#cb7529] rounded-md shadow-md flex items-center px-3 justify-center text-white cursor-pointer"
+              "md:h-[2rem] sm:h-[1.4rem] gap-1  bg-[#cb7529] rounded-md shadow-md flex items-center px-3 justify-center text-white cursor-pointer"
             }
           >
             <div>Get a Quote</div>
