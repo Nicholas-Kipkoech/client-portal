@@ -8,7 +8,7 @@ const Context = createContext({});
 const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [page, setPage] = useState("Home");
   const [quotes, setQuotes] = useState([]);
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState<any>({});
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -41,6 +41,14 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, []);
 
+  const [userInitials, setUserInitials] = useState("");
+
+  useEffect(() => {
+    if (Object.keys(user).length > 1) {
+      setUserInitials(user?.fullName);
+    }
+  }, [user]);
+
   return (
     <Context.Provider
       value={{
@@ -49,6 +57,7 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
         quotes,
         isUserAuthenticated,
         user,
+        userInitials,
       }}
     >
       {children}
