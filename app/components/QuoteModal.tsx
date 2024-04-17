@@ -71,6 +71,7 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
         });
         showToast("Motor details submitted successfully");
         if (res.success === true) {
+          console.log(res.response);
           setLoading(false);
           const existingQuotes = JSON.parse(
             localStorage.getItem("quotes") || "[]"
@@ -80,7 +81,7 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
           handleClose();
           router.push("/quotes");
         }
-        //refresh the page once the quotes is added
+        // refresh the page once the quotes is added
         setTimeout(() => {
           window.location.reload();
         }, 1000);

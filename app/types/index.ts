@@ -15,4 +15,5 @@ export interface IQuotes {
   stamp_duty: number;
   trainning_levy: number;
   PHCfund: number;
+  totalPremium: number;
 }
