@@ -55,7 +55,7 @@ const QuotesPage = () => {
             <p>Year: {yearOfManufacture}</p>
             <p>Use: {use?.toUpperCase()}</p>
             <p>Reg Number: {reqNumber}</p>
-            <p className="font-semibold">Cover Period: {days}</p>
+            <p className="font-semibold">Cover Period: {365} days</p>
           </div>
         </div>
         <div className="flex justify-center px-5 py-5">

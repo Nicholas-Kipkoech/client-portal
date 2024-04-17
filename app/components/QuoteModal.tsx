@@ -127,7 +127,7 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
           <>
             <CustomSelect
               name={"Model/Make"}
-              placeholder="Select model/make...."
+              placeholder="Select model/make"
               options={makeOptions}
               onChange={(value: any) => setModel(value.value)}
             />
@@ -148,7 +148,7 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
 
             <CustomSelect
               name={"Year of Manufacture"}
-              placeholder="Select model/make...."
+              placeholder="Select year of manufacture"
               options={yearsOptions}
               onChange={(value: any) => setYear(value.value)}
             />

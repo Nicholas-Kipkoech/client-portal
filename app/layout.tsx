@@ -1,9 +1,11 @@
+import * as React from "react";
 import type { Metadata } from "next";
 import { Nunito_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ContextProvider, ToastProvider } from "./providers/providers";
+import { ChakraProvider } from "@chakra-ui/react";
 const nunitoSans = Nunito_Sans({
   weight: "400",
   subsets: ["latin"],
@@ -23,13 +25,15 @@ export default function RootLayout({
     <html lang="en">
       <body className={nunitoSans.className}>
         <ContextProvider>
-          <ToastProvider>
-            <div className="mx-[5rem] 2xl:mx-[15rem]">
-              <Navbar />
-              {children}
-              <SpeedInsights />
-            </div>
-          </ToastProvider>
+          <ChakraProvider>
+            <ToastProvider>
+              <div className="mx-[5rem] 2xl:mx-[15rem]">
+                <Navbar />
+                {children}
+                <SpeedInsights />
+              </div>
+            </ToastProvider>
+          </ChakraProvider>
         </ContextProvider>
       </body>
     </html>
