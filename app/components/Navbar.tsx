@@ -39,12 +39,12 @@ const Navbar = () => {
   }, [isUserAuthenticated]);
 
   return (
-    <div className="sticky top-0 bg-[#F7F5FD] z-10 py-[1px] h-[auto]">
-      <div className="flex  my-10 gap-10 justify-between">
-        <span className="flex text-[18px] font-bold cursor-auto">
+    <div className="sticky top-0 bg-[#F7F5FD] z-10 md:p-[10px] sm:p-[1px] h-[auto]">
+      <div className="flex sm:my-2 items-center justify-between">
+        <span className="flex md:text-[18px] sm:text-[12px] font-bold cursor-auto">
           CLIENT PORTAL
         </span>
-        <div className="flex gap-8 2xl:text-[18px]">
+        <div className="flex gap-8 2xl:text-[18px] sm:text-[12px] items-center">
           <span className="cursor-pointer">Claims</span>
           {!isLoggedIn && (
             <div className="cursor-pointer" onClick={() => setOpenLogin(true)}>
@@ -54,11 +54,11 @@ const Navbar = () => {
           <div
             onClick={() => setOpenModal(true)}
             className={
-              "h-[2rem] gap-1  bg-[#cb7529] rounded-md shadow-md flex items-center px-3 justify-center text-white cursor-pointer"
+              "h-[2rem] sm:h-[1.4rem] gap-1  bg-[#cb7529] rounded-md shadow-md flex items-center px-3 justify-center text-white cursor-pointer"
             }
           >
             <div>Get a Quote</div>
-            <GoArrowRight size={25} />
+            <GoArrowRight className="sm:h-[4rem] md:h-[5rem]" />
           </div>
 
           {user && (

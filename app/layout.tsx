@@ -27,7 +27,7 @@ export default function RootLayout({
         <ContextProvider>
           <ChakraProvider>
             <ToastProvider>
-              <div className="mx-[5rem] 2xl:mx-[15rem]">
+              <div className="sm:mx-0 xl:mx-[5rem] 2xl:mx-[15rem]">
                 <Navbar />
                 {children}
                 <SpeedInsights />
