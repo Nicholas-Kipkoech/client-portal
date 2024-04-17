@@ -80,6 +80,10 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
           handleClose();
           router.push("/quotes");
         }
+        //refresh the page once the quotes is added
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       }
     } catch (error: any) {
       setLoading(false);

@@ -36,10 +36,10 @@ const QuotesPage = () => {
       <div className="w-[46%]  border rounded-md shadow-2xl hover:border-[#cb7529] cursor-pointer">
         <div className="py-5 px-5 flex justify-between">
           <div>
-            <p>Model: {model}</p>
+            <p>Model: {model?.toUpperCase()}</p>
             <p>Premium: KES {premium?.toLocaleString()}</p>
             <p>Year: {yearOfManufacture}</p>
-            <p>Use: {use}</p>
+            <p>Use: {use?.toUpperCase()}</p>
           </div>
           <div>
             <p>Stamp Duty: KES {stamp_duty}</p>
