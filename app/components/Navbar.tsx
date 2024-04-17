@@ -5,11 +5,16 @@ import Login from "./Login";
 import { GoArrowRight } from "react-icons/go";
 import QuoteModal from "./QuoteModal";
 import { useContextApi } from "../context/context";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const [openLogin, setOpenLogin] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const { userInitials }: any = useContextApi();
+
+  const pathname = usePathname().replace("/", "");
+
+  const user = pathname !== "" && userInitials;
 
   return (
     <div className="sticky top-0 bg-[#F7F5FD] z-10 py-[1px] h-[auto]">
@@ -31,9 +36,9 @@ const Navbar = () => {
             <p>Get a Quote</p>
             <GoArrowRight size={25} />
           </div>
-          {userInitials && (
+          {user && (
             <div className="bg-[#092332] text-white h-[2rem] text-[15px] w-auto px-2 rounded-md flex justify-center items-center">
-              {userInitials}
+              {user}
             </div>
           )}
         </div>
