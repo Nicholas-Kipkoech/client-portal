@@ -43,7 +43,7 @@ interface Toggle {
 
 const CustomToggle = ({ name, content, active, onClick }: Toggle) => {
   return (
-    <div className="p-1 rounded h-auto  2xl:w-[50rem] w-[38rem] sm:w-[90%]">
+    <div className="p-1 rounded h-auto  2xl:w-[50rem] w-[38rem] sm:w-screen">
       <div
         className="flex justify-between items-center cursor-pointer"
         onClick={onClick}
@@ -82,7 +82,7 @@ const Covers = () => {
           alt="house"
           className="sm:hidden md:block h-[20rem] 2xl:h-[25rem] 2xl:w-[45rem] md:w-[35rem] rounded-lg"
         />
-        <div className="flex flex-col gap-1 divide-y divide-gray-300 sm:px-2">
+        <div className="flex flex-col gap-1 divide-y divide-gray-300 ">
           {CoversData.map((cover, index) => (
             <CustomToggle
               key={index}

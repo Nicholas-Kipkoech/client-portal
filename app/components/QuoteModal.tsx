@@ -103,7 +103,16 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
   };
 
   return (
-    <Modal centered open={open} footer onCancel={handleClose}>
+    <Modal
+      centered
+      open={open}
+      footer
+      onCancel={handleClose}
+      style={{
+        touchAction: "none",
+        overflow: "hidden",
+      }}
+    >
       <div className="h-auto">
         <div className="flex  my-8">
           <p
