@@ -57,9 +57,9 @@ const Navbar = () => {
   }, []);
 
   return (
-    <div className="sticky top-0 bg-[#F7F5FD] z-10 md:p-[10px] sm:p-[1px] h-[auto]">
-      <div className="flex sm:my-2 items-center justify-between">
-        <span className="flex md:text-[18px] sm:text-[12px] font-bold cursor-auto">
+    <div className="sticky top-0 bg-[#F7F5FD] z-10 md:p-[10px] sm:p-[1px] h-[auto] ">
+      <div className="flex sm:my-2 sm:px-2 items-center justify-between">
+        <span className="flex md:text-[18px] sm:text-[14px] font-bold cursor-auto">
           CLIENT PORTAL
         </span>
         {isMobile ? (
@@ -82,16 +82,8 @@ const Navbar = () => {
                   </div>
                 )}
               </MenuItem>
-              <MenuItem>
-                <div
-                  onClick={() => setOpenModal(true)}
-                  className={
-                    "md:h-[2rem] sm:h-[1.4rem] gap-1  bg-[#cb7529] rounded-md shadow-md flex items-center px-3 justify-center text-white cursor-pointer"
-                  }
-                >
-                  <div>Get a Quote</div>
-                  <GoArrowRight className="sm:h-[4rem] md:h-[5rem]" />
-                </div>
+              <MenuItem onClick={() => setOpenModal(true)}>
+                Get a Quote
               </MenuItem>
               <MenuItem>Update Profile</MenuItem>
               <MenuItem onClick={handleLogout}>Logout</MenuItem>
