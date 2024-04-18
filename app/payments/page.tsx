@@ -37,8 +37,8 @@ const PaymentPage = () => {
         <p>Back</p>
       </div>
       <div className="flex items-center justify-center">
-        <div className="w-[40rem] sm:w-[22rem] border py-10 my-6  rounded-md shadow-2xl">
-          <p className="flex justify-center text-[1.8rem] sm:text-[1.2rem] items-center">
+        <div className="md:w-[40rem] sm:w-[22rem] border py-10 my-6  rounded-md shadow-2xl">
+          <p className="flex justify-center md:text-[1.8rem] sm:text-[1.2rem] items-center">
             Pay{" "}
             {selectedQuote?.totalPremium
               ? `KES ${selectedQuote?.totalPremium?.toLocaleString()}`
@@ -84,7 +84,7 @@ const PaymentPage = () => {
                     name={`Pay ${amount ? `KES ${amount}` : ""} `}
                     onClick={handlePay}
                     className={
-                      "h-[3rem] border w-[50%] sm:w-[100%] sm:h-[2.8rem] bg-[#cb7529] text-white my-5 rounded-md"
+                      "md:h-[3rem] border w-[50%] sm:w-[100%] sm:h-[2.8rem] bg-[#cb7529] text-white my-5 rounded-md"
                     }
                   />
                 </div>
