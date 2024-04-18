@@ -28,8 +28,8 @@ const PaymentPage = () => {
 
   return (
     <div className="flex justify-center bg-white">
-      <div className="w-[40rem] border py-10 my-6 rounded-md">
-        <p className="flex justify-center text-[1.8rem] items-center">
+      <div className="w-[40rem] sm:w-[22rem] border py-10 my-6  rounded-md shadow-2xl">
+        <p className="flex justify-center text-[1.8rem] sm:text-[1.2rem] items-center">
           Pay{" "}
           {selectedQuote?.totalPremium
             ? `KES ${selectedQuote?.totalPremium?.toLocaleString()}`
@@ -60,7 +60,7 @@ const PaymentPage = () => {
                 placeholder={"+2547123..."}
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
-                className={"h-[3rem] p-[5px] border rounded-md"}
+                className={"h-[3rem]  p-[5px] border rounded-md"}
               />
               <CustomInput
                 name={"Amount (KES)"}
@@ -73,7 +73,7 @@ const PaymentPage = () => {
                   name={`Pay ${amount ? `KES ${amount}` : ""} `}
                   onClick={handlePay}
                   className={
-                    "h-[3rem] border w-[50%] bg-[#cb7529] text-white my-5 rounded-md"
+                    "h-[3rem] border w-[50%] sm:w-[100%] sm:h-[2.8rem] bg-[#cb7529] text-white my-5 rounded-md"
                   }
                 />
               </div>

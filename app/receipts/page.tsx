@@ -12,22 +12,27 @@ const Reciepts = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center my-4 mx-8">
+    <div className="flex flex-col justify-center my-4 mx-8 sm:mx-4">
       <div
-        className="flex my-4 items-center gap-1 cursor-pointer "
+        className="flex my-4  items-center justify-between cursor-pointer "
         onClick={() => router.back()}
       >
-        <GrPrevious size={20} />
-        <p>Back</p>
+        <div className="flex gap-0 items-center">
+          <GrPrevious size={15} />
+          <p>Back</p>
+        </div>
+        <p className="text-[1.8rem] sm:text-[1.3rem] font-semibold">Receipts</p>
+        <p></p>
       </div>
-      <p className="text-[1.8rem] font-semibold">Receipts</p>
-      <div className="border h-[6rem] w-[25%] rounded-md shadow-xl py-5 px-5 flex justify-center items-center flex-col">
-        <p>Sample Reciept </p>
-        <div
-          className="mx-2 h-[4rem] border w-[10rem] flex items-center cursor-pointer justify-center rounded-md bg-[#cb7529] text-white"
-          onClick={() => handleViewReceipt("Sample Receipt")}
-        >
-          View Reciept
+      <div className="flex justify-center ">
+        <div className="border h-[8rem] w-[100%] gap-2 rounded-md shadow-xl py-5 px-5 sm:py-3 sm:px-2 flex justify-center items-center flex-col">
+          <p>Sample Reciept </p>
+          <div
+            className="mx-2 h-[4rem] sm:h-[2.5rem] border w-[10rem] flex items-center cursor-pointer justify-center rounded-md bg-[#cb7529] text-white"
+            onClick={() => handleViewReceipt("Sample Receipt")}
+          >
+            View Reciept
+          </div>
         </div>
       </div>
     </div>

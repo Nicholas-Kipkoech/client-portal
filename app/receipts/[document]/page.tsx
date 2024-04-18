@@ -17,13 +17,13 @@ const DocumentPage = () => {
   return (
     <div>
       <div
-        className="flex my-4 items-center gap-1 cursor-pointer "
+        className="flex my-4 sm:my-2 items-center gap-1 cursor-pointer "
         onClick={() => router.back()}
       >
         <GrPrevious size={20} />
         <p>Back</p>
       </div>
-      <p className="flex justify-center text-[1.5rem]">{documentName}</p>
+      <p className="flex justify-center text-[1.5rem] ">{documentName}</p>
       <div className="flex justify-center my-3">
         <iframe
           src={
