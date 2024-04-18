@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { GrPrevious } from "react-icons/gr";
 
-const Login = ({ open, handleClose }: any) => {
+const Login = () => {
   const router = useRouter();
   const [isLogin, setIsLogin] = useState(true);
   const [isLogging, setIsLogging] = useState(false);
@@ -32,7 +32,6 @@ const Login = ({ open, handleClose }: any) => {
       if (res.success === true) {
         localStorage.setItem("accessToken", res.access_token);
         showToast("loggin successful");
-        handleClose();
         router.push("/quotes");
         setIsLogging(false);
       }

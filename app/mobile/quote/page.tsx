@@ -10,12 +10,7 @@ import { useContextApi } from "../../context/context";
 import { useCustomToast } from "../../constants/useToast";
 import { GrPrevious } from "react-icons/gr";
 
-interface IModal {
-  open: boolean;
-  handleClose: () => void;
-}
-
-const MobileModal = ({ open, handleClose }: IModal) => {
+const MobileModal = () => {
   const { years }: any = useContextApi();
   const [address, setAddress] = useState("");
   const [car_reg, setCarReg] = useState("");
@@ -87,7 +82,6 @@ const MobileModal = ({ open, handleClose }: IModal) => {
           );
           const updatedQuotes = [...existingQuotes, ...res.response];
           localStorage.setItem("quotes", JSON.stringify(updatedQuotes));
-          handleClose();
           router.push("/quotes");
         }
         // refresh the page once the quotes is added
