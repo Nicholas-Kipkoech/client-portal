@@ -66,13 +66,14 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   }, [user]);
 
   useEffect(() => {
-    const checkMobile = () => {
-      if (typeof window !== "undefined") {
-        return window.innerWidth < 768;
-      }
-      return false;
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
     };
-    setIsMobile(checkMobile());
+    window.addEventListener("resize", handleResize);
+
+    handleResize();
+
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (

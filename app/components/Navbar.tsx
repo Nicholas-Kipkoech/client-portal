@@ -53,7 +53,6 @@ const Navbar = () => {
     }, 1000);
   };
 
-  // Use useEffect to set initial state on client side only
   useEffect(() => {
     if (isUserAuthenticated() === true) {
       setIsLoggedIn(true);
