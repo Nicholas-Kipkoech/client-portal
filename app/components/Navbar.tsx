@@ -65,7 +65,10 @@ const Navbar = () => {
   return (
     <div className="sticky top-0 bg-[#F7F5FD] z-10 md:p-[10px] sm:p-[1px] h-[auto] ">
       <div className="flex sm:my-2 sm:px-2 items-center justify-between">
-        <span className="flex md:text-[18px] sm:text-[14px] font-bold cursor-auto">
+        <span
+          className="flex md:text-[18px] sm:text-[14px] font-bold cursor-pointer"
+          onClick={() => router.push("/")}
+        >
           CLIENT PORTAL
         </span>
         {isMobile ? (
@@ -85,9 +88,20 @@ const Navbar = () => {
           </Menu>
         ) : (
           <div className="flex gap-8 md:text-[18px] sm:text-[12px] items-center">
-            <span className="cursor-pointer">Claims</span>
+            <span className="cursor-pointer hover:text-[blue]">Claims</span>
+            <span
+              className="cursor-pointer hover:text-[blue]"
+              onClick={() => router.push("/quotes")}
+            >
+              {" "}
+              Quotes
+            </span>
+            <span className="cursor-pointer hover:text-[blue]">Policies</span>
             {!isLoggedIn && (
-              <div className="cursor-pointer" onClick={handleLogin}>
+              <div
+                className="cursor-pointer hover:text-[blue]"
+                onClick={handleLogin}
+              >
                 Login
               </div>
             )}
