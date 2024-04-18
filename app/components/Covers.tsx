@@ -43,7 +43,7 @@ interface Toggle {
 
 const CustomToggle = ({ name, content, active, onClick }: Toggle) => {
   return (
-    <div className="p-1 rounded h-auto  2xl:w-[50rem] w-[38rem] sm:w-screen">
+    <div className="p-1 rounded h-auto  2xl:w-[50rem] w-[38rem] sm:w-[22rem]">
       <div
         className="flex justify-between items-center cursor-pointer"
         onClick={onClick}

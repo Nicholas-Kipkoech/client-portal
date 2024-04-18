@@ -21,8 +21,8 @@ import { IoMenu } from "react-icons/io5";
 const Navbar = () => {
   const [openLogin, setOpenLogin] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-  const { userInitials, isUserAuthenticated }: any = useContextApi();
-  const [isMobile, setIsMobile] = useState(false);
+  const { userInitials, isUserAuthenticated, isMobile }: any = useContextApi();
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
 
@@ -46,15 +46,6 @@ const Navbar = () => {
       setIsLoggedIn(false);
     }
   }, [isUserAuthenticated]);
-  useEffect(() => {
-    const checkMobile = () => {
-      if (typeof window !== "undefined") {
-        return window.innerWidth < 768;
-      }
-      return false;
-    };
-    setIsMobile(checkMobile());
-  }, []);
 
   return (
     <div className="sticky top-0 bg-[#F7F5FD] z-10 md:p-[10px] sm:p-[1px] h-[auto] ">
@@ -71,22 +62,14 @@ const Navbar = () => {
             />
             <MenuList>
               <MenuItem>Claims</MenuItem>
-              <MenuItem>
-                {" "}
-                {!isLoggedIn && (
-                  <div
-                    className="cursor-pointer"
-                    onClick={() => setOpenLogin(true)}
-                  >
-                    Login
-                  </div>
-                )}
-              </MenuItem>
+              {!isLoggedIn && (
+                <MenuItem onClick={() => setOpenLogin(true)}>Login</MenuItem>
+              )}
               <MenuItem onClick={() => setOpenModal(true)}>
                 Get a Quote
               </MenuItem>
               <MenuItem>Update Profile</MenuItem>
-              <MenuItem onClick={handleLogout}>Logout</MenuItem>
+              {isLoggedIn && <MenuItem onClick={handleLogout}>Logout</MenuItem>}
             </MenuList>
           </Menu>
         ) : (
@@ -119,7 +102,9 @@ const Navbar = () => {
                 </div>
                 <MenuList>
                   <MenuItem>Update Profile</MenuItem>
-                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                  {isLoggedIn && (
+                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                  )}
                 </MenuList>
               </Menu>
             )}

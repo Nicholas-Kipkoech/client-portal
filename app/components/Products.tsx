@@ -63,7 +63,7 @@ const Products = () => {
         Different products for different needs
       </p>
 
-      <div className=" md:justify-between  sm:h-[30rem] sm:justify-center sm:flex-col  md:flex md:flex-row md:gap-2  sm:overflow-auto">
+      <div className="md:justify-between md:h-auto sm:h-[30rem] sm:justify-center sm:flex-col  md:flex md:flex-row md:gap-2  sm:overflow-auto">
         {ProductsData.map((product, index) => (
           <CustomProduct
             key={index}

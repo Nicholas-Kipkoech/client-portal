@@ -45,23 +45,33 @@ const QuotesPage = () => {
             <p className="font-bold text-[1.15rem] sm:text-[0.8rem]">
               Total Premium: KES {totalPremium?.toLocaleString()}
             </p>
-            <p className="sm:text-[0.9rem]">
+            <p className="sm:text-[0.9rem] md:text-[1rem]">
               Basic premium: KES {premium?.toLocaleString()}
             </p>
-            <p className="sm:text-[0.9rem]">Stamp Duty: KES {stamp_duty}</p>
-            <p className="sm:text-[0.9rem]">
+            <p className="sm:text-[0.9rem] md:text-[1rem]">
+              Stamp Duty: KES {stamp_duty}
+            </p>
+            <p className="sm:text-[0.9rem] md:text-[1rem]">
               PHC Fund: KES {PHCfund?.toLocaleString()}
             </p>
-            <p className="sm:text-[0.9rem]">
+            <p className="sm:text-[0.9rem] md:text-[1rem]">
               Training Levy: KES {trainning_levy?.toLocaleString()}
             </p>
           </div>
           <div>
-            <p className="sm:text-[0.9rem]">Model: {model?.toUpperCase()}</p>
-            <p className="sm:text-[0.9rem]">Year: {yearOfManufacture}</p>
-            <p className="sm:text-[0.9rem]">Use: {use?.toUpperCase()}</p>
-            <p className="sm:text-[0.9rem]">Reg Number: {reqNumber}</p>
-            <p className="font-semibold sm:text-[0.9rem]">
+            <p className="sm:text-[0.9rem] md:text-[1rem]">
+              Model: {model?.toUpperCase()}
+            </p>
+            <p className="sm:text-[0.9rem] md:text-[1rem]">
+              Year: {yearOfManufacture}
+            </p>
+            <p className="sm:text-[0.9rem] md:text-[1rem]">
+              Use: {use?.toUpperCase()}
+            </p>
+            <p className="sm:text-[0.9rem] md:text-[1rem]">
+              Reg Number: {reqNumber}
+            </p>
+            <p className="font-semibold sm:text-[0.9rem] md:text-[1rem]">
               Cover Period: {365} days
             </p>
           </div>
@@ -78,10 +88,10 @@ const QuotesPage = () => {
   };
 
   return (
-    <div className="bg-[white] py-4 px-4 h-auto">
+    <div className="bg-[white] py-4 px-4 h-auto md:flex md:flex-col md:items-center">
       <p className="text-[1.8rem] font-bold">Requested Quotes</p>
 
-      <div className="flex flex-wrap justify-center gap-4 sm:flex-col">
+      <div className="flex flex-wrap justify-center gap-4 sm:flex-col md:flex-row">
         {quotes.map((quote: IQuotes, index: number) => (
           <CustomProduct
             key={index}

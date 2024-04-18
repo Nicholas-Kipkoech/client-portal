@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { Modal } from "antd";
 import CustomInput from "../utils/CustomInput";
 import CustomButton from "../utils/CustomButtom";
 import CustomSelect from "../utils/CustomSelect";
@@ -9,13 +8,14 @@ import { requestMotorQuote } from "../services/apiServices";
 import { useRouter } from "next/navigation";
 import { useContextApi } from "../context/context";
 import { useCustomToast } from "../constants/useToast";
+import { GrPrevious } from "react-icons/gr";
 
 interface IModal {
   open: boolean;
   handleClose: () => void;
 }
 
-const QuoteModal = ({ open, handleClose }: IModal) => {
+const MobileModal = ({ open, handleClose }: IModal) => {
   const { years }: any = useContextApi();
   const [address, setAddress] = useState("");
   const [car_reg, setCarReg] = useState("");
@@ -103,14 +103,21 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
   };
 
   return (
-    <Modal centered open={open} footer onCancel={handleClose}>
-      <div className="h-auto">
-        <div className="flex  my-8">
+    <>
+      <div className="h-auto my-2">
+        <div
+          className="flex items-center cursor-pointer"
+          onClick={() => router.back()}
+        >
+          <GrPrevious size={15} />
+          <p>Back</p>
+        </div>
+        <div className="flex  my-4 justify-center items-center">
           <p
             onClick={() => setActive("motor")}
             className={`${
               active === "motor" ? "bg-[#cb7529]" : "bg-[#094b6a]"
-            } w-1/2 h-[30px] flex items-center cursor-pointer justify-center border rounded-l-md text-white `}
+            } w-[45%] h-[30px] flex items-center cursor-pointer justify-center border rounded-l-md text-white `}
           >
             Motor
           </p>
@@ -118,17 +125,18 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
             onClick={() => setActive("non_motor")}
             className={`${
               active === "non_motor" ? "bg-[#cb7529]" : "bg-[#094b6a]"
-            } w-1/2 h-[30px] items-center flex  cursor-pointer justify-center border  text-white rounded-r-md`}
+            } w-[45%] h-[30px] items-center flex  cursor-pointer justify-center border  text-white rounded-r-md`}
           >
             Non-Motor
           </p>
         </div>
         {active === "motor" && (
-          <>
+          <div className="flex justify-center flex-col px-4">
             <CustomSelect
               name={"Model/Make"}
               placeholder="Select model/make"
               options={makeOptions}
+              className=""
               onChange={(value: any) => setModel(value.value)}
             />
             <CustomInput
@@ -159,10 +167,10 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
               options={useOptions}
               onChange={(value: any) => setUse(value.value)}
             />
-          </>
+          </div>
         )}
         {active === "non_motor" && (
-          <>
+          <div className="px-4">
             <CustomInput
               type="text"
               name={"Address"}
@@ -205,10 +213,10 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
                 setProduct(value)
               }
             />
-          </>
+          </div>
         )}
       </div>
-      <div className="flex justify-center my-5">
+      <div className="flex justify-center my-5 px-4">
         <CustomButton
           disabled={loading}
           name={loading ? "Requesting quote...." : "Request Quote"}
@@ -218,8 +226,8 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
           onClick={handleRequestQuote}
         />
       </div>
-    </Modal>
+    </>
   );
 };
 
-export default QuoteModal;
+export default MobileModal;

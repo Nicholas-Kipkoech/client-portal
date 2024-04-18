@@ -11,6 +11,7 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<any>({});
   const [years, setYears] = useState<number[]>([]);
   const [selectedQuote, setSelectedQuote] = useState({});
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const years: number[] = [];
@@ -64,6 +65,16 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [user]);
 
+  useEffect(() => {
+    const checkMobile = () => {
+      if (typeof window !== "undefined") {
+        return window.innerWidth < 768;
+      }
+      return false;
+    };
+    setIsMobile(checkMobile());
+  }, []);
+
   return (
     <Context.Provider
       value={{
@@ -76,6 +87,7 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
         years,
         selectedQuote,
         setSelectedQuote,
+        isMobile,
       }}
     >
       {children}

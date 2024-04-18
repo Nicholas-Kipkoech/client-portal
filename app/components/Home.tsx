@@ -13,7 +13,7 @@ const HomePage = () => {
   return (
     <div className="md:flex md:gap-10 justify-between">
       <div className="flex md:flex-col sm:flex-col justify-start md:gap-10 sm:gap-4 sm:p-2">
-        <p className=" sm:text-[1.5rem] md:text-[2rem] font-[700] 2xl:text-[4rem] font-sans">
+        <p className=" sm:text-[1.2rem] md:text-[2rem] font-[700] 2xl:text-[4rem] font-sans">
           We keep you covered, wherever you’re planted.
         </p>
 
