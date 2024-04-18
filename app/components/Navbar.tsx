@@ -6,14 +6,23 @@ import { GoArrowRight } from "react-icons/go";
 import QuoteModal from "./QuoteModal";
 import { useContextApi } from "../context/context";
 import { usePathname, useRouter } from "next/navigation";
-import { Menu, MenuButton, MenuList, MenuItem, Button } from "@chakra-ui/react";
-import { BiDownArrow } from "react-icons/bi";
+import {
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Button,
+  IconButton,
+} from "@chakra-ui/react";
+
 import { FaChevronDown } from "react-icons/fa";
+import { IoMenu } from "react-icons/io5";
 
 const Navbar = () => {
   const [openLogin, setOpenLogin] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const { userInitials, isUserAuthenticated }: any = useContextApi();
+  const [isMobile, setIsMobile] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
 
@@ -37,6 +46,15 @@ const Navbar = () => {
       setIsLoggedIn(false);
     }
   }, [isUserAuthenticated]);
+  useEffect(() => {
+    const checkMobile = () => {
+      if (typeof window !== "undefined") {
+        return window.innerWidth < 768;
+      }
+      return false;
+    };
+    setIsMobile(checkMobile());
+  }, []);
 
   return (
     <div className="sticky top-0 bg-[#F7F5FD] z-10 md:p-[10px] sm:p-[1px] h-[auto]">
@@ -44,38 +62,77 @@ const Navbar = () => {
         <span className="flex md:text-[18px] sm:text-[12px] font-bold cursor-auto">
           CLIENT PORTAL
         </span>
-        <div className="flex gap-8 md:text-[18px] sm:text-[12px] items-center">
-          <span className="cursor-pointer">Claims</span>
-          {!isLoggedIn && (
-            <div className="cursor-pointer" onClick={() => setOpenLogin(true)}>
-              Login
-            </div>
-          )}
-          <div
-            onClick={() => setOpenModal(true)}
-            className={
-              "md:h-[2rem] sm:h-[1.4rem] gap-1  bg-[#cb7529] rounded-md shadow-md flex items-center px-3 justify-center text-white cursor-pointer"
-            }
-          >
-            <div>Get a Quote</div>
-            <GoArrowRight className="sm:h-[4rem] md:h-[5rem]" />
-          </div>
-
-          {user && (
-            <Menu>
-              <div className="flex items-center gap-1 cursor-pointer">
-                <MenuButton className="text-[1.2rem] font-semibold">
-                  {user}
-                </MenuButton>
-                <FaChevronDown />
+        {isMobile ? (
+          <Menu>
+            <MenuButton
+              as={IconButton}
+              aria-label="Options"
+              icon={<IoMenu />}
+            />
+            <MenuList>
+              <MenuItem>Claims</MenuItem>
+              <MenuItem>
+                {" "}
+                {!isLoggedIn && (
+                  <div
+                    className="cursor-pointer"
+                    onClick={() => setOpenLogin(true)}
+                  >
+                    Login
+                  </div>
+                )}
+              </MenuItem>
+              <MenuItem>
+                <div
+                  onClick={() => setOpenModal(true)}
+                  className={
+                    "md:h-[2rem] sm:h-[1.4rem] gap-1  bg-[#cb7529] rounded-md shadow-md flex items-center px-3 justify-center text-white cursor-pointer"
+                  }
+                >
+                  <div>Get a Quote</div>
+                  <GoArrowRight className="sm:h-[4rem] md:h-[5rem]" />
+                </div>
+              </MenuItem>
+              <MenuItem>Update Profile</MenuItem>
+              <MenuItem onClick={handleLogout}>Logout</MenuItem>
+            </MenuList>
+          </Menu>
+        ) : (
+          <div className="flex gap-8 md:text-[18px] sm:text-[12px] items-center">
+            <span className="cursor-pointer">Claims</span>
+            {!isLoggedIn && (
+              <div
+                className="cursor-pointer"
+                onClick={() => setOpenLogin(true)}
+              >
+                Login
               </div>
-              <MenuList>
-                <MenuItem>Update Profile</MenuItem>
-                <MenuItem onClick={handleLogout}>Logout</MenuItem>
-              </MenuList>
-            </Menu>
-          )}
-        </div>{" "}
+            )}
+            <div
+              onClick={() => setOpenModal(true)}
+              className={
+                "md:h-[2rem] sm:h-[1.4rem] gap-1  bg-[#cb7529] rounded-md shadow-md flex items-center px-3 justify-center text-white cursor-pointer"
+              }
+            >
+              <div>Get a Quote</div>
+              <GoArrowRight className="sm:h-[4rem] md:h-[5rem]" />
+            </div>
+            {user && (
+              <Menu>
+                <div className="flex items-center gap-1 cursor-pointer">
+                  <MenuButton className="text-[1.2rem] font-semibold">
+                    {user}
+                  </MenuButton>
+                  <FaChevronDown />
+                </div>
+                <MenuList>
+                  <MenuItem>Update Profile</MenuItem>
+                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                </MenuList>
+              </Menu>
+            )}
+          </div>
+        )}
       </div>
       <Login open={openLogin} handleClose={() => setOpenLogin(false)} />
       <QuoteModal open={openModal} handleClose={() => setOpenModal(false)} />

@@ -39,30 +39,38 @@ const QuotesPage = () => {
     days,
   }: QuoteInterface) => {
     return (
-      <div className="w-[46%]  border rounded-md shadow-2xl hover:border-[#cb7529] cursor-pointer">
+      <div className="md:w-[46%] sm:w-[100%] border rounded-md shadow-2xl hover:border-[#cb7529] cursor-pointer">
         <div className="py-4 px-4 flex justify-between">
           <div>
-            <p className="font-bold text-[1.15rem]">
+            <p className="font-bold text-[1.15rem] sm:text-[0.8rem]">
               Total Premium: KES {totalPremium?.toLocaleString()}
             </p>
-            <p>Basic premium: KES {premium?.toLocaleString()}</p>
-            <p>Stamp Duty: KES {stamp_duty}</p>
-            <p>PHC Fund: KES {PHCfund?.toLocaleString()}</p>
-            <p>Training Levy: KES {trainning_levy?.toLocaleString()}</p>
+            <p className="sm:text-[0.9rem]">
+              Basic premium: KES {premium?.toLocaleString()}
+            </p>
+            <p className="sm:text-[0.9rem]">Stamp Duty: KES {stamp_duty}</p>
+            <p className="sm:text-[0.9rem]">
+              PHC Fund: KES {PHCfund?.toLocaleString()}
+            </p>
+            <p className="sm:text-[0.9rem]">
+              Training Levy: KES {trainning_levy?.toLocaleString()}
+            </p>
           </div>
           <div>
-            <p>Model: {model?.toUpperCase()}</p>
-            <p>Year: {yearOfManufacture}</p>
-            <p>Use: {use?.toUpperCase()}</p>
-            <p>Reg Number: {reqNumber}</p>
-            <p className="font-semibold">Cover Period: {365} days</p>
+            <p className="sm:text-[0.9rem]">Model: {model?.toUpperCase()}</p>
+            <p className="sm:text-[0.9rem]">Year: {yearOfManufacture}</p>
+            <p className="sm:text-[0.9rem]">Use: {use?.toUpperCase()}</p>
+            <p className="sm:text-[0.9rem]">Reg Number: {reqNumber}</p>
+            <p className="font-semibold sm:text-[0.9rem]">
+              Cover Period: {365} days
+            </p>
           </div>
         </div>
         <div className="flex justify-center px-5 py-5">
           <CustomButton
             name={"Accept Quote"}
             onClick={() => handleSelectQuote(data)}
-            className=" h-[40px] border w-[20rem] rounded-md bg-[#cb7529] text-white"
+            className=" h-[40px] border w-[20rem]  rounded-md bg-[#cb7529] text-white"
           />
         </div>
       </div>
@@ -73,7 +81,7 @@ const QuotesPage = () => {
     <div className="bg-[white] py-4 px-4 h-auto">
       <p className="text-[1.8rem] font-bold">Requested Quotes</p>
 
-      <div className="flex flex-wrap justify-center gap-4">
+      <div className="flex flex-wrap justify-center gap-4 sm:flex-col">
         {quotes.map((quote: IQuotes, index: number) => (
           <CustomProduct
             key={index}
