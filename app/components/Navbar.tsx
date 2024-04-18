@@ -79,10 +79,15 @@ const Navbar = () => {
             />
             <MenuList>
               <MenuItem>Claims</MenuItem>
+              <MenuItem onClick={() => router.push("/quotes")}>Quotes</MenuItem>
+              <MenuItem onClick={() => router.push("/policies")}>
+                Policies
+              </MenuItem>
               {!isLoggedIn && <MenuItem onClick={handleLogin}>Login</MenuItem>}
               <MenuItem onClick={handleOpenModal}>Get a Quote</MenuItem>
               <MenuItem>Update Profile</MenuItem>
               {isLoggedIn && <MenuItem onClick={handleLogout}>Logout</MenuItem>}
+              <MenuItem>{user}</MenuItem>
             </MenuList>
           </Menu>
         ) : (
@@ -95,7 +100,12 @@ const Navbar = () => {
               {" "}
               Quotes
             </span>
-            <span className="cursor-pointer hover:text-[blue]">Policies</span>
+            <span
+              className="cursor-pointer hover:text-[blue]"
+              onClick={() => router.push("/policies")}
+            >
+              Policies
+            </span>
             {!isLoggedIn && (
               <div
                 className="cursor-pointer hover:text-[blue]"
