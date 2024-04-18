@@ -17,19 +17,24 @@ const DocumentPage = () => {
   return (
     <div>
       <div
-        className="flex my-4 sm:my-2 items-center gap-1 cursor-pointer "
+        className="flex my-4 sm:my-2 items-center justify-between gap-1 cursor-pointer "
         onClick={() => router.back()}
       >
-        <GrPrevious size={20} />
-        <p>Back</p>
+        <div className="flex items-center">
+          <GrPrevious size={15} />
+          <p>Back</p>
+        </div>
+        <p className="flex justify-center text-[1.5rem] sm:text-[1.2rem] ">
+          {documentName}
+        </p>
+        <p></p>
       </div>
-      <p className="flex justify-center text-[1.5rem] ">{documentName}</p>
       <div className="flex justify-center my-3">
         <iframe
           src={
             "https://kra.go.ke/images/publications/OSCU_Specification_Document_v2.0.pdf"
           }
-          className="h-screen w-screen"
+          className="h-screen sm:h-[50vh] w-screen sm:w-[90%]"
         />
       </div>
     </div>
