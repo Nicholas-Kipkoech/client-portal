@@ -79,33 +79,34 @@ const Login = ({ open, handleClose }: any) => {
         <p>Back</p>
       </div>
       {isLogin ? (
-        <div className="  p-10">
+        <div className="p-8">
           <p className="text-[18px] font-bold flex justify-center">
             Login to your account to continue
           </p>
-          <div className="py-8">
+          <div className="py-8 flex flex-col items-center">
             <CustomInput
               name={"Email"}
-              className="h-[40px] border rounded-md"
+              className="h-[40px] w-[20rem] border rounded-md"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
             <CustomInput
               name={"Password"}
               value={password}
-              className="h-[40px] border rounded-md"
+              className="h-[40px] w-[20rem] border rounded-md"
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-
-          <CustomButton
-            onClick={handleLogin}
-            disabled={isLogging}
-            name={isLogging ? "Logging in..." : "Login"}
-            className={
-              "h-[40px] flex justify-center border items-center w-[100%] rounded-md bg-[#cb7529] text-white"
-            }
-          />
+          <div className="flex justify-center">
+            <CustomButton
+              onClick={handleLogin}
+              disabled={isLogging}
+              name={isLogging ? "Logging in..." : "Login"}
+              className={
+                "h-[40px] flex justify-center border items-center w-[100%]  rounded-md bg-[#cb7529] text-white"
+              }
+            />
+          </div>
           <div className="flex justify-center gap-1 py-2">
             <p>Dont have an account?</p>
             <a onClick={() => setIsLogin(false)} className="text-[blue]">
@@ -114,11 +115,11 @@ const Login = ({ open, handleClose }: any) => {
           </div>
         </div>
       ) : (
-        <div className="bg-white my-3">
+        <div className="bg-white my-2">
           <p className="flex justify-center text-[18px] font-bold">
             Create your account
           </p>
-          <div className="pt-4 px-10 flex flex-col gap-2 text-[14px]">
+          <div className="pt-2 px-5 flex flex-col gap-2 text-[14px]">
             <CustomInput
               name={"Email"}
               value={email}
