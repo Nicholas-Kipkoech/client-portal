@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import CustomInput from "../utils/CustomInput";
-import CustomButton from "../utils/CustomButtom";
-import CustomSelect from "../utils/CustomSelect";
-import { requestMotorQuote } from "../services/apiServices";
+import CustomInput from "../../utils/CustomInput";
+import CustomButton from "../../utils/CustomButtom";
+import CustomSelect from "../../utils/CustomSelect";
+import { requestMotorQuote } from "../../services/apiServices";
 import { useRouter } from "next/navigation";
-import { useContextApi } from "../context/context";
-import { useCustomToast } from "../constants/useToast";
+import { useContextApi } from "../../context/context";
+import { useCustomToast } from "../../constants/useToast";
 import { GrPrevious } from "react-icons/gr";
 
 interface IModal {

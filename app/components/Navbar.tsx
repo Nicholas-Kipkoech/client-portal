@@ -30,6 +30,21 @@ const Navbar = () => {
 
   const user = pathname !== "" && userInitials;
 
+  const handleOpenModal = () => {
+    if (isMobile) {
+      router.push("/mobile/quote");
+    } else {
+      setOpenModal(true);
+    }
+  };
+  const handleLogin = () => {
+    if (isMobile) {
+      router.push("/mobile/auth/login");
+    } else {
+      setOpenLogin(true);
+    }
+  };
+
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
     router.push("/");
@@ -62,12 +77,8 @@ const Navbar = () => {
             />
             <MenuList>
               <MenuItem>Claims</MenuItem>
-              {!isLoggedIn && (
-                <MenuItem onClick={() => setOpenLogin(true)}>Login</MenuItem>
-              )}
-              <MenuItem onClick={() => setOpenModal(true)}>
-                Get a Quote
-              </MenuItem>
+              {!isLoggedIn && <MenuItem onClick={handleLogin}>Login</MenuItem>}
+              <MenuItem onClick={handleOpenModal}>Get a Quote</MenuItem>
               <MenuItem>Update Profile</MenuItem>
               {isLoggedIn && <MenuItem onClick={handleLogout}>Logout</MenuItem>}
             </MenuList>
@@ -76,15 +87,12 @@ const Navbar = () => {
           <div className="flex gap-8 md:text-[18px] sm:text-[12px] items-center">
             <span className="cursor-pointer">Claims</span>
             {!isLoggedIn && (
-              <div
-                className="cursor-pointer"
-                onClick={() => setOpenLogin(true)}
-              >
+              <div className="cursor-pointer" onClick={handleLogin}>
                 Login
               </div>
             )}
             <div
-              onClick={() => setOpenModal(true)}
+              onClick={handleOpenModal}
               className={
                 "md:h-[2rem] sm:h-[1.4rem] gap-1  bg-[#cb7529] rounded-md shadow-md flex items-center px-3 justify-center text-white cursor-pointer"
               }

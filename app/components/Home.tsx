@@ -4,11 +4,20 @@ import CustomButton from "../utils/CustomButtom";
 import QuoteModal from "./QuoteModal";
 import Image from "next/image";
 import house from "../assets/house.jpg";
+import { useContextApi } from "../context/context";
+import { useRouter } from "next/navigation";
 
 const HomePage = () => {
+  const router = useRouter();
+  const { isMobile }: any = useContextApi();
   const [modalOpen, setModalOpen] = useState(false);
+
   const handleOpenQuote = () => {
-    setModalOpen(true);
+    if (isMobile) {
+      router.push("/mobile/quote");
+    } else {
+      setModalOpen(true);
+    }
   };
   return (
     <div className="md:flex md:gap-10 justify-between">
