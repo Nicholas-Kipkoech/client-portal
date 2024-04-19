@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { GrPrevious } from "react-icons/gr";
 
 const PaymentPage = () => {
-  const { selectedQuote }: any = useContextApi();
+  const { selectedQuote, setAcceptedQuotes }: any = useContextApi();
   const [phoneNumber, setPhoneNumber] = useState("");
   const [amount, setAmount] = useState("");
   const [loading, setLoading] = useState(false);
@@ -23,7 +23,8 @@ const PaymentPage = () => {
   const handlePay = () => {
     setLoading(true);
     setTimeout(() => {
-      router.push("/receipts");
+      setAcceptedQuotes(true);
+      router.push("/quotes");
     }, 3000); // First timeout after 1 second
   };
 

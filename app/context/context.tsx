@@ -13,6 +13,7 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [selectedQuote, setSelectedQuote] = useState({});
   const [isMobile, setIsMobile] = useState(false);
   const [cachedQuotes, setCachedQuotes] = useState({});
+  const [acceptedQuotes, setAcceptedQuotes] = useState(false);
 
   useEffect(() => {
     const years: number[] = [];
@@ -98,6 +99,8 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
         selectedQuote,
         setSelectedQuote,
         isMobile,
+        acceptedQuotes,
+        setAcceptedQuotes,
       }}
     >
       {children}

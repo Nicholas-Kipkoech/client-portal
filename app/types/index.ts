@@ -17,4 +17,5 @@ export interface IQuotes {
   PHCfund: number;
   totalPremium: number;
   days: number;
+  value?: number;
 }

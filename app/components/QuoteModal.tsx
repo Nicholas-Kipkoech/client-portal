@@ -88,7 +88,7 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
           const updatedQuotes = [...existingQuotes, ...res.response];
           localStorage.setItem("quotes", JSON.stringify(updatedQuotes));
           handleClose();
-          router.push("/quotes");
+          router.push("/received-quotes");
         }
         // refresh the page once the quotes is added
         setTimeout(() => {
