@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import CustomButton from "../utils/CustomButtom";
 import { MdDone } from "react-icons/md";
+import { GrPrevious } from "react-icons/gr";
 
 const PolicyDetails = () => {
   return (
@@ -82,8 +83,16 @@ const Claims = () => {
 
   return (
     <div className="flex justify-center flex-col mx-9 my-9">
-      <div className="flex items-center gap-2">
-        <div className="flex flex-col gap-4 sm:hidden md:block">
+      <div className="flex justify-between">
+        <div className="flex items-center">
+          <GrPrevious size={15} />
+          <p>Back</p>
+        </div>
+        <p className="font-semibold text-[1rem]">File A Claim</p>
+        <p></p>
+      </div>
+      <div className="flex items-center gap-2 mt-2">
+        <div className="flex flex-col gap-6 sm:hidden md:block">
           {steps.map((item, index: number) => (
             <div key={index} className="flex items-center gap-2">
               <MdDone
@@ -97,21 +106,32 @@ const Claims = () => {
             </div>
           ))}
         </div>
-        <div className="h-[20rem] border w-[80%] sm:w-[100%]">
+        <div className="h-[20rem] border md:w-[80%] sm:w-[100%]">
           {renderPage()}
         </div>
       </div>
       <div className="flex justify-center mt-2 gap-2">
-        <CustomButton
-          name={"Next"}
-          onClick={handleNext}
-          className="bg-[#cb7529] md:h-[3rem] md:w-[12rem] sm:h-[2rem] sm:w-[10rem] rounded-lg text-white"
-        />
-        <CustomButton
-          name={"Previous"}
-          onClick={handlePrevious}
-          className="bg-[#cb7529] md:h-[3rem] md:w-[12rem] sm:h-[2rem] sm:w-[10rem] rounded-lg text-white"
-        />
+        {current > 0 && (
+          <CustomButton
+            name={"Previous"}
+            onClick={handlePrevious}
+            className="bg-[#cb7529] md:h-[3rem] md:w-[12rem] sm:h-[2rem] sm:w-[10rem] rounded-md text-white"
+          />
+        )}
+        {current < steps.length - 1 && (
+          <CustomButton
+            name={"Next"}
+            onClick={handleNext}
+            className="bg-[#cb7529] md:h-[3rem] md:w-[12rem] sm:h-[2rem] sm:w-[10rem] rounded-md text-white"
+          />
+        )}
+        {current === steps.length - 1 && (
+          <CustomButton
+            name={"Submit"}
+            onClick={() => {}}
+            className="bg-[#092332] md:h-[3rem] md:w-[12rem] sm:h-[2rem] sm:w-[10rem] rounded-md text-white"
+          />
+        )}
       </div>
     </div>
   );
