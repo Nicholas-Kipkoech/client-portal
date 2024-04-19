@@ -5,6 +5,7 @@ import { IQuotes } from "../types";
 import CustomButton from "../utils/CustomButtom";
 import Login from "../components/Login";
 import { useRouter } from "next/navigation";
+import { GrPrevious } from "react-icons/gr";
 
 interface QuoteInterface extends IQuotes {
   data: any;
@@ -89,8 +90,14 @@ const QuotesPage = () => {
 
   return (
     <div className="bg-[white] py-4 px-4 h-auto md:flex md:flex-col md:items-center">
+      <div
+        onClick={() => router.back()}
+        className="flex items-center cursor-pointer"
+      >
+        <GrPrevious size={15} />
+        <p>Back</p>
+      </div>
       <p className="text-[1.8rem] font-bold">Requested Quotes</p>
-
       <div className="flex flex-wrap justify-center gap-4 sm:flex-col md:flex-row">
         {quotes.map((quote: IQuotes, index: number) => (
           <CustomProduct

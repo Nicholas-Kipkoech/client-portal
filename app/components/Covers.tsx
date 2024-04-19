@@ -50,13 +50,13 @@ const CustomToggle = ({ name, content, active, onClick }: Toggle) => {
       >
         <div className="flex gap-2 items-center">
           <MdDone className="bg-[#092332] h-[2rem] w-[2rem] text-white rounded-[50%] p-1" />
-          <p className="sm:text-[14px] md:text-[20px] 2xl:text-[25px] font-[500]">
+          <p className="sm:text-[1.2rem] md:text-[20px] 2xl:text-[25px] font-[500]">
             {name}
           </p>
         </div>
         {active ? <FaMinus size={25} /> : <FaPlus size={25} />}
       </div>
-      <p className="md:mx-10 2xl:text-[20px] sm:mx-5 sm:text-[14px] sm:w-[22rem]">
+      <p className="md:mx-10 2xl:text-[20px] sm:mx-5 sm:text-[1rem] sm:w-[22rem]">
         {active ? content : ""}
       </p>
     </div>
