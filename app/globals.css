@@ -25,24 +25,3 @@ body {
     text-wrap: balance;
   }
 }
-table {
-  margin-top: 1rem;
-}
-table,
-th,
-td {
-  border: 1px solid black;
-  border-collapse: collapse;
-  color: white;
-}
-th,
-td {
-  background-color: #215971;
-}
-th {
-  width: 10rem;
-  height: 2rem;
-}
-td {
-  padding: 0.5rem;
-}
