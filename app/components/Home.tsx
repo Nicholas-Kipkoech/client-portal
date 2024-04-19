@@ -32,6 +32,7 @@ const HomePage = () => {
             placeholder="Enter your addresss"
             className="h-[50px] md:w-full p-[5px] md:block sm:hidden outline-none "
           />
+
           <CustomButton
             onClick={handleOpenQuote}
             name={"Get a Quote"}

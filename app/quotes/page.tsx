@@ -6,6 +6,7 @@ import CustomButton from "../utils/CustomButtom";
 import Login from "../components/Login";
 import { useRouter } from "next/navigation";
 import { GrPrevious } from "react-icons/gr";
+import { Table } from "antd";
 
 interface QuoteInterface extends IQuotes {
   data: any;
@@ -13,8 +14,9 @@ interface QuoteInterface extends IQuotes {
 
 const QuotesPage = () => {
   const router = useRouter();
-  const { quotes, isUserAuthenticated, setSelectedQuote }: any =
+  const { quotes, isUserAuthenticated, setSelectedQuote, user }: any =
     useContextApi();
+
   const [openLogin, setOpenLogin] = useState(false);
 
   const handleSelectQuote = (data: any) => {
@@ -79,7 +81,7 @@ const QuotesPage = () => {
         </div>
         <div className="flex justify-center px-5 py-5">
           <CustomButton
-            name={"Accept Quote"}
+            name={"View Receipt"}
             onClick={() => handleSelectQuote(data)}
             className=" h-[40px] border w-[20rem]  rounded-md bg-[#cb7529] text-white"
           />
@@ -88,17 +90,61 @@ const QuotesPage = () => {
     );
   };
 
+  const columns = [
+    {
+      title: "Quote Number",
+      dataIndex: "invoiceNumber",
+      render: (_: any, item: any) => <p>Q/02/03258/04/2024</p>,
+    },
+    {
+      title: "Product",
+      dataIndex: "use",
+      render: (_: any, item: any) => <p>Motor {item.use}</p>,
+    },
+    {
+      title: "Insured",
+      dataIndex: "invoiceNumber",
+      render: (_: any, item: any) => <p>{user.fullName}</p>,
+    },
+    {
+      title: "Sum Insured",
+      dataIndex: "invoiceNumber",
+      render: (_: any, item: any) => <p>KSH {item.value?.toLocaleString()}</p>,
+    },
+    {
+      title: "Premium",
+      dataIndex: "invoiceNumber",
+      render: (_: any, item: any) => <p>KSH {item.premium.toLocaleString()}</p>,
+    },
+    {
+      title: "Intermediary",
+      dataIndex: "invoiceNumber",
+      render: (_: any, item: any) => <p className="cursor-pointer">Direct</p>,
+    },
+  ];
+
   return (
-    <div className="bg-[white] py-4 px-4 h-auto md:flex md:flex-col md:items-center">
+    <div className="bg-[white] py-4 px-4 h-auto md:flex md:flex-col">
       <div
         onClick={() => router.back()}
-        className="flex items-center cursor-pointer"
+        className="flex justify-between  cursor-pointer"
       >
-        <GrPrevious size={15} />
-        <p>Back</p>
+        <div className="flex items-center">
+          <GrPrevious size={15} />
+          <p>Back</p>
+        </div>
+        <p className="md:text-[1.8rem] sm:text-[1.2rem] font-bold">Quotes</p>
+        <p></p>
       </div>
-      <p className="text-[1.8rem] font-bold">Requested Quotes</p>
-      <div className="flex flex-wrap justify-center gap-4 sm:flex-col md:flex-row">
+
+      <Table
+        columns={columns}
+        dataSource={quotes}
+        className="sm:hidden md:block hover:bg-none"
+        rowHoverable={false}
+      />
+
+      <div className="flex flex-wrap md:hidden sm:block justify-center gap-4 mt-2 sm:flex-col md:flex-row">
         {quotes.map((quote: IQuotes, index: number) => (
           <CustomProduct
             key={index}

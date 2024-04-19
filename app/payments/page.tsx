@@ -37,7 +37,7 @@ const PaymentPage = () => {
         <p>Back</p>
       </div>
       <div className="flex items-center justify-center">
-        <div className="md:w-[40rem] sm:w-[22rem] border py-10 my-6  rounded-md shadow-2xl">
+        <div className="md:w-[40rem] sm:w-[22rem] border py-10 my-6 hover:border-[#cb7529]  rounded-md shadow-2xl">
           <p className="flex justify-center md:text-[1.8rem] sm:text-[1.2rem] items-center">
             Pay{" "}
             {selectedQuote?.totalPremium

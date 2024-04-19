@@ -17,18 +17,19 @@ import {
 
 import { FaChevronDown } from "react-icons/fa";
 import { IoMenu } from "react-icons/io5";
+import Gravatar from "react-gravatar";
 
 const Navbar = () => {
   const [openLogin, setOpenLogin] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-  const { userInitials, isUserAuthenticated, isMobile }: any = useContextApi();
+  const { userEmail, isUserAuthenticated, isMobile }: any = useContextApi();
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
 
   const pathname = usePathname().replace("/", "");
 
-  const user = pathname !== "" && userInitials;
+  const user = pathname !== "" && userEmail;
 
   const handleOpenModal = () => {
     if (isMobile) {
@@ -87,7 +88,9 @@ const Navbar = () => {
               <MenuItem onClick={handleOpenModal}>Get a Quote</MenuItem>
               <MenuItem>Update Profile</MenuItem>
               {isLoggedIn && <MenuItem onClick={handleLogout}>Logout</MenuItem>}
-              <MenuItem>{user}</MenuItem>
+              <MenuItem>
+                {user && <Gravatar email={user} className="rounded-[50%]" />}
+              </MenuItem>
             </MenuList>
           </Menu>
         ) : (
@@ -126,10 +129,10 @@ const Navbar = () => {
             {user && (
               <Menu>
                 <div className="flex items-center gap-1 cursor-pointer">
-                  <MenuButton className="text-[1.2rem] font-semibold">
-                    {user}
+                  <Gravatar email={user} className="rounded-[50%]" />
+                  <MenuButton>
+                    <FaChevronDown size={15} />
                   </MenuButton>
-                  <FaChevronDown />
                 </div>
                 <MenuList>
                   <MenuItem>Update Profile</MenuItem>

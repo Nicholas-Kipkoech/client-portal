@@ -12,6 +12,7 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [years, setYears] = useState<number[]>([]);
   const [selectedQuote, setSelectedQuote] = useState({});
   const [isMobile, setIsMobile] = useState(false);
+  const [cachedQuotes, setCachedQuotes] = useState({});
 
   useEffect(() => {
     const years: number[] = [];
@@ -25,6 +26,14 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
     setYears(years);
     getYears();
   }, []);
+
+  // const getQuotes = async (forceRefresh = false) => {
+  //   if (!forceRefresh) {
+  //     return cachedQuotes;
+  //   }else{
+  //     const fetchedQuotes =
+  //   }
+  // };
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -57,11 +66,11 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, []);
 
-  const [userInitials, setUserInitials] = useState("");
+  const [userEmail, setUserEmail] = useState("");
 
   useEffect(() => {
     if (Object.keys(user).length > 1) {
-      setUserInitials(user?.fullName);
+      setUserEmail(user?.email);
     }
   }, [user]);
 
@@ -84,7 +93,7 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
         quotes,
         isUserAuthenticated,
         user,
-        userInitials,
+        userEmail,
         years,
         selectedQuote,
         setSelectedQuote,
