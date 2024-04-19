@@ -79,7 +79,7 @@ const Navbar = () => {
               icon={<IoMenu />}
             />
             <MenuList>
-              <MenuItem>Claims</MenuItem>
+              <MenuItem onClick={() => router.push("/claims")}>Claims</MenuItem>
               <MenuItem onClick={() => router.push("/quotes")}>Quotes</MenuItem>
               <MenuItem onClick={() => router.push("/policies")}>
                 Policies
@@ -95,7 +95,12 @@ const Navbar = () => {
           </Menu>
         ) : (
           <div className="flex gap-8 md:text-[18px] sm:text-[12px] items-center">
-            <span className="cursor-pointer hover:text-[blue]">Claims</span>
+            <span
+              className="cursor-pointer hover:text-[blue]"
+              onClick={() => router.push("/claims")}
+            >
+              Claims
+            </span>
             <span
               className="cursor-pointer hover:text-[blue]"
               onClick={() => router.push("/quotes")}

@@ -43,7 +43,7 @@ const TestimonialCarousel = () => {
       style={{
         position: "relative",
       }}
-      className="h-[28rem] sm:h-[12rem] sm:hidden"
+      className="h-[28rem] sm:h-[12rem] sm:hidden md:block"
     >
       <div
         style={{
