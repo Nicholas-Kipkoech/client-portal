@@ -83,7 +83,7 @@ const Claims = () => {
   return (
     <div className="flex justify-center flex-col mx-9 my-9">
       <div className="flex items-center gap-2">
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 sm:hidden md:block">
           {steps.map((item, index: number) => (
             <div key={index} className="flex items-center gap-2">
               <MdDone
@@ -97,18 +97,20 @@ const Claims = () => {
             </div>
           ))}
         </div>
-        <div className="h-[20rem] border w-[80%]">{renderPage()}</div>
+        <div className="h-[20rem] border w-[80%] sm:w-[100%]">
+          {renderPage()}
+        </div>
       </div>
       <div className="flex justify-center mt-2 gap-2">
         <CustomButton
           name={"Next"}
           onClick={handleNext}
-          className="bg-[#cb7529] h-[3rem] w-[12rem] rounded-lg text-white"
+          className="bg-[#cb7529] md:h-[3rem] md:w-[12rem] sm:h-[2rem] sm:w-[10rem] rounded-lg text-white"
         />
         <CustomButton
           name={"Previous"}
           onClick={handlePrevious}
-          className="bg-[#cb7529] h-[3rem] w-[12rem] rounded-lg text-white"
+          className="bg-[#cb7529] md:h-[3rem] md:w-[12rem] sm:h-[2rem] sm:w-[10rem] rounded-lg text-white"
         />
       </div>
     </div>

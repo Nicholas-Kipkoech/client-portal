@@ -43,7 +43,7 @@ const TestimonialCarousel = () => {
       style={{
         position: "relative",
       }}
-      className="h-[28rem] sm:h-[12rem] sm:hidden md:block"
+      className="md:h-[28rem] sm:h-[12rem] sm:hidden md:block"
     >
       <div
         style={{
@@ -55,7 +55,7 @@ const TestimonialCarousel = () => {
           backgroundImage: `url(${Testimonials[currentIndex].backgroundUrl})`,
           backgroundSize: "contain",
         }}
-        className="rounded-lg sm:w-[20rem] "
+        className="rounded-lg md:w-[100%] sm:w-[20rem] "
       />
       <div
         style={{
@@ -64,8 +64,11 @@ const TestimonialCarousel = () => {
         }}
         className="p-2  mt-[15rem] flex justify-between"
       >
-        <div className="w-[25rem] 2xl:w-[40rem] bg-[#092332] opacity-[0.8] p-2 2xl:p-5 rounded-lg flex flex-col gap-5">
-          <p style={{ color: "white" }} className="sm:text-[11px]">
+        <div className="md:w-[25rem] 2xl:w-[40rem] bg-[#092332] opacity-[0.8] p-2 2xl:p-5 rounded-lg flex flex-col gap-5">
+          <p
+            style={{ color: "white" }}
+            className="sm:text-[11px] md:text-[15px]"
+          >
             “{Testimonials[currentIndex].content}”
           </p>
           <p
