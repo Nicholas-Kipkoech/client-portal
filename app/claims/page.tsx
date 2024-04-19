@@ -1,67 +1,111 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import CustomButton from "../utils/CustomButtom";
 import { MdDone } from "react-icons/md";
 import { GrPrevious } from "react-icons/gr";
-
-const PolicyDetails = () => {
-  return (
-    <div className="flex justify-center items-center">Policy Details Page</div>
-  );
-};
-const LossLocation = () => {
-  return (
-    <div className="flex justify-center items-center">Loss Location Page</div>
-  );
-};
-const ClaimDetails = () => {
-  return (
-    <div className="flex justify-center items-center">Claim Details Page</div>
-  );
-};
-
-const UploadPhotos = () => {
-  return (
-    <div className="flex justify-center items-center">Upload Photos Page</div>
-  );
-};
-const Reporter = () => {
-  return <div className="flex justify-center items-center">Reporter Page</div>;
-};
-
-const Submit = () => {
-  return <div className="flex justify-center items-center">Submit Page</div>;
-};
-
-const steps = [
-  {
-    title: "Policy Details",
-    content: <PolicyDetails />,
-  },
-  {
-    title: "Loss Location",
-    content: <LossLocation />,
-  },
-  {
-    title: "Claim Details",
-    content: <ClaimDetails />,
-  },
-  {
-    title: "Upload Photos",
-    content: <UploadPhotos />,
-  },
-  {
-    title: "Who's Reporting",
-    content: <Reporter />,
-  },
-  {
-    title: "Finalize and Submit",
-    content: <Submit />,
-  },
-];
+import CustomSelect from "../utils/CustomSelect";
+import CustomInput from "../utils/CustomInput";
+import Image from "next/image";
 
 const Claims = () => {
   const [current, setCurrent] = useState(0);
+  const [image, setImage] = useState(" ");
+
+  const handleImageChange = function loadFile(e: any) {
+    if (e.target.files.length > 0) {
+      const file = URL.createObjectURL(e.target.files[0]);
+      setImage(file);
+    }
+  };
+  const inputRef = useRef<any>(null);
+  const handleInputclick = (event: any) => {
+    if (inputRef.current) {
+      inputRef?.current?.click();
+    }
+  };
+
+  const PolicyDetails = () => {
+    return (
+      <div className="flex justify-center  items-center">
+        <div>
+          <CustomInput
+            onChange={() => {}}
+            value={""}
+            name={"Car Registration No"}
+            className="h-[2.8rem] border w-[25rem] rounded-sm"
+          />
+          <CustomInput
+            onChange={() => {}}
+            value={""}
+            type="date"
+            name={"Loss Date"}
+            className="h-[2.8rem] border w-[25rem] rounded-sm"
+          />
+        </div>
+      </div>
+    );
+  };
+
+  const ClaimDetails = () => {
+    return (
+      <div className="flex  flex-col justify-center items-center">
+        <p>Description</p>
+        <textarea
+          className="h-[10rem] border w-[40rem] outline-[#cb7529]"
+          value={""}
+        />
+      </div>
+    );
+  };
+
+  const UploadPhotos = () => {
+    return (
+      <div className="flex flex-col justify-center gap-2 items-center">
+        <div
+          onClick={handleInputclick}
+          className="h-[3rem] rounded-md bg-slate-500 text-white w-[10rem] flex items-center border justify-center cursor-pointer"
+        >
+          Upload Photo
+        </div>
+        <input
+          name="Upload Photo"
+          id="upload"
+          type="file"
+          ref={inputRef}
+          onChange={handleImageChange}
+          accept="image/*"
+          className="hidden"
+        />
+        <label htmlFor="upload">
+          <div>
+            {image.length > 1 && (
+              <img
+                alt="uploadImage"
+                src={image}
+                className="h-[12rem] w-[23rem]"
+              />
+            )}
+          </div>
+        </label>
+      </div>
+    );
+  };
+
+  const steps = [
+    {
+      title: "Policy Details",
+      content: <PolicyDetails />,
+    },
+    {
+      title: "Claim Details",
+      content: <ClaimDetails />,
+    },
+    {
+      title: "Upload Photos",
+      content: <UploadPhotos />,
+    },
+  ];
 
   const renderPage = () => {
     return <>{steps[current].content}</>;
@@ -106,7 +150,7 @@ const Claims = () => {
             </div>
           ))}
         </div>
-        <div className="h-[20rem] border md:w-[80%] sm:w-[100%]">
+        <div className="h-[20rem] flex items-center justify-center border md:w-[80%] sm:w-[100%]">
           {renderPage()}
         </div>
       </div>
