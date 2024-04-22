@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import React, { useRef, useState } from "react";
+import React, { ChangeEvent, useRef, useState } from "react";
 import CustomButton from "../utils/CustomButtom";
 import { MdDone } from "react-icons/md";
 import { GrPrevious } from "react-icons/gr";
@@ -10,19 +10,28 @@ import Image from "next/image";
 
 const Claims = () => {
   const [current, setCurrent] = useState(0);
-  const [image, setImage] = useState(" ");
+  const [images, setImages] = useState<any[]>([]);
 
-  const handleImageChange = function loadFile(e: any) {
-    if (e.target.files.length > 0) {
-      const file = URL.createObjectURL(e.target.files[0]);
-      setImage(file);
+  const handleImageChange = function loadFile(
+    e: React.ChangeEvent<HTMLInputElement>
+  ) {
+    if (e.target.files && e.target.files.length > 0) {
+      const selectedImage = Array.from(e.target.files).map((file) =>
+        URL.createObjectURL(file)
+      );
+      setImages((prevImage) => [...prevImage, ...selectedImage]);
     }
   };
+  console.log(images);
   const inputRef = useRef<any>(null);
   const handleInputclick = (event: any) => {
     if (inputRef.current) {
       inputRef?.current?.click();
     }
+  };
+
+  const handleDeleteImage = (key: number) => {
+    setImages(images.filter((image, index) => index !== key));
   };
 
   const PolicyDetails = () => {
@@ -63,31 +72,47 @@ const Claims = () => {
     return (
       <div className="flex flex-col justify-center gap-2 items-center">
         <div
-          onClick={handleInputclick}
-          className="h-[3rem] rounded-md bg-slate-500 text-white w-[10rem] flex items-center border justify-center cursor-pointer"
+          style={{
+            overflowX: "auto",
+            maxHeight: "200px",
+          }}
         >
-          Upload Photo
+          <input
+            name="Upload Photo"
+            id="upload"
+            type="file"
+            ref={inputRef}
+            onChange={handleImageChange}
+            accept="image/*"
+            className="hidden"
+            multiple
+          />
+          <label htmlFor="upload">
+            <div className="flex flex-wrap gap-2 justify-center ">
+              {images.map((image, key) => (
+                <div key={key}>
+                  <p
+                    className="text-red-600 flex justify-end text-[0.8rem] cursor-pointer"
+                    onClick={() => handleDeleteImage(key)}
+                  >
+                    X
+                  </p>
+                  <img
+                    alt="uploadImage"
+                    src={image}
+                    className="h-[10rem] w-[20rem]"
+                  />
+                </div>
+              ))}
+            </div>
+          </label>
         </div>
-        <input
-          name="Upload Photo"
-          id="upload"
-          type="file"
-          ref={inputRef}
-          onChange={handleImageChange}
-          accept="image/*"
-          className="hidden"
-        />
-        <label htmlFor="upload">
-          <div>
-            {image.length > 1 && (
-              <img
-                alt="uploadImage"
-                src={image}
-                className="h-[12rem] w-[23rem]"
-              />
-            )}
-          </div>
-        </label>
+        <div
+          onClick={handleInputclick}
+          className="h-[2.5rem] rounded-md bg-slate-500 text-white w-[8rem] flex items-center border justify-center cursor-pointer"
+        >
+          Upload Photos
+        </div>
       </div>
     );
   };
@@ -150,7 +175,7 @@ const Claims = () => {
             </div>
           ))}
         </div>
-        <div className="h-[20rem] flex items-center justify-center border md:w-[80%] sm:w-[100%]">
+        <div className="h-[20rem] flex items-center justify-center border shadow-2xl rounded-md md:w-[80%] sm:w-[100%]">
           {renderPage()}
         </div>
       </div>
