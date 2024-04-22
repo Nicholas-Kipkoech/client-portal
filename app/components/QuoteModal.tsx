@@ -1,6 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Modal } from "antd";
 import CustomInput from "../utils/CustomInput";
 import CustomButton from "../utils/CustomButtom";
@@ -102,6 +103,30 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
     }
   };
 
+  const inputRef = useRef<any>(null);
+
+  const handleInputclick = (event: any) => {
+    if (inputRef.current) {
+      inputRef?.current?.click();
+    }
+  };
+
+  const [carImages, setCarImages] = useState<any[]>([]);
+
+  const handleImageChange = function loadFile(
+    e: React.ChangeEvent<HTMLInputElement>
+  ) {
+    if (e.target.files && e.target.files.length > 0) {
+      const selectedImage = Array.from(e.target.files).map((file) =>
+        URL.createObjectURL(file)
+      );
+      setCarImages((prevImage) => [...prevImage, ...selectedImage]);
+    }
+  };
+  const handleImageDelete = (index: number) => {
+    setCarImages(carImages.filter((image, key) => key !== index));
+  };
+
   return (
     <Modal centered open={open} footer onCancel={handleClose}>
       <div className="h-auto">
@@ -159,6 +184,47 @@ const QuoteModal = ({ open, handleClose }: IModal) => {
               options={useOptions}
               onChange={(value: any) => setUse(value.value)}
             />
+
+            <div>
+              <p className="flex justify-center text-[1.2rem]">Car Photos</p>
+              <p className="flex justify-center text-[1rem] text-slate-500">
+                Add front,sides,back view
+              </p>
+
+              <div className="flex flex-col justify-center">
+                <div className="flex flex-wrap gap-2">
+                  {carImages.map((image, index) => (
+                    <div key={index} className="">
+                      <p
+                        className="flex justify-end text-red-700 cursor-pointer"
+                        onClick={() => handleImageDelete(index)}
+                      >
+                        X
+                      </p>
+                      <img
+                        src={image}
+                        alt="image"
+                        className="h-[5rem] w-[8rem]"
+                      />
+                    </div>
+                  ))}
+                </div>
+                <div
+                  onClick={handleInputclick}
+                  className="h-[2rem] border w-[10rem] cursor-pointer bg-slate-800 text-white rounded-md items-center flex justify-center"
+                >
+                  Upload Images
+                </div>
+                <input
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  className="hidden"
+                  ref={inputRef}
+                  onChange={handleImageChange}
+                />
+              </div>
+            </div>
           </>
         )}
         {active === "non_motor" && (
