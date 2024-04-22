@@ -71,12 +71,7 @@ const Claims = () => {
   const UploadPhotos = () => {
     return (
       <div className="flex flex-col justify-center gap-2 items-center">
-        <div
-          style={{
-            overflowX: "auto",
-            maxHeight: "200px",
-          }}
-        >
+        <div className="2xl:max-h-[400px] md:max-h-[200px] overflow-x-auto">
           <input
             name="Upload Photo"
             id="upload"
@@ -100,7 +95,7 @@ const Claims = () => {
                   <img
                     alt="uploadImage"
                     src={image}
-                    className="h-[10rem] w-[20rem]"
+                    className="md:h-[10rem] md:w-[20rem]"
                   />
                 </div>
               ))}
@@ -175,7 +170,7 @@ const Claims = () => {
             </div>
           ))}
         </div>
-        <div className="h-[20rem] flex items-center justify-center border shadow-2xl rounded-md md:w-[80%] sm:w-[100%]">
+        <div className="md:h-[20rem] 2xl:h-[40rem] 2xl:w-[90%] flex items-center justify-center border shadow-2xl rounded-md md:w-[80%] sm:w-[100%]">
           {renderPage()}
         </div>
       </div>
