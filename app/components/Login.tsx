@@ -36,10 +36,6 @@ const Login = ({ open, handleClose }: any) => {
         router.push("/quotes");
         setIsLogging(false);
       }
-      // refresh after loggin..
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
     } catch (error: any) {
       setIsLogging(false);
       console.error(error.response.data.error);

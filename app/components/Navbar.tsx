@@ -89,7 +89,9 @@ const Navbar = () => {
               <MenuItem>Update Profile</MenuItem>
               {isLoggedIn && <MenuItem onClick={handleLogout}>Logout</MenuItem>}
               <MenuItem>
-                {user && <Gravatar email={user} className="rounded-[50%]" />}
+                {isLoggedIn && (
+                  <Gravatar email={user} className="rounded-[50%]" />
+                )}
               </MenuItem>
             </MenuList>
           </Menu>
@@ -131,7 +133,7 @@ const Navbar = () => {
               <div>Get a Quote</div>
               <GoArrowRight className="sm:h-[4rem] md:h-[5rem]" />
             </div>
-            {user && (
+            {isLoggedIn && (
               <Menu>
                 <div className="flex items-center gap-1 cursor-pointer">
                   <Gravatar email={user} className="rounded-[50%]" />
