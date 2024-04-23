@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ContextProvider, ToastProvider } from "./providers/providers";
 import { ChakraProvider } from "@chakra-ui/react";
+import Sidebar from "./components/Sidebar";
 const nunitoSans = Nunito_Sans({
   weight: "400",
   subsets: ["latin"],
@@ -27,10 +28,14 @@ export default function RootLayout({
         <ContextProvider>
           <ChakraProvider>
             <ToastProvider>
-              <div className="sm:mx-0 xl:mx-[5rem] 2xl:mx-[15rem]">
-                <Navbar />
-                {children}
-                <SpeedInsights />
+              <div className="flex">
+                <div className="w-[15%]">
+                  <Sidebar />
+                </div>
+                <div className="w-[85%]">
+                  <Navbar />
+                  <div className="p-2">{children}</div>
+                </div>
               </div>
             </ToastProvider>
           </ChakraProvider>

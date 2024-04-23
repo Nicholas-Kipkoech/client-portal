@@ -87,6 +87,7 @@ const Policies = () => {
             Table: {
               headerBg: "#092332",
               headerColor: "white",
+
               colorBgContainer: "whitesmoke",
               padding: 4,
               paddingXS: 5,
@@ -97,6 +98,7 @@ const Policies = () => {
         }}
       >
         <Table
+          className="mt-2"
           dataSource={policies}
           loading={loadingPolicies}
           columns={columns}
