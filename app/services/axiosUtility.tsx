@@ -3,7 +3,7 @@ import { API_URL } from "../constants/database-connect";
 
 export const PrivateAxiosUtility = axios.create({
   baseURL: `${API_URL}`,
-  timeout: 600000,
+  timeout: 6000000,
   headers: {
     "Content-Type": "application/json",
   },
@@ -11,7 +11,7 @@ export const PrivateAxiosUtility = axios.create({
 
 export const AxiosUtility = axios.create({
   baseURL: `${API_URL}`,
-  timeout: 600000,
+  timeout: 6000000,
   headers: {
     "Content-Type": "application/json",
   },

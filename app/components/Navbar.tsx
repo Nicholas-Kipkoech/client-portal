@@ -22,14 +22,12 @@ import Gravatar from "react-gravatar";
 const Navbar = () => {
   const [openLogin, setOpenLogin] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-  const { userEmail, isUserAuthenticated, isMobile }: any = useContextApi();
+  const { isUserAuthenticated, isMobile, user }: any = useContextApi();
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
 
   const pathname = usePathname().replace("/", "");
-
-  const user = pathname !== "" && userEmail;
 
   const handleOpenModal = () => {
     if (isMobile) {
@@ -62,6 +60,8 @@ const Navbar = () => {
     }
   }, [isUserAuthenticated]);
 
+  console.log(user.entityName);
+
   return (
     <div className="sticky top-0 bg-[#F7F5FD] z-10 md:p-[10px] sm:p-[1px] h-[auto] ">
       <div className="flex sm:my-2 sm:px-2 items-center justify-between">
@@ -88,11 +88,6 @@ const Navbar = () => {
               <MenuItem onClick={handleOpenModal}>Get a Quote</MenuItem>
               <MenuItem>Update Profile</MenuItem>
               {isLoggedIn && <MenuItem onClick={handleLogout}>Logout</MenuItem>}
-              <MenuItem>
-                {isLoggedIn && (
-                  <Gravatar email={user} className="rounded-[50%]" />
-                )}
-              </MenuItem>
             </MenuList>
           </Menu>
         ) : (
@@ -136,9 +131,11 @@ const Navbar = () => {
             {isLoggedIn && (
               <Menu>
                 <div className="flex items-center gap-1 cursor-pointer">
-                  <Gravatar email={user} className="rounded-[50%]" />
                   <MenuButton>
-                    <FaChevronDown size={15} />
+                    <div className="flex">
+                      <p className="text-[12px]">{user.entityName}</p>
+                      <FaChevronDown size={15} />
+                    </div>
                   </MenuButton>
                 </div>
                 <MenuList>

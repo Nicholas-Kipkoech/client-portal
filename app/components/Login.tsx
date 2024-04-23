@@ -14,6 +14,7 @@ const Login = ({ open, handleClose }: any) => {
   const [isRegistering, setIsRegistering] = useState(false);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [entCode, setEntCode] = useState("");
 
   //......//registration
 
@@ -22,15 +23,15 @@ const Login = ({ open, handleClose }: any) => {
   const [address, setAddress] = useState("");
 
   const showToast = useCustomToast();
+
   const handleLogin = async () => {
     try {
       setIsLogging(true);
       const res = await userLogin({
-        email: email,
-        password: password,
+        ent_code: entCode,
       });
       if (res.success === true) {
-        localStorage.setItem("accessToken", res.access_token);
+        localStorage.setItem("accessToken", res.accessToken);
         showToast("loggin successful");
         handleClose();
         router.push("/quotes");
@@ -74,16 +75,16 @@ const Login = ({ open, handleClose }: any) => {
           </p>
           <div className="py-8">
             <CustomInput
-              name={"Email"}
+              name={"Username"}
               className="h-[40px] border rounded-md"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={entCode}
+              onChange={(e) => setEntCode(e.target.value)}
             />
             <CustomInput
               name={"Password"}
-              value={password}
+              value={entCode}
               className="h-[40px] border rounded-md"
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => setEntCode(e.target.value)}
             />
           </div>
 

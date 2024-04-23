@@ -14,3 +14,8 @@ export const userRegister = async (data: any) => {
   const res = await PrivateAxiosUtility.post(`/user/register`, data);
   return res.data;
 };
+
+export const getPolicies = async (data: any) => {
+  const res = await PrivateAxiosUtility.post(`/policies/fetch`, data);
+  return res.data;
+};

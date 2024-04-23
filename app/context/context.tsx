@@ -2,6 +2,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { IQuotes } from "../types";
 import { jwtDecode } from "jwt-decode";
+import { getPolicies } from "../services/apiServices";
+import axios from "axios";
 
 const Context = createContext({});
 
@@ -12,8 +14,9 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [years, setYears] = useState<number[]>([]);
   const [selectedQuote, setSelectedQuote] = useState({});
   const [isMobile, setIsMobile] = useState(false);
-  const [cachedQuotes, setCachedQuotes] = useState({});
+  const [loadingPolicies, setLoadingPolices] = useState(false);
   const [acceptedQuotes, setAcceptedQuotes] = useState(false);
+  const [policies, setPolicies] = useState([]);
 
   useEffect(() => {
     const years: number[] = [];
@@ -67,14 +70,6 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, []);
 
-  const [userEmail, setUserEmail] = useState("");
-
-  useEffect(() => {
-    if (Object.keys(user).length > 1) {
-      setUserEmail(user?.email);
-    }
-  }, [user]);
-
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
@@ -86,6 +81,21 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  useEffect(() => {
+    async function fetchPolicies() {
+      setLoadingPolices(true);
+      if (user) {
+        const response = await getPolicies({
+          intermediaryCode: user?.intermediaryCode,
+          clientCode: user?.entityCode,
+        });
+        setLoadingPolices(false);
+        setPolicies(response.results);
+      }
+    }
+    fetchPolicies();
+  }, [user]);
+
   return (
     <Context.Provider
       value={{
@@ -94,13 +104,14 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
         quotes,
         isUserAuthenticated,
         user,
-        userEmail,
         years,
         selectedQuote,
         setSelectedQuote,
         isMobile,
         acceptedQuotes,
         setAcceptedQuotes,
+        policies,
+        loadingPolicies,
       }}
     >
       {children}
