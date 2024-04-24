@@ -3,10 +3,10 @@ import type { Metadata } from "next";
 import { Nunito_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ContextProvider, ToastProvider } from "./providers/providers";
 import { ChakraProvider } from "@chakra-ui/react";
 import Sidebar from "./components/Sidebar";
+
 const nunitoSans = Nunito_Sans({
   weight: "400",
   subsets: ["latin"],
@@ -29,12 +29,12 @@ export default function RootLayout({
           <ChakraProvider>
             <ToastProvider>
               <div className="flex">
-                <div className="w-[15%]">
+                <div className="w-1/5">
                   <Sidebar />
                 </div>
-                <div className="w-[85%]">
+                <div className="w-4/5">
                   <Navbar />
-                  <div className="p-2">{children}</div>
+                  {children}
                 </div>
               </div>
             </ToastProvider>

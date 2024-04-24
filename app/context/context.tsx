@@ -2,7 +2,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { IQuotes } from "../types";
 import { jwtDecode } from "jwt-decode";
-import { getPolicies } from "../services/apiServices";
+import { getClaims, getPolicies } from "../services/apiServices";
 import axios from "axios";
 
 const Context = createContext({});
@@ -15,8 +15,10 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [selectedQuote, setSelectedQuote] = useState({});
   const [isMobile, setIsMobile] = useState(false);
   const [loadingPolicies, setLoadingPolices] = useState(false);
+  const [loadingClaims, setLoadingClaims] = useState(false);
   const [acceptedQuotes, setAcceptedQuotes] = useState(false);
   const [policies, setPolicies] = useState([]);
+  const [claims, setClaims] = useState([]);
 
   useEffect(() => {
     const years: number[] = [];
@@ -84,7 +86,7 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     async function fetchPolicies() {
       setLoadingPolices(true);
-      if (user) {
+      if (Object.keys(user).length > 0) {
         const response = await getPolicies({
           intermediaryCode: user?.intermediaryCode,
           clientCode: user?.entityCode,
@@ -94,6 +96,21 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
       }
     }
     fetchPolicies();
+  }, [user]);
+
+  useEffect(() => {
+    async function fetchClaims() {
+      setLoadingClaims(true);
+      if (Object.keys(user).length > 0) {
+        const response = await getClaims({
+          intermediaryCode: user?.intermediaryCode,
+          clientCode: user?.entityCode,
+        });
+        setLoadingClaims(false);
+        setClaims(response.results);
+      }
+    }
+    fetchClaims();
   }, [user]);
 
   return (
@@ -112,6 +129,8 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
         setAcceptedQuotes,
         policies,
         loadingPolicies,
+        claims,
+        loadingClaims,
       }}
     >
       {children}

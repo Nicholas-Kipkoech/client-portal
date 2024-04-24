@@ -19,3 +19,7 @@ export const getPolicies = async (data: any) => {
   const res = await PrivateAxiosUtility.post(`/policies/fetch`, data);
   return res.data;
 };
+export const getClaims = async (data: any) => {
+  const res = await PrivateAxiosUtility.post(`/claims/fetch`, data);
+  return res.data;
+};

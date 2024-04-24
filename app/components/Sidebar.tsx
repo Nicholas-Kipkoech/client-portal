@@ -1,35 +1,55 @@
-import React from "react";
-import { GiCircle } from "react-icons/gi";
-import iconLogo from "../assets/iconLogo.png";
+"use client";
 import Image from "next/image";
-
+import React, { useState } from "react";
+import iconLogo from "../assets/iconLogo.png";
+import { MdOutlineCircle } from "react-icons/md";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+interface NavProps {
+  name: string;
+  page: string;
+}
 const Menus = [
   {
-    title: "Quotes",
-    link: "/quotes",
+    name: "Quotes",
+    page: "/quotes",
   },
   {
-    title: "Policies",
-    link: "/policies",
+    name: "Policies",
+    page: "/policies",
   },
   {
-    title: "Claims",
-    link: "/claims",
+    name: "Claims",
+    page: "/claims",
   },
 ];
-
 const Sidebar = () => {
+  const [active, setActive] = useState("quotes");
+
+  const CustomNavItem = ({ name, page }: NavProps) => {
+    return (
+      <Link
+        href={page}
+        className={`${
+          usePathname().replace("/", "") === page.replace("/", "")
+            ? "bg-[#cb7529]"
+            : "bg-slate-700"
+        } text-white h-[2.4rem]  flex items-center pl-5 gap-2 rounded-r-[50px]`}
+      >
+        <MdOutlineCircle size={15} />
+        {name}
+      </Link>
+    );
+  };
+
   return (
-    <div className="h-[780px] bg-slate-800 text-white w-full">
-      <div className="h-[6rem] flex items-center justify-center">
-        <Image src={iconLogo} alt="" className="h-[10rem] w-[10rem]" />
+    <div className=" h-[800px] max-h-[1400px] bg-[#092332]">
+      <div className="flex items-center justify-center">
+        <Image src={iconLogo} alt="" height={"120"} />
       </div>
-      <div className="px-2 py-2">
+      <div className="flex gap-2 flex-col pr-2">
         {Menus.map((menu, key) => (
-          <div key={key} className="flex items-center gap-1">
-            <GiCircle size={15} />
-            {menu.title}
-          </div>
+          <CustomNavItem name={menu.name} key={key} page={menu.page} />
         ))}
       </div>
     </div>

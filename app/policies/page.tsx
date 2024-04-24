@@ -7,6 +7,14 @@ import { GrPrevious } from "react-icons/gr";
 import { useContextApi } from "../context/context";
 import { Months } from "../utils/months";
 
+export const formatDate = (serverTime: string) => {
+  const date = new Date(serverTime);
+  const day = date.getDate();
+  const month = Months[date.getMonth()];
+  const year = date.getFullYear();
+  return day + "-" + month + "-" + year;
+};
+
 const Policies = () => {
   const router = useRouter();
   const { policies, loadingPolicies }: any = useContextApi();
@@ -15,14 +23,6 @@ const Policies = () => {
     localStorage.setItem("receipt_name", name);
     router.push(`/policies/${name.replace(" ", "")}`);
   };
-
-  function formatDate(serverTime: string) {
-    const date = new Date(serverTime);
-    const day = date.getDate();
-    const month = Months[date.getMonth()];
-    const year = date.getFullYear();
-    return day + "-" + month + "-" + year;
-  }
 
   const columns = [
     {
@@ -69,15 +69,15 @@ const Policies = () => {
 
   return (
     <div className="flex flex-col justify-center ">
-      <div className="flex justify-between">
-        <div
-          className="cursor-pointer flex items-center"
-          onClick={() => router.back()}
-        >
+      <div
+        onClick={() => router.back()}
+        className="flex justify-between  cursor-pointer"
+      >
+        <div className="flex items-center">
           <GrPrevious size={15} />
           <p>Back</p>
         </div>
-        <p>Policies</p>
+        <p className="md:text-[1.8rem] sm:text-[1.2rem] font-bold">Policies</p>
         <p></p>
       </div>
 
