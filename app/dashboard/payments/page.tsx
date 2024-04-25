@@ -1,12 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useContextApi } from "../context/context";
-import CustomInput from "../utils/CustomInput";
-import CustomButton from "../utils/CustomButtom";
+import { useContextApi } from "../../context/context";
+
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import { useRouter } from "next/navigation";
 import { GrPrevious } from "react-icons/gr";
+import CustomInput from "@/app/utils/CustomInput";
+import CustomButton from "@/app/utils/CustomButtom";
 
 const PaymentPage = () => {
   const { selectedQuote, setAcceptedQuotes }: any = useContextApi();

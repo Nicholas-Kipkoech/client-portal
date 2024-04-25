@@ -2,52 +2,106 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import iconLogo from "../assets/iconLogo.png";
-import { MdOutlineCircle } from "react-icons/md";
+import {
+  MdDashboard,
+  MdOutlineCircle,
+  MdOutlineSettings,
+} from "react-icons/md";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { HiOutlineMenu } from "react-icons/hi";
+import { GrOverview } from "react-icons/gr";
+import { LiaFileInvoiceSolid } from "react-icons/lia";
+import { VscOrganization } from "react-icons/vsc";
 interface NavProps {
   name: string;
   page: string;
+  icon: any;
 }
-const Menus = [
+
+const menuItems = [
   {
-    name: "Quotes",
-    page: "/quotes",
+    title: "Insights",
+    list: [
+      {
+        title: "Overview",
+        path: "/dashboard",
+        icon: <GrOverview />,
+      },
+    ],
   },
   {
-    name: "Policies",
-    page: "/policies",
+    title: "Quotes",
+    list: [
+      {
+        title: "Add Quote",
+        path: "/dashboard/quotes/add-quote",
+        icon: <VscOrganization />,
+      },
+      {
+        title: "View Quotes",
+        path: "/dashboard/quotes",
+        icon: <LiaFileInvoiceSolid />,
+      },
+    ],
   },
   {
-    name: "Claims",
-    page: "/claims",
+    title: "Policies",
+    list: [
+      {
+        title: "View policies",
+        path: "/dashboard/policies",
+        icon: <LiaFileInvoiceSolid />,
+      },
+    ],
+  },
+  {
+    title: "Claims",
+    list: [
+      {
+        title: "File claim",
+        path: "/dashboard/claims/file-claim",
+        icon: <LiaFileInvoiceSolid />,
+      },
+      {
+        title: "View claims",
+        path: "/dashboard/claims",
+        icon: <LiaFileInvoiceSolid />,
+      },
+    ],
   },
 ];
-const Sidebar = () => {
-  const [active, setActive] = useState("quotes");
 
-  const CustomNavItem = ({ name, page }: NavProps) => {
+const Sidebar = () => {
+  const MenuLink = ({ item }: any) => {
+    const pathname = usePathname();
+
     return (
       <Link
-        href={`/dashboard${page}`}
-        className={`${
-          usePathname().replace("/", "") === page.replace("/", "")
-            ? "bg-[#cb7529]"
-            : "bg-slate-700"
-        } text-white h-[2.4rem]  flex items-center pl-5 gap-2 rounded-r-[50px]`}
+        href={item.path}
+        className={`p-[5px] flex items-center gap-[5px] text-[13px] text-white hover:bg-[#2e2f3b] hover:text-white m-[2px] rounded-[10px] ${
+          pathname === item.path && "bg-[#995224]"
+        }`}
       >
-        <MdOutlineCircle size={15} />
-        {name}
+        {item.icon}
+        {item.title}
       </Link>
     );
   };
 
   return (
-    <div className="min-h-[800px] max-h-[1400px] bg-[#092332]">
-      <div className="flex gap-2 flex-col pr-2 pt-2">
-        {Menus.map((menu, key) => (
-          <CustomNavItem name={menu.name} key={key} page={menu.page} />
-        ))}
+    <div className="min-h-screen bg-[#092332]">
+      <div className="flex gap-2 flex-col pr-2 pt-2 pl-3">
+        <ul className="list-none ">
+          {menuItems.map((cat) => (
+            <li key={cat.title} className="text-white">
+              <span>{cat.title}</span>
+              {cat.list.map((item) => (
+                <MenuLink item={item} key={item.title} />
+              ))}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

@@ -1,11 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import React, { useRef, useState } from "react";
-import CustomButton from "../../utils/CustomButtom";
+
 import { MdDone } from "react-icons/md";
 import { GrPrevious } from "react-icons/gr";
-import CustomInput from "../../utils/CustomInput";
-
+import CustomInput from "@/app/utils/CustomInput";
+import CustomButton from "@/app/utils/CustomButtom";
 const Claims = () => {
   const [current, setCurrent] = useState(0);
   const [images, setImages] = useState<any[]>([]);

@@ -12,10 +12,12 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <ToastProvider>
           <Navbar />
           <div className="flex ">
-            <div className="w-1/5">
+            <div className="w-[18%] fixed h-screen overflow-y-auto">
               <Sidebar />
             </div>
-            <div className="w-4/5 px-2">{children}</div>
+            <div className="w-[82%] px-2 overflow-y-auto h-screen ml-[18%]">
+              {children}
+            </div>
           </div>
         </ToastProvider>
       </ChakraProvider>

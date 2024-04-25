@@ -1,19 +1,11 @@
 "use client";
 
 import { useContextApi } from "@/app/context/context";
-import { Months } from "@/app/utils/months";
 import { ConfigProvider, Table } from "antd";
 import { useRouter } from "next/navigation";
+import { formatDate } from "../../utils/helpers";
 import React from "react";
 import { GrPrevious } from "react-icons/gr";
-
-export const formatDate = (serverTime: string) => {
-  const date = new Date(serverTime);
-  const day = date.getDate();
-  const month = Months[date.getMonth()];
-  const year = date.getFullYear();
-  return day + "-" + month + "-" + year;
-};
 
 const Policies = () => {
   const router = useRouter();
@@ -102,6 +94,7 @@ const Policies = () => {
           dataSource={policies}
           loading={loadingPolicies}
           columns={columns}
+          scroll={{ x: 1500 }}
         />
         ;
       </ConfigProvider>

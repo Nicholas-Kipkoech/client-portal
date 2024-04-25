@@ -1,10 +1,13 @@
 "use client";
 import React from "react";
 import { useContextApi } from "../../context/context";
-import { useRouter } from "next/navigation";
+
 import { GrPrevious } from "react-icons/gr";
-import { Table } from "antd";
+import { ConfigProvider, Table } from "antd";
 import { IQuotes } from "../../types";
+import CustomButton from "@/app/utils/CustomButtom";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const QuotesPage = () => {
   const router = useRouter();
@@ -98,12 +101,29 @@ const QuotesPage = () => {
         <p></p>
       </div>
 
-      <Table
-        columns={columns}
-        dataSource={quotes}
-        className="sm:hidden md:block hover:bg-none"
-        rowHoverable={false}
-      />
+      <ConfigProvider
+        theme={{
+          components: {
+            Table: {
+              headerBg: "#092332",
+              headerColor: "white",
+
+              colorBgContainer: "whitesmoke",
+              padding: 4,
+              paddingXS: 5,
+              paddingXXS: 1,
+              rowHoverBg: "#cb7529",
+            },
+          },
+        }}
+      >
+        <Table
+          columns={columns}
+          dataSource={quotes}
+          className="sm:hidden md:block hover:bg-none"
+          scroll={{ x: 1000 }}
+        />
+      </ConfigProvider>
       <div className="flex flex-wrap md:hidden justify-center gap-4 mt-2 sm:flex-col md:flex-row">
         {quotes.map((quote: IQuotes, index: number) => (
           <CustomProduct

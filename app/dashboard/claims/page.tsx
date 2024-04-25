@@ -4,7 +4,8 @@ import React from "react";
 import { useContextApi } from "../../context/context";
 import { GrPrevious } from "react-icons/gr";
 import { useRouter } from "next/navigation";
-import { formatDate } from "../policies/page";
+import Link from "next/link";
+import { formatDate } from "@/app/utils/helpers";
 
 const Claims = () => {
   const { claims, loadingClaims }: any = useContextApi();
@@ -23,7 +24,7 @@ const Claims = () => {
             item.status === "Open"
               ? "bg-blue-400 text-black"
               : "bg-red-400 text-white"
-          } p-[5px] rounded-md`}
+          } w-[6rem] h-[2rem] rounded-md flex items-center justify-center`}
         >
           {item.status}
         </div>
@@ -39,7 +40,7 @@ const Claims = () => {
       render: (_: any, item: any) => (
         <div>
           <p className="text-[12px]">{item.intermediary}</p>
-          <p className="text-[0.5rem] text-slate-600">{item.insured}</p>
+          <p className="text-[12px]">{item.insured}</p>
         </div>
       ),
     },
@@ -73,7 +74,7 @@ const Claims = () => {
     <div>
       <div
         onClick={() => router.back()}
-        className="flex justify-between  cursor-pointer"
+        className="flex justify-between items-center  cursor-pointer"
       >
         <div className="flex items-center">
           <GrPrevious size={15} />
@@ -101,7 +102,7 @@ const Claims = () => {
           columns={columns}
           loading={loadingClaims}
           dataSource={claims}
-          scroll={{ x: 200 }}
+          scroll={{ x: 1500 }}
         />
       </ConfigProvider>
     </div>

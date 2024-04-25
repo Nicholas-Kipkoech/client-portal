@@ -34,7 +34,7 @@ const Login = ({ open, handleClose }: any) => {
         localStorage.setItem("accessToken", res.accessToken);
         showToast("loggin successful");
         handleClose();
-        router.push("/quotes");
+        router.push("/dashboard");
         setIsLogging(false);
       }
     } catch (error: any) {
