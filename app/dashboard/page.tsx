@@ -72,7 +72,7 @@ const Dashboard = () => {
         href={`dashboard/${to}`}
         className="h-[10rem] w-[20rem] border flex flex-col items-center justify-center shadow-xl"
       >
-        <p className="flex justify-center text-[2rem] font-bold">{name}</p>
+        <p className="flex justify-center text-[1.5rem] font-bold">{name}</p>
         <div className="flex justify-center">
           <p className="font-bold text-[1.2rem] text-slate-600">
             {" "}
@@ -107,17 +107,26 @@ const Dashboard = () => {
         <CustomButton
           name={loadingUwData ? "Running..." : "Run"}
           onClick={handleRunReports}
-          className="border h-[2rem] w-[10rem] bg-slate-800 text-white rounded-md mt-8"
+          className="border h-[40px] w-[15rem] bg-slate-800 text-white rounded-md mt-8"
         />
       </div>
       <div className="pt-2 flex flex-wrap gap-2">
         <CustomCard name="Quotes" count={quotes.length} to="quotes" />
-        <CustomCard name="Policies" count={policies.length} to="policies" />
+        <CustomCard
+          name="Running Policies"
+          count={policies.length}
+          to="policies"
+        />
         <CustomCard name="Claims" count={claims.length} to="claims" />
         <CustomCard name="Receipts" count={0} to="" />
-        <CustomCard name="Premium" count={totalPremium} to="" currency={true} />
         <CustomCard
-          name="Commission"
+          name="Premium Booked"
+          count={totalPremium}
+          to=""
+          currency={true}
+        />
+        <CustomCard
+          name="Commission Earned"
           count={totalCommission}
           to=""
           currency={true}

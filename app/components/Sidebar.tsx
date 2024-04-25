@@ -34,7 +34,7 @@ const menuItems = [
     title: "Quotes",
     list: [
       {
-        title: "Add Quote",
+        title: "Request Quote",
         path: "/dashboard/quotes/add-quote",
         icon: <VscOrganization />,
       },
@@ -49,7 +49,7 @@ const menuItems = [
     title: "Policies",
     list: [
       {
-        title: "View policies",
+        title: "View Running policies",
         path: "/dashboard/policies",
         icon: <LiaFileInvoiceSolid />,
       },
