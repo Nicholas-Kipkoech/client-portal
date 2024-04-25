@@ -79,11 +79,8 @@ const Policies = () => {
             Table: {
               headerBg: "#092332",
               headerColor: "white",
-
+              padding: 2,
               colorBgContainer: "whitesmoke",
-              padding: 4,
-              paddingXS: 5,
-              paddingXXS: 1,
               rowHoverBg: "#cb7529",
             },
           },

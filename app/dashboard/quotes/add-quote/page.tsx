@@ -84,12 +84,9 @@ const AddQuote = () => {
           );
           const updatedQuotes = [...existingQuotes, ...res.response];
           localStorage.setItem("quotes", JSON.stringify(updatedQuotes));
-          router.push("/quotes");
+          router.push("/dashboard/quotes");
         }
         // refresh the page once the quotes is added
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
       }
     } catch (error: any) {
       setLoading(false);
@@ -123,163 +120,167 @@ const AddQuote = () => {
   };
 
   return (
-    <>
-      <div className="h-auto">
-        <div className="flex  my-8">
-          <p
-            onClick={() => setActive("motor")}
-            className={`${
-              active === "motor" ? "bg-[#cb7529]" : "bg-[#094b6a]"
-            } w-1/2 h-[30px] flex items-center cursor-pointer justify-center border rounded-l-md text-white `}
-          >
-            Motor
-          </p>
-          <p
-            onClick={() => setActive("non_motor")}
-            className={`${
-              active === "non_motor" ? "bg-[#cb7529]" : "bg-[#094b6a]"
-            } w-1/2 h-[30px] items-center flex  cursor-pointer justify-center border  text-white rounded-r-md`}
-          >
-            Non-Motor
-          </p>
-        </div>
-        {active === "motor" && (
-          <>
-            <CustomSelect
-              name={"Model/Make"}
-              placeholder="Select model/make"
-              options={makeOptions}
-              onChange={(value: any) => setModel(value.value)}
-            />
-            <CustomInput
-              type="text"
-              name={"Car Value (KES)"}
-              value={motorValue}
-              className={"h-[40px]  border rounded-md"}
-              onChange={(e) => setMotorValue(e.target.value)}
-            />
-            <CustomInput
-              type="text"
-              name={"Car Registration"}
-              value={car_reg}
-              className={"h-[40px]  border rounded-md"}
-              onChange={(e) => setCarReg(e.target.value.toUpperCase())}
-            />
+    <div className=" flex items-center justify-center ">
+      <div className="w-[60%]">
+        <div className="h-auto ">
+          <div className="flex  my-8 ">
+            <p
+              onClick={() => setActive("motor")}
+              className={`${
+                active === "motor" ? "bg-[#cb7529]" : "bg-[#094b6a]"
+              } w-1/2 h-[30px] flex items-center cursor-pointer justify-center border rounded-l-md text-white `}
+            >
+              Motor
+            </p>
+            <p
+              onClick={() => setActive("non_motor")}
+              className={`${
+                active === "non_motor" ? "bg-[#cb7529]" : "bg-[#094b6a]"
+              } w-1/2 h-[30px] items-center flex  cursor-pointer justify-center border  text-white rounded-r-md`}
+            >
+              Non-Motor
+            </p>
+          </div>
+          {active === "motor" && (
+            <>
+              <CustomSelect
+                name={"Model/Make"}
+                placeholder="Select model/make"
+                options={makeOptions}
+                onChange={(value: any) => setModel(value.value)}
+              />
+              <CustomInput
+                type="text"
+                name={"Car Value (KES)"}
+                value={motorValue}
+                className={"h-[40px]  border rounded-md"}
+                onChange={(e) => setMotorValue(e.target.value)}
+              />
+              <CustomInput
+                type="text"
+                name={"Car Registration"}
+                value={car_reg}
+                className={"h-[40px]  border rounded-md"}
+                onChange={(e) => setCarReg(e.target.value.toUpperCase())}
+              />
 
-            <CustomSelect
-              name={"Year of Manufacture"}
-              placeholder="Select year of manufacture"
-              options={yearsOptions}
-              onChange={(value: any) => setYear(value.value)}
-            />
+              <CustomSelect
+                name={"Year of Manufacture"}
+                placeholder="Select year of manufacture"
+                options={yearsOptions}
+                onChange={(value: any) => setYear(value.value)}
+              />
 
-            <CustomSelect
-              name={"Use"}
-              placeholder="Select use..."
-              options={useOptions}
-              onChange={(value: any) => setUse(value.value)}
-            />
+              <CustomSelect
+                name={"Use"}
+                placeholder="Select use..."
+                options={useOptions}
+                onChange={(value: any) => setUse(value.value)}
+              />
 
-            <div>
-              <p className="flex justify-center text-[1.2rem]">Car Photos</p>
-              <p className="flex justify-center text-[1rem] text-slate-500">
-                Add front,sides,back view
-              </p>
+              <div>
+                <p className="flex justify-center text-[1.2rem]">Car Photos</p>
+                <p className="flex justify-center text-[1rem] text-slate-500">
+                  Add front,sides,back view
+                </p>
 
-              <div className="flex flex-col justify-center">
-                <div className="flex flex-wrap gap-2">
-                  {carImages.map((image, index) => (
-                    <div key={index} className="">
-                      <p
-                        className="flex justify-end text-red-700 cursor-pointer"
-                        onClick={() => handleImageDelete(index)}
-                      >
-                        X
-                      </p>
-                      <img
-                        src={image}
-                        alt="image"
-                        className="h-[5rem] w-[8rem]"
-                      />
-                    </div>
-                  ))}
+                <div className="flex flex-col justify-center">
+                  <div className="flex flex-wrap gap-2">
+                    {carImages.map((image, index) => (
+                      <div key={index} className="">
+                        <p
+                          className="flex justify-end text-red-700 cursor-pointer"
+                          onClick={() => handleImageDelete(index)}
+                        >
+                          X
+                        </p>
+                        <img
+                          src={image}
+                          alt="image"
+                          className="h-[8rem] w-[12rem]"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                  <div
+                    onClick={handleInputclick}
+                    className="h-[2rem] border w-[10rem] mt-5 cursor-pointer bg-slate-800 text-white rounded-md items-center flex justify-center"
+                  >
+                    Upload Images
+                  </div>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    className="hidden"
+                    ref={inputRef}
+                    onChange={handleImageChange}
+                  />
                 </div>
-                <div
-                  onClick={handleInputclick}
-                  className="h-[2rem] border w-[10rem] cursor-pointer bg-slate-800 text-white rounded-md items-center flex justify-center"
-                >
-                  Upload Images
-                </div>
-                <input
-                  type="file"
-                  accept="image/*"
-                  multiple
-                  className="hidden"
-                  ref={inputRef}
-                  onChange={handleImageChange}
-                />
               </div>
-            </div>
-          </>
-        )}
-        {active === "non_motor" && (
-          <>
-            <CustomInput
-              type="text"
-              name={"Address"}
-              value={address}
-              className={"h-[40px] border rounded-md"}
-              onChange={(e) => setAddress(e.target.value)}
-            />
-            <CustomSelect
-              name={"City"}
-              options={[
-                {
-                  label: "Nairobi",
-                  value: "Nairobi",
-                },
-              ]}
-              onChange={(value: React.SetStateAction<string>) => setCity(value)}
-            />
-            <CustomSelect
-              name={"Purpose"}
-              options={[
-                {
-                  label: "Purpose1",
-                  value: "Purpose1",
-                },
-              ]}
-              onChange={(value: React.SetStateAction<string>) =>
-                setPurpose(value)
-              }
-            />
-            <CustomSelect
-              name={"Products"}
-              placeholder="Select product..."
-              options={[
-                {
-                  label: "Product1",
-                  value: "Product1",
-                },
-              ]}
-              onChange={(value: React.SetStateAction<string>) =>
-                setProduct(value)
-              }
-            />
-          </>
-        )}
+            </>
+          )}
+          {active === "non_motor" && (
+            <>
+              <CustomInput
+                type="text"
+                name={"Address"}
+                value={address}
+                className={"h-[40px] border rounded-md"}
+                onChange={(e) => setAddress(e.target.value)}
+              />
+              <CustomSelect
+                name={"City"}
+                options={[
+                  {
+                    label: "Nairobi",
+                    value: "Nairobi",
+                  },
+                ]}
+                onChange={(value: React.SetStateAction<string>) =>
+                  setCity(value)
+                }
+              />
+              <CustomSelect
+                name={"Purpose"}
+                options={[
+                  {
+                    label: "Purpose1",
+                    value: "Purpose1",
+                  },
+                ]}
+                onChange={(value: React.SetStateAction<string>) =>
+                  setPurpose(value)
+                }
+              />
+              <CustomSelect
+                name={"Products"}
+                placeholder="Select product..."
+                options={[
+                  {
+                    label: "Product1",
+                    value: "Product1",
+                  },
+                ]}
+                onChange={(value: React.SetStateAction<string>) =>
+                  setProduct(value)
+                }
+              />
+            </>
+          )}
+        </div>
+        <div className="flex justify-center my-5">
+          <CustomButton
+            disabled={loading}
+            name={loading ? "Requesting quote...." : "Request Quote"}
+            className={
+              "h-[40px] bg-[#cb7529] flex justify-center items-center w-[100%] rounded-md text-white "
+            }
+            onClick={handleRequestQuote}
+          />
+        </div>
       </div>
-      <div className="flex justify-center my-5">
-        <CustomButton
-          disabled={loading}
-          name={loading ? "Requesting quote...." : "Request Quote"}
-          className={
-            "h-[40px] bg-[#cb7529] flex justify-center items-center w-[100%] rounded-md text-white "
-          }
-          onClick={handleRequestQuote}
-        />
-      </div>
-    </>
+    </div>
   );
 };
 

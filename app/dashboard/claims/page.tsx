@@ -89,10 +89,7 @@ const Claims = () => {
             Table: {
               headerBg: "#092332",
               headerColor: "white",
-              colorBgContainer: "whitesmoke",
-              paddingXS: 5,
-              padding: 5,
-              paddingXXS: 1,
+              padding: 2,
               rowHoverBg: "#cb7529",
             },
           },

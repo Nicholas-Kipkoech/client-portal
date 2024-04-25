@@ -107,11 +107,8 @@ const QuotesPage = () => {
             Table: {
               headerBg: "#092332",
               headerColor: "white",
-
               colorBgContainer: "whitesmoke",
-              padding: 4,
-              paddingXS: 5,
-              paddingXXS: 1,
+              padding: 10,
               rowHoverBg: "#cb7529",
             },
           },
