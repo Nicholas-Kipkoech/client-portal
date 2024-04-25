@@ -2,7 +2,11 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { IQuotes } from "../types";
 import { jwtDecode } from "jwt-decode";
-import { getClaims, getPolicies } from "../services/apiServices";
+import {
+  getClaims,
+  getPolicies,
+  getPremiumsAndCommission,
+} from "../services/apiServices";
 import axios from "axios";
 
 const Context = createContext({});
@@ -19,6 +23,10 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [acceptedQuotes, setAcceptedQuotes] = useState(false);
   const [policies, setPolicies] = useState([]);
   const [claims, setClaims] = useState([]);
+  const [fromDate, setFromDate] = useState("1-Jan-2023");
+  const [toDate, setToDate] = useState("31-Dec-2023");
+  const [uwData, setUwData] = useState([]);
+  const [loadingUwData, setLoadingUwData] = useState(false);
 
   useEffect(() => {
     const years: number[] = [];
@@ -32,14 +40,6 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
     setYears(years);
     getYears();
   }, []);
-
-  // const getQuotes = async (forceRefresh = false) => {
-  //   if (!forceRefresh) {
-  //     return cachedQuotes;
-  //   }else{
-  //     const fetchedQuotes =
-  //   }
-  // };
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -112,6 +112,41 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
     }
     fetchClaims();
   }, [user]);
+  useEffect(() => {
+    async function fetchPremiums() {
+      setLoadingUwData(true);
+      if (Object.keys(user).length > 0) {
+        const response = await getPremiumsAndCommission({
+          fromDate: fromDate,
+          toDate: toDate,
+          intermediaryCode: user?.intermediaryCode,
+          clientCode: user?.entityCode,
+        });
+        setLoadingUwData(false);
+        setUwData(response.results);
+      }
+    }
+    fetchPremiums();
+  }, [user, fromDate, toDate]);
+
+  const calculateUwData = (uwData: any[]) => {
+    const totalPremium = uwData.reduce((total: number, uw) => {
+      return (
+        total +
+        uw.newBusiness +
+        uw.renewals +
+        uw.refund +
+        uw.additional +
+        uw.facin +
+        uw.commission
+      );
+    }, 0);
+    const totalCommission = uwData.reduce((total: number, uw) => {
+      return total + uw.commission;
+    }, 0);
+    return { totalPremium, totalCommission };
+  };
+  const { totalPremium, totalCommission } = calculateUwData(uwData);
 
   return (
     <Context.Provider
@@ -131,6 +166,11 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
         loadingPolicies,
         claims,
         loadingClaims,
+        totalPremium,
+        totalCommission,
+        setFromDate,
+        setToDate,
+        loadingUwData,
       }}
     >
       {children}

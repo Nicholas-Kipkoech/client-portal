@@ -23,3 +23,7 @@ export const getClaims = async (data: any) => {
   const res = await PrivateAxiosUtility.post(`/claims/fetch`, data);
   return res.data;
 };
+export const getPremiumsAndCommission = async (data: any) => {
+  const res = await PrivateAxiosUtility.post(`/premiums/fetch`, data);
+  return res.data;
+};
