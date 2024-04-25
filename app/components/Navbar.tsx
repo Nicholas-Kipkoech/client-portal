@@ -61,7 +61,7 @@ const Navbar = () => {
   }, [isUserAuthenticated]);
 
   return (
-    <div className="sticky top-0 bg-[#F7F5FD] flex justify-between z-10 md:p-[10px] sm:p-[1px] h-[auto] ">
+    <div className="sticky top-0 bg-[#F7F5FD] flex justify-between z-10 md:p-[10px] sm:p-[1px] h-[5rem] ">
       <span
         className="flex md:text-[18px] sm:text-[14px] font-bold cursor-pointer"
         onClick={() => router.push("/")}

@@ -29,7 +29,7 @@ const Sidebar = () => {
   const CustomNavItem = ({ name, page }: NavProps) => {
     return (
       <Link
-        href={page}
+        href={`/dashboard${page}`}
         className={`${
           usePathname().replace("/", "") === page.replace("/", "")
             ? "bg-[#cb7529]"
@@ -43,11 +43,8 @@ const Sidebar = () => {
   };
 
   return (
-    <div className=" h-[800px] max-h-[1400px] bg-[#092332]">
-      <div className="flex items-center justify-center">
-        <Image src={iconLogo} alt="" height={"120"} />
-      </div>
-      <div className="flex gap-2 flex-col pr-2">
+    <div className="min-h-[800px] max-h-[1400px] bg-[#092332]">
+      <div className="flex gap-2 flex-col pr-2 pt-2">
         {Menus.map((menu, key) => (
           <CustomNavItem name={menu.name} key={key} page={menu.page} />
         ))}

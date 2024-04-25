@@ -1,11 +1,11 @@
 "use client";
 
+import { useContextApi } from "@/app/context/context";
+import { Months } from "@/app/utils/months";
 import { ConfigProvider, Table } from "antd";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { GrPrevious } from "react-icons/gr";
-import { useContextApi } from "../context/context";
-import { Months } from "../utils/months";
 
 export const formatDate = (serverTime: string) => {
   const date = new Date(serverTime);

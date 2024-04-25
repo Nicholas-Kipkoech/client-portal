@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
-import { useContextApi } from "../context/context";
+import { useContextApi } from "../../context/context";
 import { useRouter } from "next/navigation";
 import { GrPrevious } from "react-icons/gr";
 import { Table } from "antd";
-import { IQuotes } from "../types";
+import { IQuotes } from "../../types";
 
 const QuotesPage = () => {
   const router = useRouter();

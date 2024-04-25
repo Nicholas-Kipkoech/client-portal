@@ -1,10 +1,10 @@
 "use client";
 import { ConfigProvider, Table } from "antd";
 import React from "react";
-import { useContextApi } from "../context/context";
-import { formatDate } from "../policies/page";
+import { useContextApi } from "../../context/context";
 import { GrPrevious } from "react-icons/gr";
 import { useRouter } from "next/navigation";
+import { formatDate } from "../policies/page";
 
 const Claims = () => {
   const { claims, loadingClaims }: any = useContextApi();
