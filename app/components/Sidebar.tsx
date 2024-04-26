@@ -1,15 +1,7 @@
 "use client";
-import Image from "next/image";
-import React, { useState } from "react";
-import iconLogo from "../assets/iconLogo.png";
-import {
-  MdDashboard,
-  MdOutlineCircle,
-  MdOutlineSettings,
-} from "react-icons/md";
+import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { HiOutlineMenu } from "react-icons/hi";
 import { GrOverview } from "react-icons/gr";
 import { LiaFileInvoiceSolid } from "react-icons/lia";
 import { VscOrganization } from "react-icons/vsc";
@@ -49,8 +41,13 @@ const menuItems = [
     title: "Policies",
     list: [
       {
+        title: "View Running policies",
+        path: "/dashboard/policies/runningPolicies",
+        icon: <LiaFileInvoiceSolid />,
+      },
+      {
         title: "View All policies",
-        path: "/dashboard/policies",
+        path: "/dashboard/policies/allPolicies",
         icon: <LiaFileInvoiceSolid />,
       },
     ],
@@ -64,8 +61,33 @@ const menuItems = [
         icon: <LiaFileInvoiceSolid />,
       },
       {
-        title: "View claims",
-        path: "/dashboard/claims",
+        title: "Open claims",
+        path: "/dashboard/claims/openClaims",
+        icon: <LiaFileInvoiceSolid />,
+      },
+      {
+        title: "View All claims",
+        path: "/dashboard/claims/allClaims",
+        icon: <LiaFileInvoiceSolid />,
+      },
+    ],
+  },
+  {
+    title: "Reports",
+    list: [
+      {
+        title: "View Premiums",
+        path: "/dashboard/reports/premiums",
+        icon: <LiaFileInvoiceSolid />,
+      },
+      {
+        title: "View Statements",
+        path: "/dashboard/reports/statements",
+        icon: <LiaFileInvoiceSolid />,
+      },
+      {
+        title: "Upcoming Renewals",
+        path: "/dashboard/reports/upcomingRenewals",
         icon: <LiaFileInvoiceSolid />,
       },
     ],

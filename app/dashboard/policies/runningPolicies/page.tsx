@@ -1,20 +1,16 @@
 "use client";
 
 import { useContextApi } from "@/app/context/context";
+import { formatDate } from "@/app/utils/helpers";
 import { ConfigProvider, Table } from "antd";
 import { useRouter } from "next/navigation";
-import { formatDate } from "../../utils/helpers";
+
 import React from "react";
 import { GrPrevious } from "react-icons/gr";
 
 const Policies = () => {
   const router = useRouter();
-  const { policies, loadingPolicies }: any = useContextApi();
-
-  const handleViewReceipt = (name: string) => {
-    localStorage.setItem("receipt_name", name);
-    router.push(`/policies/${name.replace(" ", "")}`);
-  };
+  const { filteredPolicies, loadingPolicies }: any = useContextApi();
 
   const columns = [
     {
@@ -88,7 +84,7 @@ const Policies = () => {
       >
         <Table
           className="mt-2"
-          dataSource={policies}
+          dataSource={filteredPolicies}
           loading={loadingPolicies}
           columns={columns}
           scroll={{ x: 1500 }}

@@ -31,3 +31,7 @@ export const getReceiptsData = async (data: any) => {
   const res = await PrivateAxiosUtility.post(`/ARreceipts/fetch`, data);
   return res.data;
 };
+export const getPremiumReports = async (data: any) => {
+  const res = await PrivateAxiosUtility.post(`/premiumReports/fetch`, data);
+  return res.data;
+};

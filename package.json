@@ -20,11 +20,14 @@
     "jwt-decode": "^4.0.0",
     "next": "14.1.4",
     "react": "^18",
+    "react-csv-downloader": "^3.1.0",
     "react-dom": "^18",
     "react-gravatar": "^2.6.3",
     "react-icons": "^5.0.1",
     "react-select": "^5.8.0",
-    "react-toastify": "^10.0.5"
+    "react-spreadsheet": "^0.9.4",
+    "react-toastify": "^10.0.5",
+    "scheduler": "^0.23.1"
   },
   "devDependencies": {
     "@types/node": "^20",

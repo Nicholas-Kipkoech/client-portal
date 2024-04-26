@@ -26,6 +26,7 @@ const Dashboard = () => {
     loadingUwData,
     receiptResults,
     filteredPolicies,
+    openClaims,
   }: any = useContextApi();
   const [fmDate, setFmDate] = useState("");
   const [toDate, setTdDate] = useState("");
@@ -119,7 +120,7 @@ const Dashboard = () => {
           count={filteredPolicies.length}
           to="policies"
         />
-        <CustomCard name="Claims" count={claims.length} to="claims" />
+        <CustomCard name="Open Claims" count={openClaims.length} to="claims" />
         <CustomCard
           name="Premium Booked"
           count={totalPremium}
@@ -133,7 +134,9 @@ const Dashboard = () => {
           currency={true}
         />
 
-        <div className={`h-[10rem] bg-white w-[20rem] border cursor-pointer  `}>
+        <div
+          className={`h-[10rem] bg-white w-[20rem] border cursor-pointer shadow-xl  `}
+        >
           <div className="flex gap-1 flex-col text-[14px] ">
             <p className="flex items-center justify-center text-[1.5rem] font-bold">
               Receipts

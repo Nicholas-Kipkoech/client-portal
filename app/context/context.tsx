@@ -4,6 +4,7 @@ import { jwtDecode } from "jwt-decode";
 import {
   getClaims,
   getPolicies,
+  getPremiumReports,
   getPremiumsAndCommission,
   getReceiptsData,
 } from "../services/apiServices";
@@ -26,6 +27,8 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [toDate, setToDate] = useState("31-Dec-2023");
   const [uwData, setUwData] = useState([]);
   const [receipts, setReceipts] = useState([]);
+  const [premiumReports, setPremiumReports] = useState([]);
+  const [loadingPremiumReports, setLoadingPremiumReports] = useState(false);
   const [loadingUwData, setLoadingUwData] = useState(false);
 
   useEffect(() => {
@@ -143,6 +146,22 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
     }
     fetchReceipts();
   }, [user, fromDate, toDate]);
+  useEffect(() => {
+    async function fetchPremiumReports() {
+      setLoadingPremiumReports(true);
+      if (Object.keys(user).length > 0) {
+        const response = await getPremiumReports({
+          fromDate: fromDate,
+          toDate: toDate,
+          intermediaryCode: user?.intermediaryCode,
+          clientCode: user?.entityCode,
+        });
+        setLoadingPremiumReports(false);
+        setPremiumReports(response.results);
+      }
+    }
+    fetchPremiumReports();
+  }, [user, fromDate, toDate]);
 
   const calculateUwData = (uwData: any[]) => {
     const totalPremium = uwData.reduce((total: number, uw) => {
@@ -191,6 +210,9 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
     const policyYear = new Date(policy.periodTo).getFullYear();
     return policyYear === currentYear || policyYear === nextYear;
   });
+  const openClaims = claims.filter((claim: any) => {
+    return claim.status === "Open";
+  });
 
   return (
     <Context.Provider
@@ -217,6 +239,11 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
         setToDate,
         loadingUwData,
         receiptResults,
+        openClaims,
+        premiumReports,
+        loadingPremiumReports,
+        fromDate,
+        toDate,
       }}
     >
       {children}
