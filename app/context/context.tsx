@@ -1,6 +1,5 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
-import { IQuotes } from "../types";
 import { jwtDecode } from "jwt-decode";
 import {
   getClaims,
@@ -8,7 +7,6 @@ import {
   getPremiumsAndCommission,
   getReceiptsData,
 } from "../services/apiServices";
-import axios from "axios";
 
 const Context = createContext({});
 
@@ -186,6 +184,14 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   };
   const receiptResults = calculateTotalByCurrency(receipts);
 
+  const currentYear = new Date(Date.now()).getFullYear();
+  const nextYear = currentYear + 1;
+
+  const filteredPolicies = policies.filter((policy: any) => {
+    const policyYear = new Date(policy.periodTo).getFullYear();
+    return policyYear === currentYear || policyYear === nextYear;
+  });
+
   return (
     <Context.Provider
       value={{
@@ -201,6 +207,7 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
         acceptedQuotes,
         setAcceptedQuotes,
         policies,
+        filteredPolicies,
         loadingPolicies,
         claims,
         loadingClaims,

@@ -49,7 +49,7 @@ const menuItems = [
     title: "Policies",
     list: [
       {
-        title: "View Running policies",
+        title: "View All policies",
         path: "/dashboard/policies",
         icon: <LiaFileInvoiceSolid />,
       },

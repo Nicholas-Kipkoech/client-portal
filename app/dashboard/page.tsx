@@ -25,10 +25,10 @@ const Dashboard = () => {
     setToDate,
     loadingUwData,
     receiptResults,
+    filteredPolicies,
   }: any = useContextApi();
   const [fmDate, setFmDate] = useState("");
   const [toDate, setTdDate] = useState("");
-  console.log(receiptResults);
 
   const handleToDate = (date: any, dateString: any) => {
     const [day, month, year] = dateString.split("-");
@@ -116,7 +116,7 @@ const Dashboard = () => {
         <CustomCard name="Quotes" count={quotes.length} to="quotes" />
         <CustomCard
           name="Running Policies"
-          count={policies.length}
+          count={filteredPolicies.length}
           to="policies"
         />
         <CustomCard name="Claims" count={claims.length} to="claims" />
