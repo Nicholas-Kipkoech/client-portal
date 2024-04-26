@@ -17,6 +17,7 @@ import {
 import { FaChevronDown } from "react-icons/fa";
 import { IoMenu } from "react-icons/io5";
 import { MdMenu } from "react-icons/md";
+import CustomButton from "../utils/CustomButtom";
 
 const Navbar = () => {
   const [openLogin, setOpenLogin] = useState(false);
@@ -68,7 +69,22 @@ const Navbar = () => {
       >
         CLIENT PORTAL
       </span>
-      <div>{user.entityName}</div>
+      <div className="flex gap-4 items-center">
+        <div className="border h-[3rem] rounded-md bg-white w-[20rem] flex items-center justify-center flex-col">
+          <div className="flex items-center gap-2">
+            <div className="p-2 border rounded-[50%] text-bold bg-slate-900 text-white items-center flex justify-center">
+              NM
+            </div>
+            <div>
+              <p className="font-bold text-[0.8rem] ">{user.entityName}</p>
+            </div>
+          </div>
+        </div>
+        <CustomButton
+          name="Logout"
+          className="h-[2rem] w-[5rem] bg-[#cb7529] rounded-md text-white"
+        />
+      </div>
     </div>
   );
 };

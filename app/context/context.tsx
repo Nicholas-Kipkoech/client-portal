@@ -6,6 +6,7 @@ import {
   getClaims,
   getPolicies,
   getPremiumsAndCommission,
+  getReceiptsData,
 } from "../services/apiServices";
 import axios from "axios";
 
@@ -26,6 +27,7 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [fromDate, setFromDate] = useState("1-Jan-2023");
   const [toDate, setToDate] = useState("31-Dec-2023");
   const [uwData, setUwData] = useState([]);
+  const [receipts, setReceipts] = useState([]);
   const [loadingUwData, setLoadingUwData] = useState(false);
 
   useEffect(() => {
@@ -129,6 +131,21 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
     fetchPremiums();
   }, [user, fromDate, toDate]);
 
+  useEffect(() => {
+    async function fetchReceipts() {
+      if (Object.keys(user).length > 0) {
+        const response = await getReceiptsData({
+          fromDate: fromDate,
+          toDate: toDate,
+          intermediaryCode: user?.intermediaryCode,
+          clientCode: user?.entityCode,
+        });
+        setReceipts(response.results);
+      }
+    }
+    fetchReceipts();
+  }, [user, fromDate, toDate]);
+
   const calculateUwData = (uwData: any[]) => {
     const totalPremium = uwData.reduce((total: number, uw) => {
       return (
@@ -147,6 +164,27 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
     return { totalPremium, totalCommission };
   };
   const { totalPremium, totalCommission } = calculateUwData(uwData);
+
+  const calculateTotalByCurrency = (receipts: any[]) => {
+    return receipts.reduce((acc: any, curr) => {
+      const { currencyCode, receiptAmount } = curr;
+      // Check if the currency code already exists in the accumulator object
+      if (acc[currencyCode]) {
+        // If exists, add the current receipt amount to the existing total
+        acc[currencyCode].total += receiptAmount;
+        // Increment the count for the currency code
+        acc[currencyCode].count++;
+      } else {
+        // If currency code doesn't exist, create a new entry
+        acc[currencyCode] = {
+          total: receiptAmount,
+          count: 1,
+        };
+      }
+      return acc;
+    }, {});
+  };
+  const receiptResults = calculateTotalByCurrency(receipts);
 
   return (
     <Context.Provider
@@ -171,6 +209,7 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
         setFromDate,
         setToDate,
         loadingUwData,
+        receiptResults,
       }}
     >
       {children}

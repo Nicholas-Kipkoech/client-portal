@@ -24,9 +24,11 @@ const Dashboard = () => {
     setFromDate,
     setToDate,
     loadingUwData,
+    receiptResults,
   }: any = useContextApi();
   const [fmDate, setFmDate] = useState("");
   const [toDate, setTdDate] = useState("");
+  console.log(receiptResults);
 
   const handleToDate = (date: any, dateString: any) => {
     const [day, month, year] = dateString.split("-");
@@ -70,7 +72,7 @@ const Dashboard = () => {
     return (
       <Link
         href={`dashboard/${to}`}
-        className="h-[10rem] w-[20rem] border flex flex-col items-center justify-center shadow-xl"
+        className="h-[10rem] w-[20rem] bg-white border flex flex-col items-center justify-center shadow-xl"
       >
         <p className="flex justify-center text-[1.5rem] font-bold">{name}</p>
         <div className="flex justify-center">
@@ -84,7 +86,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="pt-2">
+    <div className="py-4">
       <div className="flex items-center justify-center gap-2">
         <div className="flex flex-col mt-2">
           <label>From date</label>
@@ -118,7 +120,6 @@ const Dashboard = () => {
           to="policies"
         />
         <CustomCard name="Claims" count={claims.length} to="claims" />
-        <CustomCard name="Receipts" count={0} to="" />
         <CustomCard
           name="Premium Booked"
           count={totalPremium}
@@ -131,6 +132,30 @@ const Dashboard = () => {
           to=""
           currency={true}
         />
+
+        <div className={`h-[10rem] bg-white w-[20rem] border cursor-pointer  `}>
+          <div className="flex gap-1 flex-col text-[14px] ">
+            <p className="flex items-center justify-center text-[1.5rem] font-bold">
+              Receipts
+            </p>
+            <div className="justify-between flex font-bold px-2">
+              <p>Amount</p>
+              <p>Count</p>
+            </div>
+            {Object.entries(receiptResults).map(
+              ([currencyCode, { total, count }]: any, key) => (
+                <div className="justify-between flex px-2" key={key}>
+                  <p className="text-[20px] font-bold flex justify-start items-start">
+                    {currencyCode} {total.toLocaleString()}
+                  </p>
+                  <p className="text-[20px] font-bold flex justify-start items-start">
+                    {count.toLocaleString()}
+                  </p>
+                </div>
+              )
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
