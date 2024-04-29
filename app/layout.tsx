@@ -3,7 +3,6 @@ import * as React from "react";
 import type { Metadata } from "next";
 import { Nunito_Sans } from "next/font/google";
 import "./globals.css";
-import ContextProvider from "./context/context";
 import HomeNavbar from "./components/HomeNavbar";
 import { usePathname } from "next/navigation";
 
@@ -27,10 +26,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={nunitoSans.className}>
-        <ContextProvider>
-          {pathname === "" && <HomeNavbar />}
-          {children}
-        </ContextProvider>
+        {pathname === "" && <HomeNavbar />}
+        {children}
       </body>
     </html>
   );

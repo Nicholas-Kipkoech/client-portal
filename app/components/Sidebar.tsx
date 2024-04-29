@@ -1,10 +1,12 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { GrOverview } from "react-icons/gr";
 import { LiaFileInvoiceSolid } from "react-icons/lia";
 import { VscOrganization } from "react-icons/vsc";
+import { MdOutlineNavigateNext } from "react-icons/md";
+import { FaChevronDown } from "react-icons/fa6";
 interface NavProps {
   name: string;
   page: string;
@@ -92,9 +94,25 @@ const menuItems = [
       },
     ],
   },
+  {
+    title: "Finance",
+    list: [
+      {
+        title: "Receipts Download",
+        path: "/dashboard/finance/receipts",
+        icon: <LiaFileInvoiceSolid />,
+      },
+      {
+        title: "Claim Credit Notes",
+        path: "/dashboard/finance/claimCreditNotes",
+        icon: <LiaFileInvoiceSolid />,
+      },
+    ],
+  },
 ];
 
 const Sidebar = () => {
+  const [showSubMenu, setShowSubMenu] = useState(0);
   const MenuLink = ({ item }: any) => {
     const pathname = usePathname();
 
@@ -111,16 +129,31 @@ const Sidebar = () => {
     );
   };
 
+  const handleShowMenu = (index: any) => {
+    setShowSubMenu((prevIndex) => (prevIndex === index ? null : index));
+  };
+
   return (
-    <div className="min-h-screen bg-[#092332]">
+    <div className="h-screen bg-[#092332] overflow-y-auto">
       <div className="flex gap-2 flex-col pr-2 pt-2 pl-3">
         <ul className="list-none ">
-          {menuItems.map((cat) => (
-            <li key={cat.title} className="text-white">
-              <span>{cat.title}</span>
-              {cat.list.map((item) => (
-                <MenuLink item={item} key={item.title} />
-              ))}
+          {menuItems.map((cat, index) => (
+            <li key={cat.title} className="text-white ">
+              <div
+                className="flex items-center cursor-pointer gap-2"
+                onClick={() => handleShowMenu(index)}
+              >
+                <span>{cat.title}</span>
+                {showSubMenu === index ? (
+                  <FaChevronDown size={15} />
+                ) : (
+                  <MdOutlineNavigateNext size={20} />
+                )}
+              </div>
+              {showSubMenu === index &&
+                cat.list.map((item) => (
+                  <MenuLink item={item} key={item.title} />
+                ))}
             </li>
           ))}
         </ul>

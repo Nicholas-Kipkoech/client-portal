@@ -3,8 +3,9 @@ import CsvDownloader from "react-csv-downloader";
 import React, { useState } from "react";
 import { useContextApi } from "@/app/context/context";
 import { formatDate, Months } from "@/app/utils/helpers";
-import { DatePicker } from "antd";
+import { DatePicker, Spin } from "antd";
 import CustomButton from "@/app/utils/CustomButtom";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const Premiums = () => {
   const {
@@ -28,6 +29,14 @@ const Premiums = () => {
     {
       id: "sumInsured",
       displayName: "Sum Insured",
+    },
+    {
+      id: "premClass",
+      displayName: "Class",
+    },
+    {
+      id: "premSubClass",
+      displayName: "Sub Class",
     },
     {
       id: "insuredName",
@@ -100,6 +109,8 @@ const Premiums = () => {
       policyNo: premium.policyNo,
       endNo: premium.endNo,
       sumInsured: premium.sumInsured,
+      premClass: premium.premClass,
+      premSubClass: premium.premSubClass,
       insuredName: premium.insuredName,
       issueDate: formatDate(premium.issueDate),
       start: formatDate(premium.start),
@@ -155,8 +166,8 @@ const Premiums = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center">
-      <div className="w-[60%] flex flex-col gap-2">
+    <div className="flex flex-col items-center justify-center mt-[6rem]">
+      <div className="w-[60%] flex flex-col gap-2 border p-2">
         <div className="flex items-center justify-center gap-2">
           <div className="flex flex-col mt-2">
             <label>From date</label>
@@ -187,13 +198,28 @@ const Premiums = () => {
           {toDate ? toDate : _toDate}
         </p>
         <CsvDownloader
-          filename={`Premium Register ${fmDate}-${toDate}`}
+          disabled={loadingPremiumReports}
+          filename={`Premium Register [${fmDate}] - [${toDate}]`}
           extension=".csv"
           columns={columns}
           datas={mappedPremiums}
           className="bg-[#cb7529] h-[3rem] rounded-sm text-white border w-auto p-2 flex justify-center items-center"
         >
-          Download CSV {mappedPremiums.length} records
+          {loadingPremiumReports ? (
+            <Spin
+              spinning={loadingPremiumReports}
+              indicator={
+                <LoadingOutlined
+                  style={{
+                    fontSize: 25,
+                    color: "white",
+                  }}
+                />
+              }
+            />
+          ) : (
+            `Download CSV ${mappedPremiums.length} records`
+          )}
         </CsvDownloader>
       </div>
     </div>

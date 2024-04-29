@@ -35,3 +35,11 @@ export const getPremiumReports = async (data: any) => {
   const res = await PrivateAxiosUtility.post(`/premiumReports/fetch`, data);
   return res.data;
 };
+export const getClaimCreditNotes = async (data: any) => {
+  const res = await PrivateAxiosUtility.post(`/claimCreditNotes/fetch`, data);
+  return res.data;
+};
+export const getReceipts = async (data: any) => {
+  const res = await PrivateAxiosUtility.post(`/receipts/fetch`, data);
+  return res.data;
+};

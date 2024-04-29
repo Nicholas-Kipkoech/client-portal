@@ -2,10 +2,12 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import {
+  getClaimCreditNotes,
   getClaims,
   getPolicies,
   getPremiumReports,
   getPremiumsAndCommission,
+  getReceipts,
   getReceiptsData,
 } from "../services/apiServices";
 
@@ -28,6 +30,8 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [uwData, setUwData] = useState([]);
   const [receipts, setReceipts] = useState([]);
   const [premiumReports, setPremiumReports] = useState([]);
+  const [claimCreditNotes, setClaimCreditNotes] = useState([]);
+  const [receiptsData, setReceiptsData] = useState([]);
   const [loadingPremiumReports, setLoadingPremiumReports] = useState(false);
   const [loadingUwData, setLoadingUwData] = useState(false);
 
@@ -163,6 +167,31 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
     fetchPremiumReports();
   }, [user, fromDate, toDate]);
 
+  useEffect(() => {
+    async function fetchClaimCreditNotes() {
+      if (Object.keys(user).length > 0) {
+        const response = await getClaimCreditNotes({
+          intermediaryCode: user?.intermediaryCode,
+          clientCode: user?.entityCode,
+        });
+        setClaimCreditNotes(response.results);
+      }
+    }
+    fetchClaimCreditNotes();
+  }, [user]);
+  useEffect(() => {
+    async function fetchReceipts() {
+      if (Object.keys(user).length > 0) {
+        const response = await getReceipts({
+          intermediaryCode: user?.intermediaryCode,
+          clientCode: user?.entityCode,
+        });
+        setReceiptsData(response.results);
+      }
+    }
+    fetchReceipts();
+  }, [user]);
+
   const calculateUwData = (uwData: any[]) => {
     const totalPremium = uwData.reduce((total: number, uw) => {
       return (
@@ -244,6 +273,8 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
         loadingPremiumReports,
         fromDate,
         toDate,
+        claimCreditNotes,
+        receiptsData,
       }}
     >
       {children}

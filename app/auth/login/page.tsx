@@ -15,6 +15,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [entCode, setEntCode] = useState("");
+  const [error, setError] = useState("");
 
   //......//registration
 
@@ -38,8 +39,9 @@ const Login = () => {
       }
     } catch (error: any) {
       setIsLogging(false);
-      console.error(error);
-      showToast("Something went wrong try again!", "error");
+      console.error(error.response.data.message);
+      setError(error.response.data.message);
+      showToast(error.response.data.message, "error");
     }
   };
 
@@ -73,6 +75,7 @@ const Login = () => {
             <p className="text-[18px] font-bold flex justify-center">
               Login to your account to continue
             </p>
+            {error && <p className="text-[red] text-[14px]">{error}</p>}
             <div className="py-8">
               <CustomInput
                 name={"Username"}

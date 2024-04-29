@@ -1,24 +1,16 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import CustomButton from "../utils/CustomButtom";
-import QuoteModal from "./QuoteModal";
 import Image from "next/image";
 import house from "../assets/house.jpg";
-import { useContextApi } from "../context/context";
 import { useRouter } from "next/navigation";
 
 const HomePage = () => {
   const router = useRouter();
-  const { isMobile }: any = useContextApi();
-  const [modalOpen, setModalOpen] = useState(false);
-
   const handleOpenQuote = () => {
-    if (isMobile) {
-      router.push("/mobile/quote");
-    } else {
-      setModalOpen(true);
-    }
+    router.push("/mobile/quote");
   };
+
   return (
     <div className="md:flex md:gap-10 justify-between">
       <div className="flex md:flex-col sm:flex-col sm:justify-start md:gap-10 sm:gap-4 sm:p-2">
@@ -48,8 +40,6 @@ const HomePage = () => {
         alt="house"
         className="md:rounded-[20px] sm:hidden md:block md:h-[20rem] 2xl:h-[25rem] md:w-[40rem]  2xl:w-[80rem]"
       />
-
-      <QuoteModal open={modalOpen} handleClose={() => setModalOpen(false)} />
     </div>
   );
 };
