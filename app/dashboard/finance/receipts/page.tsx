@@ -1,11 +1,49 @@
 "use client";
 import { useContextApi } from "@/app/context/context";
+import CustomButton from "@/app/utils/CustomButtom";
+import CustomInput from "@/app/utils/CustomInput";
 import { formatDate } from "@/app/utils/helpers";
 import { ConfigProvider, Table } from "antd";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+import { GrPrevious } from "react-icons/gr";
 
 const Receipts = () => {
+  const router = useRouter();
   const { receiptsData, user }: any = useContextApi();
+  const [initialReceipt, setInitialReceipt] = useState([]);
+  const [searchParams, setSearchParams] = useState<any>({
+    from: "",
+    receiptNo: "",
+    amount: "",
+  });
+
+  const handleSearch = () => {
+    const filteredClaims = receiptsData.filter((receipt: any) => {
+      for (const key in searchParams) {
+        if (searchParams[key]) {
+          // Check if the search param is not empty
+          const fieldValue = receipt[key]?.toLowerCase(); // Get the field value of the policy (if exists)
+          const searchTerm = searchParams[key].toLowerCase(); // Get the search term
+          if (fieldValue && fieldValue.includes(searchTerm)) {
+            return true; // Include policy if field value matches the search term
+          }
+        }
+      }
+      return false;
+    });
+    setInitialReceipt(filteredClaims);
+  };
+  console.log(initialReceipt);
+
+  const handleReset = () => {
+    setSearchParams({
+      from: "",
+      amount: "",
+      receiptNo: "",
+    });
+    setInitialReceipt(receiptsData);
+  };
   const columns = [
     {
       title: "Reeeipt NO",
@@ -70,6 +108,50 @@ const Receipts = () => {
   ];
   return (
     <div>
+      <div className="flex justify-between items-center">
+        <div className="flex items-center" onClick={() => router.back()}>
+          <GrPrevious size={15} />
+          <p>Back</p>
+        </div>
+        <p className="md:text-[1.8rem] sm:text-[1.2rem] font-bold">Receipts</p>
+        <p></p>
+      </div>
+      <div className="flex flex-wrap gap-[0.2rem] my-2 items-center">
+        <CustomInput
+          name="Insured Name"
+          onChange={(e) =>
+            setSearchParams({ ...searchParams, from: e.target.value })
+          }
+          className="border w-[15rem] p-2"
+          value={searchParams.from}
+        />
+        <CustomInput
+          name="Receipt No"
+          className="border w-[10rem] p-2"
+          value={searchParams.receiptNo}
+          onChange={(e) =>
+            setSearchParams({ ...searchParams, receiptNo: e.target.value })
+          }
+        />
+        <CustomInput
+          name="Amount"
+          className="border w-[10rem] p-2"
+          value={searchParams.amount}
+          onChange={(e) =>
+            setSearchParams({ ...searchParams, amount: e.target.value })
+          }
+        />
+        <CustomButton
+          onClick={handleSearch}
+          name="Search"
+          className="border h-[2.2rem] bg-slate-800 text-white w-[5rem] mt-7"
+        />
+        <CustomButton
+          onClick={handleReset}
+          name="Reset"
+          className="border h-[2.2rem] bg-red-600 text-white w-[5rem] mt-7"
+        />
+      </div>
       <ConfigProvider
         theme={{
           components: {
@@ -87,7 +169,7 @@ const Receipts = () => {
         <Table
           className="mt-2"
           columns={columns}
-          dataSource={receiptsData}
+          dataSource={initialReceipt.length > 0 ? initialReceipt : receiptsData}
           scroll={{ x: 1600 }}
         />
       </ConfigProvider>
