@@ -1,11 +1,48 @@
 "use client";
 import { useContextApi } from "@/app/context/context";
+import CustomButton from "@/app/utils/CustomButtom";
+import CustomInput from "@/app/utils/CustomInput";
 import { formatDate } from "@/app/utils/helpers";
 import { ConfigProvider, Table } from "antd";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+import { GrPrevious } from "react-icons/gr";
 
 const ClaimsCreditNotes = () => {
   const { claimCreditNotes }: any = useContextApi();
+  const router = useRouter();
+
+  const [initialClaimCreditNotes, setInitialCreditNotes] = useState([]);
+
+  const [searchParams, setSearchParams] = useState<any>({
+    journalNo: "",
+    insured: "",
+  });
+
+  const handleSearch = () => {
+    const filteredReceipts = claimCreditNotes.filter((receipt: any) => {
+      for (const key in searchParams) {
+        if (searchParams[key]) {
+          // Check if the search param is not empty
+          const fieldValue = receipt[key]?.toLowerCase(); // Get the field value of the policy (if exists)
+          const searchTerm = searchParams[key].toLowerCase(); // Get the search term
+          if (fieldValue && fieldValue.includes(searchTerm)) {
+            return true; // Include policy if field value matches the search term
+          }
+        }
+      }
+      return false;
+    });
+    setInitialCreditNotes(filteredReceipts);
+  };
+  const handleReset = () => {
+    setSearchParams({
+      insured: "",
+      journalNo: "",
+    });
+    setInitialCreditNotes(claimCreditNotes);
+  };
+
   const columns = [
     {
       title: "Journal NO",
@@ -70,6 +107,45 @@ const ClaimsCreditNotes = () => {
   ];
   return (
     <div>
+      <div className="flex justify-between items-center">
+        <div className="flex items-center" onClick={() => router.back()}>
+          <GrPrevious size={15} />
+          <p>Back</p>
+        </div>
+        <p className="md:text-[1.8rem] sm:text-[1.2rem] font-bold">
+          Claim Credit Notes
+        </p>
+        <p></p>
+      </div>
+      <div className="flex flex-wrap gap-[0.2rem] my-2 items-center">
+        <CustomInput
+          name="Insured Name"
+          onChange={(e) =>
+            setSearchParams({ ...searchParams, insured: e.target.value })
+          }
+          className="border w-[15rem] p-2"
+          value={searchParams.insured}
+        />
+        <CustomInput
+          name="Journal No"
+          onChange={(e) =>
+            setSearchParams({ ...searchParams, journalNo: e.target.value })
+          }
+          className="border w-[15rem] p-2"
+          value={searchParams.journalNo}
+        />
+
+        <CustomButton
+          onClick={handleSearch}
+          name="Search"
+          className="border h-[2.2rem] bg-slate-800 text-white w-[5rem] mt-7"
+        />
+        <CustomButton
+          onClick={handleReset}
+          name="Reset"
+          className="border h-[2.2rem] bg-red-600 text-white w-[5rem] mt-7"
+        />
+      </div>
       <ConfigProvider
         theme={{
           components: {
@@ -86,7 +162,11 @@ const ClaimsCreditNotes = () => {
         <Table
           className="mt-2"
           columns={columns}
-          dataSource={claimCreditNotes}
+          dataSource={
+            initialClaimCreditNotes.length > 0
+              ? initialClaimCreditNotes
+              : claimCreditNotes
+          }
           scroll={{ x: 1200 }}
         />
       </ConfigProvider>
