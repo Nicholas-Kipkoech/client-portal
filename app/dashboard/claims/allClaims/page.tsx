@@ -3,7 +3,7 @@ import { ConfigProvider, Table } from "antd";
 import React, { useState } from "react";
 
 import { GrPrevious } from "react-icons/gr";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { formatDate } from "@/app/utils/helpers";
 import { useContextApi } from "@/app/context/context";
@@ -37,7 +37,6 @@ const AllClaim = () => {
     });
     setInitialClaims(filteredClaims);
   };
-  console.log(initialClaims);
 
   const handleReset = () => {
     setSearchParams({

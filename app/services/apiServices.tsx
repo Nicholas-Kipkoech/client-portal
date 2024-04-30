@@ -47,3 +47,7 @@ export const getClaimDebits = async (data: any) => {
   const res = await PrivateAxiosUtility.post(`/claimDebits/fetch`, data);
   return res.data;
 };
+export const getCommissionPayable = async (data: any) => {
+  const res = await PrivateAxiosUtility.post(`/commissionPayble/fetch`, data);
+  return res.data;
+};

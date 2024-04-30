@@ -7,117 +7,11 @@ import { LiaFileInvoiceSolid } from "react-icons/lia";
 import { VscOrganization } from "react-icons/vsc";
 import { MdOutlineNavigateNext } from "react-icons/md";
 import { FaChevronDown } from "react-icons/fa6";
-interface NavProps {
-  name: string;
-  page: string;
-  icon: any;
-}
-
-const menuItems = [
-  {
-    title: "Insights",
-    list: [
-      {
-        title: "Overview",
-        path: "/dashboard",
-        icon: <GrOverview />,
-      },
-    ],
-  },
-  {
-    title: "Quotes",
-    list: [
-      {
-        title: "Request Quote",
-        path: "/dashboard/quotes/add-quote",
-        icon: <VscOrganization />,
-      },
-      {
-        title: "View Quotes",
-        path: "/dashboard/quotes",
-        icon: <LiaFileInvoiceSolid />,
-      },
-    ],
-  },
-  {
-    title: "Policies",
-    list: [
-      {
-        title: "View Running policies",
-        path: "/dashboard/policies/runningPolicies",
-        icon: <LiaFileInvoiceSolid />,
-      },
-      {
-        title: "View All policies",
-        path: "/dashboard/policies/allPolicies",
-        icon: <LiaFileInvoiceSolid />,
-      },
-    ],
-  },
-  {
-    title: "Claims",
-    list: [
-      {
-        title: "File claim",
-        path: "/dashboard/claims/file-claim",
-        icon: <LiaFileInvoiceSolid />,
-      },
-      {
-        title: "Open claims",
-        path: "/dashboard/claims/openClaims",
-        icon: <LiaFileInvoiceSolid />,
-      },
-      {
-        title: "View All claims",
-        path: "/dashboard/claims/allClaims",
-        icon: <LiaFileInvoiceSolid />,
-      },
-    ],
-  },
-  {
-    title: "Reports",
-    list: [
-      {
-        title: "View Premiums",
-        path: "/dashboard/reports/premiums",
-        icon: <LiaFileInvoiceSolid />,
-      },
-      {
-        title: "View Statements",
-        path: "/dashboard/reports/statements",
-        icon: <LiaFileInvoiceSolid />,
-      },
-      {
-        title: "Upcoming Renewals",
-        path: "/dashboard/reports/upcomingRenewals",
-        icon: <LiaFileInvoiceSolid />,
-      },
-    ],
-  },
-  {
-    title: "Finance",
-    list: [
-      {
-        title: "Receipts Download",
-        path: "/dashboard/finance/receipts",
-        icon: <LiaFileInvoiceSolid />,
-      },
-      {
-        title: "Claim Credit Notes",
-        path: "/dashboard/finance/claimCreditNotes",
-        icon: <LiaFileInvoiceSolid />,
-      },
-      {
-        title: "Debits",
-        path: "/dashboard/finance/debits",
-        icon: <LiaFileInvoiceSolid />,
-      },
-    ],
-  },
-];
+import { useContextApi } from "../context/context";
 
 const Sidebar = () => {
   const [showSubMenu, setShowSubMenu] = useState(0);
+  const { user }: any = useContextApi();
   const MenuLink = ({ item }: any) => {
     const pathname = usePathname();
 
@@ -138,6 +32,117 @@ const Sidebar = () => {
     setShowSubMenu((prevIndex) => (prevIndex === index ? null : index));
   };
 
+  const menuItems = [
+    {
+      title: "Insights",
+      list: [
+        {
+          title: "Overview",
+          path: "/dashboard",
+          icon: <GrOverview />,
+        },
+      ],
+    },
+    {
+      title: "Quotes",
+      list: [
+        {
+          title: "Request Quote",
+          path: "/dashboard/quotes/add-quote",
+          icon: <VscOrganization />,
+        },
+        {
+          title: "View Quotes",
+          path: "/dashboard/quotes",
+          icon: <LiaFileInvoiceSolid />,
+        },
+      ],
+    },
+    {
+      title: "Policies",
+      list: [
+        {
+          title: "View Running policies",
+          path: "/dashboard/policies/runningPolicies",
+          icon: <LiaFileInvoiceSolid />,
+        },
+        {
+          title: "View All policies",
+          path: "/dashboard/policies/allPolicies",
+          icon: <LiaFileInvoiceSolid />,
+        },
+      ],
+    },
+    {
+      title: "Claims",
+      list: [
+        {
+          title: "File claim",
+          path: "/dashboard/claims/file-claim",
+          icon: <LiaFileInvoiceSolid />,
+        },
+        {
+          title: "Open claims",
+          path: "/dashboard/claims/openClaims",
+          icon: <LiaFileInvoiceSolid />,
+        },
+        {
+          title: "View All claims",
+          path: "/dashboard/claims/allClaims",
+          icon: <LiaFileInvoiceSolid />,
+        },
+      ],
+    },
+    {
+      title: "Reports",
+      list: [
+        {
+          title: "View Premiums",
+          path: "/dashboard/reports/premiums",
+          icon: <LiaFileInvoiceSolid />,
+        },
+        {
+          title: "View Statements",
+          path: "/dashboard/reports/statements",
+          icon: <LiaFileInvoiceSolid />,
+        },
+        {
+          title: "Upcoming Renewals",
+          path: "/dashboard/reports/upcomingRenewals",
+          icon: <LiaFileInvoiceSolid />,
+        },
+        (user && user?.intermediaryCode === "70") ||
+        user.intermediaryCode === "25"
+          ? {
+              title: "Commsion Payable",
+              path: "/dashboard/reports/commissionPayable",
+              icon: <LiaFileInvoiceSolid />,
+            }
+          : "",
+      ],
+    },
+    {
+      title: "Finance",
+      list: [
+        {
+          title: "Receipts Download",
+          path: "/dashboard/finance/receipts",
+          icon: <LiaFileInvoiceSolid />,
+        },
+        {
+          title: "Claim Credit Notes",
+          path: "/dashboard/finance/claimCreditNotes",
+          icon: <LiaFileInvoiceSolid />,
+        },
+        {
+          title: "Debits",
+          path: "/dashboard/finance/debits",
+          icon: <LiaFileInvoiceSolid />,
+        },
+      ],
+    },
+  ];
+
   return (
     <div className="h-screen bg-[#092332] overflow-y-auto">
       <div className="flex gap-2 flex-col pr-2 pt-2 pl-3">
@@ -156,8 +161,8 @@ const Sidebar = () => {
                 )}
               </div>
               {showSubMenu === index &&
-                cat.list.map((item) => (
-                  <MenuLink item={item} key={item.title} />
+                cat.list.map((item: any) => (
+                  <MenuLink item={item} key={item?.title} />
                 ))}
             </li>
           ))}

@@ -34,7 +34,6 @@ const Receipts = () => {
     });
     setInitialReceipt(filteredClaims);
   };
- 
 
   const handleReset = () => {
     setSearchParams({

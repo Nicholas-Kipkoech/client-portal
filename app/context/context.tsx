@@ -5,6 +5,7 @@ import {
   getClaimCreditNotes,
   getClaimDebits,
   getClaims,
+  getCommissionPayable,
   getPolicies,
   getPremiumReports,
   getPremiumsAndCommission,
@@ -28,12 +29,16 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [claims, setClaims] = useState([]);
   const [fromDate, setFromDate] = useState("1-Jan-2023");
   const [toDate, setToDate] = useState("31-Dec-2023");
+  const [fromMonthDate, setFromMonthDate] = useState("1-Apr-2024");
+  const [toMonthDate, setToMonthDate] = useState("30-Apr-2024");
   const [uwData, setUwData] = useState([]);
   const [receipts, setReceipts] = useState([]);
   const [premiumReports, setPremiumReports] = useState([]);
   const [claimCreditNotes, setClaimCreditNotes] = useState([]);
   const [receiptsData, setReceiptsData] = useState([]);
   const [debits, setDebits] = useState([]);
+  const [commissionPayble, setCommissionPayable] = useState([]);
+  const [loadingCommissions, setLoadingCommissions] = useState(false);
   const [loadingPremiumReports, setLoadingPremiumReports] = useState(false);
   const [loadingUwData, setLoadingUwData] = useState(false);
 
@@ -205,6 +210,22 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
     }
     fetchClaimDebits();
   }, [user]);
+  useEffect(() => {
+    async function fetchCommissionPayable() {
+      setLoadingCommissions(true);
+      if (Object.keys(user).length > 0) {
+        const response = await getCommissionPayable({
+          fromDate: toMonthDate,
+          toDate: fromMonthDate,
+          intermediaryCode: user?.intermediaryCode,
+          clientCode: user?.entityCode,
+        });
+        setLoadingCommissions(false);
+        setCommissionPayable(response.results);
+      }
+    }
+    fetchCommissionPayable();
+  }, [user, toMonthDate, fromMonthDate]);
 
   const calculateUwData = (uwData: any[]) => {
     const totalPremium = uwData.reduce((total: number, uw) => {
@@ -290,6 +311,8 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
         claimCreditNotes,
         receiptsData,
         debits,
+        commissionPayble,
+        loadingCommissions,
       }}
     >
       {children}
