@@ -58,7 +58,7 @@ const Receipts = () => {
       render: (_: any, item: any) => (
         <div className="flex gap-2">
           <a
-            target="__blank"
+            target="_blank"
             href={item.receiptUrl}
             className="p-[4px] border cursor-pointer bg-slate-700 text-white rounded-md"
           >
@@ -79,6 +79,7 @@ const Receipts = () => {
               padding: 4,
               colorBgContainer: "whitesmoke",
               rowHoverBg: "#cb7529",
+              lineHeight: 2,
             },
           },
         }}

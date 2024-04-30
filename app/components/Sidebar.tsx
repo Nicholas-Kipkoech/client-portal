@@ -107,6 +107,11 @@ const menuItems = [
         path: "/dashboard/finance/claimCreditNotes",
         icon: <LiaFileInvoiceSolid />,
       },
+      {
+        title: "Debits",
+        path: "/dashboard/finance/debits",
+        icon: <LiaFileInvoiceSolid />,
+      },
     ],
   },
 ];

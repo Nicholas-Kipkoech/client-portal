@@ -4,13 +4,13 @@ import { formatDate } from "@/app/utils/helpers";
 import { ConfigProvider, Table } from "antd";
 import React from "react";
 
-const ClaimsCreditNotes = () => {
-  const { claimCreditNotes }: any = useContextApi();
+const Debits = () => {
+  const { debits }: any = useContextApi();
   const columns = [
     {
-      title: "Journal NO",
+      title: "Doc NO",
       dataIndex: "policyNo",
-      render: (_: any, item: any) => <p>{item.journalNo}</p>,
+      render: (_: any, item: any) => <p>{item.docNumber}</p>,
     },
     {
       title: "GL Date",
@@ -18,39 +18,34 @@ const ClaimsCreditNotes = () => {
       render: (_: any, item: any) => <p>{formatDate(item.glDate)}</p>,
     },
     {
-      title: "Currency",
+      title: "Policy No",
       dataIndex: "product",
-      render: (_: any, item: any) => <p>{item.currency}</p>,
+      render: (_: any, item: any) => <p>{item.policyNo}</p>,
     },
     {
-      title: "DR Total",
+      title: "End No",
       dataIndex: "invoiceNumber",
-      render: (_: any, item: any) => <p> {item.DRTotal.toLocaleString()}</p>,
+      render: (_: any, item: any) => <p> {item.endNo}</p>,
     },
     {
-      title: "CR Total",
+      title: "Insured",
       dataIndex: "invoiceNumber",
-      render: (_: any, item: any) => <p>{item.CRTotal.toLocaleString()}</p>,
+      render: (_: any, item: any) => <p>{item.insured}</p>,
     },
     {
-      title: "Type",
+      title: "Premium",
       dataIndex: "status",
-      render: (_: any, item: any) => <p>{item.type}</p>,
+      render: (_: any, item: any) => <p>KSH {item.premium.toLocaleString()}</p>,
     },
     {
-      title: "Status",
+      title: "Paid",
       dataIndex: "status",
-      render: (_: any, item: any) => <p>{item.status}</p>,
+      render: (_: any, item: any) => <p>KSH {item.paid.toLocaleString()}</p>,
     },
     {
-      title: "Posted",
+      title: "Outstanding Balance",
       dataIndex: "status",
-      render: (_: any, item: any) => <p>{item.posted}</p>,
-    },
-    {
-      title: "Narration",
-      dataIndex: "status",
-      render: (_: any, item: any) => <p>{item.narration}</p>,
+      render: (_: any, item: any) => <p>KSH {item.os.toLocaleString()}</p>,
     },
     {
       title: "Action",
@@ -76,7 +71,8 @@ const ClaimsCreditNotes = () => {
             Table: {
               headerBg: "#092332",
               headerColor: "white",
-              padding: 4,
+              padding: 2,
+              paddingXXS: 5,
               colorBgContainer: "whitesmoke",
               rowHoverBg: "#cb7529",
             },
@@ -86,7 +82,7 @@ const ClaimsCreditNotes = () => {
         <Table
           className="mt-2"
           columns={columns}
-          dataSource={claimCreditNotes}
+          dataSource={debits}
           scroll={{ x: 1200 }}
         />
       </ConfigProvider>
@@ -94,4 +90,4 @@ const ClaimsCreditNotes = () => {
   );
 };
 
-export default ClaimsCreditNotes;
+export default Debits;

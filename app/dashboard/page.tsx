@@ -17,8 +17,7 @@ interface CustomCardProps {
 const Dashboard = () => {
   const {
     quotes,
-    claims,
-    policies,
+    debits,
     totalPremium,
     totalCommission,
     setFromDate,
@@ -27,6 +26,7 @@ const Dashboard = () => {
     receiptResults,
     filteredPolicies,
     openClaims,
+    claimCreditNotes,
   }: any = useContextApi();
   const [fmDate, setFmDate] = useState("");
   const [toDate, setTdDate] = useState("");
@@ -117,9 +117,19 @@ const Dashboard = () => {
         <CustomCard
           name="Running Policies"
           count={filteredPolicies.length}
-          to="policies"
+          to="policies/runningPolicies"
         />
-        <CustomCard name="Open Claims" count={openClaims.length} to="claims" />
+        <CustomCard
+          name="Open Claims"
+          count={openClaims.length}
+          to="claims/openClaims"
+        />
+        <CustomCard name="Debits" count={debits.length} to="finance/debits" />
+        <CustomCard
+          name="Claim Credit Notes"
+          count={claimCreditNotes.length}
+          to="finance/debits"
+        />
         <CustomCard
           name="Premium Booked"
           count={totalPremium}

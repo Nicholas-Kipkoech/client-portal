@@ -3,6 +3,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import {
   getClaimCreditNotes,
+  getClaimDebits,
   getClaims,
   getPolicies,
   getPremiumReports,
@@ -32,6 +33,7 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [premiumReports, setPremiumReports] = useState([]);
   const [claimCreditNotes, setClaimCreditNotes] = useState([]);
   const [receiptsData, setReceiptsData] = useState([]);
+  const [debits, setDebits] = useState([]);
   const [loadingPremiumReports, setLoadingPremiumReports] = useState(false);
   const [loadingUwData, setLoadingUwData] = useState(false);
 
@@ -191,6 +193,18 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
     }
     fetchReceipts();
   }, [user]);
+  useEffect(() => {
+    async function fetchClaimDebits() {
+      if (Object.keys(user).length > 0) {
+        const response = await getClaimDebits({
+          intermediaryCode: user?.intermediaryCode,
+          clientCode: user?.entityCode,
+        });
+        setDebits(response.results);
+      }
+    }
+    fetchClaimDebits();
+  }, [user]);
 
   const calculateUwData = (uwData: any[]) => {
     const totalPremium = uwData.reduce((total: number, uw) => {
@@ -275,6 +289,7 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
         toDate,
         claimCreditNotes,
         receiptsData,
+        debits,
       }}
     >
       {children}

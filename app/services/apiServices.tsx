@@ -43,3 +43,7 @@ export const getReceipts = async (data: any) => {
   const res = await PrivateAxiosUtility.post(`/receipts/fetch`, data);
   return res.data;
 };
+export const getClaimDebits = async (data: any) => {
+  const res = await PrivateAxiosUtility.post(`/claimDebits/fetch`, data);
+  return res.data;
+};

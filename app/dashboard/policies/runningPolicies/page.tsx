@@ -1,17 +1,55 @@
 "use client";
 
 import { useContextApi } from "@/app/context/context";
+import CustomButton from "@/app/utils/CustomButtom";
+import CustomInput from "@/app/utils/CustomInput";
 import { formatDate } from "@/app/utils/helpers";
 import { ConfigProvider, Table } from "antd";
 import { useRouter } from "next/navigation";
 
-import React from "react";
+import React, { useState } from "react";
 import { GrPrevious } from "react-icons/gr";
 
 const Policies = () => {
   const router = useRouter();
-  const { filteredPolicies, loadingPolicies }: any = useContextApi();
+  const { filteredPolicies: runningPolicies, loadingPolicies }: any =
+    useContextApi();
+  const [initialPolicies, setInitialPolicies] = useState([]);
+  const [searchParams, setSearchParams] = useState<any>({
+    client: "",
+    carRegNo: "",
+    policyNo: "",
+    endNo: "",
+    product: "",
+  });
 
+  const handleSearch = () => {
+    const filteredPolicies = runningPolicies.filter((policy: any) => {
+      for (const key in searchParams) {
+        if (searchParams[key]) {
+          // Check if the search param is not empty
+          const fieldValue = policy[key]?.toLowerCase(); // Get the field value of the policy (if exists)
+          const searchTerm = searchParams[key].toLowerCase(); // Get the search term
+          if (fieldValue && fieldValue.includes(searchTerm)) {
+            return true; // Include policy if field value matches the search term
+          }
+        }
+      }
+      return false;
+    });
+    setInitialPolicies(filteredPolicies);
+  };
+
+  const handleReset = () => {
+    setSearchParams({
+      client: "",
+      carRegNo: "",
+      policyNo: "",
+      endNo: "",
+      product: "",
+    });
+    setInitialPolicies(runningPolicies);
+  };
   const columns = [
     {
       title: "Policy Number",
@@ -57,16 +95,68 @@ const Policies = () => {
 
   return (
     <div className="flex flex-col justify-center ">
-      <div
-        onClick={() => router.back()}
-        className="flex justify-between  cursor-pointer"
-      >
-        <div className="flex items-center">
+      <div className="flex justify-between">
+        <div className="flex items-center" onClick={() => router.back()}>
           <GrPrevious size={15} />
           <p>Back</p>
         </div>
-        <p className="md:text-[1.8rem] sm:text-[1.2rem] font-bold">Policies</p>
+        <p className="md:text-[1.8rem] sm:text-[1.2rem] font-bold">
+          Running Policies
+        </p>
         <p></p>
+      </div>
+
+      <div className="flex flex-wrap gap-[0.2rem] my-2 items-center">
+        <CustomInput
+          name="Insured"
+          onChange={(e) =>
+            setSearchParams({ ...searchParams, client: e.target.value })
+          }
+          className="border w-[15rem] p-2"
+          value={searchParams.client}
+        />
+        <CustomInput
+          name="Vehicle Reg No"
+          className="border w-[10rem] p-2"
+          value={searchParams.carRegNo}
+          onChange={(e) =>
+            setSearchParams({ ...searchParams, carRegNo: e.target.value })
+          }
+        />
+        <CustomInput
+          name="Policy No"
+          className="border w-[15rem] p-2"
+          value={searchParams.policyNo}
+          onChange={(e) =>
+            setSearchParams({ ...searchParams, policyNo: e.target.value })
+          }
+        />
+        <CustomInput
+          name="End No"
+          className="border w-[15rem] p-2"
+          value={searchParams.endNo}
+          onChange={(e) =>
+            setSearchParams({ ...searchParams, endNo: e.target.value })
+          }
+        />
+        <CustomInput
+          name="Product Name"
+          className="border w-[15rem] p-2"
+          value={searchParams.product}
+          onChange={(e) =>
+            setSearchParams({ ...searchParams, product: e.target.value })
+          }
+        />
+        <CustomButton
+          onClick={handleSearch}
+          name="Search"
+          className="border h-[2.2rem] bg-slate-800 text-white w-[5rem] mt-7"
+        />
+        <CustomButton
+          onClick={handleReset}
+          name="Reset"
+          className="border h-[2.2rem] bg-red-600 text-white w-[5rem] mt-7"
+        />
       </div>
 
       <ConfigProvider
@@ -84,7 +174,9 @@ const Policies = () => {
       >
         <Table
           className="mt-2"
-          dataSource={filteredPolicies}
+          dataSource={
+            initialPolicies.length > 0 ? initialPolicies : runningPolicies
+          }
           loading={loadingPolicies}
           columns={columns}
           scroll={{ x: 1500 }}

@@ -13,21 +13,32 @@ const Navbar = () => {
 
   const router = useRouter();
 
+  function formatName(name: string) {
+    if (name !== undefined) {
+      let finalName = "";
+      const splittedName = name?.split(" ");
+      for (let i = 0; i < splittedName?.length; i++) {
+        finalName += splittedName[i][0];
+      }
+      return finalName;
+    }
+  }
+
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
     router.push("/");
   };
 
   return (
-    <div className="sticky top-0 bg-[#F7F5FD] flex justify-between items-center z-10  sm:p-[1px] h-auto ">
+    <div className="sticky top-0 bg-[grey] flex justify-between items-center z-10  sm:p-[1px] h-auto ">
       <span className="flex md:text-[18px] sm:text-[14px] font-bold cursor-pointer">
         CLIENT PORTAL
       </span>
       <div className="flex gap-4 items-center m-3">
         <div className="border h-auto p-2 rounded-md bg-white w-auto flex items-center justify-center flex-col">
           <div className="flex items-center gap-2">
-            <div className="p-2 border rounded-[50%] text-bold bg-slate-900 text-white items-center flex justify-center">
-              NM
+            <div className="p-3  border rounded-[50%] text-bold bg-slate-900 text-white items-center flex justify-center">
+              {formatName(user?.entityName)}
             </div>
             <div className="flex gap-2 items-center">
               <div>
@@ -49,7 +60,8 @@ const Navbar = () => {
                   <div className="p-2">
                     <p className="font-bold text-[0.8rem] ">
                       {" "}
-                      Email accounts [{user.entityEmail}]
+                      Email accounts [
+                      {user.entityEmail ? user.entityEmail : "N/A"}]
                     </p>
                     <p className="font-bold text-[0.8rem] ">
                       Phone No [{user.entityPhone ? user.entityPhone : "N/A"}]
