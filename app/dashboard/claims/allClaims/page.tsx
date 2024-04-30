@@ -1,14 +1,53 @@
 "use client";
 import { ConfigProvider, Table } from "antd";
-import React from "react";
+import React, { useState } from "react";
 
 import { GrPrevious } from "react-icons/gr";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { formatDate } from "@/app/utils/helpers";
 import { useContextApi } from "@/app/context/context";
+import CustomInput from "@/app/utils/CustomInput";
+import CustomButton from "@/app/utils/CustomButtom";
 
-const Claims = () => {
+const AllClaim = () => {
   const { claims, loadingClaims }: any = useContextApi();
+
+  const [initialClaims, setInitialClaims] = useState([]);
+
+  const [searchParams, setSearchParams] = useState<any>({
+    insured: "",
+    carRegNo: "",
+    policyNumber: "",
+  });
+
+  const handleSearch = () => {
+    const filteredClaims = claims.filter((claim: any) => {
+      for (const key in searchParams) {
+        if (searchParams[key]) {
+          // Check if the search param is not empty
+          const fieldValue = claim[key]?.toLowerCase(); // Get the field value of the policy (if exists)
+          const searchTerm = searchParams[key].toLowerCase(); // Get the search term
+          if (fieldValue && fieldValue.includes(searchTerm)) {
+            return true; // Include policy if field value matches the search term
+          }
+        }
+      }
+      return false;
+    });
+    setInitialClaims(filteredClaims);
+  };
+  console.log(initialClaims);
+
+  const handleReset = () => {
+    setSearchParams({
+      insured: "",
+      carRegNo: "",
+      policyNumber: "",
+      lossDate: "",
+    });
+    setInitialClaims(claims);
+  };
 
   const columns = [
     {
@@ -39,8 +78,10 @@ const Claims = () => {
       dataIndex: "invoiceNumber",
       render: (_: any, item: any) => (
         <div>
-          <p className="text-[12px]">{item.intermediary}</p>
-          <p className="text-[12px]">{item.insured}</p>
+          <p className="text-[13px] font-bold">{item.insured}</p>
+          <p className="text-[10px] font-bold text-slate-500">
+            {item.intermediary}
+          </p>
         </div>
       ),
     },
@@ -72,16 +113,51 @@ const Claims = () => {
   const router = useRouter();
   return (
     <div>
-      <div
-        onClick={() => router.back()}
-        className="flex justify-between items-center  cursor-pointer"
-      >
-        <div className="flex items-center">
+      <div className="flex justify-between items-center">
+        <div className="flex items-center" onClick={() => router.back()}>
           <GrPrevious size={15} />
           <p>Back</p>
         </div>
-        <p className="md:text-[1.8rem] sm:text-[1.2rem] font-bold">Claims</p>
+        <p className="md:text-[1.8rem] sm:text-[1.2rem] font-bold">
+          All Claims
+        </p>
         <p></p>
+      </div>
+      <div className="flex flex-wrap gap-[0.2rem] my-2 items-center">
+        <CustomInput
+          name="Policy No"
+          onChange={(e) =>
+            setSearchParams({ ...searchParams, policyNumber: e.target.value })
+          }
+          className="border w-[15rem] p-2"
+          value={searchParams.policyNumber}
+        />
+        <CustomInput
+          name="Insured Name"
+          onChange={(e) =>
+            setSearchParams({ ...searchParams, insured: e.target.value })
+          }
+          className="border w-[15rem] p-2"
+          value={searchParams.insured}
+        />
+        <CustomInput
+          name="Vehicle Reg No"
+          className="border w-[10rem] p-2"
+          value={searchParams.carRegNo}
+          onChange={(e) =>
+            setSearchParams({ ...searchParams, carRegNo: e.target.value })
+          }
+        />
+        <CustomButton
+          onClick={handleSearch}
+          name="Search"
+          className="border h-[2.2rem] bg-slate-800 text-white w-[5rem] mt-7"
+        />
+        <CustomButton
+          onClick={handleReset}
+          name="Reset"
+          className="border h-[2.2rem] bg-red-600 text-white w-[5rem] mt-7"
+        />
       </div>
       <ConfigProvider
         theme={{
@@ -98,7 +174,7 @@ const Claims = () => {
         <Table
           columns={columns}
           loading={loadingClaims}
-          dataSource={claims}
+          dataSource={initialClaims.length > 0 ? initialClaims : claims}
           scroll={{ x: 1500 }}
         />
       </ConfigProvider>
@@ -106,4 +182,4 @@ const Claims = () => {
   );
 };
 
-export default Claims;
+export default AllClaim;
