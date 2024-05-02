@@ -55,3 +55,7 @@ export const getGLStatements = async (data: any) => {
   const res = await PrivateAxiosUtility.post(`/glStatements/fetch`, data);
   return res.data;
 };
+export const getUpcomingRenewals = async (data: any) => {
+  const res = await PrivateAxiosUtility.post(`/upcomingRenewals/fetch`, data);
+  return res.data;
+};

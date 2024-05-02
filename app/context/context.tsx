@@ -12,7 +12,9 @@ import {
   getPremiumsAndCommission,
   getReceipts,
   getReceiptsData,
+  getUpcomingRenewals,
 } from "../services/apiServices";
+import { format3months } from "../utils/helpers";
 
 const Context = createContext({});
 
@@ -40,6 +42,7 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [debits, setDebits] = useState([]);
   const [commissionPayable, setCommissionPayable] = useState([]);
   const [glStatements, setGLstatements] = useState([]);
+  const [upcomingRenewals, setUpcomingRenewals] = useState([]);
   const [loadingCommissions, setLoadingCommissions] = useState(false);
   const [loadingPremiumReports, setLoadingPremiumReports] = useState(false);
   const [loadingUwData, setLoadingUwData] = useState(false);
@@ -245,6 +248,23 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
     fetchCommissionPayable();
   }, [user, toMonthDate, fromMonthDate]);
 
+  const { systemDate, next3Month } = format3months();
+  useEffect(() => {
+    async function fetchUpcomingRenewals() {
+      if (Object.keys(user).length > 0) {
+        const response = await getUpcomingRenewals({
+          fromDate: systemDate,
+          toDate: next3Month,
+          intermediaryCode: user?.intermediaryCode,
+          clientCode: user?.entityCode,
+        });
+
+        setUpcomingRenewals(response.results);
+      }
+    }
+    fetchUpcomingRenewals();
+  }, [user, systemDate, next3Month]);
+
   const calculateUwData = (uwData: any[]) => {
     const totalPremium = uwData.reduce((total: number, uw) => {
       return (
@@ -332,6 +352,7 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
         commissionPayable,
         loadingCommissions,
         glStatements,
+        upcomingRenewals,
       }}
     >
       {children}
