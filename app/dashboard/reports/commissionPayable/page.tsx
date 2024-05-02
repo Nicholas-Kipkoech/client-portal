@@ -8,6 +8,12 @@ import { formatDate } from "@/app/utils/helpers";
 import { useContextApi } from "@/app/context/context";
 
 const CommissionPayble = () => {
+  function calculatePercentage(num1: number, num2: number): any {
+    const absNum1 = Math.abs(num1);
+    const absNum2 = Math.abs(num2);
+    return Math.floor(100 / (absNum1 / absNum2));
+  }
+
   const { commissionPayable, loadingCommissions }: any = useContextApi();
 
   const columns = [
@@ -53,7 +59,9 @@ const CommissionPayble = () => {
     {
       title: "Comm Rate",
       dataIndex: "paid",
-      render: (_: any, item: any) => <p>{item.commRate}</p>,
+      render: (_: any, item: any) => (
+        <p>{calculatePercentage(item.basicPremium, item.commission)}%</p>
+      ),
     },
     {
       title: "Commission",
@@ -73,7 +81,9 @@ const CommissionPayble = () => {
     {
       title: "Net Comm Payable",
       dataIndex: "paid",
-      render: (_: any, item: any) => <p>{item.netPayable}</p>,
+      render: (_: any, item: any) => (
+        <p>{(item.commission - item.WHTonComm).toFixed(2)}</p>
+      ),
     },
   ];
   const router = useRouter();
@@ -106,7 +116,7 @@ const CommissionPayble = () => {
           columns={columns}
           loading={loadingCommissions}
           dataSource={commissionPayable}
-          scroll={{ x: 1500 }}
+          scroll={{ x: 1800 }}
         />
       </ConfigProvider>
     </div>

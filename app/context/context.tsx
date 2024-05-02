@@ -37,7 +37,7 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [claimCreditNotes, setClaimCreditNotes] = useState([]);
   const [receiptsData, setReceiptsData] = useState([]);
   const [debits, setDebits] = useState([]);
-  const [commissionPayble, setCommissionPayable] = useState([]);
+  const [commissionPayable, setCommissionPayable] = useState([]);
   const [loadingCommissions, setLoadingCommissions] = useState(false);
   const [loadingPremiumReports, setLoadingPremiumReports] = useState(false);
   const [loadingUwData, setLoadingUwData] = useState(false);
@@ -215,8 +215,8 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
       setLoadingCommissions(true);
       if (Object.keys(user).length > 0) {
         const response = await getCommissionPayable({
-          fromDate: toMonthDate,
-          toDate: fromMonthDate,
+          fromDate: fromMonthDate,
+          toDate: toMonthDate,
           intermediaryCode: user?.intermediaryCode,
           clientCode: user?.entityCode,
         });
@@ -311,7 +311,7 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
         claimCreditNotes,
         receiptsData,
         debits,
-        commissionPayble,
+        commissionPayable,
         loadingCommissions,
       }}
     >
