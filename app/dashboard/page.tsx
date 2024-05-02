@@ -73,7 +73,7 @@ const Dashboard = () => {
     return (
       <Link
         href={`dashboard/${to}`}
-        className="h-[10rem] w-[20rem] bg-white border flex flex-col items-center justify-center shadow-xl"
+        className="h-[10rem] w-[20rem] text-[#000000] bg-[#FFFFFF] border flex flex-col items-center justify-center shadow-2xl rounded-md"
       >
         <p className="flex justify-center text-[1.5rem] font-bold">{name}</p>
         <div className="flex justify-center">
@@ -86,7 +86,7 @@ const Dashboard = () => {
     );
   };
   return (
-    <div className="py-4">
+    <div className="py-4 ">
       <div className="flex items-center justify-center gap-2">
         <div className="flex flex-col mt-2">
           <label>From date</label>
@@ -144,7 +144,7 @@ const Dashboard = () => {
         />
 
         <div
-          className={`h-[10rem] bg-white w-[20rem] border cursor-pointer shadow-xl  `}
+          className={`h-[10rem] bg-white w-[20rem] border cursor-pointer shadow-2xl rounded-md  `}
         >
           <div className="flex gap-1 flex-col text-[14px] ">
             <p className="flex items-center justify-center text-[1.5rem] font-bold">

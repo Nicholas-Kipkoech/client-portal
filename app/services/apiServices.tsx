@@ -51,3 +51,7 @@ export const getCommissionPayable = async (data: any) => {
   const res = await PrivateAxiosUtility.post(`/commissionPayble/fetch`, data);
   return res.data;
 };
+export const getGLStatements = async (data: any) => {
+  const res = await PrivateAxiosUtility.post(`/glStatements/fetch`, data);
+  return res.data;
+};

@@ -6,6 +6,7 @@ import {
   getClaimDebits,
   getClaims,
   getCommissionPayable,
+  getGLStatements,
   getPolicies,
   getPremiumReports,
   getPremiumsAndCommission,
@@ -38,6 +39,7 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [receiptsData, setReceiptsData] = useState([]);
   const [debits, setDebits] = useState([]);
   const [commissionPayable, setCommissionPayable] = useState([]);
+  const [glStatements, setGLstatements] = useState([]);
   const [loadingCommissions, setLoadingCommissions] = useState(false);
   const [loadingPremiumReports, setLoadingPremiumReports] = useState(false);
   const [loadingUwData, setLoadingUwData] = useState(false);
@@ -172,6 +174,22 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
       }
     }
     fetchPremiumReports();
+  }, [user, fromDate, toDate]);
+
+  useEffect(() => {
+    async function fetchGlstatements() {
+      if (Object.keys(user).length > 0) {
+        const response = await getGLStatements({
+          fromDate: fromDate,
+          toDate: toDate,
+          intermediaryCode: user?.intermediaryCode,
+          clientCode: user?.entityCode,
+        });
+
+        setGLstatements(response.results);
+      }
+    }
+    fetchGlstatements();
   }, [user, fromDate, toDate]);
 
   useEffect(() => {
@@ -313,6 +331,7 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
         debits,
         commissionPayable,
         loadingCommissions,
+        glStatements,
       }}
     >
       {children}
