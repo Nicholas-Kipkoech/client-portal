@@ -170,6 +170,7 @@ const Receipts = () => {
           columns={columns}
           dataSource={initialReceipt.length > 0 ? initialReceipt : receiptsData}
           scroll={{ x: 1600 }}
+          pagination={{ pageSize: 20 }}
         />
       </ConfigProvider>
     </div>

@@ -1,10 +1,8 @@
 "use client";
 import { ConfigProvider, Table } from "antd";
 import React from "react";
-
 import { GrPrevious } from "react-icons/gr";
 import { useRouter } from "next/navigation";
-import { formatDate } from "@/app/utils/helpers";
 import { useContextApi } from "@/app/context/context";
 
 const CommissionPayble = () => {
@@ -33,28 +31,36 @@ const CommissionPayble = () => {
       title: "Insured",
       dataIndex: "invoiceNumber",
       render: (_: any, item: any) => (
-        <p className="text-[13px] font-bold">{item.insured}</p>
+        <p className="text-[13px] font-bold text-ellipsis">{item.insured}</p>
       ),
     },
     {
       title: "Total Premium",
       dataIndex: "lossDate",
-      render: (_: any, item: any) => <p>{item.totalPremium}</p>,
+      render: (_: any, item: any) => (
+        <p>KSH {item.totalPremium.toLocaleString()}</p>
+      ),
     },
     {
       title: "Paid Premium",
       dataIndex: "intimationDate",
-      render: (_: any, item: any) => <p>{item.paidPremium}</p>,
+      render: (_: any, item: any) => (
+        <p>KSH{item.paidPremium.toLocaleString()}</p>
+      ),
     },
     {
       title: "Outstanding",
       dataIndex: "currency",
-      render: (_: any, item: any) => <p>{item.osPremium}</p>,
+      render: (_: any, item: any) => (
+        <p>KSH{item.osPremium.toLocaleString()}</p>
+      ),
     },
     {
       title: "Basic Premium",
       dataIndex: "total",
-      render: (_: any, item: any) => <p>{item.basicPremium}</p>,
+      render: (_: any, item: any) => (
+        <p>KSH{item.basicPremium.toLocaleString()}</p>
+      ),
     },
     {
       title: "Comm Rate",
@@ -66,23 +72,32 @@ const CommissionPayble = () => {
     {
       title: "Commission",
       dataIndex: "paid",
-      render: (_: any, item: any) => <p>{item.commission}</p>,
+      render: (_: any, item: any) => (
+        <p>KSH{item.commission.toLocaleString()}</p>
+      ),
     },
     {
       title: "WHT on Comm",
       dataIndex: "paid",
-      render: (_: any, item: any) => <p>{item.WHTonComm}</p>,
+      render: (_: any, item: any) => (
+        <p>KSH{item.WHTonComm.toLocaleString()}</p>
+      ),
     },
     {
       title: "Paid Commission",
       dataIndex: "paid",
-      render: (_: any, item: any) => <p>{item.paidComm}</p>,
+      render: (_: any, item: any) => <p>KSH{item.paidComm.toLocaleString()}</p>,
     },
     {
       title: "Net Comm Payable",
       dataIndex: "paid",
       render: (_: any, item: any) => (
-        <p>{(item.commission - item.WHTonComm).toFixed(2)}</p>
+        <p>
+          KSH{" "}
+          {parseInt(
+            (item.commission - item.WHTonComm).toLocaleString()
+          ).toFixed(2)}
+        </p>
       ),
     },
   ];
@@ -117,6 +132,7 @@ const CommissionPayble = () => {
           loading={loadingCommissions}
           dataSource={commissionPayable}
           scroll={{ x: 1800 }}
+          pagination={{ pageSize: 20 }}
         />
       </ConfigProvider>
     </div>

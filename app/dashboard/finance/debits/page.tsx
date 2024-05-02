@@ -84,6 +84,7 @@ const Debits = () => {
           columns={columns}
           dataSource={debits}
           scroll={{ x: 1200 }}
+          pagination={{ pageSize: 20 }}
         />
       </ConfigProvider>
     </div>

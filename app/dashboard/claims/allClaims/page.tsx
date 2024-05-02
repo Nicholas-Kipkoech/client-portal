@@ -175,6 +175,7 @@ const AllClaim = () => {
           loading={loadingClaims}
           dataSource={initialClaims.length > 0 ? initialClaims : claims}
           scroll={{ x: 1500 }}
+          pagination={{ pageSize: 20 }}
         />
       </ConfigProvider>
     </div>

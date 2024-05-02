@@ -175,6 +175,7 @@ const OpenClaims = () => {
           loading={loadingClaims}
           dataSource={initialClaims.length > 0 ? initialClaims : openClaims}
           scroll={{ x: 1500 }}
+          pagination={{ pageSize: 20 }}
         />
       </ConfigProvider>
     </div>
