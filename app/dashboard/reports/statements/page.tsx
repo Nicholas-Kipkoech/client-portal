@@ -1,10 +1,12 @@
 "use client";
-import { ConfigProvider, Table } from "antd";
+import { ConfigProvider, Spin, Table } from "antd";
 import React from "react";
 import { GrPrevious } from "react-icons/gr";
 import { useRouter } from "next/navigation";
 import { useContextApi } from "@/app/context/context";
 import { formatDate } from "@/app/utils/helpers";
+import { LoadingOutlined } from "@ant-design/icons";
+import CsvDownloader from "react-csv-downloader";
 
 const Statements = () => {
   const { glStatements, loadingGl }: any = useContextApi();
@@ -12,7 +14,7 @@ const Statements = () => {
   const columns = [
     {
       title: "Issue Date",
-      dataIndex: "policyNo",
+      dataIndex: "issueDate",
       render: (_: any, item: any) => <p>{formatDate(item.issueDate)}</p>,
     },
     {
@@ -25,75 +27,95 @@ const Statements = () => {
     },
     {
       title: "Debit No",
-      dataIndex: "invoiceNumber",
+      dataIndex: "debitNo",
       render: (_: any, item: any) => (
         <p className="text-[13px]">{item.debitNo}</p>
       ),
     },
     {
       title: "Vehicles",
-      dataIndex: "lossDate",
+      dataIndex: "vehicles",
       render: (_: any, item: any) => <p> {item.vehicles}</p>,
     },
     {
       title: "Insured",
-      dataIndex: "intimationDate",
+      dataIndex: "insured",
       render: (_: any, item: any) => <p>{item.insured}</p>,
     },
     {
       title: "DR/DC",
-      dataIndex: "currency",
+      dataIndex: "drCr",
       render: (_: any, item: any) => (
         <p>{item.drCr === "D" ? "Debit" : "Credit"}</p>
       ),
     },
     {
-      title: "DR/DC",
+      title: "Currency",
       dataIndex: "currency",
       render: (_: any, item: any) => <p>{item.currency}</p>,
     },
     {
       title: "Premium",
-      dataIndex: "total",
-      render: (_: any, item: any) => <p> {item.premium.toLocaleString()}</p>,
+      dataIndex: "premium",
+      render: (_: any, item: any) => (
+        <p> KSH {item.premium.toLocaleString()}</p>
+      ),
     },
 
     {
       title: "PVT premium",
-      dataIndex: "paid",
-      render: (_: any, item: any) => <p> {item.PVTprem.toLocaleString()}</p>,
+      dataIndex: "PVTprem",
+      render: (_: any, item: any) => (
+        <p> KSH {item.PVTprem.toLocaleString()}</p>
+      ),
     },
     {
       title: "Stamp Duty",
-      dataIndex: "paid",
-      render: (_: any, item: any) => <p> {item.stampDuty.toLocaleString()}</p>,
+      dataIndex: "stampDuty",
+      render: (_: any, item: any) => (
+        <p>KSH {item.stampDuty.toLocaleString()}</p>
+      ),
     },
     {
       title: "Training Levy",
-      dataIndex: "paid",
+      dataIndex: "trainingLevy",
       render: (_: any, item: any) => (
-        <p> {item.trainingLevy.toLocaleString()}</p>
+        <p>KSH {item.trainingLevy.toLocaleString()}</p>
       ),
     },
     {
       title: "PHC Fund",
-      dataIndex: "paid",
-      render: (_: any, item: any) => <p> {item.PHCfund.toLocaleString()}</p>,
+      dataIndex: "PHCfund",
+      render: (_: any, item: any) => <p>KSH {item.PHCfund.toLocaleString()}</p>,
     },
     {
       title: "Comm",
       dataIndex: "comm",
-      render: (_: any, item: any) => <p> {item.comm.toLocaleString()}</p>,
+      render: (_: any, item: any) => <p> KSH {item.comm.toLocaleString()}</p>,
     },
     {
       title: "W Tax",
-      dataIndex: "paid",
-      render: (_: any, item: any) => <p> {item.Wtax.toLocaleString()}</p>,
+      dataIndex: "Wtax",
+      render: (_: any, item: any) => <p> KSH {item.Wtax.toLocaleString()}</p>,
     },
     {
       title: "Policy Net",
-      dataIndex: "paid",
-      render: (_: any, item: any) => <p> {item.policyNet.toLocaleString()}</p>,
+      dataIndex: "policyNet",
+      render: (_: any, item: any) => (
+        <p>
+          {" "}
+          KSH{" "}
+          {(
+            item.premium +
+            item.PVTprem +
+            item.stampDuty +
+            item.Wtax +
+            item.trainingLevy +
+            item.PHCfund -
+            item.comm
+          ).toLocaleString()}
+        </p>
+      ),
     },
     {
       title: "Credit Net",
@@ -104,6 +126,45 @@ const Statements = () => {
       dataIndex: "outstanding",
     },
   ];
+
+  const mappedColumns = columns.map((column) => {
+    return {
+      id: column.dataIndex,
+      displayName: column.title,
+    };
+  });
+
+  const mappedStatements = glStatements.map((statement: any) => {
+    return {
+      issueDate: formatDate(statement.issueDate),
+      docNo: statement.docNo,
+      endNo: statement.endNo,
+      debitNo: statement.debitNo,
+      vehicles: statement.vehicles,
+      insured: statement.insured,
+      drCr: statement.drCr === "D" ? "Debit" : "Credit",
+      currency: statement.currency,
+      premium: statement.premium.toLocaleString(),
+      PVTprem: statement.PVTprem.toLocaleString(),
+      stampDuty: statement.stampDuty.toLocaleString(),
+      trainingLevy: statement.trainingLevy.toLocaleString(),
+      PHCfund: statement.PHCfund.toLocaleString(),
+      comm: statement.comm.toLocaleString(),
+      Wtax: statement.Wtax.toLocaleString(),
+      policyNet: Math.floor(
+        statement.premium +
+          statement.PVTprem +
+          statement.stampDuty +
+          statement.trainingLevy +
+          statement.PHCfund +
+          statement.Wtax -
+          statement.comm
+      ),
+      creditNet: statement.creditNet,
+      outstanding: 0,
+    };
+  });
+
   const router = useRouter();
   return (
     <div>
@@ -117,6 +178,31 @@ const Statements = () => {
         </p>
         <p></p>
       </div>
+
+      <CsvDownloader
+        disabled={loadingGl}
+        filename={`GL Statements ${new Date(Date.now())}`}
+        extension=".csv"
+        columns={mappedColumns}
+        datas={mappedStatements}
+        className="bg-[#cb7529] h-[3rem] rounded-sm text-white border w-[18rem] m-2 p-2 flex justify-center items-center"
+      >
+        {loadingGl ? (
+          <Spin
+            spinning={loadingGl}
+            indicator={
+              <LoadingOutlined
+                style={{
+                  fontSize: 25,
+                  color: "white",
+                }}
+              />
+            }
+          />
+        ) : (
+          `Export to Excel ${mappedStatements.length} records`
+        )}
+      </CsvDownloader>
 
       <ConfigProvider
         theme={{

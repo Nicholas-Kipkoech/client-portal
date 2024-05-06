@@ -20,6 +20,8 @@ const Dashboard = () => {
     debits,
     totalPremium,
     totalCommission,
+    fromDate: startDate,
+    toDate: endDate,
     setFromDate,
     setToDate,
     loadingUwData,
@@ -87,7 +89,10 @@ const Dashboard = () => {
   };
   return (
     <div className="py-4 ">
-      <div className="flex items-center justify-center gap-2 sm:flex-col">
+      <div className="flex justify-center md:text-[1.5rem] font-bold">
+        Running period: [{startDate} to {endDate}]
+      </div>
+      <div className="flex items-center justify-center gap-2 sm:flex-col md:flex-row">
         <div className="flex flex-col mt-2">
           <label>From date</label>
           <DatePicker

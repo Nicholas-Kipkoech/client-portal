@@ -31,3 +31,9 @@ export const format3months = () => {
   const next3Month = today + "-" + nextMonth + "-" + year;
   return { systemDate: systemDate, next3Month: next3Month };
 };
+
+export const formatYearly = (year) => {
+  const start = `1-Jan-${year}`;
+  const end = `31-Dec-${year}`;
+  return { startDate: start, endDate: end };
+};

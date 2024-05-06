@@ -14,7 +14,7 @@ import {
   getReceiptsData,
   getUpcomingRenewals,
 } from "../services/apiServices";
-import { format3months } from "../utils/helpers";
+import { format3months, formatYearly } from "../utils/helpers";
 
 const Context = createContext({});
 
@@ -30,8 +30,8 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [acceptedQuotes, setAcceptedQuotes] = useState(false);
   const [policies, setPolicies] = useState([]);
   const [claims, setClaims] = useState([]);
-  const [fromDate, setFromDate] = useState("1-Jan-2023");
-  const [toDate, setToDate] = useState("31-Dec-2023");
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
   const [fromMonthDate, setFromMonthDate] = useState("1-Apr-2024");
   const [toMonthDate, setToMonthDate] = useState("30-Apr-2024");
   const [uwData, setUwData] = useState([]);
@@ -47,6 +47,12 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [loadingCommissions, setLoadingCommissions] = useState(false);
   const [loadingPremiumReports, setLoadingPremiumReports] = useState(false);
   const [loadingUwData, setLoadingUwData] = useState(false);
+
+  useEffect(() => {
+    const { startDate, endDate } = formatYearly("2023");
+    setFromDate(startDate);
+    setToDate(endDate);
+  }, []);
 
   useEffect(() => {
     const years: number[] = [];

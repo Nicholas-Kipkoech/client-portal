@@ -17,6 +17,7 @@ const Premiums = () => {
     fromDate,
     toDate: _toDate,
   }: any = useContextApi();
+
   const columns = [
     {
       id: "policyNo",
