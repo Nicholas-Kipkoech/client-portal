@@ -87,7 +87,7 @@ const Dashboard = () => {
   };
   return (
     <div className="py-4 ">
-      <div className="flex items-center justify-center gap-2">
+      <div className="flex items-center justify-center gap-2 sm:flex-col">
         <div className="flex flex-col mt-2">
           <label>From date</label>
           <DatePicker
@@ -109,10 +109,10 @@ const Dashboard = () => {
         <CustomButton
           name={loadingUwData ? "Running..." : "Run"}
           onClick={handleRunReports}
-          className="border h-[40px] w-[15rem] bg-slate-800 text-white rounded-md mt-8"
+          className="border h-[40px] w-[15rem] bg-slate-800 text-white rounded-md md:mt-8 sm:mt-2"
         />
       </div>
-      <div className="pt-2 flex flex-wrap gap-2">
+      <div className="pt-2 flex flex-wrap gap-2 justify-center ">
         <CustomCard name="Quotes" count={quotes.length} to="quotes" />
         <CustomCard
           name="Running Policies"

@@ -7,7 +7,7 @@ import { useContextApi } from "@/app/context/context";
 import { formatDate } from "@/app/utils/helpers";
 
 const Statements = () => {
-  const { glStatements }: any = useContextApi();
+  const { glStatements, loadingGl }: any = useContextApi();
 
   const columns = [
     {
@@ -132,7 +132,7 @@ const Statements = () => {
       >
         <Table
           columns={columns}
-          loading={glStatements.length < 1}
+          loading={loadingGl}
           dataSource={glStatements}
           scroll={{ x: 1800 }}
           pagination={{ pageSize: 20 }}

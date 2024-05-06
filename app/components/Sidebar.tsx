@@ -18,7 +18,7 @@ const Sidebar = () => {
     return (
       <Link
         href={item.path}
-        className={`p-[5px] flex items-center pl-6 gap-[5px] text-[13px] text-white hover:bg-[#2e2f3b] hover:text-white m-[2px] rounded-[10px] ${
+        className={`p-[5px] flex items-center  pl-6 gap-[5px] text-[13px] text-white hover:bg-[#2e2f3b] hover:text-white m-[2px] rounded-[10px] ${
           pathname === item.path && "bg-[#995224]"
         }`}
       >

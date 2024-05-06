@@ -42,6 +42,7 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [debits, setDebits] = useState([]);
   const [commissionPayable, setCommissionPayable] = useState([]);
   const [glStatements, setGLstatements] = useState([]);
+  const [loadingGl, setLoadingGl] = useState(false);
   const [upcomingRenewals, setUpcomingRenewals] = useState([]);
   const [loadingCommissions, setLoadingCommissions] = useState(false);
   const [loadingPremiumReports, setLoadingPremiumReports] = useState(false);
@@ -181,19 +182,21 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     async function fetchGlstatements() {
+      setLoadingGl(true);
       if (Object.keys(user).length > 0) {
         const response = await getGLStatements({
-          fromDate: fromDate,
-          toDate: toDate,
+          fromDate: fromMonthDate,
+          toDate: toMonthDate,
           intermediaryCode: user?.intermediaryCode,
           clientCode: user?.entityCode,
         });
 
+        setLoadingGl(false);
         setGLstatements(response.results);
       }
     }
     fetchGlstatements();
-  }, [user, fromDate, toDate]);
+  }, [user, fromMonthDate, toMonthDate]);
 
   useEffect(() => {
     async function fetchClaimCreditNotes() {
@@ -353,6 +356,7 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
         loadingCommissions,
         glStatements,
         upcomingRenewals,
+        loadingGl,
       }}
     >
       {children}
