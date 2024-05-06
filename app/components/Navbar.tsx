@@ -145,7 +145,7 @@ const Navbar = () => {
   ];
 
   return (
-    <div className="sticky top-0 bg-[grey] flex justify-between items-center z-10 w-full h-auto ">
+    <div className="sticky top-0 bg-[grey] flex justify-between items-center z-10  h-auto ">
       <div className="md:hidden sm:block">
         <Menu>
           <MenuButton as={Button} rightIcon={<IoMenu />} />

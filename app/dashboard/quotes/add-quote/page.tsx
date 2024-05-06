@@ -121,7 +121,7 @@ const AddQuote = () => {
 
   return (
     <div className=" flex items-center justify-center ">
-      <div className="w-[60%]">
+      <div className="md:w-[60%] sm:w-full">
         <div className="h-auto ">
           <div className="flex  my-8 ">
             <p

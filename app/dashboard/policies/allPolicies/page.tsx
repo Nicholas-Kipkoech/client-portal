@@ -110,18 +110,18 @@ const Policies = () => {
         </p>
         <p></p>
       </div>
-      <div className="flex flex-wrap gap-[0.2rem] my-2 items-center">
+      <div className="md:flex md:flex-wrap sm:flex-nowrap sm:flex-col md:flex-row gap-[0.2rem] my-2 md:items-center">
         <CustomInput
           name="Insured"
           onChange={(e) =>
             setSearchParams({ ...searchParams, client: e.target.value })
           }
-          className="border w-[15rem] p-2"
+          className="border md:w-[15rem]  p-2 sm:w-full"
           value={searchParams.client}
         />
         <CustomInput
           name="Vehicle Reg No"
-          className="border w-[10rem] p-2"
+          className="border md:w-[10rem] p-2 sm:w-full"
           value={searchParams.carRegNo}
           onChange={(e) =>
             setSearchParams({ ...searchParams, carRegNo: e.target.value })
@@ -129,7 +129,7 @@ const Policies = () => {
         />
         <CustomInput
           name="Policy No"
-          className="border w-[15rem] p-2"
+          className="border md:w-[15rem] p-2 sm:w-full"
           value={searchParams.policyNo}
           onChange={(e) =>
             setSearchParams({ ...searchParams, policyNo: e.target.value })
@@ -137,7 +137,7 @@ const Policies = () => {
         />
         <CustomInput
           name="End No"
-          className="border w-[15rem] p-2"
+          className="border md:w-[15rem] p-2 sm:w-full"
           value={searchParams.endNo}
           onChange={(e) =>
             setSearchParams({ ...searchParams, endNo: e.target.value })
@@ -145,22 +145,24 @@ const Policies = () => {
         />
         <CustomInput
           name="Product Name"
-          className="border w-[15rem] p-2"
+          className="border md:w-[15rem] p-2 sm:w-full"
           value={searchParams.product}
           onChange={(e) =>
             setSearchParams({ ...searchParams, product: e.target.value })
           }
         />
-        <CustomButton
-          onClick={handleSearch}
-          name="Search"
-          className="border h-[2.2rem] bg-slate-800 text-white w-[5rem] mt-7"
-        />
-        <CustomButton
-          onClick={handleReset}
-          name="Reset"
-          className="border h-[2.2rem] bg-red-600 text-white w-[5rem] mt-7"
-        />
+        <div className="sm:flex  gap-2">
+          <CustomButton
+            onClick={handleSearch}
+            name="Search"
+            className="border h-[2.2rem] bg-slate-800 text-white sm:w-full md:w-[15rem] mt-7"
+          />
+          <CustomButton
+            onClick={handleReset}
+            name="Reset"
+            className="border h-[2.2rem] bg-red-600 text-white  sm:w-full md:w-[15rem] mt-7"
+          />
+        </div>
       </div>
 
       <ConfigProvider

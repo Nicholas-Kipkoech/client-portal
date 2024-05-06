@@ -14,7 +14,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             <div className="w-[18%] h-screen fixed sm:hidden md:block">
               <Sidebar />
             </div>
-            <div className="w-full flex flex-col md:ml-[18%] sm:ml-0">
+            <div className="md:w-[82%] sm:w-full flex flex-col md:ml-[18%] sm:ml-0">
               <Navbar />
               <div className="px-2">{children}</div>
             </div>

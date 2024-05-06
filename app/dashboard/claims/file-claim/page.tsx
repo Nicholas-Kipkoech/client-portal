@@ -40,14 +40,14 @@ const Claims = () => {
             onChange={() => {}}
             value={""}
             name={"Car Registration No"}
-            className="h-[2.8rem] border w-[25rem] rounded-sm"
+            className="md:h-[2.8rem] border sm:w-[20rem] rounded-sm"
           />
           <CustomInput
             onChange={() => {}}
             value={""}
             type="date"
             name={"Loss Date"}
-            className="h-[2.8rem] border w-[25rem] rounded-sm"
+            className="md:h-[2.8rem] border sm:w-[20rem] rounded-sm"
           />
         </div>
       </div>
@@ -59,7 +59,7 @@ const Claims = () => {
       <div className="flex  flex-col justify-center items-center">
         <p>Description</p>
         <textarea
-          className="h-[10rem] border w-[40rem] outline-[#cb7529]"
+          className="md:h-[10rem] sm:h-[10rem] border md:w-[40rem] sm:w-[20rem] outline-[#cb7529]"
           value={""}
         />
       </div>
@@ -68,7 +68,7 @@ const Claims = () => {
 
   const UploadPhotos = () => {
     return (
-      <div className="flex flex-col justify-center gap-2 items-center">
+      <div className="flex flex-col justify-center gap-2 items-center overflow-y-auto">
         <div className="2xl:max-h-[400px] md:max-h-[200px] overflow-x-auto">
           <input
             name="Upload Photo"
@@ -81,7 +81,7 @@ const Claims = () => {
             multiple
           />
           <label htmlFor="upload">
-            <div className="flex flex-wrap gap-2 justify-center ">
+            <div className="flex flex-wrap gap-2 justify-center max-h-[150px] ">
               {images.map((image, key) => (
                 <div key={key}>
                   <p
@@ -93,7 +93,7 @@ const Claims = () => {
                   <img
                     alt="uploadImage"
                     src={image}
-                    className="md:h-[10rem] md:w-[20rem]"
+                    className="md:h-[10rem] sm:h-[5rem] sm:w-[10rem] md:w-[20rem]"
                   />
                 </div>
               ))}
@@ -102,7 +102,7 @@ const Claims = () => {
         </div>
         <div
           onClick={handleInputclick}
-          className="h-[2.5rem] rounded-md bg-slate-500 text-white w-[8rem] flex items-center border justify-center cursor-pointer"
+          className="h-[2.5rem] rounded-md bg-slate-500 text-white w-[8rem] flex items-center border justify-center cursor-pointer  "
         >
           Upload Photos
         </div>
@@ -144,7 +144,7 @@ const Claims = () => {
   };
 
   return (
-    <div className="flex justify-center flex-col mx-9 my-9">
+    <div className="flex justify-center flex-col md:mx-9 md:my-9">
       <div className="flex justify-between">
         <div className="flex items-center">
           <GrPrevious size={15} />
@@ -168,7 +168,7 @@ const Claims = () => {
             </div>
           ))}
         </div>
-        <div className="md:h-[20rem] 2xl:h-[40rem] 2xl:w-[90%] flex items-center justify-center border shadow-2xl rounded-md md:w-[80%] sm:w-[100%]">
+        <div className="md:h-[20rem] sm:h-[15rem] 2xl:h-[40rem] 2xl:w-[90%] flex items-center justify-center border shadow-2xl rounded-md md:w-[80%] sm:w-full">
           {renderPage()}
         </div>
       </div>
