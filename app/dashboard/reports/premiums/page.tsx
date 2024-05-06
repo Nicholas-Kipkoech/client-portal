@@ -166,10 +166,10 @@ const Premiums = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center mt-[6rem]">
-      <div className="w-[60%] flex flex-col gap-2 border p-2">
-        <div className="flex items-center justify-center gap-2">
-          <div className="flex flex-col mt-2">
+    <div className="flex flex-col items-center justify-center md:mt-[6rem] sm:mt-[2rem]">
+      <div className="md:w-[60%] sm:w-full flex flex-col gap-2 border p-2">
+        <div className="flex sm:flex-col md:flex-row items-center justify-center gap-2">
+          <div className="flex flex-col md:mt-2 sm:mt-1">
             <label>From date</label>
             <DatePicker
               format={"DD-MM-YYYY"}
@@ -178,7 +178,7 @@ const Premiums = () => {
               onChange={handleFromDate}
             />
           </div>
-          <div className="flex flex-col mt-2">
+          <div className="flex flex-col md:mt-2 sm:mt-1">
             <label>To date</label>
             <DatePicker
               format={"DD-MM-YYYY"}
@@ -190,12 +190,11 @@ const Premiums = () => {
           <CustomButton
             name={loadingPremiumReports ? "Running..." : "Run"}
             onClick={handleRunReports}
-            className="border h-[40px] w-[15rem] bg-slate-800 text-white rounded-md mt-8"
+            className="border h-[40px] w-[15rem] bg-slate-800 text-white rounded-md md:mt-8 sm:mt-4"
           />
         </div>
-        <p className="text-[1.5rem] font-bold flex justify-center">
-          Premium Register for {fmDate ? fmDate : fromDate} to{" "}
-          {toDate ? toDate : _toDate}
+        <p className="md:text-[1.5rem] sm:text-[0.8rem] font-bold flex justify-center">
+          [ {fmDate ? fmDate : fromDate} to {toDate ? toDate : _toDate}]
         </p>
         <CsvDownloader
           disabled={loadingPremiumReports}

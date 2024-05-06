@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useContextApi } from "../context/context";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import CustomButton from "../utils/CustomButtom";
 import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
@@ -16,6 +16,8 @@ const Navbar = () => {
   const { user }: any = useContextApi();
 
   const router = useRouter();
+
+  const pathname = usePathname();
 
   function formatName(name: string) {
     if (name !== undefined) {
@@ -149,7 +151,10 @@ const Navbar = () => {
       <div className="md:hidden sm:block">
         <Menu>
           <MenuButton as={Button} rightIcon={<IoMenu />} />
-          <MenuList className="overflow-y-auto scroll max-h-[300px]">
+          <MenuList
+            className="overflow-y-auto scroll max-h-[300px]"
+            backgroundColor={"#092332"}
+          >
             {menuItems.map((item, key) => (
               <>
                 <MenuItem key={key} className="">
@@ -160,7 +165,9 @@ const Navbar = () => {
                     <Link
                       key={key}
                       href={cat.path ? cat.path : ""}
-                      className="p-[5px] flex items-center bg-black  pl-6 gap-[5px] text-[13px] text-white hover:bg-[#2e2f3b] hover:text-white m-[2px] rounded-[10px]"
+                      className={`p-[5px] flex items-center  pl-6 gap-[5px] text-[13px] text-white hover:bg-[#2e2f3b] hover:text-white m-[2px] rounded-[10px] ${
+                        pathname === cat.path && "bg-[#995224]"
+                      }`}
                     >
                       {cat.title}
                     </Link>

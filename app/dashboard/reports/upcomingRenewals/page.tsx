@@ -85,7 +85,7 @@ const UpcomingRenewals = () => {
           <GrPrevious size={15} />
           <p>Back</p>
         </div>
-        <p className="md:text-[1rem] sm:text-[1rem] font-bold">
+        <p className="md:text-[1rem] sm:text-[0.6rem] font-bold">
           Upcoming Renewals [{systemDate} to {next3Month}]
         </p>
         <p></p>

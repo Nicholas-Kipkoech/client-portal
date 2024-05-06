@@ -115,18 +115,18 @@ const Receipts = () => {
         <p className="md:text-[1.8rem] sm:text-[1.2rem] font-bold">Receipts</p>
         <p></p>
       </div>
-      <div className="flex flex-wrap gap-[0.2rem] my-2 items-center">
+      <div className="flex md:flex-wrap sm:flex-col md:flex-row gap-[0.2rem] my-2 md:items-center">
         <CustomInput
           name="Insured Name"
           onChange={(e) =>
             setSearchParams({ ...searchParams, from: e.target.value })
           }
-          className="border w-[15rem] p-2"
+          className="border md:w-[15rem] sm:w-full p-2"
           value={searchParams.from}
         />
         <CustomInput
           name="Receipt No"
-          className="border w-[10rem] p-2"
+          className="border md:w-[10rem] sm:w-full p-2"
           value={searchParams.receiptNo}
           onChange={(e) =>
             setSearchParams({ ...searchParams, receiptNo: e.target.value })
@@ -134,22 +134,24 @@ const Receipts = () => {
         />
         <CustomInput
           name="Amount"
-          className="border w-[10rem] p-2"
+          className="border md:w-[10rem] sm:w-full p-2"
           value={searchParams.amount}
           onChange={(e) =>
             setSearchParams({ ...searchParams, amount: e.target.value })
           }
         />
-        <CustomButton
-          onClick={handleSearch}
-          name="Search"
-          className="border h-[2.2rem] bg-slate-800 text-white w-[5rem] mt-7"
-        />
-        <CustomButton
-          onClick={handleReset}
-          name="Reset"
-          className="border h-[2.2rem] bg-red-600 text-white w-[5rem] mt-7"
-        />
+        <div className="sm:flex">
+          <CustomButton
+            onClick={handleSearch}
+            name="Search"
+            className="border h-[2.2rem] bg-slate-800 text-white md:w-[5rem] sm:w-full mt-7"
+          />
+          <CustomButton
+            onClick={handleReset}
+            name="Reset"
+            className="border h-[2.2rem] bg-red-600 text-white md:w-[5rem] sm:w-full mt-7"
+          />
+        </div>
       </div>
       <ConfigProvider
         theme={{

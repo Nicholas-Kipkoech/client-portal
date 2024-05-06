@@ -117,13 +117,13 @@ const ClaimsCreditNotes = () => {
         </p>
         <p></p>
       </div>
-      <div className="flex flex-wrap gap-[0.2rem] my-2 items-center">
+      <div className="flex flex-wrap sm:flex-col md:flex-row  gap-[0.2rem] my-2 md:items-center">
         <CustomInput
           name="Insured Name"
           onChange={(e) =>
             setSearchParams({ ...searchParams, insured: e.target.value })
           }
-          className="border w-[15rem] p-2"
+          className="border md:w-[15rem] sm:w-full p-2"
           value={searchParams.insured}
         />
         <CustomInput
@@ -131,20 +131,21 @@ const ClaimsCreditNotes = () => {
           onChange={(e) =>
             setSearchParams({ ...searchParams, journalNo: e.target.value })
           }
-          className="border w-[15rem] p-2"
+          className="border md:w-[15rem] sm:w-full p-2"
           value={searchParams.journalNo}
         />
-
-        <CustomButton
-          onClick={handleSearch}
-          name="Search"
-          className="border h-[2.2rem] bg-slate-800 text-white w-[5rem] mt-7"
-        />
-        <CustomButton
-          onClick={handleReset}
-          name="Reset"
-          className="border h-[2.2rem] bg-red-600 text-white w-[5rem] mt-7"
-        />
+        <div className="flex">
+          <CustomButton
+            onClick={handleSearch}
+            name="Search"
+            className="border h-[2.2rem] bg-slate-800 text-white md:w-[5rem] sm:w-full mt-7"
+          />
+          <CustomButton
+            onClick={handleReset}
+            name="Reset"
+            className="border h-[2.2rem] bg-red-600 text-white md:w-[5rem] sm:w-full mt-7"
+          />
+        </div>
       </div>
       <ConfigProvider
         theme={{
