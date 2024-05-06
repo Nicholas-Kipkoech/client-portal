@@ -1,3 +1,25 @@
-{
-  "extends": "next/core-web-vitals"
+ {
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+  "rules": {
+    // Add your naming convention rules here
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": "variableLike",
+        "format": ["camelCase"]
+      },
+  
+      {
+        "selector": "typeLike",
+        "format": ["PascalCase"]
+      },
+      {
+        "selector": "enumMember",
+        "format": ["PascalCase"]
+      }
+      // Add more rules as needed
+    ]
+  }
 }
