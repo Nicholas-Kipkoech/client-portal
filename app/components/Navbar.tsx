@@ -147,7 +147,7 @@ const Navbar = () => {
   ];
 
   return (
-    <div className="sticky top-0 bg-[grey] flex justify-between items-center z-10  h-auto ">
+    <div className="sticky top-0 bg-[#cb1919] flex justify-between items-center z-10  h-auto ">
       <div className="md:hidden sm:block">
         <Menu>
           <MenuButton as={Button} rightIcon={<IoMenu />} />
@@ -178,8 +178,9 @@ const Navbar = () => {
           </MenuList>
         </Menu>
       </div>
-      <span className="flex md:text-[18px] sm:text-[14px] font-bold cursor-pointer">
-        CLIENT PORTAL
+      <div className="sm:hidden md:block"></div>
+      <span className="flex  sm:text-[12px] text-white md:hidden sm:block font-bold cursor-pointer">
+        {user.entityName}
       </span>
       <div className="flex gap-4 items-center m-3">
         <div className="border h-auto p-2 rounded-md  sm:hidden md:block bg-white w-auto flex items-center justify-center flex-col">

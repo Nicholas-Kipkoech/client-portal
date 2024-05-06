@@ -8,6 +8,8 @@ import { VscOrganization } from "react-icons/vsc";
 import { MdOutlineNavigateNext } from "react-icons/md";
 import { FaChevronDown } from "react-icons/fa6";
 import { useContextApi } from "../context/context";
+import iconLogo from "../assets/iconLogo.png";
+import Image from "next/image";
 
 const Sidebar = () => {
   const [showSubMenu, setShowSubMenu] = useState(0);
@@ -145,6 +147,9 @@ const Sidebar = () => {
 
   return (
     <div className="h-screen bg-[#092332] overflow-y-auto">
+      <div className="flex items-center justify-center">
+        <Image src={iconLogo} alt="icon Logo" height={120} />
+      </div>
       <div className="flex gap-2 flex-col pr-2 pt-2 pl-3">
         <ul className="list-none ">
           {menuItems.map((cat, index) => (

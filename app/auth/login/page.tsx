@@ -68,8 +68,8 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center h-[100vh] justify-center">
-      <div className="w-[40%] border p-2 bg-white ">
+    <div className="flex items-center h-screen justify-center">
+      <div className="md:w-[40%] sm:w-full border m-2 p-2 bg-white ">
         {isLogin ? (
           <div className="p-10">
             <p className="text-[18px] font-bold flex justify-center">
@@ -107,7 +107,7 @@ const Login = () => {
             </div>
           </div>
         ) : (
-          <div className="bg-white">
+          <div className="bg-white mt-2">
             <p className="flex justify-center text-[18px] font-bold">
               Create your account
             </p>
