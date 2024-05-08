@@ -128,6 +128,7 @@ export const ReportsContextProvider = ({
         toDate,
         setToDate,
         glStatements,
+        upcomingRenewals,
       }}
     >
       {children}
