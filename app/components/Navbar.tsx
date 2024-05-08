@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useContextApi } from "../context/context";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -147,7 +147,7 @@ const Navbar = () => {
   ];
 
   return (
-    <div className="sticky top-0 bg-[#27005D] flex justify-between items-center z-10  h-auto ">
+    <div className="sticky top-0 bg-[#092332] flex justify-between items-center z-10  h-auto ">
       <div className="md:hidden sm:block">
         <Menu>
           <MenuButton as={Button} rightIcon={<IoMenu />} />
@@ -178,7 +178,7 @@ const Navbar = () => {
           </MenuList>
         </Menu>
       </div>
-      <div className="sm:hidden md:block"></div>
+      <div className="sm:hidden md:block "></div>
       <span className="flex  sm:text-[12px] text-white md:hidden sm:block font-bold cursor-pointer">
         {user.entityName}
       </span>
