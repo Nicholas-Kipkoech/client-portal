@@ -14,7 +14,6 @@ import Image from "next/image";
 const Sidebar = () => {
   const [showSubMenu, setShowSubMenu] = useState(0);
   const { user }: any = useContextApi();
-  const [message, setMessage] = useState("");
   const MenuLink = ({ item }: any) => {
     const pathname = usePathname();
 
@@ -34,20 +33,6 @@ const Sidebar = () => {
   const handleShowMenu = (index: any) => {
     setShowSubMenu((prevIndex) => (prevIndex === index ? null : index));
   };
-
-  useEffect(() => {
-    function formatTimeGreetings() {
-      const time = new Date(Date.now()).getHours();
-      let message =
-        time < 12
-          ? "Good Morning"
-          : time < 18
-          ? "Good Afternoon"
-          : "Good Evening";
-      setMessage(message);
-    }
-    formatTimeGreetings();
-  }, []);
 
   const menuItems = [
     {
@@ -162,11 +147,8 @@ const Sidebar = () => {
 
   return (
     <div className="h-screen bg-[#092332] overflow-y-auto">
-      <div className="text-white text-[1.5rem] justify-center flex">
-        {message}
-      </div>
       <div className="flex items-center justify-center">
-        <Image src={iconLogo} alt="icon Logo" height={120} />
+        <Image src={iconLogo} alt="icon Logo" height={80} />
       </div>
       <div className="flex gap-2 flex-col pr-2 pt-2 pl-3">
         <ul className="list-none ">
