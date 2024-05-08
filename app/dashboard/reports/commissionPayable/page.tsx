@@ -1,9 +1,9 @@
 "use client";
 import { ConfigProvider, Table } from "antd";
-import React from "react";
+import React, { useContext } from "react";
 import { GrPrevious } from "react-icons/gr";
 import { useRouter } from "next/navigation";
-import { useContextApi } from "@/app/context/context";
+import ReportsContext from "@/app/context/reports/reports-context";
 
 const CommissionPayble = () => {
   function calculatePercentage(num1: number, num2: number): any {
@@ -12,7 +12,8 @@ const CommissionPayble = () => {
     return Math.floor(100 / (absNum1 / absNum2));
   }
 
-  const { commissionPayable, loadingCommissions }: any = useContextApi();
+  const { commissionPayable, loadingCommissions }: any =
+    useContext(ReportsContext);
 
   const columns = [
     {

@@ -1,15 +1,15 @@
 "use client";
 import { ConfigProvider, Spin, Table } from "antd";
-import React from "react";
+import React, { useContext } from "react";
 import { GrPrevious } from "react-icons/gr";
 import { useRouter } from "next/navigation";
-import { useContextApi } from "@/app/context/context";
 import { formatDate } from "@/app/utils/helpers";
 import { LoadingOutlined } from "@ant-design/icons";
 import CsvDownloader from "react-csv-downloader";
+import ReportsContext from "@/app/context/reports/reports-context";
 
 const Statements = () => {
-  const { glStatements, loadingGl }: any = useContextApi();
+  const { glStatements, loadingGl }: any = useContext(ReportsContext);
 
   const columns = [
     {

@@ -1,11 +1,14 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useContextApi } from "../context/context";
 import CustomInput from "../utils/CustomInput";
 import CustomButton from "../utils/CustomButtom";
 import { Months } from "../utils/helpers";
 import { DatePicker } from "antd";
+import PolicyContext from "../context/policies/policies-context";
+import ClaimsContext from "../context/claims/claims-context";
+import FinanceContext from "../context/finance/finance-context";
 
 interface CustomCardProps {
   name: string;
@@ -17,7 +20,6 @@ interface CustomCardProps {
 const Dashboard = () => {
   const {
     quotes,
-    debits,
     totalPremium,
     totalCommission,
     fromDate: startDate,
@@ -26,10 +28,12 @@ const Dashboard = () => {
     setToDate,
     loadingUwData,
     receiptResults,
-    filteredPolicies,
-    openClaims,
-    claimCreditNotes,
   }: any = useContextApi();
+
+  const { filteredPolicies }: any = useContext(PolicyContext);
+  const { openClaims }: any = useContext(ClaimsContext);
+  const { debits, claimCreditNotes }: any = useContext(FinanceContext);
+
   const [fmDate, setFmDate] = useState("");
   const [toDate, setTdDate] = useState("");
 

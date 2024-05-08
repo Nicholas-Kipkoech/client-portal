@@ -1,13 +1,13 @@
 import React from "react";
 import Sidebar from "../components/Sidebar";
-import ContextProvider from "../context/context";
 import { ChakraProvider } from "@chakra-ui/react";
 import ToastProvider from "../providers/ToastProvider";
 import Navbar from "../components/Navbar";
+import AppContextProvider from "../providers/AppContextProvider";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <ContextProvider>
+    <AppContextProvider>
       <ChakraProvider>
         <ToastProvider>
           <div className="flex">
@@ -21,7 +21,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           </div>
         </ToastProvider>
       </ChakraProvider>
-    </ContextProvider>
+    </AppContextProvider>
   );
 };
 

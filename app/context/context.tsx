@@ -2,15 +2,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import {
-  getClaimCreditNotes,
-  getClaimDebits,
-  getClaims,
-  getCommissionPayable,
-  getGLStatements,
-  getPolicies,
   getPremiumReports,
   getPremiumsAndCommission,
-  getReceipts,
   getReceiptsData,
   getUpcomingRenewals,
 } from "../services/apiServices";
@@ -25,27 +18,15 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [years, setYears] = useState<number[]>([]);
   const [selectedQuote, setSelectedQuote] = useState({});
   const [isMobile, setIsMobile] = useState(false);
-  const [loadingPolicies, setLoadingPolices] = useState(false);
-  const [loadingClaims, setLoadingClaims] = useState(false);
+
   const [acceptedQuotes, setAcceptedQuotes] = useState(false);
-  const [policies, setPolicies] = useState([]);
-  const [claims, setClaims] = useState([]);
+
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
-  const [fromMonthDate, setFromMonthDate] = useState("1-Apr-2024");
-  const [toMonthDate, setToMonthDate] = useState("30-Apr-2024");
+
   const [uwData, setUwData] = useState([]);
   const [receipts, setReceipts] = useState([]);
-  const [premiumReports, setPremiumReports] = useState([]);
-  const [claimCreditNotes, setClaimCreditNotes] = useState([]);
-  const [receiptsData, setReceiptsData] = useState([]);
-  const [debits, setDebits] = useState([]);
-  const [commissionPayable, setCommissionPayable] = useState([]);
-  const [glStatements, setGLstatements] = useState([]);
-  const [loadingGl, setLoadingGl] = useState(false);
-  const [upcomingRenewals, setUpcomingRenewals] = useState([]);
-  const [loadingCommissions, setLoadingCommissions] = useState(false);
-  const [loadingPremiumReports, setLoadingPremiumReports] = useState(false);
+
   const [loadingUwData, setLoadingUwData] = useState(false);
 
   useEffect(() => {
@@ -110,35 +91,6 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   useEffect(() => {
-    async function fetchPolicies() {
-      setLoadingPolices(true);
-      if (Object.keys(user).length > 0) {
-        const response = await getPolicies({
-          intermediaryCode: user?.intermediaryCode,
-          clientCode: user?.entityCode,
-        });
-        setLoadingPolices(false);
-        setPolicies(response.results);
-      }
-    }
-    fetchPolicies();
-  }, [user]);
-
-  useEffect(() => {
-    async function fetchClaims() {
-      setLoadingClaims(true);
-      if (Object.keys(user).length > 0) {
-        const response = await getClaims({
-          intermediaryCode: user?.intermediaryCode,
-          clientCode: user?.entityCode,
-        });
-        setLoadingClaims(false);
-        setClaims(response.results);
-      }
-    }
-    fetchClaims();
-  }, [user]);
-  useEffect(() => {
     async function fetchPremiums() {
       setLoadingUwData(true);
       if (Object.keys(user).length > 0) {
@@ -169,110 +121,6 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
     }
     fetchReceipts();
   }, [user, fromDate, toDate]);
-  useEffect(() => {
-    async function fetchPremiumReports() {
-      setLoadingPremiumReports(true);
-      if (Object.keys(user).length > 0) {
-        const response = await getPremiumReports({
-          fromDate: fromDate,
-          toDate: toDate,
-          intermediaryCode: user?.intermediaryCode,
-          clientCode: user?.entityCode,
-        });
-        setLoadingPremiumReports(false);
-        setPremiumReports(response.results);
-      }
-    }
-    fetchPremiumReports();
-  }, [user, fromDate, toDate]);
-
-  useEffect(() => {
-    async function fetchGlstatements() {
-      setLoadingGl(true);
-      if (Object.keys(user).length > 0) {
-        const response = await getGLStatements({
-          fromDate: fromMonthDate,
-          toDate: toMonthDate,
-          intermediaryCode: user?.intermediaryCode,
-          clientCode: user?.entityCode,
-        });
-
-        setLoadingGl(false);
-        setGLstatements(response.results);
-      }
-    }
-    fetchGlstatements();
-  }, [user, fromMonthDate, toMonthDate]);
-
-  useEffect(() => {
-    async function fetchClaimCreditNotes() {
-      if (Object.keys(user).length > 0) {
-        const response = await getClaimCreditNotes({
-          intermediaryCode: user?.intermediaryCode,
-          clientCode: user?.entityCode,
-        });
-        setClaimCreditNotes(response.results);
-      }
-    }
-    fetchClaimCreditNotes();
-  }, [user]);
-  useEffect(() => {
-    async function fetchReceipts() {
-      if (Object.keys(user).length > 0) {
-        const response = await getReceipts({
-          intermediaryCode: user?.intermediaryCode,
-          clientCode: user?.entityCode,
-        });
-        setReceiptsData(response.results);
-      }
-    }
-    fetchReceipts();
-  }, [user]);
-  useEffect(() => {
-    async function fetchClaimDebits() {
-      if (Object.keys(user).length > 0) {
-        const response = await getClaimDebits({
-          intermediaryCode: user?.intermediaryCode,
-          clientCode: user?.entityCode,
-        });
-        setDebits(response.results);
-      }
-    }
-    fetchClaimDebits();
-  }, [user]);
-  useEffect(() => {
-    async function fetchCommissionPayable() {
-      setLoadingCommissions(true);
-      if (Object.keys(user).length > 0) {
-        const response = await getCommissionPayable({
-          fromDate: fromMonthDate,
-          toDate: toMonthDate,
-          intermediaryCode: user?.intermediaryCode,
-          clientCode: user?.entityCode,
-        });
-        setLoadingCommissions(false);
-        setCommissionPayable(response.results);
-      }
-    }
-    fetchCommissionPayable();
-  }, [user, toMonthDate, fromMonthDate]);
-
-  const { systemDate, next3Month } = format3months();
-  useEffect(() => {
-    async function fetchUpcomingRenewals() {
-      if (Object.keys(user).length > 0) {
-        const response = await getUpcomingRenewals({
-          fromDate: systemDate,
-          toDate: next3Month,
-          intermediaryCode: user?.intermediaryCode,
-          clientCode: user?.entityCode,
-        });
-
-        setUpcomingRenewals(response.results);
-      }
-    }
-    fetchUpcomingRenewals();
-  }, [user, systemDate, next3Month]);
 
   const calculateUwData = (uwData: any[]) => {
     const totalPremium = uwData.reduce((total: number, uw) => {
@@ -314,17 +162,6 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   };
   const receiptResults = calculateTotalByCurrency(receipts);
 
-  const currentYear = new Date(Date.now()).getFullYear();
-  const nextYear = currentYear + 1;
-
-  const filteredPolicies = policies.filter((policy: any) => {
-    const policyYear = new Date(policy.periodTo).getFullYear();
-    return policyYear === currentYear || policyYear === nextYear;
-  });
-  const openClaims = claims.filter((claim: any) => {
-    return claim.status === "Open";
-  });
-
   return (
     <Context.Provider
       value={{
@@ -339,30 +176,14 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
         isMobile,
         acceptedQuotes,
         setAcceptedQuotes,
-        policies,
-        filteredPolicies,
-        loadingPolicies,
-        claims,
-        loadingClaims,
         totalPremium,
         totalCommission,
         setFromDate,
         setToDate,
         loadingUwData,
         receiptResults,
-        openClaims,
-        premiumReports,
-        loadingPremiumReports,
         fromDate,
         toDate,
-        claimCreditNotes,
-        receiptsData,
-        debits,
-        commissionPayable,
-        loadingCommissions,
-        glStatements,
-        upcomingRenewals,
-        loadingGl,
       }}
     >
       {children}

@@ -1,16 +1,17 @@
 "use client";
 import { useContextApi } from "@/app/context/context";
+import FinanceContext from "@/app/context/finance/finance-context";
 import CustomButton from "@/app/utils/CustomButtom";
 import CustomInput from "@/app/utils/CustomInput";
 import { formatDate } from "@/app/utils/helpers";
 import { ConfigProvider, Table } from "antd";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { GrPrevious } from "react-icons/gr";
 
 const Receipts = () => {
   const router = useRouter();
-  const { receiptsData, user }: any = useContextApi();
+  const { receiptsData, user }: any = useContext(FinanceContext);
   const [initialReceipt, setInitialReceipt] = useState([]);
   const [searchParams, setSearchParams] = useState<any>({
     from: "",

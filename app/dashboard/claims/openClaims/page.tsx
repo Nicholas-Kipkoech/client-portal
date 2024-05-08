@@ -1,16 +1,16 @@
 "use client";
 import { ConfigProvider, Table } from "antd";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import { GrPrevious } from "react-icons/gr";
 import { useRouter } from "next/navigation";
 import { formatDate } from "@/app/utils/helpers";
-import { useContextApi } from "@/app/context/context";
 import CustomInput from "@/app/utils/CustomInput";
 import CustomButton from "@/app/utils/CustomButtom";
+import ClaimsContext from "@/app/context/claims/claims-context";
 
 const OpenClaims = () => {
-  const { openClaims, loadingClaims }: any = useContextApi();
+  const { openClaims, loadingClaims }: any = useContext(ClaimsContext);
 
   const [initialClaims, setInitialClaims] = useState([]);
   const [searchParams, setSearchParams] = useState<any>({

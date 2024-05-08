@@ -1,13 +1,13 @@
 "use client";
 import { ConfigProvider, Table } from "antd";
-import React from "react";
+import React, { useContext } from "react";
 import { GrPrevious } from "react-icons/gr";
 import { useRouter } from "next/navigation";
-import { useContextApi } from "@/app/context/context";
 import { format3months, formatDate } from "@/app/utils/helpers";
+import ReportsContext from "@/app/context/reports/reports-context";
 
 const UpcomingRenewals = () => {
-  const { upcomingRenewals }: any = useContextApi();
+  const { upcomingRenewals }: any = useContext(ReportsContext);
   const { next3Month, systemDate } = format3months();
 
   const columns = [

@@ -1,11 +1,11 @@
 "use client";
-import { useContextApi } from "@/app/context/context";
+import FinanceContext from "@/app/context/finance/finance-context";
 import { formatDate } from "@/app/utils/helpers";
 import { ConfigProvider, Table } from "antd";
-import React from "react";
+import React, { useContext } from "react";
 
 const Debits = () => {
-  const { debits }: any = useContextApi();
+  const { debits }: any = useContext(FinanceContext);
   const columns = [
     {
       title: "Doc NO",

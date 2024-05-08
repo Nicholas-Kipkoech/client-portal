@@ -1,22 +1,21 @@
 "use client";
 import CsvDownloader from "react-csv-downloader";
-import React, { useState } from "react";
-import { useContextApi } from "@/app/context/context";
+import React, { useContext, useState } from "react";
 import { formatDate, Months } from "@/app/utils/helpers";
 import { DatePicker, Spin } from "antd";
 import CustomButton from "@/app/utils/CustomButtom";
 import { LoadingOutlined } from "@ant-design/icons";
+import ReportsContext from "@/app/context/reports/reports-context";
 
 const Premiums = () => {
   const {
     premiumReports,
-    user,
     setFromDate,
     setToDate,
     loadingPremiumReports,
     fromDate,
     toDate: _toDate,
-  }: any = useContextApi();
+  }: any = useContext(ReportsContext);
 
   const columns = [
     {
