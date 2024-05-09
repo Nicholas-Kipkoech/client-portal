@@ -37,3 +37,27 @@ export const formatYearly = (year) => {
   const end = `31-Dec-${year}`;
   return { startDate: start, endDate: end };
 };
+
+export const getDaysForNextSixMonths = (months) => {
+  const currentDate = new Date();
+  let currentYear = currentDate.getFullYear();
+  let currentMonth = currentDate.getMonth();
+
+  const monthsData = [];
+
+  // Loop to calculate days for the next 6 months
+  for (let i = 0; i < months; i++) {
+    // Calculate the month and year for the current iteration
+    const targetMonth = currentMonth + i;
+    const targetYear = currentYear + Math.floor((currentMonth + i) / 12); // Handle year overflow
+
+    // Calculate the number of days in the target month
+    const daysInMonth = new Date(targetYear, targetMonth + 1, 0).getDate();
+
+    // Add month data to the array
+    monthsData.push(daysInMonth);
+  }
+  const totalMonthDays =
+    monthsData.reduce((total, days) => total + days, 0) - 1;
+  return totalMonthDays;
+};

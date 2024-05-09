@@ -151,19 +151,21 @@ const Sidebar = () => {
         <Image src={iconLogo} alt="icon Logo" height={80} />
       </div>
       <div className="flex gap-2 flex-col pr-2 pt-2 pl-3">
-        <ul className="list-none ">
+        <ul className="list-none flex flex-col gap-2 ">
           {menuItems.map((cat, index) => (
             <li key={cat.title} className="text-white ">
               <div
-                className="flex items-center cursor-pointer gap-2"
+                className="flex justify-between mx-2  cursor-pointer hover:bg-[#7a7ea9] h-[2rem] rounded-md px-2 items-center"
                 onClick={() => handleShowMenu(index)}
               >
                 <span>{cat.title}</span>
-                {showSubMenu === index ? (
-                  <FaChevronDown size={15} />
-                ) : (
-                  <MdOutlineNavigateNext size={20} />
-                )}
+                <div>
+                  {showSubMenu === index ? (
+                    <FaChevronDown size={15} />
+                  ) : (
+                    <MdOutlineNavigateNext size={20} />
+                  )}
+                </div>
               </div>
               {showSubMenu === index &&
                 cat.list.map((item: any) => (

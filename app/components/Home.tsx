@@ -3,8 +3,10 @@ import React from "react";
 import CustomButton from "../utils/CustomButtom";
 import Image from "next/image";
 import house from "../assets/house.jpg";
+import { useRouter } from "next/navigation";
 
 const HomePage = () => {
+  const router = useRouter();
   return (
     <div className="md:flex md:gap-10 justify-between">
       <div className="flex md:flex-col sm:flex-col sm:justify-start md:gap-10 sm:gap-4 sm:p-2">
@@ -21,6 +23,7 @@ const HomePage = () => {
 
           <CustomButton
             name={"Get a Quote"}
+            onClick={() => router.push("/quote")}
             className={
               "sm:h-[2.5rem] sm:rounded-[10px] sm:text-[1.2rem]  md:h-[3rem] bg-[#cb7529] md:rounded-[30px] sm:w-[15rem] md:w-[14rem] 2xl:w-[15rem] text-white sm:mt-2"
             }
