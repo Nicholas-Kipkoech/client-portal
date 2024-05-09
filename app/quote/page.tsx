@@ -9,14 +9,13 @@ import { requestMotorQuote } from "@/app/services/apiServices";
 import CustomInput from "@/app/utils/CustomInput";
 import CustomSelect from "@/app/utils/CustomSelect";
 import CustomButton from "@/app/utils/CustomButtom";
-import { useContextApi } from "../context/context";
 
 const AddQuote = () => {
   const [address, setAddress] = useState("");
   const [car_reg, setCarReg] = useState("");
   const [motorValue, setMotorValue] = useState<number | any>(null);
 
-  const [year, setYear] = useState(null);
+  const [year, setYear] = useState(0);
   const [city, setCity] = useState("");
   const [purpose, setPurpose] = useState("");
   const [model, setModel] = useState("");
@@ -27,6 +26,7 @@ const AddQuote = () => {
   const [active, setActive] = useState("motor");
   const [loading, setLoading] = useState(false);
   const [years, setYears] = useState<number[]>([]);
+  const [month, setMonth] = useState("");
 
   useEffect(() => {
     const years: number[] = [];
@@ -77,58 +77,33 @@ const AddQuote = () => {
   const router = useRouter();
   const showToast = useCustomToast();
 
+  const payload = {
+    use,
+    coverDateFrom: "17 Apr 2023 08:00",
+    coverDateTo: "16 Apr 2024 23:59",
+  };
+
   const handleRequestQuote = async () => {
     try {
       if (active === "motor") {
-        setLoading(true);
         const res = await requestMotorQuote({
           model: model,
           reqNumber: car_reg,
-          use: use,
-          yearOfManufacture: Number(year),
-          value: Number(motorValue),
+          value: motorValue,
+          yearOfManufacture: year,
         });
-        showToast("Motor details submitted successfully");
         if (res.success === true) {
-          setLoading(false);
-          const existingQuotes = JSON.parse(
-            localStorage.getItem("quotes") || "[]"
-          );
-          const updatedQuotes = [...existingQuotes, ...res.response];
-          localStorage.setItem("quotes", JSON.stringify(updatedQuotes));
-          router.push("/dashboard/quotes");
+          const obj = { ...payload, ...res.response[0] };
+          localStorage.setItem("quotes", JSON.stringify(obj));
+          localStorage.setItem("state", "quote");
+          router.push("/auth/login");
         }
-        // refresh the page once the quotes is added
+        showToast("Motor details submitted successfully");
       }
     } catch (error: any) {
       setLoading(false);
-      console.error(error.response.data.error);
-      showToast(error.response.data.error, "error");
+      showToast(error, "error");
     }
-  };
-
-  const inputRef = useRef<any>(null);
-
-  const handleInputclick = (event: any) => {
-    if (inputRef.current) {
-      inputRef?.current?.click();
-    }
-  };
-
-  const [carImages, setCarImages] = useState<any[]>([]);
-
-  const handleImageChange = function loadFile(
-    e: React.ChangeEvent<HTMLInputElement>
-  ) {
-    if (e.target.files && e.target.files.length > 0) {
-      const selectedImage = Array.from(e.target.files).map((file) =>
-        URL.createObjectURL(file)
-      );
-      setCarImages((prevImage) => [...prevImage, ...selectedImage]);
-    }
-  };
-  const handleImageDelete = (index: number) => {
-    setCarImages(carImages.filter((image, key) => key !== index));
   };
 
   return (
@@ -196,47 +171,51 @@ const AddQuote = () => {
                   options={useOptions}
                   onChange={(value: any) => setUse(value.value)}
                 />
-
-                <div>
-                  <p className="flex justify-center text-[1.2rem]">
-                    Car Photos
-                  </p>
-                  <p className="flex justify-center text-[1rem] text-slate-500">
-                    Add front,sides,back view
-                  </p>
-
-                  <div className="flex flex-col justify-center">
-                    <div className="flex flex-wrap gap-2">
-                      {carImages.map((image, index) => (
-                        <div key={index} className="">
-                          <p
-                            className="flex justify-end text-red-700 cursor-pointer"
-                            onClick={() => handleImageDelete(index)}
-                          >
-                            X
-                          </p>
-                          <img
-                            src={image}
-                            alt="image"
-                            className="h-[8rem] w-[12rem]"
-                          />
-                        </div>
-                      ))}
-                    </div>
-                    <div
-                      onClick={handleInputclick}
-                      className="h-[2rem] border w-[10rem] mt-5 cursor-pointer bg-slate-800 text-white rounded-md items-center flex justify-center"
-                    >
-                      Upload Images
-                    </div>
+                <p className="mt-2">Select Period</p>
+                <div className="flex flex-wrap justify-between mt-2">
+                  <div className="flex items-center gap-1">
                     <input
-                      type="file"
-                      accept="image/*"
-                      multiple
-                      className="hidden"
-                      ref={inputRef}
-                      onChange={handleImageChange}
+                      type="radio"
+                      id="1month"
+                      name="month"
+                      value={"1"}
+                      checked={month === "1"}
+                      onChange={(e) => setMonth(e.target.value)}
                     />
+                    <label htmlFor="1month">1 month</label>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <input
+                      type="radio"
+                      id="1month"
+                      name="month"
+                      value={"3"}
+                      checked={month === "3"}
+                      onChange={(e) => setMonth(e.target.value)}
+                    />
+                    <label htmlFor="1month">3 month</label>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <input
+                      type="radio"
+                      id="1month"
+                      name="month"
+                      value={"6"}
+                      checked={month === "6"}
+                      onChange={(e) => setMonth(e.target.value)}
+                    />
+                    <label htmlFor="1month">6 month</label>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <input
+                      type="radio"
+                      id="1month"
+                      name="month"
+                      value={"12"}
+                      checked={month === "12"}
+                      onChange={(e) => setMonth(e.target.value)}
+                    />
+                    <label htmlFor="1month">12 month</label>
                   </div>
                 </div>
               </>

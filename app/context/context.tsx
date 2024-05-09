@@ -48,14 +48,6 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
     getYears();
   }, []);
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const quotesString = localStorage.getItem("quotes");
-      const quotes = quotesString ? JSON.parse(quotesString) : [];
-      setQuotes(quotes);
-    }
-  }, []);
-
   function isUserAuthenticated(): boolean {
     if (typeof window !== "undefined") {
       const accessTokenJson = localStorage.getItem("accessToken");
@@ -167,7 +159,6 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
       value={{
         page,
         setPage,
-        quotes,
         isUserAuthenticated,
         user,
         years,

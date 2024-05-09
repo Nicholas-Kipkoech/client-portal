@@ -6,6 +6,11 @@ export const requestMotorQuote = async (data: Imotor) => {
   return res.data;
 };
 
+export const createPolicy = async (data: anys) => {
+  const res = await PrivateAxiosUtility.post(`/request/motor/policy`, data);
+  return res.data;
+};
+
 export const userLogin = async (data: any) => {
   const res = await PrivateAxiosUtility.post(`/user/login`, data);
   return res.data;

@@ -4,55 +4,12 @@ import { useContextApi } from "../../context/context";
 
 import { GrPrevious } from "react-icons/gr";
 import { ConfigProvider, Table } from "antd";
-import { IQuotes } from "../../types";
-import CustomButton from "@/app/utils/CustomButtom";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 const QuotesPage = () => {
   const router = useRouter();
 
   const { quotes, user }: any = useContextApi();
-
-  const CustomProduct = ({
-    model,
-    premium,
-    yearOfManufacture,
-    use,
-    reqNumber,
-    totalPremium,
-    value,
-  }: IQuotes) => {
-    return (
-      <div className="md:w-[46%] sm:w-[100%] border rounded-md shadow-2xl hover:border-[#cb7529] cursor-pointer">
-        <div className="py-4 px-4 flex justify-between">
-          <div>
-            <p className="font-bold text-[1.15rem] sm:text-[0.8rem]">
-              Quote Number: Q/02/03258/04/2024
-            </p>
-            <p className="font-bold text-[1.15rem] sm:text-[0.8rem]">
-              Product : Motor {use}
-            </p>
-            <p className="sm:text-[0.9rem] md:text-[1rem]">
-              Insured : {user.fullName}
-            </p>
-            <p className="sm:text-[0.9rem] md:text-[1rem]">
-              Sum Insured : KES {value?.toLocaleString()}
-            </p>
-          </div>
-          <div>
-            <p className="sm:text-[0.9rem] md:text-[1rem]">
-              Premium: {premium.toLocaleString()}
-            </p>
-
-            <p className="font-semibold sm:text-[0.9rem] md:text-[1rem]">
-              Intermediary: Direct
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  };
 
   const columns = [
     {
@@ -117,28 +74,10 @@ const QuotesPage = () => {
         <Table
           columns={columns}
           dataSource={quotes}
-          className="sm:hidden md:block hover:bg-none"
+          className=" hover:bg-none"
           scroll={{ x: 1000 }}
         />
       </ConfigProvider>
-      <div className="flex flex-wrap md:hidden justify-center gap-4 mt-2 sm:flex-col md:flex-row">
-        {quotes.map((quote: IQuotes, index: number) => (
-          <CustomProduct
-            key={index}
-            model={quote.model}
-            premium={quote.premium}
-            yearOfManufacture={quote.yearOfManufacture}
-            PHCfund={quote.PHCfund}
-            use={quote.use}
-            trainning_levy={quote.trainning_levy}
-            reqNumber={quote.reqNumber}
-            stamp_duty={quote.stamp_duty}
-            totalPremium={quote.totalPremium}
-            days={quote.days}
-            value={quote.value}
-          />
-        ))}
-      </div>
     </div>
   );
 };

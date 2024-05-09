@@ -13,6 +13,7 @@ const Login = () => {
   const [isLogging, setIsLogging] = useState(false);
   const [isRegistering, setIsRegistering] = useState(false);
   const [password, setPassword] = useState("");
+  const [kraPIN, setKraPIN] = useState("");
   const [email, setEmail] = useState("");
   const [entCode, setEntCode] = useState("");
   const [error, setError] = useState("");
@@ -48,17 +49,26 @@ const Login = () => {
   const handleRegister = async () => {
     try {
       setIsRegistering(true);
-      const res = await userRegister({
-        address: address,
-        email: email,
-        fullName: fullName,
-        password: password,
-        phoneNumber: phoneNumber,
-      });
-      if (res.success === true) {
-        showToast("Registration successful");
-        setIsRegistering(false);
-        setIsLogin(true);
+      const payload = {
+        address,
+        email,
+        fullName,
+        password,
+        phoneNumber,
+        kraPIN,
+      };
+      const state = localStorage.getItem("state");
+      const existingQuotesJSON = localStorage.getItem("quotes");
+      const existingQuotes = existingQuotesJSON
+        ? JSON.parse(existingQuotesJSON)
+        : {};
+      const updatedQuotes = {
+        ...existingQuotes,
+        ...payload,
+      };
+      if (state === "quote") {
+        localStorage.setItem("quotes", JSON.stringify(updatedQuotes));
+        router.push("/quote/payments");
       }
     } catch (error: any) {
       console.error(error);
@@ -122,6 +132,12 @@ const Login = () => {
                 name={"Full Name"}
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
+                className={"h-[40px] border rounded-md"}
+              />
+              <CustomInput
+                name={"KRA PIN"}
+                value={kraPIN}
+                onChange={(e) => setKraPIN(e.target.value)}
                 className={"h-[40px] border rounded-md"}
               />
               <CustomInput

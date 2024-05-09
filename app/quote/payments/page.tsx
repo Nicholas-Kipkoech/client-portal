@@ -8,29 +8,63 @@ import { useRouter } from "next/navigation";
 import { GrPrevious } from "react-icons/gr";
 import CustomInput from "@/app/utils/CustomInput";
 import CustomButton from "@/app/utils/CustomButtom";
+import { createPolicy } from "@/app/services/apiServices";
+import { useCustomToast } from "@/app/constants/useToast";
 
 const PaymentPage = () => {
-  const { selectedQuote, setAcceptedQuotes }: any = useContextApi();
   const [phoneNumber, setPhoneNumber] = useState("");
   const [amount, setAmount] = useState("");
+  const [quote, setQuote] = useState<any>({});
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (selectedQuote) {
-      setAmount(selectedQuote.totalPremium);
+    if (typeof window !== undefined) {
+      const quotes: any = localStorage.getItem("quotes");
+      const JSONresults = JSON.parse(quotes);
+      setQuote(JSONresults);
     }
-  }, [selectedQuote]);
+  }, []);
+
+  useEffect(() => {
+    if (Object.keys(quote).length > 0) {
+      setAmount(quote.totalPremium);
+      setPhoneNumber(quote.phoneNumber);
+    }
+  }, [quote]);
+
   const router = useRouter();
-  const handlePay = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setAcceptedQuotes(true);
-      router.push("/quotes");
-    }, 3000); // First timeout after 1 second
+  const showToast = useCustomToast();
+  const handlePay = async () => {
+    try {
+      setLoading(true);
+      const res = await createPolicy({
+        kraPin: quote.kraPIN,
+        name: quote.fullName,
+        address: quote.address,
+        mobileNumber: quote.phoneNumber,
+        email: quote.email,
+        coverDateFrom: quote.coverDateFrom,
+        coverDateTo: quote.coverDateTo,
+        vehicleReg: quote.reqNumber,
+        vehicleUse: quote.use,
+        vehicleManYear: quote.yearOfManufacture,
+        vehiclePremium: quote.premium,
+        grossPremium: quote.totalPremium,
+        vehicleMake: quote.model,
+        vehicleModel: quote.model,
+      });
+      console.log(res);
+      if (res.response.success === true) {
+        setLoading(false);
+        showToast("Policy created successfully");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
-    <div className="flex flex-col  justify-center bg-white">
+    <div className="flex flex-col justify-center bg-white h-[100vh]">
       <div
         className="flex items-center mt-2 cursor-pointer"
         onClick={() => router.back()}
@@ -42,8 +76,8 @@ const PaymentPage = () => {
         <div className="md:w-[40rem] sm:w-[22rem] border py-10 my-6 hover:border-[#cb7529]  rounded-md shadow-2xl">
           <p className="flex justify-center md:text-[1.8rem] sm:text-[1.2rem] items-center">
             Pay{" "}
-            {selectedQuote?.totalPremium
-              ? `KES ${selectedQuote?.totalPremium?.toLocaleString()}`
+            {quote?.totalPremium
+              ? `KES ${quote?.totalPremium?.toLocaleString()}`
               : ""}{" "}
             with MPESA
           </p>
@@ -78,6 +112,7 @@ const PaymentPage = () => {
                 <CustomInput
                   name={"Amount (KES)"}
                   value={amount}
+                  disabled
                   className={"h-[3rem] p-[5px] border rounded-md"}
                   onChange={(e) => setAmount(e.target.value)}
                 />
@@ -86,7 +121,7 @@ const PaymentPage = () => {
                     name={`Pay ${amount ? `KES ${amount}` : ""} `}
                     onClick={handlePay}
                     className={
-                      "md:h-[3rem] border w-[50%] sm:w-[100%] sm:h-[2.8rem] bg-[#cb7529] text-white my-5 rounded-md"
+                      "md:h-[3rem] border w-[50%]  bg-[#cb7529] text-white my-5 rounded-md"
                     }
                   />
                 </div>
