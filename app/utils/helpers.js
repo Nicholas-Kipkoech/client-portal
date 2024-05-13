@@ -61,3 +61,42 @@ export const getDaysForNextSixMonths = (months) => {
     monthsData.reduce((total, days) => total + days, 0) - 1;
   return totalMonthDays;
 };
+
+export const getCoverDates = () => {
+  // Get today's date and time
+  const currentDate = new Date();
+
+  // Create a new date object for 1 year from today
+  const oneYearLater = new Date(currentDate);
+  oneYearLater.setFullYear(currentDate.getFullYear() + 1);
+
+  // Set the date to one day before (subtract 1 day)
+  oneYearLater.setDate(oneYearLater.getDate() - 1);
+
+  // Set the time of oneYearLater to 23:59:59 (one second before midnight)
+  oneYearLater.setHours(23, 59, 59, 0);
+
+  // Format the dates in "DD Month YYYY HH:mm" format
+  const coverDateFrom = formatDateWithTime(currentDate);
+  const coverDateTo = formatDateWithTime(oneYearLater);
+
+  return {
+    coverDateFrom,
+    coverDateTo,
+  };
+};
+
+// Helper function to format date with time in "DD Month YYYY HH:mm" format
+function formatDateWithTime(date) {
+  const day = date.getDate().toString().padStart(2, "0");
+  const month = getMonthName(date.getMonth());
+  const year = date.getFullYear();
+  const hours = date.getHours().toString().padStart(2, "0");
+  const minutes = date.getMinutes().toString().padStart(2, "0");
+  return `${day} ${month} ${year} ${hours}:${minutes}`;
+}
+
+// Helper function to get month name from month index
+function getMonthName(monthIndex) {
+  return Months[monthIndex];
+}

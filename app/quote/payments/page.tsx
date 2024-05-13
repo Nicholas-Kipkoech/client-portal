@@ -38,6 +38,7 @@ const PaymentPage = () => {
     try {
       setLoading(true);
       const res = await createPolicy({
+        paymentNumber: phoneNumber,
         kraPin: quote.kraPIN,
         name: quote.fullName,
         address: quote.address,
@@ -52,6 +53,7 @@ const PaymentPage = () => {
         grossPremium: quote.totalPremium,
         vehicleMake: quote.model,
         vehicleModel: quote.model,
+        vehicleValue: parseInt(quote.value),
       });
       console.log(res);
       if (res.response.success === true) {
@@ -118,7 +120,9 @@ const PaymentPage = () => {
                 />
                 <div className="flex justify-center items-center">
                   <CustomButton
-                    name={`Pay ${amount ? `KES ${amount}` : ""} `}
+                    name={`Pay ${
+                      amount ? `KES ${amount.toLocaleString()}` : ""
+                    } `}
                     onClick={handlePay}
                     className={
                       "md:h-[3rem] border w-[50%]  bg-[#cb7529] text-white my-5 rounded-md"

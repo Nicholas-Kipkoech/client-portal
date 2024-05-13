@@ -49,11 +49,6 @@ const Sidebar = () => {
       title: "Quotes",
       list: [
         {
-          title: "Request Quote",
-          path: "/dashboard/quotes/add-quote",
-          icon: <VscOrganization />,
-        },
-        {
           title: "View Quotes",
           path: "/dashboard/quotes",
           icon: <LiaFileInvoiceSolid />,
@@ -124,7 +119,7 @@ const Sidebar = () => {
       ],
     },
     {
-      title: "Finance",
+      title: "Downloads",
       list: [
         {
           title: "Receipts Download",

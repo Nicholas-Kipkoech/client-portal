@@ -9,6 +9,7 @@ import { requestMotorQuote } from "@/app/services/apiServices";
 import CustomInput from "@/app/utils/CustomInput";
 import CustomSelect from "@/app/utils/CustomSelect";
 import CustomButton from "@/app/utils/CustomButtom";
+import { getCoverDates, Months } from "../utils/helpers";
 
 const AddQuote = () => {
   const [address, setAddress] = useState("");
@@ -77,10 +78,12 @@ const AddQuote = () => {
   const router = useRouter();
   const showToast = useCustomToast();
 
+  const { coverDateFrom, coverDateTo } = getCoverDates();
+
   const payload = {
     use,
-    coverDateFrom: "17 Apr 2023 08:00",
-    coverDateTo: "16 Apr 2024 23:59",
+    coverDateFrom: coverDateFrom,
+    coverDateTo: coverDateTo,
   };
 
   const handleRequestQuote = async () => {
@@ -96,7 +99,7 @@ const AddQuote = () => {
           const obj = { ...payload, ...res.response[0] };
           localStorage.setItem("quotes", JSON.stringify(obj));
           localStorage.setItem("state", "quote");
-          router.push("/auth/login");
+          router.push("/quote/accept");
         }
         showToast("Motor details submitted successfully");
       }

@@ -122,7 +122,6 @@ const Dashboard = () => {
         />
       </div>
       <div className="pt-2 flex flex-wrap gap-2 justify-center ">
-        <CustomCard name="Quotes" count={quotes.length} to="quotes" />
         <CustomCard
           name="Running Policies"
           count={filteredPolicies.length}

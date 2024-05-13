@@ -57,7 +57,7 @@ const Debits = () => {
             href={item.receiptUrl}
             className="p-[4px] border cursor-pointer bg-slate-700 text-white rounded-md"
           >
-            Download Receipt
+            Download ETIMS
           </a>{" "}
         </div>
       ),
