@@ -108,14 +108,11 @@ const Sidebar = () => {
           path: "/dashboard/reports/upcomingRenewals",
           icon: <LiaFileInvoiceSolid />,
         },
-        (user && user?.intermediaryCode === "70") ||
-        user.intermediaryCode === "25"
-          ? {
-              title: "Commsion Payable",
-              path: "/dashboard/reports/commissionPayable",
-              icon: <LiaFileInvoiceSolid />,
-            }
-          : "",
+        {
+          title: "Commsion Payable",
+          path: "/dashboard/reports/commissionPayable",
+          icon: <LiaFileInvoiceSolid />,
+        },
       ],
     },
     {
