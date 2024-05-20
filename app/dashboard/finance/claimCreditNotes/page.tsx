@@ -45,6 +45,21 @@ const ClaimsCreditNotes = () => {
 
   const columns = [
     {
+      title: "Action",
+      dataIndex: "status",
+      render: (_: any, item: any) => (
+        <div className="flex gap-2">
+          <a
+            target="_blank"
+            href={item.receiptUrl}
+            className="p-[4px] border cursor-pointer bg-slate-700 text-white rounded-md"
+          >
+            Download Receipt
+          </a>{" "}
+        </div>
+      ),
+    },
+    {
       title: "Journal NO",
       dataIndex: "policyNo",
       render: (_: any, item: any) => <p>{item.journalNo}</p>,
@@ -88,21 +103,6 @@ const ClaimsCreditNotes = () => {
       title: "Narration",
       dataIndex: "status",
       render: (_: any, item: any) => <p>{item.narration}</p>,
-    },
-    {
-      title: "Action",
-      dataIndex: "status",
-      render: (_: any, item: any) => (
-        <div className="flex gap-2">
-          <a
-            target="_blank"
-            href={item.receiptUrl}
-            className="p-[4px] border cursor-pointer bg-slate-700 text-white rounded-md"
-          >
-            Download Receipt
-          </a>{" "}
-        </div>
-      ),
     },
   ];
   return (
