@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useRouter } from "next/navigation";
 import { useCustomToast } from "@/app/constants/useToast";
@@ -9,7 +9,7 @@ import { requestMotorQuote } from "@/app/services/apiServices";
 import CustomInput from "@/app/utils/CustomInput";
 import CustomSelect from "@/app/utils/CustomSelect";
 import CustomButton from "@/app/utils/CustomButtom";
-import { getCoverDates, Months } from "../utils/helpers";
+import { getCoverDates } from "../utils/helpers";
 
 const AddQuote = () => {
   const [address, setAddress] = useState("");
@@ -22,6 +22,7 @@ const AddQuote = () => {
   const [model, setModel] = useState("");
   const [product, setProduct] = useState("");
   const [use, setUse] = useState("");
+  const [coverType, setCoverType] = useState("");
   const [motor, setMotor] = useState(false);
   const [non_motor, setNonMotor] = useState(false);
   const [active, setActive] = useState("motor");
@@ -59,6 +60,16 @@ const AddQuote = () => {
     {
       label: "Private",
       value: "private",
+    },
+  ];
+  const coverOptions = [
+    {
+      label: "Comprehensive",
+      value: "comprehensive",
+    },
+    {
+      label: "Third Party",
+      value: "Third Party",
     },
   ];
   const makeOptions = [
@@ -173,6 +184,12 @@ const AddQuote = () => {
                   placeholder="Select use..."
                   options={useOptions}
                   onChange={(value: any) => setUse(value.value)}
+                />
+                <CustomSelect
+                  name={"Cover Type"}
+                  placeholder="Select cover type..."
+                  options={coverOptions}
+                  onChange={(value: any) => setCoverType(value.value)}
                 />
                 <p className="mt-2">Select Period</p>
                 <div className="flex flex-wrap justify-between mt-2">

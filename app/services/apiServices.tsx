@@ -6,7 +6,7 @@ export const requestMotorQuote = async (data: Imotor) => {
   return res.data;
 };
 
-export const createPolicy = async (data: anys) => {
+export const createPolicy = async (data: any) => {
   const res = await PrivateAxiosUtility.post(`/request/motor/policy`, data);
   return res.data;
 };
