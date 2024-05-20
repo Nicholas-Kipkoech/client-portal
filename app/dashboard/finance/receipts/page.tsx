@@ -46,6 +46,21 @@ const Receipts = () => {
   };
   const columns = [
     {
+      title: "Action",
+      dataIndex: "status",
+      render: (_: any, item: any) => (
+        <div className="flex gap-2">
+          <a
+            target="_blank"
+            href={item.receiptUrl}
+            className="p-[4px] border cursor-pointer bg-slate-700 text-white rounded-md"
+          >
+            Download Receipt
+          </a>{" "}
+        </div>
+      ),
+    },
+    {
       title: "Reeeipt NO",
       dataIndex: "policyNo",
       render: (_: any, item: any) => <p>{item.receiptNo}</p>,
@@ -89,21 +104,6 @@ const Receipts = () => {
       title: "Posted",
       dataIndex: "status",
       render: (_: any, item: any) => <p>{item.posted}</p>,
-    },
-    {
-      title: "Action",
-      dataIndex: "status",
-      render: (_: any, item: any) => (
-        <div className="flex gap-2">
-          <a
-            target="_blank"
-            href={item.receiptUrl}
-            className="p-[4px] border cursor-pointer bg-slate-700 text-white rounded-md"
-          >
-            Download Receipt
-          </a>{" "}
-        </div>
-      ),
     },
   ];
   return (

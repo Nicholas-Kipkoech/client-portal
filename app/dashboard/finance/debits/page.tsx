@@ -8,6 +8,21 @@ const Debits = () => {
   const { debits }: any = useContext(FinanceContext);
   const columns = [
     {
+      title: "Action",
+      dataIndex: "status",
+      render: (_: any, item: any) => (
+        <div className="flex gap-2">
+          <a
+            target="_blank"
+            href={item.receiptUrl}
+            className="p-[4px] border cursor-pointer bg-slate-700 text-white rounded-md"
+          >
+            Download ETIMS
+          </a>{" "}
+        </div>
+      ),
+    },
+    {
       title: "Doc NO",
       dataIndex: "policyNo",
       render: (_: any, item: any) => <p>{item.docNumber}</p>,
@@ -47,21 +62,6 @@ const Debits = () => {
       dataIndex: "status",
       render: (_: any, item: any) => <p>KSH {item.os.toLocaleString()}</p>,
     },
-    {
-      title: "Action",
-      dataIndex: "status",
-      render: (_: any, item: any) => (
-        <div className="flex gap-2">
-          <a
-            target="_blank"
-            href={item.receiptUrl}
-            className="p-[4px] border cursor-pointer bg-slate-700 text-white rounded-md"
-          >
-            Download ETIMS
-          </a>{" "}
-        </div>
-      ),
-    },
   ];
   return (
     <div>
@@ -83,7 +83,7 @@ const Debits = () => {
           className="mt-2"
           columns={columns}
           dataSource={debits}
-          scroll={{ x: 1200 }}
+          scroll={{ x: 1800 }}
           pagination={{ pageSize: 20 }}
         />
       </ConfigProvider>
