@@ -1,77 +1,72 @@
 "use client";
-import React from "react";
-import { MdDone } from "react-icons/md";
-import { products } from "./travelUtils";
-import { benefitsData } from "./benefits";
-import { GrLinkNext } from "react-icons/gr";
+import React, { useState } from "react";
+
 import { useRouter } from "next/navigation";
+import { IoArrowBackOutline } from "react-icons/io5";
+import { countriesOptions } from "./travelUtils";
+import CustomSelect from "../utils/CustomSelect";
+import CustomInput from "../utils/CustomInput";
+import CustomButton from "../utils/CustomButtom";
 
-interface IProductCard {
-  name: string;
-  benefits?: any[];
-  code: string;
-}
-
-const Products = () => {
+const Travel = () => {
   const router = useRouter();
-
-  function handleViewPricing(code: string) {
+  const [data, setData] = useState<any[]>([]);
+  const [product, setProduct] = useState<any>("");
+  const handleGetQuote = () => {
     router.push("/travel/quote");
-    localStorage.setItem("productCode", code);
-  }
-
-  const CustomProductCard = ({ name, benefits, code }: IProductCard) => {
-    return (
-      <div className="bg-[#F9FAFE] shadow-2xl border-gray-500 p-8 w-[30rem] rounded-[20px] h-auto border-1">
-        <p className="text-[1.5rem] font-bold flex justify-center">{name}</p>
-
-        <p className="text-[1.2rem] font-semibold">Product Benefits</p>
-
-        <div className="list-none">
-          {benefits?.map((benefit) => {
-            const matchingDetail = benefit.details.find(
-              (detail: { code: string }) => detail.code === code
-            );
-            const value = matchingDetail ? matchingDetail.value : 0;
-            return (
-              <div
-                key={benefit.name}
-                className="flex items-center justify-between gap-[0.3rem]"
-              >
-                <div className="flex gap-[0.3rem]">
-                  <MdDone size={20} color="blue" />
-                  <p className="text-ellipsis text-[10px]">{benefit.name}</p>
-                </div>
-                <p>${value.toLocaleString()}</p>
-              </div>
-            );
-          })}
-        </div>
-        <div
-          onClick={() => handleViewPricing(code)}
-          className="flex items-center mt-2 gap-1 h-[2.5rem] rounded-[20px] cursor-pointer bg-[#cb7529] text-white justify-center"
-        >
-          <p>View Pricing</p>
-          <GrLinkNext />
-        </div>
-      </div>
-    );
   };
 
   return (
-    <div className="flex items-center justify-center  p-20">
-      <div className="flex flex-wrap gap-4">
-        {products.map((product) => (
-          <CustomProductCard
-            key={product.CC_CODE}
-            name={product.CC_NAME}
-            code={product.CC_CODE}
-            benefits={benefitsData}
+    <div className="m-5">
+      <div
+        onClick={() => router.back()}
+        className="flex gap-2 items-center cursor-pointer  py-1 bg-yellow-950 text-white w-[6rem] mb-2 justify-center rounded-md"
+      >
+        <IoArrowBackOutline size={20} />
+        <p>Back</p>
+      </div>
+
+      <div className="flex items-center  gap-2 justify-center">
+        <div className="w-[50%] border  bg-white shadow-2xl rounded-md h-[30rem] flex items-center justify-center  flex-col p-3">
+          <CustomSelect
+            name="Destination"
+            options={countriesOptions}
+            className="w-[30rem] "
+            placeholder={"Select Destination..."}
+            onChange={() => {}}
           />
-        ))}
+          <CustomInput
+            name="Travel Date"
+            type="date"
+            className={"border w-[30rem] h-[2.6rem] rounded-md"}
+            value={""}
+            onChange={() => {}}
+          />
+          <CustomInput
+            name="Return Date"
+            type="date"
+            className={"border w-[30rem] h-[2.6rem] rounded-md"}
+            value={""}
+            onChange={() => {}}
+          />
+          <CustomInput
+            name="Date of Birth"
+            type="date"
+            className={"border w-[30rem] h-[2.6rem] rounded-md"}
+            value={""}
+            onChange={() => {}}
+          />
+          <CustomButton
+            name={"Get Quote"}
+            onClick={handleGetQuote}
+            className={
+              "bg-[#cb7229] text-white w-[30rem] my-5 h-[3rem] rounded-[30px] text-[1.2rem]"
+            }
+          />
+        </div>
       </div>
     </div>
   );
 };
 
-export default Products;
+export default Travel;
