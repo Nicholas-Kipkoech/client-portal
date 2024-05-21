@@ -24,15 +24,18 @@ const Products = () => {
   }, []);
 
   async function handleViewPricing(code: string, productName: string) {
-    // router.push("/travel/acceptQuote");
     localStorage.setItem("product", JSON.stringify({ code, productName }));
     const updatedPayload = { ...payload, coverCode: code };
-    console.log(updatedPayload);
+    localStorage.setItem("travelQuote", JSON.stringify(updatedPayload));
     const response = await axios.post(
       "http://105.27.207.82:8101/icon/bima/uw/calculate_cover_premium",
       updatedPayload
     );
-    console.log(response.data);
+
+    if (response.data) {
+      localStorage.setItem("quoteResponse", JSON.stringify(response.data));
+      router.push("/travel/acceptQuote");
+    }
   }
 
   const CustomProductCard = ({ name, benefits, code }: IProductCard) => {

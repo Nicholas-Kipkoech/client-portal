@@ -29,6 +29,7 @@ const Travel = () => {
     );
     setToken(response.data.value);
   }
+  console.log(token);
 
   useEffect(() => {
     getToken();
