@@ -1,4 +1,4 @@
-const products = [
+export const products = [
   {
     CC_CODE: "093",
     CC_NAME: "Schengen Medical",
@@ -28,3 +28,30 @@ export const ProductOptions = products.map((product) => {
     value: product.CC_CODE,
   };
 });
+
+export const countriesOptions = [
+  {
+    label: "Germany",
+    value: "Germany",
+  },
+  {
+    label: "France",
+    value: "France",
+  },
+  {
+    label: "United Kingdom",
+    value: "United Kingdom",
+  },
+  {
+    label: "United States of America",
+    value: "United States of America",
+  },
+  {
+    label: "South Africa",
+    value: "South Africa",
+  },
+  {
+    label: "Kenya",
+    value: "Kenya",
+  },
+];

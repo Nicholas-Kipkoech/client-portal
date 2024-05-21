@@ -9,6 +9,7 @@ export const benefitsData = [
       { value: 7500, code: "093-5" },
     ],
   },
+
   {
     name: "TRANSPORTATIONOR REPATRIATION OF THE ACCOMPANYING INSURED",
     details: [

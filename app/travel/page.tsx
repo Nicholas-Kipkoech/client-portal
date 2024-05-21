@@ -1,111 +1,77 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import CustomSelect from "../utils/CustomSelect";
-import CustomInput from "../utils/CustomInput";
-import CustomButton from "../utils/CustomButtom";
-import { useRouter } from "next/navigation";
-import { IoArrowBackOutline } from "react-icons/io5";
-import { ProductOptions } from "./travelUtils";
-import { Table } from "antd";
+import React from "react";
+import { MdDone } from "react-icons/md";
+import { products } from "./travelUtils";
 import { benefitsData } from "./benefits";
+import { GrLinkNext } from "react-icons/gr";
+import { useRouter } from "next/navigation";
 
-const Travel = () => {
+interface IProductCard {
+  name: string;
+  benefits?: any[];
+  code: string;
+}
+
+const Products = () => {
   const router = useRouter();
-  const [data, setData] = useState<any[]>([]);
-  const [productCode, setProductCode] = useState("093");
-  const handleGetQuote = () => {
-    router.push("/travel/acceptQuote");
+
+  function handleViewPricing(code: string) {
+    router.push("/travel/quote");
+    localStorage.setItem("productCode", code);
+  }
+
+  const CustomProductCard = ({ name, benefits, code }: IProductCard) => {
+    return (
+      <div className="bg-[#F9FAFE] shadow-2xl border-gray-500 p-8 w-[30rem] rounded-[20px] h-auto border-1">
+        <p className="text-[1.5rem] font-bold flex justify-center">{name}</p>
+
+        <p className="text-[1.2rem] font-semibold">Product Benefits</p>
+
+        <div className="list-none">
+          {benefits?.map((benefit) => {
+            const matchingDetail = benefit.details.find(
+              (detail: { code: string }) => detail.code === code
+            );
+            const value = matchingDetail ? matchingDetail.value : 0;
+            return (
+              <div
+                key={benefit.name}
+                className="flex items-center justify-between gap-[0.3rem]"
+              >
+                <div className="flex gap-[0.3rem]">
+                  <MdDone size={20} color="blue" />
+                  <p className="text-ellipsis text-[10px]">{benefit.name}</p>
+                </div>
+                <p>${value.toLocaleString()}</p>
+              </div>
+            );
+          })}
+        </div>
+        <div
+          onClick={() => handleViewPricing(code)}
+          className="flex items-center mt-2 gap-1 h-[2.5rem] rounded-[20px] cursor-pointer bg-[#cb7529] text-white justify-center"
+        >
+          <p>View Pricing</p>
+          <GrLinkNext />
+        </div>
+      </div>
+    );
   };
 
-  useEffect(() => {
-    const filteredData = benefitsData
-      .flatMap((benefit) =>
-        benefit.details.map((detail) => ({ ...detail, name: benefit.name }))
-      )
-      .filter((data) => data.code === productCode);
-
-    setData(filteredData);
-  }, [productCode]);
-
-  const columns = [
-    {
-      title: "Benefit",
-      dataIndex: "name",
-      key: "name",
-      render: (_: any, item: any) => <p>{item.name}</p>,
-    },
-    {
-      title: "Value (USD)",
-      dataIndex: "key",
-      key: "key",
-      render: (_: any, item: any) => <p> {item.value.toLocaleString()} </p>,
-    },
-  ];
   return (
-    <div className="m-5">
-      <div
-        onClick={() => router.back()}
-        className="flex gap-2 items-center cursor-pointer  py-1 bg-yellow-950 text-white w-[6rem] mb-2 justify-center rounded-md"
-      >
-        <IoArrowBackOutline size={20} />
-        <p>Back</p>
-      </div>
-
-      <div className="flex items-center  gap-2 justify-center">
-        <div className="w-[40%] border  bg-white shadow-2xl rounded-md h-[30rem] flex items-center justify-center  flex-col p-3">
-          <CustomSelect
-            name="Destination"
-            options={[]}
-            className="w-[30rem] "
-            placeholder={"Select Destination..."}
-            onChange={() => {}}
+    <div className="flex items-center justify-center  p-20">
+      <div className="flex flex-wrap gap-4">
+        {products.map((product) => (
+          <CustomProductCard
+            key={product.CC_CODE}
+            name={product.CC_NAME}
+            code={product.CC_CODE}
+            benefits={benefitsData}
           />
-          <CustomSelect
-            name="Product"
-            defaultValue={ProductOptions[0]}
-            options={ProductOptions}
-            placeholder={"Select Product..."}
-            className="w-[30rem] "
-            onChange={(value: any) => setProductCode(value.value)}
-          />
-          <CustomInput
-            name="Travel Date"
-            type="date"
-            className={"border w-[30rem] h-[2.6rem] rounded-md"}
-            value={""}
-            onChange={() => {}}
-          />
-          <CustomInput
-            name="Return Date"
-            type="date"
-            className={"border w-[30rem] h-[2.6rem] rounded-md"}
-            value={""}
-            onChange={() => {}}
-          />
-          <CustomInput
-            name="Date of Birth"
-            type="date"
-            className={"border w-[30rem] h-[2.6rem] rounded-md"}
-            value={""}
-            onChange={() => {}}
-          />
-          <CustomButton
-            name={"Get Quote"}
-            onClick={handleGetQuote}
-            className={
-              "bg-[#cb7229] text-white w-[30rem] my-5 h-[3rem] rounded-[30px] text-[1.4rem]"
-            }
-          />
-        </div>
-        <div className="w-[60%] max-h-[30rem] border bg-white shadow-2xl rounded-md h-[30rem] overflow-y-auto  p-2">
-          <p className="text-[1.5rem] font-bold flex justify-center">
-            Benefits
-          </p>
-          <Table dataSource={data} columns={columns} />
-        </div>
+        ))}
       </div>
     </div>
   );
 };
 
-export default Travel;
+export default Products;
