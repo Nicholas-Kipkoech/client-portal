@@ -4,7 +4,6 @@ import CustomInput from "@/app/utils/CustomInput";
 import CustomSelect from "@/app/utils/CustomSelect";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { IoArrowBackOutline } from "react-icons/io5";
 
 const Payments = () => {
   const router = useRouter();
