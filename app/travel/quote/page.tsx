@@ -1,11 +1,12 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { MdDone } from "react-icons/md";
 import { products } from "../travelUtils";
 import { benefitsData } from "../benefits";
 import { GrLinkNext } from "react-icons/gr";
 import { useRouter } from "next/navigation";
 import { IoArrowBackOutline } from "react-icons/io5";
+import axios from "axios";
 
 interface IProductCard {
   name: string;
@@ -15,9 +16,23 @@ interface IProductCard {
 
 const Products = () => {
   const router = useRouter();
+  const [payload, setPayload] = useState<any>({});
 
-  function handleViewPricing(code: string) {
-    router.push("/travel/acceptQuote");
+  useEffect(() => {
+    const payload: any = localStorage.getItem("travelQuote");
+    setPayload(JSON.parse(payload));
+  }, []);
+
+  async function handleViewPricing(code: string, productName: string) {
+    // router.push("/travel/acceptQuote");
+    localStorage.setItem("product", JSON.stringify({ code, productName }));
+    const updatedPayload = { ...payload, coverCode: code };
+    console.log(updatedPayload);
+    const response = await axios.post(
+      "http://105.27.207.82:8101/icon/bima/uw/calculate_cover_premium",
+      updatedPayload
+    );
+    console.log(response.data);
   }
 
   const CustomProductCard = ({ name, benefits, code }: IProductCard) => {
@@ -48,7 +63,7 @@ const Products = () => {
           })}
         </div>
         <div
-          onClick={() => handleViewPricing(code)}
+          onClick={() => handleViewPricing(code, name)}
           className="flex items-center mt-2 gap-1 h-[2.5rem] rounded-[20px] cursor-pointer bg-[#cb7529] text-white justify-center"
         >
           <p>View Pricing</p>
@@ -59,7 +74,7 @@ const Products = () => {
   };
 
   return (
-    <div className="p-20">
+    <div className="p-20 flex flex-col justify-center">
       <div
         onClick={() => router.back()}
         className="flex gap-2 items-center cursor-pointer  py-1 bg-yellow-950 text-white w-[6rem] mb-2 justify-center rounded-md"
