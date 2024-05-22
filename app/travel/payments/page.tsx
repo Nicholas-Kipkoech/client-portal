@@ -1,4 +1,5 @@
 "use client";
+import { _API_URL } from "@/app/constants/database-connect";
 import CustomButton from "@/app/utils/CustomButtom";
 import CustomInput from "@/app/utils/CustomInput";
 import CustomSelect from "@/app/utils/CustomSelect";
@@ -76,10 +77,11 @@ const Payments = () => {
     try {
       setMessage("Processing....");
       const response = await axios.post(
-        "http://105.27.207.82:8101/icon/bima/uw/create_quote_express",
+        `${_API_URL}/uw/create_quote_express`,
         paymentPayload
       );
       if (response.data.info === "Success") {
+        localStorage.setItem("policyResponse", JSON.stringify(response.data));
         setMessage("Success");
         setLoading(false);
         router.push("/travel/documents");

@@ -7,6 +7,7 @@ import { GrLinkNext } from "react-icons/gr";
 import { useRouter } from "next/navigation";
 import { IoArrowBackOutline } from "react-icons/io5";
 import axios from "axios";
+import { _API_URL } from "@/app/constants/database-connect";
 
 interface IProductCard {
   name: string;
@@ -28,7 +29,7 @@ const Products = () => {
     const updatedPayload = { ...payload, coverCode: code };
     localStorage.setItem("travelQuote", JSON.stringify(updatedPayload));
     const response = await axios.post(
-      "http://105.27.207.82:8101/icon/bima/uw/calculate_cover_premium",
+      `${_API_URL}/uw/calculate_cover_premium`,
       updatedPayload
     );
 
