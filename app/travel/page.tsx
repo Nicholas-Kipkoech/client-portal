@@ -9,6 +9,7 @@ import CustomInput from "../utils/CustomInput";
 import CustomButton from "../utils/CustomButtom";
 import axios from "axios";
 import { formatDate } from "../utils/helpers";
+import { _API_URL } from "../constants/database-connect";
 
 const Travel = () => {
   const router = useRouter();
@@ -20,13 +21,10 @@ const Travel = () => {
   const [token, setToken] = useState("");
 
   async function getToken() {
-    const response = await axios.post(
-      "http://105.27.207.82:8101/icon/bima/auth/generatetoken",
-      {
-        un: "icon",
-        pw: "B1MA",
-      }
-    );
+    const response = await axios.post(`${_API_URL}/auth/generatetoken`, {
+      un: "icon",
+      pw: "B1MA",
+    });
     setToken(response.data.value);
   }
   console.log(token);
@@ -77,6 +75,7 @@ const Travel = () => {
 
       <div className="flex items-center  gap-2 justify-center">
         <div className="w-auto border  bg-white shadow-2xl rounded-md h-[30rem] flex items-center justify-center  flex-col p-5">
+          <p className="text-[1.5rem] font-semibold">Fill in travel details</p>
           <CustomSelect
             name="Destination"
             options={countriesOptions}

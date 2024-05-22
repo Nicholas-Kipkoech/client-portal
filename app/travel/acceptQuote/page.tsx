@@ -24,6 +24,12 @@ const AcceptQuote = () => {
     premiums.charges?.chargesLocal["P.H.C Fund"] +
     premiums.charges?.chargesLocal["Stamp Duty"] +
     premiums.charges?.chargesLocal["Training Levy"];
+  const totalInUsd =
+    premiums.premiumForeign +
+    premiums.charges?.chargeForeign["Admin Fee"] +
+    premiums.charges?.chargeForeign["P.H.C Fund"] +
+    premiums.charges?.chargeForeign["Stamp Duty"] +
+    premiums.charges?.chargeForeign["Training Levy"];
   if (typeof window !== "undefined") {
     localStorage.setItem("total", total);
   }
@@ -96,6 +102,10 @@ const AcceptQuote = () => {
                 <p>Training Levy: </p>
                 <p> {premiums.charges?.chargeForeign["Training Levy"]}</p>
               </div>
+              <div className="flex gap-2 justify-between">
+                <p>Total: </p>
+                <p> {totalInUsd}</p>
+              </div>
             </div>
           </div>
           <div className="max-h-[20rem] flex flex-col justify-center items-end p-2 h-[15rem]">
@@ -120,6 +130,10 @@ const AcceptQuote = () => {
               <div className="flex gap-2 justify-between">
                 <p>Training Levy: </p>
                 <p> {premiums.charges?.chargesLocal["Training Levy"]}</p>
+              </div>
+              <div className="flex gap-2 justify-between">
+                <p>Total: </p>
+                <p> {total}</p>
               </div>
             </div>
           </div>
