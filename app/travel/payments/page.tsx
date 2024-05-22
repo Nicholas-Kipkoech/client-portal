@@ -80,6 +80,7 @@ const Payments = () => {
         paymentPayload
       );
       if (response.data.info === "Success") {
+        localStorage.setItem("policyResponse", JSON.stringify(response.data));
         setMessage("Success");
         setLoading(false);
         router.push("/travel/documents");
