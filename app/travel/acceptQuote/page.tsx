@@ -24,7 +24,9 @@ const AcceptQuote = () => {
     premiums.charges?.chargesLocal["P.H.C Fund"] +
     premiums.charges?.chargesLocal["Stamp Duty"] +
     premiums.charges?.chargesLocal["Training Levy"];
-  localStorage.setItem("total", total);
+    if(typeof window!=="undefined"){
+      localStorage.setItem("total", total);
+    }
   return (
     <div className="m-5">
       <div
