@@ -22,6 +22,7 @@ const Payments = () => {
     gender: "",
     mpesaNo: "",
     email: "",
+    passportNo: "",
   });
   const [payload, setPayload] = useState<any>({});
   const [loading, setLoading] = useState(false);
@@ -210,6 +211,17 @@ const Payments = () => {
                 className=" border rounded-md h-[2.4rem] w-[15rem]"
               />
             </div>
+            <CustomInput
+              name={"Passport No"}
+              value={customerDetails.passportNo}
+              onChange={(e) =>
+                setCustomerDetails({
+                  ...customerDetails,
+                  passportNo: e.target.value,
+                })
+              }
+              className=" border rounded-md h-[2.4rem] w-[15rem]"
+            />{" "}
             <div className="flex">
               <CustomButton
                 name={"Pay for quote"}

@@ -77,6 +77,13 @@ const Travel = () => {
         <div className="w-auto border  bg-white shadow-2xl rounded-md h-[30rem] flex items-center justify-center  flex-col p-5">
           <p className="text-[1.5rem] font-semibold">Fill in travel details</p>
           <CustomSelect
+            name="Country of Origin"
+            options={countriesOptions}
+            className="w-[30rem] "
+            placeholder={"Select country..."}
+            onChange={(value: any) => setDestination(value.value)}
+          />
+          <CustomSelect
             name="Destination"
             options={countriesOptions}
             className="w-[30rem] "
