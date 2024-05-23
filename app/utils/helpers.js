@@ -14,11 +14,14 @@ export const Months = [
 ];
 
 export const formatDate = (serverTime) => {
-  const date = new Date(serverTime);
-  const day = date.getDate();
-  const month = Months[date.getMonth()];
-  const year = date.getFullYear();
-  return day + "-" + month + "-" + year;
+  if (serverTime) {
+    const date = new Date(serverTime);
+    const day = date.getDate();
+    const month = Months[date.getMonth()];
+    const year = date.getFullYear();
+    return day + "-" + month + "-" + year;
+  }
+  return "";
 };
 
 export const format3months = () => {

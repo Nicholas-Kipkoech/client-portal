@@ -135,6 +135,21 @@ const Sidebar = () => {
         },
       ],
     },
+    {
+      title: "Risk Notes",
+      list: [
+        {
+          title: "Submit Risk Notes",
+          path: "/dashboard/risk-notes/submit-note",
+          icon: <LiaFileInvoiceSolid />,
+        },
+        {
+          title: "View Risk Notes",
+          path: "/dashboard/risk-notes/view-risk-notes",
+          icon: <LiaFileInvoiceSolid />,
+        },
+      ],
+    },
   ];
 
   return (

@@ -1,5 +1,5 @@
 "use client";
-import { getPolicies } from "@/app/services/apiServices";
+import { getPolicies, getProducts } from "@/app/services/apiServices";
 import { jwtDecode } from "jwt-decode";
 import React, { createContext, useEffect, useState } from "react";
 
@@ -11,6 +11,7 @@ export const PolicyContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [policies, setPolicies] = useState([]);
+  const [products, setProducts] = useState([]);
   const [loadingPolicies, setLoadingPolices] = useState(false);
   const [user, setUser] = useState<any>({});
 
@@ -22,6 +23,14 @@ export const PolicyContextProvider = ({
         setUser(decodedToken.payload);
       }
     }
+  }, []);
+
+  useEffect(() => {
+    async function fetchProducts() {
+      const response = await getProducts();
+      setProducts(response.results);
+    }
+    fetchProducts();
   }, []);
 
   useEffect(() => {
@@ -49,7 +58,7 @@ export const PolicyContextProvider = ({
 
   return (
     <PolicyContext.Provider
-      value={{ loadingPolicies, policies, filteredPolicies }}
+      value={{ loadingPolicies, policies, filteredPolicies, products }}
     >
       {children}
     </PolicyContext.Provider>
