@@ -7,12 +7,17 @@ import CustomSelect from "@/app/utils/CustomSelect";
 import React, { useContext, useRef, useState } from "react";
 import { IoMdCloudUpload } from "react-icons/io";
 
+interface FileObject {
+  file: string; // Base64 string
+  type: string;
+  name: string;
+}
 const SubmitNote = () => {
   const { filteredPolicies, products }: any = useContext(PolicyContext);
   const { user }: any = useContextApi();
 
   const [checked, setChecked] = useState("newBusiness");
-  const [images, setImages] = useState<any[]>([]);
+  const [images, setImages] = useState<FileObject[]>([]);
   const [policyNo, setPolicyNo] = useState("");
   const [clientName, setClientName] = useState("");
   const [product, setProduct] = useState("");
@@ -52,16 +57,36 @@ const SubmitNote = () => {
     }
   };
 
-  const handleFileChange = (e: any, type: string) => {
+  const handleFileChange = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    type: string
+  ) => {
     if (e.target.files && e.target.files.length > 0) {
-      const newFiles = Array.from(e.target.files).map((file) => ({
-        file,
-        type,
-      }));
-      setImages((prevImages) => [...prevImages, ...newFiles]);
+      const filesArray = Array.from(e.target.files);
+      const newFiles = await Promise.all(
+        filesArray.map(async (file) => {
+          const base64 = await convertToBase64(file);
+          return {
+            file: base64,
+            type,
+            name: file.name,
+          };
+        })
+      );
+      const updatedImages = [...images, ...newFiles];
+      setImages(updatedImages);
+      localStorage.setItem("images", JSON.stringify(updatedImages));
     }
   };
 
+  const convertToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = (error) => reject(error);
+    });
+  };
   const handleDeleteFile = (key: number) => {
     setImages(images.filter((image, index) => index !== key));
   };
@@ -71,7 +96,7 @@ const SubmitNote = () => {
     if (checked === "newBusiness") {
       payload = {
         sender: user.entityName,
-        type: "New",
+        type: "New Business",
         clientName: clientName,
         images,
         sentDate: new Date(),
@@ -81,7 +106,7 @@ const SubmitNote = () => {
     } else if (checked === "renewals") {
       payload = {
         sender: user.entityName,
-        type: policyClient[0].endNo,
+        type: "Renewal",
         clientName: policyClient[0].client,
         images,
         sentDate: new Date(),
@@ -91,7 +116,7 @@ const SubmitNote = () => {
     } else {
       payload = {
         sender: user.entityName,
-        type: policyClient[0].endNo,
+        type: "Others",
         clientName: policyClient[0].client,
         images,
         sentDate: new Date(),
@@ -232,9 +257,17 @@ const SubmitNote = () => {
             {images
               .filter((image) => image.type == checked)
               .map((image, index) => (
-                <p>
-                  {index + 1}: {image.file.name}
-                </p>
+                <div className="flex justify-between">
+                  <p>
+                    {index + 1}: {image.name}
+                  </p>
+                  <p
+                    className="text-red-600 cursor-pointer"
+                    onClick={() => handleDeleteFile(index)}
+                  >
+                    Delete
+                  </p>
+                </div>
               ))}
           </div>
         </div>
