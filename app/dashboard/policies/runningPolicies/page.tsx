@@ -12,8 +12,12 @@ import { GrPrevious } from "react-icons/gr";
 
 const Policies = () => {
   const router = useRouter();
-  const { filteredPolicies: runningPolicies, loadingPolicies }: any =
-    useContext(PolicyContext);
+  const {
+    filteredPolicies: runningPolicies,
+    loadingPolicies,
+    policyDocuments,
+    setPolicyDocuments,
+  }: any = useContext(PolicyContext);
   const [initialPolicies, setInitialPolicies] = useState([]);
   const [searchParams, setSearchParams] = useState<any>({
     client: "",

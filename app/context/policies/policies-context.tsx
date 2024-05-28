@@ -13,6 +13,7 @@ export const PolicyContextProvider = ({
   const [policies, setPolicies] = useState([]);
   const [products, setProducts] = useState([]);
   const [loadingPolicies, setLoadingPolices] = useState(false);
+  const [policyDocuments, setPolicyDocuments] = useState(null);
   const [user, setUser] = useState<any>({});
 
   useEffect(() => {
@@ -58,7 +59,14 @@ export const PolicyContextProvider = ({
 
   return (
     <PolicyContext.Provider
-      value={{ loadingPolicies, policies, filteredPolicies, products }}
+      value={{
+        loadingPolicies,
+        policies,
+        filteredPolicies,
+        products,
+        policyDocuments,
+        setPolicyDocuments,
+      }}
     >
       {children}
     </PolicyContext.Provider>

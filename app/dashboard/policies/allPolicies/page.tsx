@@ -5,6 +5,7 @@ import CustomButton from "@/app/utils/CustomButtom";
 import CustomInput from "@/app/utils/CustomInput";
 import { formatDate } from "@/app/utils/helpers";
 import { ConfigProvider, Table } from "antd";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import React, { useContext, useState } from "react";
@@ -12,7 +13,12 @@ import { GrPrevious } from "react-icons/gr";
 
 const Policies = () => {
   const router = useRouter();
-  const { policies, loadingPolicies }: any = useContext(PolicyContext);
+  const {
+    policies,
+    loadingPolicies,
+    policyDocuments,
+    setPolicyDocuments,
+  }: any = useContext(PolicyContext);
   const [initialPolicies, setInitialPolicies] = useState([]);
 
   const [searchParams, setSearchParams] = useState<any>({
@@ -52,11 +58,24 @@ const Policies = () => {
     setInitialPolicies(policies);
   };
 
+  const handlePolicyDocuments = (item: any) => {
+    setPolicyDocuments(item.reportUrl);
+  };
+
   const columns = [
     {
       title: "Policy Number",
       dataIndex: "policyNo",
-      render: (_: any, item: any) => <p>{item.policyNo}</p>,
+      render: (_: any, item: any) => (
+        <Link href={`allPolicies/reports`}>
+          <p
+            className="cursor-pointer"
+            onClick={() => handlePolicyDocuments(item)}
+          >
+            {item.policyNo}
+          </p>
+        </Link>
+      ),
     },
     {
       title: "End No",
