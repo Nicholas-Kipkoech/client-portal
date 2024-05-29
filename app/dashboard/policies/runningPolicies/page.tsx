@@ -4,11 +4,12 @@ import PolicyContext from "@/app/context/policies/policies-context";
 import CustomButton from "@/app/utils/CustomButtom";
 import CustomInput from "@/app/utils/CustomInput";
 import { formatDate } from "@/app/utils/helpers";
-import { ConfigProvider, Table } from "antd";
+import { ConfigProvider, Table, Popover } from "antd";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import React, { useContext, useState } from "react";
-import { GrPrevious } from "react-icons/gr";
+import { GrDocumentPdf, GrPrevious } from "react-icons/gr";
 
 const Policies = () => {
   const router = useRouter();
@@ -54,11 +55,43 @@ const Policies = () => {
     });
     setInitialPolicies(runningPolicies);
   };
+  const handlePolicyDocuments = (item: any) => {
+    setPolicyDocuments(item.reportUrl);
+  };
+
+  const content = (items: any) => {
+    return (
+      <div className="flex flex-col gap-2">
+        <div className="flex items-center gap-2">
+          <GrDocumentPdf />
+          <a target="_blank" href={items?.policyUrl} download>
+            Policy Document
+          </a>
+        </div>
+        <div className="flex items-center gap-2">
+          <GrDocumentPdf />
+          <a target="_blank" href={items?.debitOrCreditUrl} download>
+            Debit Or CreditNote
+          </a>
+        </div>
+      </div>
+    );
+  };
+
   const columns = [
     {
       title: "Policy Number",
       dataIndex: "policyNo",
-      render: (_: any, item: any) => <p>{item.policyNo}</p>,
+      render: (_: any, item: any) => (
+        <Popover
+          className="cursor-pointer"
+          content={() => content(item.reportUrl)}
+          title={"Downloads"}
+          trigger={"click"}
+        >
+          {item.policyNo}
+        </Popover>
+      ),
     },
     {
       title: "End No",

@@ -18,7 +18,7 @@ const RiskNoteModal = ({ open, handleClose, items }: IModal) => {
     >
       {items &&
         items.map((item: any) => (
-          <iframe width={"100%"} height={"500px"} src={item.file} />
+          <iframe width={"100%"} height={"400px"} src={item.file} />
         ))}
     </Modal>
   );
