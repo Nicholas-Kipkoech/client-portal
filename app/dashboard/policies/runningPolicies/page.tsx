@@ -10,16 +10,15 @@ import { useRouter } from "next/navigation";
 
 import React, { useContext, useState } from "react";
 import { GrDocumentPdf, GrPrevious } from "react-icons/gr";
+import NotesModal from "../NotesModal";
 
 const Policies = () => {
   const router = useRouter();
-  const {
-    filteredPolicies: runningPolicies,
-    loadingPolicies,
-    policyDocuments,
-    setPolicyDocuments,
-  }: any = useContext(PolicyContext);
+  const { filteredPolicies: runningPolicies, loadingPolicies }: any =
+    useContext(PolicyContext);
   const [initialPolicies, setInitialPolicies] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
+
   const [searchParams, setSearchParams] = useState<any>({
     client: "",
     carRegNo: "",
@@ -54,9 +53,6 @@ const Policies = () => {
       product: "",
     });
     setInitialPolicies(runningPolicies);
-  };
-  const handlePolicyDocuments = (item: any) => {
-    setPolicyDocuments(item.reportUrl);
   };
 
   const content = (items: any) => {
@@ -127,6 +123,17 @@ const Policies = () => {
       title: "Status",
       dataIndex: "status",
       render: (_: any, item: any) => <p>{item.status}</p>,
+    },
+    {
+      title: "Engagement",
+      dataIndex: "status",
+      render: (_: any, item: any) => (
+        <CustomButton
+          name={"Add note"}
+          onClick={() => setOpenModal(true)}
+          className={"h-[2rem] border rounded-md  px-3 bg-slate-900 text-white"}
+        />
+      ),
     },
   ];
 
@@ -222,6 +229,7 @@ const Policies = () => {
         />
         ;
       </ConfigProvider>
+      <NotesModal open={openModal} handleClose={() => setOpenModal(false)} />
     </div>
   );
 };

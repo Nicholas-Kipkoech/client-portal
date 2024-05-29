@@ -121,10 +121,6 @@ const Statements = () => {
       title: "Credit Net",
       dataIndex: "creditNet",
     },
-    {
-      title: "Outstanding",
-      dataIndex: "outstanding",
-    },
   ];
 
   const mappedColumns = columns.map((column) => {
