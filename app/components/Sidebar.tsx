@@ -109,7 +109,7 @@ const Sidebar = () => {
           icon: <LiaFileInvoiceSolid />,
         },
         {
-          title: "Commsion Payable",
+          title: "Commision Payable",
           path: "/dashboard/reports/commissionPayable",
           icon: <LiaFileInvoiceSolid />,
         },

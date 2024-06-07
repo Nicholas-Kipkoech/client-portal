@@ -43,7 +43,7 @@ const AcceptQuote = () => {
         <p>Back</p>
       </div>
       <div className="flex justify-center items-center gap-2">
-        <div className="w-[50%] border bg-white h-[28rem] overflow-y-auto rounded-md shadow-2xl">
+        <div className="w-[50%] border bg-white h-[30rem] overflow-y-auto rounded-md shadow-2xl">
           <div className="px-2 max-h-[6rem] h-[4rem] font-bold flex justify-center text-[1.8rem]">
             <p> Product: {product.productName}</p>
           </div>
@@ -75,13 +75,13 @@ const AcceptQuote = () => {
             </div>
           </div>
         </div>
-        <div className="w-[30%] border bg-white h-[28rem] rounded-md shadow-2xl">
+        <div className="w-[40%] border bg-white h-[30rem] rounded-md shadow-2xl">
           <p className="flex justify-center text-[2rem] font-bold border b">
             Premiums
           </p>
           <div className="max-h-[20rem] flex flex-col justify-center items-end p-2 h-auto">
             <div className="text-[1.5rem]">Premiums in USD</div>
-            <div className="pl-4  ">
+            <div className="pl-4 mr-2  ">
               <div className="flex gap-2 justify-between">
                 <p>Premiums: </p>
                 <p>{premiums.premiumForeign}</p>
@@ -110,7 +110,7 @@ const AcceptQuote = () => {
           </div>
           <div className="max-h-[20rem] flex flex-col justify-center items-end p-2 h-[15rem]">
             <div className="text-[1.5rem]">Premiums in KSH</div>
-            <div className="pl-4  ">
+            <div className="pl-4 mr-2 ">
               <div className="flex gap-2 justify-between">
                 <p>Premiums: </p>
                 <p>{premiums.premiumLocal}</p>

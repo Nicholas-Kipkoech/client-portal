@@ -173,7 +173,7 @@ const Premiums = () => {
             <label>From date</label>
             <DatePicker
               format={"DD-MM-YYYY"}
-              placeholder={"DD-MM-YYYY"}
+              placeholder={fromDate}
               className={"w-[250px] h-[40px] border p-2 rounded-md"}
               onChange={handleFromDate}
             />
@@ -182,7 +182,7 @@ const Premiums = () => {
             <label>To date</label>
             <DatePicker
               format={"DD-MM-YYYY"}
-              placeholder={"DD-MM-YYYY"}
+              placeholder={toDate}
               className={"w-[250px] h-[40px] border p-2 rounded-md"}
               onChange={handleToDate}
             />

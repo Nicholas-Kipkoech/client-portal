@@ -85,7 +85,7 @@ const Dashboard = () => {
         <div className="flex justify-center">
           <p className="font-bold text-[1.2rem] text-slate-600">
             {" "}
-            {currency && "KSH"} {count?.toLocaleString()}
+            {count?.toLocaleString()}
           </p>
         </div>
       </Link>
@@ -141,7 +141,7 @@ const Dashboard = () => {
         <CustomCard
           name="Premium Booked"
           count={totalPremium}
-          to=""
+          to="reports/premiums"
           currency={true}
         />
         <CustomCard

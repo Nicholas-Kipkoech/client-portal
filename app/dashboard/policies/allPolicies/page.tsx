@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import React, { useContext, useState } from "react";
 import { GrDocumentPdf, GrPrevious } from "react-icons/gr";
 import NotesModal from "../NotesModal";
+import CustomSelect from "@/app/utils/CustomSelect";
 
 const Policies = () => {
   const router = useRouter();
@@ -29,6 +30,7 @@ const Policies = () => {
     policyNo: "",
     endNo: "",
     product: "",
+    status: "",
   });
 
   const handleSearch = () => {
@@ -56,12 +58,9 @@ const Policies = () => {
       policyNo: "",
       endNo: "",
       product: "",
+      status: "",
     });
     setInitialPolicies(policies);
-  };
-
-  const handlePolicyDocuments = (item: any) => {
-    setPolicyDocuments(item.reportUrl);
   };
 
   const content = (items: any) => {
@@ -200,6 +199,24 @@ const Policies = () => {
           value={searchParams.product}
           onChange={(e) =>
             setSearchParams({ ...searchParams, product: e.target.value })
+          }
+        />
+        <CustomSelect
+          name={"Status"}
+          options={[
+            {
+              label: "Active",
+              value: "Active",
+            },
+            {
+              label: "Closed",
+              value: "Closed",
+            },
+          ]}
+          placeholder="select status"
+          className=" md:w-[15rem] p-2 sm:w-full"
+          onChange={(value: any) =>
+            setSearchParams({ ...searchParams, status: value.value })
           }
         />
         <div className="sm:flex  gap-2">

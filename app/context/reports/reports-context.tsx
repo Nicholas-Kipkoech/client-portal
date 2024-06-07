@@ -110,10 +110,26 @@ export const ReportsContextProvider = ({
   }, [user, systemDate, next3Month]);
 
   useEffect(() => {
-    const { startDate, endDate } = formatYearly("2023");
+    const { startDate, endDate } = formatYearly("2024");
     setFromDate(startDate);
     setToDate(endDate);
   }, []);
+
+  function calculateCommPayable(commissionPayable: any[]) {
+    return commissionPayable.reduce((acc: any, comm) => {
+      const { currencyCode, commission, WHTonComm } = comm;
+      if (acc[currencyCode]) {
+        acc[currencyCode].total += Number(commission - WHTonComm);
+      } else {
+        acc[currencyCode] = {
+          total: Number(commission - WHTonComm),
+        };
+      }
+      return acc;
+    }, {});
+  }
+
+  const commPayableResults = calculateCommPayable(commissionPayable);
 
   return (
     <ReportsContext.Provider
@@ -129,6 +145,7 @@ export const ReportsContextProvider = ({
         setToDate,
         glStatements,
         upcomingRenewals,
+        commPayableResults,
       }}
     >
       {children}

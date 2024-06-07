@@ -12,7 +12,7 @@ const CommissionPayble = () => {
     return Math.floor(100 / (absNum1 / absNum2));
   }
 
-  const { commissionPayable, loadingCommissions }: any =
+  const { commissionPayable, loadingCommissions, commPayableResults }: any =
     useContext(ReportsContext);
 
   const columns = [
@@ -39,28 +39,42 @@ const CommissionPayble = () => {
       title: "Total Premium",
       dataIndex: "lossDate",
       render: (_: any, item: any) => (
-        <p>KSH {item.totalPremium.toLocaleString()}</p>
+        <p>
+          {item.currencyCode} {item.totalPremium.toLocaleString()}
+        </p>
       ),
     },
     {
       title: "Paid Premium",
       dataIndex: "intimationDate",
       render: (_: any, item: any) => (
-        <p>KSH{item.paidPremium.toLocaleString()}</p>
+        <p>
+          {" "}
+          {item.currencyCode}
+          {item.paidPremium.toLocaleString()}
+        </p>
       ),
     },
     {
       title: "Outstanding",
       dataIndex: "currency",
       render: (_: any, item: any) => (
-        <p>KSH{item.osPremium.toLocaleString()}</p>
+        <p>
+          {" "}
+          {item.currencyCode}
+          {item.osPremium.toLocaleString()}
+        </p>
       ),
     },
     {
       title: "Basic Premium",
       dataIndex: "total",
       render: (_: any, item: any) => (
-        <p>KSH{item.basicPremium.toLocaleString()}</p>
+        <p>
+          {" "}
+          {item.currencyCode}
+          {item.basicPremium.toLocaleString()}
+        </p>
       ),
     },
     {
@@ -74,30 +88,42 @@ const CommissionPayble = () => {
       title: "Commission",
       dataIndex: "paid",
       render: (_: any, item: any) => (
-        <p>KSH{item.commission.toLocaleString()}</p>
+        <p>
+          {" "}
+          {item.currencyCode}
+          {item.commission.toLocaleString()}
+        </p>
       ),
     },
     {
       title: "WHT on Comm",
       dataIndex: "paid",
       render: (_: any, item: any) => (
-        <p>KSH{item.WHTonComm.toLocaleString()}</p>
+        <p>
+          {" "}
+          {item.currencyCode}
+          {item.WHTonComm.toLocaleString()}
+        </p>
       ),
     },
     {
       title: "Paid Commission",
       dataIndex: "paid",
-      render: (_: any, item: any) => <p>KSH{item.paidComm.toLocaleString()}</p>,
+      render: (_: any, item: any) => (
+        <p>
+          {" "}
+          {item.currencyCode}
+          {item.paidComm.toLocaleString()}
+        </p>
+      ),
     },
     {
       title: "Net Comm Payable",
       dataIndex: "paid",
       render: (_: any, item: any) => (
         <p>
-          KSH{" "}
-          {parseInt(
-            (item.commission - item.WHTonComm).toLocaleString()
-          ).toFixed(2)}
+          {item.currencyCode}{" "}
+          {Math.floor(item.commission - item.WHTonComm).toLocaleString()}
         </p>
       ),
     },
@@ -113,7 +139,15 @@ const CommissionPayble = () => {
         <p className="md:text-[1.8rem] sm:text-[1.2rem] font-bold">
           Commission Payable
         </p>
-        <p></p>
+        <div className="flex flex-col">
+          {Object.entries(commPayableResults).map(
+            ([currencyCode, { total }]: any, key) => (
+              <p className="text-[1.3rem] font-bold">
+                Total {currencyCode} {Math.floor(total).toLocaleString()}
+              </p>
+            )
+          )}
+        </div>
       </div>
 
       <ConfigProvider

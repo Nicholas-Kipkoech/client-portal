@@ -30,7 +30,7 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [loadingUwData, setLoadingUwData] = useState(false);
 
   useEffect(() => {
-    const { startDate, endDate } = formatYearly("2023");
+    const { startDate, endDate } = formatYearly("2024");
     setFromDate(startDate);
     setToDate(endDate);
   }, []);
