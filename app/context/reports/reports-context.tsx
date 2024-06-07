@@ -115,26 +115,37 @@ export const ReportsContextProvider = ({
     setToDate(endDate);
   }, []);
 
+  const filteredCommissionPayable = commissionPayable.filter(
+    (commissionPayable: any) => {
+      return (
+        commissionPayable.osPremium === -50 ||
+        commissionPayable.osPremium === 50 ||
+        commissionPayable.osPremium === 0
+      );
+    }
+  );
   function calculateCommPayable(commissionPayable: any[]) {
     return commissionPayable.reduce((acc: any, comm) => {
       const { currencyCode, commission, WHTonComm } = comm;
       if (acc[currencyCode]) {
         acc[currencyCode].total += Number(commission - WHTonComm);
+        acc[currencyCode].count++;
       } else {
         acc[currencyCode] = {
           total: Number(commission - WHTonComm),
+          count: 1,
         };
       }
       return acc;
     }, {});
   }
 
-  const commPayableResults = calculateCommPayable(commissionPayable);
+  const commPayableResults = calculateCommPayable(filteredCommissionPayable);
 
   return (
     <ReportsContext.Provider
       value={{
-        commissionPayable,
+        filteredCommissionPayable,
         loadingCommissions,
         loadingGl,
         premiumReports,

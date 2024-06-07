@@ -9,6 +9,7 @@ import { DatePicker } from "antd";
 import PolicyContext from "../context/policies/policies-context";
 import ClaimsContext from "../context/claims/claims-context";
 import FinanceContext from "../context/finance/finance-context";
+import ReportsContext from "../context/reports/reports-context";
 
 interface CustomCardProps {
   name: string;
@@ -33,6 +34,7 @@ const Dashboard = () => {
   const { filteredPolicies }: any = useContext(PolicyContext);
   const { openClaims }: any = useContext(ClaimsContext);
   const { debits, claimCreditNotes }: any = useContext(FinanceContext);
+  const { commPayableResults }: any = useContext(ReportsContext);
 
   const [fmDate, setFmDate] = useState("");
   const [toDate, setTdDate] = useState("");
@@ -150,6 +152,33 @@ const Dashboard = () => {
           to=""
           currency={true}
         />
+
+        <Link
+          href={"dashboard/reports/commissionPayable"}
+          className={`h-[10rem] bg-white w-[20rem] border cursor-pointer shadow-2xl rounded-md  `}
+        >
+          <div className="flex gap-1 flex-col text-[14px] ">
+            <p className="flex items-center justify-center text-[1.5rem] font-bold">
+              Commision Payable
+            </p>
+            <div className="justify-between flex font-bold px-2">
+              <p>Amount</p>
+              <p>Count</p>
+            </div>
+            {Object.entries(commPayableResults).map(
+              ([currencyCode, { total, count }]: any, key) => (
+                <div className="justify-between flex px-2" key={key}>
+                  <p className="text-[20px] font-bold flex justify-start items-start">
+                    {currencyCode} {total.toLocaleString()}
+                  </p>
+                  <p className="text-[20px] font-bold flex justify-start items-start">
+                    {count.toLocaleString()}
+                  </p>
+                </div>
+              )
+            )}
+          </div>
+        </Link>
 
         <div
           className={`h-[10rem] bg-white w-[20rem] border cursor-pointer shadow-2xl rounded-md  `}

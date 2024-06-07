@@ -12,8 +12,11 @@ const CommissionPayble = () => {
     return Math.floor(100 / (absNum1 / absNum2));
   }
 
-  const { commissionPayable, loadingCommissions, commPayableResults }: any =
-    useContext(ReportsContext);
+  const {
+    filteredCommissionPayable,
+    loadingCommissions,
+    commPayableResults,
+  }: any = useContext(ReportsContext);
 
   const columns = [
     {
@@ -49,9 +52,7 @@ const CommissionPayble = () => {
       dataIndex: "intimationDate",
       render: (_: any, item: any) => (
         <p>
-          {" "}
-          {item.currencyCode}
-          {item.paidPremium.toLocaleString()}
+          {item.currencyCode} {item.paidPremium.toLocaleString()}
         </p>
       ),
     },
@@ -60,9 +61,7 @@ const CommissionPayble = () => {
       dataIndex: "currency",
       render: (_: any, item: any) => (
         <p>
-          {" "}
-          {item.currencyCode}
-          {item.osPremium.toLocaleString()}
+          {item.currencyCode} {item.osPremium.toLocaleString()}
         </p>
       ),
     },
@@ -71,9 +70,7 @@ const CommissionPayble = () => {
       dataIndex: "total",
       render: (_: any, item: any) => (
         <p>
-          {" "}
-          {item.currencyCode}
-          {item.basicPremium.toLocaleString()}
+          {item.currencyCode} {item.basicPremium.toLocaleString()}
         </p>
       ),
     },
@@ -89,9 +86,7 @@ const CommissionPayble = () => {
       dataIndex: "paid",
       render: (_: any, item: any) => (
         <p>
-          {" "}
-          {item.currencyCode}
-          {item.commission.toLocaleString()}
+          {item.currencyCode} {item.commission.toLocaleString()}
         </p>
       ),
     },
@@ -100,9 +95,7 @@ const CommissionPayble = () => {
       dataIndex: "paid",
       render: (_: any, item: any) => (
         <p>
-          {" "}
-          {item.currencyCode}
-          {item.WHTonComm.toLocaleString()}
+          {item.currencyCode} {item.WHTonComm.toLocaleString()}
         </p>
       ),
     },
@@ -111,9 +104,7 @@ const CommissionPayble = () => {
       dataIndex: "paid",
       render: (_: any, item: any) => (
         <p>
-          {" "}
-          {item.currencyCode}
-          {item.paidComm.toLocaleString()}
+          {item.currencyCode} {item.paidComm.toLocaleString()}
         </p>
       ),
     },
@@ -165,7 +156,7 @@ const CommissionPayble = () => {
         <Table
           columns={columns}
           loading={loadingCommissions}
-          dataSource={commissionPayable}
+          dataSource={filteredCommissionPayable}
           scroll={{ x: 1800 }}
           pagination={{ pageSize: 20 }}
         />
