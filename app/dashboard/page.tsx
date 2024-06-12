@@ -81,9 +81,9 @@ const Dashboard = () => {
     return (
       <Link
         href={`dashboard/${to}`}
-        className="h-[10rem] w-[20rem] text-[#000000] bg-[#FFFFFF] border flex flex-col items-center justify-center shadow-2xl rounded-[20px] hover:scale-125 hover:border-[#cb7529] hover:border-2 transition-transform duration-300 ease-in-out"
+        className="h-[10rem] w-[20rem] text-[#000000] bg-[#FFFFFF] border flex flex-col items-center justify-center shadow-2xl rounded-[20px] hover:scale-105 hover:border-[#cb7529] hover:border-2  transition-transform duration-300 ease-in-out"
       >
-        <p className="flex justify-center text-[1.5rem] text-slate-600 ">
+        <p className="flex justify-center text-[1.2rem] text-slate-600 ">
           {name}
         </p>
         <div className="flex justify-center">
@@ -140,7 +140,7 @@ const Dashboard = () => {
         <CustomCard
           name="Claim Credit Notes"
           count={claimCreditNotes.length}
-          to="finance/debits"
+          to="finance/claimCreditNotes"
         />
         <CustomCard
           name="Premium Booked"
@@ -157,20 +157,20 @@ const Dashboard = () => {
 
         <Link
           href={'dashboard/reports/commissionPayable'}
-          className={`h-[10rem] bg-white w-[20rem] flex flex-col justify-center border cursor-pointer shadow-2xl rounded-[20px] hover:scale-125 hover:border-[#cb7529] hover:border-2 transition-transform duration-300 ease-in-out `}
+          className={`h-[10rem] bg-white w-[20rem] flex flex-col justify-center border cursor-pointer shadow-2xl rounded-[20px] hover:scale-105 hover:border-[#cb7529] hover:border-2 transition-transform duration-300 ease-in-out `}
         >
           <div className="flex gap-1 flex-col text-[14px] ">
-            <p className="flex items-center justify-center text-[1.5rem] text-slate-600">
+            <p className="flex items-center justify-center text-[1.2rem] text-slate-600">
               Commision Payable
             </p>
-            <div className="justify-between flex font-bold px-2">
+            {/* <div className="justify-between flex font-bold px-2">
               <p>Amount</p>
               <p>Count</p>
-            </div>
+            </div> */}
             {Object.entries(commPayableResults).map(
               ([currencyCode, { total, count }]: any, key) => (
                 <div className="justify-between flex px-2" key={key}>
-                  <p className="text-[20px] font-bold flex justify-start items-start">
+                  <p className="text-[1.5rem] font-bold flex justify-start items-start">
                     {currencyCode} {total.toLocaleString()}
                   </p>
                   <p className="text-[20px] font-bold flex justify-start items-start">
@@ -183,20 +183,20 @@ const Dashboard = () => {
         </Link>
 
         <div
-          className={`h-[10rem] bg-white w-[20rem] flex flex-col justify-center border cursor-pointer shadow-2xl rounded-[20px] hover:scale-125 hover:border-[#cb7529] hover:border-2  transition-transform duration-300 ease-in-out  `}
+          className={`h-[10rem] bg-white w-[20rem] flex flex-col justify-center border cursor-pointer shadow-2xl rounded-[20px] hover:scale-105 hover:border-[#cb7529] hover:border-2  transition-transform duration-300 ease-in-out  `}
         >
           <div className="flex gap-1 flex-col text-[14px] ">
-            <p className="flex items-center justify-center text-[1.5rem] text-slate-600">
+            <p className="flex items-center justify-center text-[1.2rem] text-slate-600">
               Receipts
             </p>
-            <div className="justify-between flex font-bold px-2">
+            {/* <div className="justify-between flex font-bold px-2">
               <p>Amount</p>
               <p>Count</p>
-            </div>
+            </div> */}
             {Object.entries(receiptResults).map(
               ([currencyCode, { total, count }]: any, key) => (
                 <div className="justify-between flex px-2" key={key}>
-                  <p className="text-[20px] font-bold flex justify-start items-start">
+                  <p className="text-[1.5rem] font-bold flex justify-start items-start">
                     {currencyCode} {total.toLocaleString()}
                   </p>
                   <p className="text-[20px] font-bold flex justify-start items-start">
