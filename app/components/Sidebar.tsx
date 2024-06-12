@@ -1,156 +1,146 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { GrOverview } from "react-icons/gr";
-import { LiaFileInvoiceSolid } from "react-icons/lia";
-import { VscOrganization } from "react-icons/vsc";
-import { MdOutlineNavigateNext } from "react-icons/md";
-import { FaChevronDown } from "react-icons/fa6";
-import { useContextApi } from "../context/context";
-import iconLogo from "../assets/iconLogo.png";
-import Image from "next/image";
+'use client'
+import React, { useEffect, useState } from 'react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { GrOverview } from 'react-icons/gr'
+import { LiaFileInvoiceSolid } from 'react-icons/lia'
+import { VscOrganization } from 'react-icons/vsc'
+import { MdOutlineNavigateNext } from 'react-icons/md'
+import { FaChevronDown } from 'react-icons/fa6'
+import { useContextApi } from '../context/context'
+import iconLogo from '../assets/iconLogo.png'
+import Image from 'next/image'
 
 const Sidebar = () => {
-  const [showSubMenu, setShowSubMenu] = useState(0);
-  const { user }: any = useContextApi();
+  const [showSubMenu, setShowSubMenu] = useState(0)
+  const { user }: any = useContextApi()
   const MenuLink = ({ item }: any) => {
-    const pathname = usePathname();
+    const pathname = usePathname()
 
     return (
       <Link
         href={item.path}
         className={`p-[5px] flex items-center  pl-6 gap-[5px] text-[13px] text-white hover:bg-[#2e2f3b] hover:text-white m-[2px] rounded-[10px] ${
-          pathname === item.path && "bg-[#995224]"
+          pathname === item.path && 'bg-[#995224]'
         }`}
       >
         {item.icon}
         {item.title}
       </Link>
-    );
-  };
+    )
+  }
 
   const handleShowMenu = (index: any) => {
-    setShowSubMenu((prevIndex) => (prevIndex === index ? null : index));
-  };
+    setShowSubMenu((prevIndex) => (prevIndex === index ? null : index))
+  }
 
   const menuItems = [
     {
-      title: "Insights",
+      title: 'Insights',
       list: [
         {
-          title: "Overview",
-          path: "/dashboard",
+          title: 'Overview',
+          path: '/dashboard',
           icon: <GrOverview />,
         },
       ],
     },
     {
-      title: "Quotes",
+      title: 'Policies',
       list: [
         {
-          title: "View Quotes",
-          path: "/dashboard/quotes",
+          title: 'View Running policies',
+          path: '/dashboard/policies/runningPolicies',
+          icon: <LiaFileInvoiceSolid />,
+        },
+        {
+          title: 'View All policies',
+          path: '/dashboard/policies/allPolicies',
           icon: <LiaFileInvoiceSolid />,
         },
       ],
     },
     {
-      title: "Policies",
+      title: 'Claims',
       list: [
         {
-          title: "View Running policies",
-          path: "/dashboard/policies/runningPolicies",
+          title: 'File claim',
+          path: '/dashboard/claims/file-claim',
           icon: <LiaFileInvoiceSolid />,
         },
         {
-          title: "View All policies",
-          path: "/dashboard/policies/allPolicies",
+          title: 'Open claims',
+          path: '/dashboard/claims/openClaims',
+          icon: <LiaFileInvoiceSolid />,
+        },
+        {
+          title: 'View All claims',
+          path: '/dashboard/claims/allClaims',
           icon: <LiaFileInvoiceSolid />,
         },
       ],
     },
     {
-      title: "Claims",
+      title: 'Reports',
       list: [
         {
-          title: "File claim",
-          path: "/dashboard/claims/file-claim",
+          title: 'View Premiums',
+          path: '/dashboard/reports/premiums',
           icon: <LiaFileInvoiceSolid />,
         },
         {
-          title: "Open claims",
-          path: "/dashboard/claims/openClaims",
+          title: 'View Statements',
+          path: '/dashboard/reports/statements',
           icon: <LiaFileInvoiceSolid />,
         },
         {
-          title: "View All claims",
-          path: "/dashboard/claims/allClaims",
+          title: 'Upcoming Renewals',
+          path: '/dashboard/reports/upcomingRenewals',
+          icon: <LiaFileInvoiceSolid />,
+        },
+        {
+          title: 'Commision Payable',
+          path: '/dashboard/reports/commissionPayable',
           icon: <LiaFileInvoiceSolid />,
         },
       ],
     },
     {
-      title: "Reports",
+      title: 'Downloads',
       list: [
         {
-          title: "View Premiums",
-          path: "/dashboard/reports/premiums",
+          title: 'Receipts Download',
+          path: '/dashboard/finance/receipts',
           icon: <LiaFileInvoiceSolid />,
         },
         {
-          title: "View Statements",
-          path: "/dashboard/reports/statements",
+          title: 'Claim Credit Notes',
+          path: '/dashboard/finance/claimCreditNotes',
           icon: <LiaFileInvoiceSolid />,
         },
         {
-          title: "Upcoming Renewals",
-          path: "/dashboard/reports/upcomingRenewals",
-          icon: <LiaFileInvoiceSolid />,
-        },
-        {
-          title: "Commision Payable",
-          path: "/dashboard/reports/commissionPayable",
+          title: 'Debits',
+          path: '/dashboard/finance/debits',
           icon: <LiaFileInvoiceSolid />,
         },
       ],
     },
     {
-      title: "Downloads",
+      title: 'Risk Notes',
       list: [
         {
-          title: "Receipts Download",
-          path: "/dashboard/finance/receipts",
+          title: 'Submit Risk Notes',
+          path: '/dashboard/risk-notes/submit-note',
           icon: <LiaFileInvoiceSolid />,
         },
         {
-          title: "Claim Credit Notes",
-          path: "/dashboard/finance/claimCreditNotes",
-          icon: <LiaFileInvoiceSolid />,
-        },
-        {
-          title: "Debits",
-          path: "/dashboard/finance/debits",
+          title: 'View Risk Notes',
+          path: '/dashboard/risk-notes/view-risk-notes',
           icon: <LiaFileInvoiceSolid />,
         },
       ],
     },
-    {
-      title: "Risk Notes",
-      list: [
-        {
-          title: "Submit Risk Notes",
-          path: "/dashboard/risk-notes/submit-note",
-          icon: <LiaFileInvoiceSolid />,
-        },
-        {
-          title: "View Risk Notes",
-          path: "/dashboard/risk-notes/view-risk-notes",
-          icon: <LiaFileInvoiceSolid />,
-        },
-      ],
-    },
-  ];
+  ]
 
   return (
     <div className="h-screen bg-[#092332] overflow-y-auto">
@@ -183,7 +173,7 @@ const Sidebar = () => {
         </ul>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Sidebar;
+export default Sidebar

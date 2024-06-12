@@ -1,52 +1,52 @@
-"use client";
-import FinanceContext from "@/app/context/finance/finance-context";
-import CustomButton from "@/app/utils/CustomButtom";
-import CustomInput from "@/app/utils/CustomInput";
-import { formatDate } from "@/app/utils/helpers";
-import { ConfigProvider, Table } from "antd";
-import { useRouter } from "next/navigation";
-import React, { useContext, useState } from "react";
-import { GrPrevious } from "react-icons/gr";
+'use client'
+import FinanceContext from '@/app/context/finance/finance-context'
+import CustomButton from '@/app/utils/CustomButtom'
+import CustomInput from '@/app/utils/CustomInput'
+import { formatDate } from '@/app/utils/helpers'
+import { ConfigProvider, Table } from 'antd'
+import { useRouter } from 'next/navigation'
+import React, { useContext, useState } from 'react'
+import { GrPrevious } from 'react-icons/gr'
 
 const ClaimsCreditNotes = () => {
-  const { claimCreditNotes }: any = useContext(FinanceContext);
-  const router = useRouter();
+  const { claimCreditNotes }: any = useContext(FinanceContext)
+  const router = useRouter()
 
-  const [initialClaimCreditNotes, setInitialCreditNotes] = useState([]);
+  const [initialClaimCreditNotes, setInitialCreditNotes] = useState([])
 
   const [searchParams, setSearchParams] = useState<any>({
-    journalNo: "",
-    insured: "",
-  });
+    journalNo: '',
+    insured: '',
+  })
 
   const handleSearch = () => {
     const filteredReceipts = claimCreditNotes.filter((receipt: any) => {
       for (const key in searchParams) {
         if (searchParams[key]) {
           // Check if the search param is not empty
-          const fieldValue = receipt[key]?.toLowerCase(); // Get the field value of the policy (if exists)
-          const searchTerm = searchParams[key].toLowerCase(); // Get the search term
+          const fieldValue = receipt[key]?.toLowerCase() // Get the field value of the policy (if exists)
+          const searchTerm = searchParams[key].toLowerCase() // Get the search term
           if (fieldValue && fieldValue.includes(searchTerm)) {
-            return true; // Include policy if field value matches the search term
+            return true // Include policy if field value matches the search term
           }
         }
       }
-      return false;
-    });
-    setInitialCreditNotes(filteredReceipts);
-  };
+      return false
+    })
+    setInitialCreditNotes(filteredReceipts)
+  }
   const handleReset = () => {
     setSearchParams({
-      insured: "",
-      journalNo: "",
-    });
-    setInitialCreditNotes(claimCreditNotes);
-  };
+      insured: '',
+      journalNo: '',
+    })
+    setInitialCreditNotes(claimCreditNotes)
+  }
 
   const columns = [
     {
-      title: "Action",
-      dataIndex: "status",
+      title: 'Action',
+      dataIndex: 'status',
       render: (_: any, item: any) => (
         <div className="flex gap-2">
           <a
@@ -55,56 +55,50 @@ const ClaimsCreditNotes = () => {
             className="p-[4px] border cursor-pointer bg-slate-700 text-white rounded-md"
           >
             Download Receipt
-          </a>{" "}
+          </a>{' '}
         </div>
       ),
     },
     {
-      title: "Journal NO",
-      dataIndex: "policyNo",
+      title: 'Journal NO',
+      dataIndex: 'policyNo',
       render: (_: any, item: any) => <p>{item.journalNo}</p>,
     },
     {
-      title: "GL Date",
-      dataIndex: "endNo",
+      title: 'GL Date',
+      dataIndex: 'endNo',
       render: (_: any, item: any) => <p>{formatDate(item.glDate)}</p>,
     },
     {
-      title: "Currency",
-      dataIndex: "product",
+      title: 'Currency',
+      dataIndex: 'product',
       render: (_: any, item: any) => <p>{item.currency}</p>,
     },
     {
-      title: "DR Total",
-      dataIndex: "invoiceNumber",
-      render: (_: any, item: any) => <p> {item.DRTotal.toLocaleString()}</p>,
+      title: 'DR Total',
+      dataIndex: 'invoiceNumber',
+      render: (_: any, item: any) => (
+        <p className="flex justify-end"> {item.DRTotal.toLocaleString()}</p>
+      ),
     },
     {
-      title: "CR Total",
-      dataIndex: "invoiceNumber",
-      render: (_: any, item: any) => <p>{item.CRTotal.toLocaleString()}</p>,
+      title: 'CR Total',
+      dataIndex: 'invoiceNumber',
+      render: (_: any, item: any) => (
+        <p className="flex justify-end">{item.CRTotal.toLocaleString()}</p>
+      ),
     },
     {
-      title: "Type",
-      dataIndex: "status",
+      title: 'Type',
+      dataIndex: 'status',
       render: (_: any, item: any) => <p>{item.type}</p>,
     },
     {
-      title: "Status",
-      dataIndex: "status",
-      render: (_: any, item: any) => <p>{item.status}</p>,
-    },
-    {
-      title: "Posted",
-      dataIndex: "status",
-      render: (_: any, item: any) => <p>{item.posted}</p>,
-    },
-    {
-      title: "Narration",
-      dataIndex: "status",
+      title: 'Narration',
+      dataIndex: 'status',
       render: (_: any, item: any) => <p>{item.narration}</p>,
     },
-  ];
+  ]
   return (
     <div>
       <div className="flex justify-between items-center">
@@ -151,11 +145,11 @@ const ClaimsCreditNotes = () => {
         theme={{
           components: {
             Table: {
-              headerBg: "#092332",
-              headerColor: "white",
+              headerBg: '#092332',
+              headerColor: 'white',
               padding: 4,
-              colorBgContainer: "whitesmoke",
-              rowHoverBg: "#cb7529",
+              colorBgContainer: 'whitesmoke',
+              rowHoverBg: '#cb7529',
             },
           },
         }}
@@ -168,12 +162,10 @@ const ClaimsCreditNotes = () => {
               ? initialClaimCreditNotes
               : claimCreditNotes
           }
-          scroll={{ x: 1200 }}
-          pagination={{ pageSize: 20 }}
         />
       </ConfigProvider>
     </div>
-  );
-};
+  )
+}
 
-export default ClaimsCreditNotes;
+export default ClaimsCreditNotes

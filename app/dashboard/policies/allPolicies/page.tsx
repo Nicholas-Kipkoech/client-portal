@@ -1,67 +1,67 @@
-"use client";
+'use client'
 
-import PolicyContext from "@/app/context/policies/policies-context";
-import CustomButton from "@/app/utils/CustomButtom";
-import CustomInput from "@/app/utils/CustomInput";
-import { formatDate } from "@/app/utils/helpers";
-import { ConfigProvider, Popover, Table } from "antd";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import PolicyContext from '@/app/context/policies/policies-context'
+import CustomButton from '@/app/utils/CustomButtom'
+import CustomInput from '@/app/utils/CustomInput'
+import { formatDate } from '@/app/utils/helpers'
+import { ConfigProvider, Popover, Table } from 'antd'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
-import React, { useContext, useState } from "react";
-import { GrDocumentPdf, GrPrevious } from "react-icons/gr";
-import NotesModal from "../NotesModal";
-import CustomSelect from "@/app/utils/CustomSelect";
+import React, { useContext, useState } from 'react'
+import { GrDocumentPdf, GrPrevious } from 'react-icons/gr'
+import NotesModal from '../NotesModal'
+import CustomSelect from '@/app/utils/CustomSelect'
 
 const Policies = () => {
-  const router = useRouter();
+  const router = useRouter()
   const {
     policies,
     loadingPolicies,
     policyDocuments,
     setPolicyDocuments,
-  }: any = useContext(PolicyContext);
-  const [initialPolicies, setInitialPolicies] = useState([]);
-  const [openModal, setOpenModal] = useState(false);
+  }: any = useContext(PolicyContext)
+  const [initialPolicies, setInitialPolicies] = useState([])
+  const [openModal, setOpenModal] = useState(false)
 
   const [searchParams, setSearchParams] = useState<any>({
-    client: "",
-    carRegNo: "",
-    policyNo: "",
-    endNo: "",
-    product: "",
-    status: "",
-  });
+    client: '',
+    carRegNo: '',
+    policyNo: '',
+    endNo: '',
+    product: '',
+    status: '',
+  })
 
   const handleSearch = () => {
     const filteredPolicies = policies.filter((policy: any) => {
       for (const key in searchParams) {
         if (searchParams[key]) {
           // Check if the search param is not empty
-          const fieldValue = policy[key]?.toLowerCase(); // Get the field value of the policy (if exists)
-          const searchTerm = searchParams[key].toLowerCase(); // Get the search term
+          const fieldValue = policy[key]?.toLowerCase() // Get the field value of the policy (if exists)
+          const searchTerm = searchParams[key].toLowerCase() // Get the search term
           if (fieldValue && fieldValue.includes(searchTerm)) {
-            return true; // Include policy if field value matches the search term
+            return true // Include policy if field value matches the search term
           }
         }
       }
-      return false;
-    });
-    setInitialPolicies(filteredPolicies);
-    console.log(initialPolicies);
-  };
+      return false
+    })
+    setInitialPolicies(filteredPolicies)
+    console.log(initialPolicies)
+  }
 
   const handleReset = () => {
     setSearchParams({
-      client: "",
-      carRegNo: "",
-      policyNo: "",
-      endNo: "",
-      product: "",
-      status: "",
-    });
-    setInitialPolicies(policies);
-  };
+      client: '',
+      carRegNo: '',
+      policyNo: '',
+      endNo: '',
+      product: '',
+      status: '',
+    })
+    setInitialPolicies(policies)
+  }
 
   const content = (items: any) => {
     return (
@@ -79,37 +79,37 @@ const Policies = () => {
           </a>
         </div>
       </div>
-    );
-  };
+    )
+  }
 
   const columns = [
     {
-      title: "Policy Number",
-      dataIndex: "policyNo",
+      title: 'Policy Number',
+      dataIndex: 'policyNo',
       render: (_: any, item: any) => (
         <Popover
           className="cursor-pointer"
           content={() => content(item.reportUrl)}
-          title={"Downloads"}
-          trigger={"click"}
+          title={'Downloads'}
+          trigger={'click'}
         >
           {item.policyNo}
         </Popover>
       ),
     },
     {
-      title: "End No",
-      dataIndex: "endNo",
+      title: 'End No',
+      dataIndex: 'endNo',
       render: (_: any, item: any) => <p>{item.endNo}</p>,
     },
     {
-      title: "Product",
-      dataIndex: "product",
+      title: 'Product',
+      dataIndex: 'product',
       render: (_: any, item: any) => <p>{item.product}</p>,
     },
     {
-      title: "Period",
-      dataIndex: "invoiceNumber",
+      title: 'Period',
+      dataIndex: 'invoiceNumber',
       render: (_: any, item: any) => (
         <div>
           <p>From : {formatDate(item.periodFrom)}</p>
@@ -118,8 +118,8 @@ const Policies = () => {
       ),
     },
     {
-      title: "Entities",
-      dataIndex: "invoiceNumber",
+      title: 'Entities',
+      dataIndex: 'invoiceNumber',
       render: (_: any, item: any) => (
         <div>
           <p>Insured : {item.client}</p>
@@ -128,22 +128,17 @@ const Policies = () => {
       ),
     },
     {
-      title: "Status",
-      dataIndex: "status",
-      render: (_: any, item: any) => <p>{item.status}</p>,
-    },
-    {
-      title: "Engagement",
-      dataIndex: "status",
+      title: 'Engagement',
+      dataIndex: 'status',
       render: (_: any, item: any) => (
         <CustomButton
-          name={"Add note"}
+          name={'Add note'}
           onClick={() => setOpenModal(true)}
-          className={"h-[2rem] border rounded-md  px-3 bg-slate-900 text-white"}
+          className={'h-[2rem] border rounded-md  px-3 bg-slate-900 text-white'}
         />
       ),
     },
-  ];
+  ]
 
   return (
     <div className="flex flex-col justify-center ">
@@ -202,15 +197,15 @@ const Policies = () => {
           }
         />
         <CustomSelect
-          name={"Status"}
+          name={'Status'}
           options={[
             {
-              label: "Active",
-              value: "Active",
+              label: 'Active',
+              value: 'Active',
             },
             {
-              label: "Closed",
-              value: "Closed",
+              label: 'Closed',
+              value: 'Closed',
             },
           ]}
           placeholder="select status"
@@ -237,11 +232,11 @@ const Policies = () => {
         theme={{
           components: {
             Table: {
-              headerBg: "#092332",
-              headerColor: "white",
+              headerBg: '#092332',
+              headerColor: 'white',
               padding: 2,
-              colorBgContainer: "whitesmoke",
-              rowHoverBg: "#cb7529",
+              colorBgContainer: 'whitesmoke',
+              rowHoverBg: '#cb7529',
             },
           },
         }}
@@ -257,7 +252,7 @@ const Policies = () => {
       </ConfigProvider>
       <NotesModal open={openModal} handleClose={() => setOpenModal(false)} />
     </div>
-  );
-};
+  )
+}
 
-export default Policies;
+export default Policies

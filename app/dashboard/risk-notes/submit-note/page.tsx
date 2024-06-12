@@ -1,134 +1,134 @@
-"use client";
-import { useContextApi } from "@/app/context/context";
-import PolicyContext from "@/app/context/policies/policies-context";
-import CustomButton from "@/app/utils/CustomButtom";
-import CustomInput from "@/app/utils/CustomInput";
-import CustomSelect from "@/app/utils/CustomSelect";
-import React, { useContext, useRef, useState } from "react";
-import { IoMdCloudUpload } from "react-icons/io";
+'use client'
+import { useContextApi } from '@/app/context/context'
+import PolicyContext from '@/app/context/policies/policies-context'
+import CustomButton from '@/app/utils/CustomButtom'
+import CustomInput from '@/app/utils/CustomInput'
+import CustomSelect from '@/app/utils/CustomSelect'
+import React, { useContext, useRef, useState } from 'react'
+import { IoMdCloudUpload } from 'react-icons/io'
 
 interface FileObject {
-  file: string; // Base64 string
-  type: string;
-  name: string;
+  file: string // Base64 string
+  type: string
+  name: string
 }
 const SubmitNote = () => {
-  const { filteredPolicies, products }: any = useContext(PolicyContext);
-  const { user }: any = useContextApi();
+  const { filteredPolicies, products }: any = useContext(PolicyContext)
+  const { user }: any = useContextApi()
 
-  const [checked, setChecked] = useState("newBusiness");
-  const [images, setImages] = useState<FileObject[]>([]);
-  const [policyNo, setPolicyNo] = useState("");
-  const [clientName, setClientName] = useState("");
-  const [product, setProduct] = useState("");
+  const [checked, setChecked] = useState('newBusiness')
+  const [images, setImages] = useState<FileObject[]>([])
+  const [policyNo, setPolicyNo] = useState('')
+  const [clientName, setClientName] = useState('')
+  const [product, setProduct] = useState('')
 
-  const inputRef = useRef<any>();
+  const inputRef = useRef<any>()
 
   const uniquePolicies = Array.from(
-    new Set(filteredPolicies.map((policy: any) => policy.policyNo))
+    new Set(filteredPolicies.map((policy: any) => policy.policyNo)),
   ).map((policyNumber) => {
     return filteredPolicies.find(
-      (policy: any) => policy.policyNo === policyNumber
-    );
-  });
+      (policy: any) => policy.policyNo === policyNumber,
+    )
+  })
 
   const policyClient = uniquePolicies.filter(
-    (policy) => policy.policyNo === policyNo
-  );
-  console.log(policyClient);
+    (policy) => policy.policyNo === policyNo,
+  )
+  console.log(policyClient)
 
   const policyOptions = uniquePolicies.map((policy: any) => {
     return {
       label: policy.policyNo,
       value: policy.policyNo,
-    };
-  });
+    }
+  })
 
   const productOptions = products.map((product: any) => {
     return {
       value: product.productCode,
       label: product.productName,
-    };
-  });
+    }
+  })
 
   const handleUploadRenewalAttachment = () => {
     if (inputRef.current) {
-      inputRef.current.click();
+      inputRef.current.click()
     }
-  };
+  }
 
   const handleFileChange = async (
     e: React.ChangeEvent<HTMLInputElement>,
-    type: string
+    type: string,
   ) => {
     if (e.target.files && e.target.files.length > 0) {
-      const filesArray = Array.from(e.target.files);
+      const filesArray = Array.from(e.target.files)
       const newFiles = await Promise.all(
         filesArray.map(async (file) => {
-          const base64 = await convertToBase64(file);
+          const base64 = await convertToBase64(file)
           return {
             file: base64,
             type,
             name: file.name,
-          };
-        })
-      );
-      const updatedImages = [...images, ...newFiles];
-      setImages(updatedImages);
-      localStorage.setItem("images", JSON.stringify(updatedImages));
+          }
+        }),
+      )
+      const updatedImages = [...images, ...newFiles]
+      setImages(updatedImages)
+      localStorage.setItem('images', JSON.stringify(updatedImages))
     }
-  };
+  }
 
   const convertToBase64 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = (error) => reject(error);
-    });
-  };
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload = () => resolve(reader.result as string)
+      reader.onerror = (error) => reject(error)
+    })
+  }
   const handleDeleteFile = (key: number) => {
-    setImages(images.filter((image, index) => index !== key));
-  };
+    setImages(images.filter((image, index) => index !== key))
+  }
 
   const handleSubmit = () => {
-    let payload;
-    if (checked === "newBusiness") {
+    let payload
+    if (checked === 'newBusiness') {
       payload = {
         sender: user.entityName,
-        type: "New Business",
+        type: 'New Business',
         clientName: clientName,
         images,
         sentDate: new Date(),
         policyNo,
         product,
-      };
-    } else if (checked === "renewals") {
+      }
+    } else if (checked === 'renewals') {
       payload = {
         sender: user.entityName,
-        type: "Renewal",
+        type: 'Renewal',
         clientName: policyClient[0].client,
         images,
         sentDate: new Date(),
         policyNo,
         product: policyClient[0].product,
-      };
+      }
     } else {
       payload = {
         sender: user.entityName,
-        type: "Others",
+        type: 'Others',
         clientName: policyClient[0].client,
         images,
         sentDate: new Date(),
         policyNo,
         product: policyClient[0].product,
-      };
+      }
     }
-    let existingRiskNotes: any = localStorage.getItem("riskNotes");
-    existingRiskNotes = existingRiskNotes ? JSON.parse(existingRiskNotes) : [];
-    const newRisksNotes = [...existingRiskNotes, payload];
-    localStorage.setItem("riskNotes", JSON.stringify(newRisksNotes));
-  };
+    let existingRiskNotes: any = localStorage.getItem('riskNotes')
+    existingRiskNotes = existingRiskNotes ? JSON.parse(existingRiskNotes) : []
+    const newRisksNotes = [...existingRiskNotes, payload]
+    localStorage.setItem('riskNotes', JSON.stringify(newRisksNotes))
+  }
 
   return (
     <div className="">
@@ -140,8 +140,8 @@ const SubmitNote = () => {
               <div className="flex gap-2">
                 <input
                   type="radio"
-                  value={"newBusiness"}
-                  checked={checked === "newBusiness"}
+                  value={'newBusiness'}
+                  checked={checked === 'newBusiness'}
                   onChange={(e) => setChecked(e.target.value)}
                   name="policyType"
                 />
@@ -150,9 +150,9 @@ const SubmitNote = () => {
               <div className="flex gap-2">
                 <input
                   type="radio"
-                  value={"renewals"}
+                  value={'renewals'}
                   name="policyType"
-                  checked={checked === "renewals"}
+                  checked={checked === 'renewals'}
                   onChange={(e) => setChecked(e.target.value)}
                 />
                 <label htmlFor="renewals">Renewals</label>
@@ -160,9 +160,9 @@ const SubmitNote = () => {
               <div className="flex gap-2">
                 <input
                   type="radio"
-                  value={"others"}
+                  value={'others'}
                   name="policyType"
-                  checked={checked === "others"}
+                  checked={checked === 'others'}
                   onChange={(e) => setChecked(e.target.value)}
                 />
                 <label htmlFor="others">Others</label>
@@ -170,7 +170,7 @@ const SubmitNote = () => {
             </div>
 
             <div>
-              {checked === "newBusiness" && (
+              {checked === 'newBusiness' && (
                 <>
                   <CustomInput
                     name="Client Name"
@@ -182,18 +182,18 @@ const SubmitNote = () => {
                     placeholder="Select product"
                     options={productOptions}
                     className=""
-                    name={"Product"}
+                    name={'Product'}
                     onChange={(value: any) => setProduct(value.label)}
                   />
                 </>
               )}
-              {checked === "renewals" && (
+              {checked === 'renewals' && (
                 <>
                   <CustomSelect
                     placeholder="Select policy no"
                     options={policyOptions}
                     className=""
-                    name={"Policy No"}
+                    name={'Policy No'}
                     onChange={(value: any) => setPolicyNo(value.value)}
                   />
                   {policyNo && (
@@ -206,13 +206,13 @@ const SubmitNote = () => {
                   )}
                 </>
               )}
-              {checked === "others" && (
+              {checked === 'others' && (
                 <>
                   <CustomSelect
                     placeholder="Select policy no"
                     options={policyOptions}
                     className=""
-                    name={"Policy No"}
+                    name={'Policy No'}
                     onChange={(value: any) => setPolicyNo(value.value)}
                   />
                   {policyNo && (
@@ -228,7 +228,7 @@ const SubmitNote = () => {
             </div>
             <div className="flex justify-between">
               <div
-                className="mt-2 cursor-pointer border bg-slate-500 text-white h-[3rem] gap-2 rounded-md flex justify-center items-center w-[20rem]"
+                className="mt-2 cursor-pointer border bg-[#092332] text-white h-[3rem] gap-2 rounded-md flex justify-center items-center w-[12rem]"
                 onClick={handleUploadRenewalAttachment}
               >
                 <IoMdCloudUpload size={25} />
@@ -242,9 +242,9 @@ const SubmitNote = () => {
                 />
               </div>
               <CustomButton
-                name={"Submit"}
+                name={'Submit'}
                 onClick={handleSubmit}
-                className="border w-[10rem] h-[3rem] mt-2 rounded-md bg-yellow-700 text-white"
+                className="border w-[15rem] h-[3rem] mt-2 rounded-md bg-[#cb7529] text-white"
               />
             </div>
           </div>
@@ -273,7 +273,7 @@ const SubmitNote = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SubmitNote;
+export default SubmitNote

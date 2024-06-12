@@ -1,21 +1,21 @@
-"use client";
-import Link from "next/link";
-import React, { useContext, useState } from "react";
-import { useContextApi } from "../context/context";
-import CustomInput from "../utils/CustomInput";
-import CustomButton from "../utils/CustomButtom";
-import { Months } from "../utils/helpers";
-import { DatePicker } from "antd";
-import PolicyContext from "../context/policies/policies-context";
-import ClaimsContext from "../context/claims/claims-context";
-import FinanceContext from "../context/finance/finance-context";
-import ReportsContext from "../context/reports/reports-context";
+'use client'
+import Link from 'next/link'
+import React, { useContext, useState } from 'react'
+import { useContextApi } from '../context/context'
+import CustomInput from '../utils/CustomInput'
+import CustomButton from '../utils/CustomButtom'
+import { Months } from '../utils/helpers'
+import { DatePicker } from 'antd'
+import PolicyContext from '../context/policies/policies-context'
+import ClaimsContext from '../context/claims/claims-context'
+import FinanceContext from '../context/finance/finance-context'
+import ReportsContext from '../context/reports/reports-context'
 
 interface CustomCardProps {
-  name: string;
-  count: number;
-  to: string | undefined;
-  currency: boolean;
+  name: string
+  count: number
+  to: string | undefined
+  currency: boolean
 }
 
 const Dashboard = () => {
@@ -29,48 +29,48 @@ const Dashboard = () => {
     setToDate,
     loadingUwData,
     receiptResults,
-  }: any = useContextApi();
+  }: any = useContextApi()
 
-  const { filteredPolicies }: any = useContext(PolicyContext);
-  const { openClaims }: any = useContext(ClaimsContext);
-  const { debits, claimCreditNotes }: any = useContext(FinanceContext);
-  const { commPayableResults }: any = useContext(ReportsContext);
+  const { filteredPolicies }: any = useContext(PolicyContext)
+  const { openClaims }: any = useContext(ClaimsContext)
+  const { debits, claimCreditNotes }: any = useContext(FinanceContext)
+  const { commPayableResults }: any = useContext(ReportsContext)
 
-  const [fmDate, setFmDate] = useState("");
-  const [toDate, setTdDate] = useState("");
+  const [fmDate, setFmDate] = useState('')
+  const [toDate, setTdDate] = useState('')
 
   const handleToDate = (date: any, dateString: any) => {
-    const [day, month, year] = dateString.split("-");
-    let formattedMonth: any = "";
+    const [day, month, year] = dateString.split('-')
+    let formattedMonth: any = ''
     if (month < 10) {
-      formattedMonth = Months[month.toString().slice(1) - 1];
+      formattedMonth = Months[month.toString().slice(1) - 1]
     } else {
-      formattedMonth = Months[Number(month - 1)];
+      formattedMonth = Months[Number(month - 1)]
     }
-    const formattedToDate = day + "-" + formattedMonth + "-" + year;
-    setTdDate(formattedToDate);
-  };
+    const formattedToDate = day + '-' + formattedMonth + '-' + year
+    setTdDate(formattedToDate)
+  }
 
   const handleFromDate = (date: any, dateString: any) => {
-    const [day, month, year] = dateString.split("-");
-    let formattedMonth: any = "";
+    const [day, month, year] = dateString.split('-')
+    let formattedMonth: any = ''
     if (month < 10) {
-      formattedMonth = Months[month.toString().slice(1) - 1];
+      formattedMonth = Months[month.toString().slice(1) - 1]
     } else {
-      formattedMonth = Months[Number(month - 1)];
+      formattedMonth = Months[Number(month - 1)]
     }
-    const formattedToDate = day + "-" + formattedMonth + "-" + year;
-    setFmDate(formattedToDate);
-  };
-  const checkDate = fmDate.split("-").join("") === "undefinedundefined";
+    const formattedToDate = day + '-' + formattedMonth + '-' + year
+    setFmDate(formattedToDate)
+  }
+  const checkDate = fmDate.split('-').join('') === 'undefinedundefined'
   const handleRunReports = () => {
     if (checkDate === true) {
-      alert("Please select from date and to date");
+      alert('Please select from date and to date')
     } else {
-      setFromDate(fmDate);
-      setToDate(toDate);
+      setFromDate(fmDate)
+      setToDate(toDate)
     }
-  };
+  }
 
   const CustomCard = ({
     name,
@@ -83,16 +83,15 @@ const Dashboard = () => {
         href={`dashboard/${to}`}
         className="h-[10rem] w-[20rem] text-[#000000] bg-[#FFFFFF] border flex flex-col items-center justify-center shadow-2xl rounded-md"
       >
-        <p className="flex justify-center text-[1.5rem] font-bold">{name}</p>
+        <p className="flex justify-center text-[1.5rem] text-slate-600 ">
+          {name}
+        </p>
         <div className="flex justify-center">
-          <p className="font-bold text-[1.2rem] text-slate-600">
-            {" "}
-            {count?.toLocaleString()}
-          </p>
+          <p className="font-bold text-[1.5rem] "> {count?.toLocaleString()}</p>
         </div>
       </Link>
-    );
-  };
+    )
+  }
   return (
     <div className="py-4 ">
       <div className="flex justify-center md:text-[1.5rem] font-bold">
@@ -102,23 +101,23 @@ const Dashboard = () => {
         <div className="flex flex-col mt-2">
           <label>From date</label>
           <DatePicker
-            format={"DD-MM-YYYY"}
-            placeholder={"DD-MM-YYYY"}
-            className={"w-[250px] h-[40px] border p-2 rounded-md"}
+            format={'DD-MM-YYYY'}
+            placeholder={'DD-MM-YYYY'}
+            className={'w-[250px] h-[40px] border p-2 rounded-md'}
             onChange={handleFromDate}
           />
         </div>
         <div className="flex flex-col mt-2">
           <label>To date</label>
           <DatePicker
-            format={"DD-MM-YYYY"}
-            placeholder={"DD-MM-YYYY"}
-            className={"w-[250px] h-[40px] border p-2 rounded-md"}
+            format={'DD-MM-YYYY'}
+            placeholder={'DD-MM-YYYY'}
+            className={'w-[250px] h-[40px] border p-2 rounded-md'}
             onChange={handleToDate}
           />
         </div>
         <CustomButton
-          name={loadingUwData ? "Running..." : "Run"}
+          name={loadingUwData ? 'Running...' : 'Run'}
           onClick={handleRunReports}
           className="border h-[40px] w-[15rem] bg-slate-800 text-white rounded-md md:mt-8 sm:mt-2"
         />
@@ -154,11 +153,11 @@ const Dashboard = () => {
         />
 
         <Link
-          href={"dashboard/reports/commissionPayable"}
-          className={`h-[10rem] bg-white w-[20rem] border cursor-pointer shadow-2xl rounded-md  `}
+          href={'dashboard/reports/commissionPayable'}
+          className={`h-[10rem] bg-white w-[20rem] flex flex-col justify-center border cursor-pointer shadow-2xl rounded-md  `}
         >
           <div className="flex gap-1 flex-col text-[14px] ">
-            <p className="flex items-center justify-center text-[1.5rem] font-bold">
+            <p className="flex items-center justify-center text-[1.5rem] text-slate-600">
               Commision Payable
             </p>
             <div className="justify-between flex font-bold px-2">
@@ -175,16 +174,16 @@ const Dashboard = () => {
                     {count.toLocaleString()}
                   </p>
                 </div>
-              )
+              ),
             )}
           </div>
         </Link>
 
         <div
-          className={`h-[10rem] bg-white w-[20rem] border cursor-pointer shadow-2xl rounded-md  `}
+          className={`h-[10rem] bg-white w-[20rem] border flex flex-col justify-center cursor-pointer shadow-2xl rounded-md  `}
         >
           <div className="flex gap-1 flex-col text-[14px] ">
-            <p className="flex items-center justify-center text-[1.5rem] font-bold">
+            <p className="flex items-center justify-center text-[1.5rem] text-slate-600">
               Receipts
             </p>
             <div className="justify-between flex font-bold px-2">
@@ -201,13 +200,13 @@ const Dashboard = () => {
                     {count.toLocaleString()}
                   </p>
                 </div>
-              )
+              ),
             )}
           </div>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Dashboard;
+export default Dashboard

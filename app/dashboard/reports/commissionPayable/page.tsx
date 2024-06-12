@@ -1,46 +1,46 @@
-"use client";
-import { ConfigProvider, Table } from "antd";
-import React, { useContext } from "react";
-import { GrPrevious } from "react-icons/gr";
-import { useRouter } from "next/navigation";
-import ReportsContext from "@/app/context/reports/reports-context";
+'use client'
+import { ConfigProvider, Table } from 'antd'
+import React, { useContext } from 'react'
+import { GrPrevious } from 'react-icons/gr'
+import { useRouter } from 'next/navigation'
+import ReportsContext from '@/app/context/reports/reports-context'
 
 const CommissionPayble = () => {
   function calculatePercentage(num1: number, num2: number): any {
-    const absNum1 = Math.abs(num1);
-    const absNum2 = Math.abs(num2);
-    return Math.floor(100 / (absNum1 / absNum2));
+    const absNum1 = Math.abs(num1)
+    const absNum2 = Math.abs(num2)
+    return Math.floor(100 / (absNum1 / absNum2))
   }
 
   const {
     filteredCommissionPayable,
     loadingCommissions,
     commPayableResults,
-  }: any = useContext(ReportsContext);
+  }: any = useContext(ReportsContext)
 
   const columns = [
     {
-      title: "Policy No",
-      dataIndex: "policyNo",
+      title: 'Policy No',
+      dataIndex: 'policyNo',
     },
     {
-      title: "End No",
-      dataIndex: "endNo",
+      title: 'End No',
+      dataIndex: 'endNo',
     },
     {
-      title: "GL Date",
-      dataIndex: "glDate",
+      title: 'GL Date',
+      dataIndex: 'glDate',
     },
     {
-      title: "Insured",
-      dataIndex: "invoiceNumber",
+      title: 'Insured',
+      dataIndex: 'invoiceNumber',
       render: (_: any, item: any) => (
         <p className="text-[13px] font-bold text-ellipsis">{item.insured}</p>
       ),
     },
     {
-      title: "Total Premium",
-      dataIndex: "lossDate",
+      title: 'Total Premium',
+      dataIndex: 'lossDate',
       render: (_: any, item: any) => (
         <p>
           {item.currencyCode} {item.totalPremium.toLocaleString()}
@@ -48,8 +48,8 @@ const CommissionPayble = () => {
       ),
     },
     {
-      title: "Paid Premium",
-      dataIndex: "intimationDate",
+      title: 'Paid Premium',
+      dataIndex: 'intimationDate',
       render: (_: any, item: any) => (
         <p>
           {item.currencyCode} {item.paidPremium.toLocaleString()}
@@ -57,8 +57,8 @@ const CommissionPayble = () => {
       ),
     },
     {
-      title: "Outstanding",
-      dataIndex: "currency",
+      title: 'Outstanding',
+      dataIndex: 'currency',
       render: (_: any, item: any) => (
         <p>
           {item.currencyCode} {item.osPremium.toLocaleString()}
@@ -66,8 +66,8 @@ const CommissionPayble = () => {
       ),
     },
     {
-      title: "Basic Premium",
-      dataIndex: "total",
+      title: 'Basic Premium',
+      dataIndex: 'total',
       render: (_: any, item: any) => (
         <p>
           {item.currencyCode} {item.basicPremium.toLocaleString()}
@@ -75,15 +75,15 @@ const CommissionPayble = () => {
       ),
     },
     {
-      title: "Comm Rate",
-      dataIndex: "paid",
+      title: 'Comm Rate',
+      dataIndex: 'paid',
       render: (_: any, item: any) => (
         <p>{calculatePercentage(item.basicPremium, item.commission)}%</p>
       ),
     },
     {
-      title: "Commission",
-      dataIndex: "paid",
+      title: 'Commission',
+      dataIndex: 'paid',
       render: (_: any, item: any) => (
         <p>
           {item.currencyCode} {item.commission.toLocaleString()}
@@ -91,8 +91,8 @@ const CommissionPayble = () => {
       ),
     },
     {
-      title: "WHT on Comm",
-      dataIndex: "paid",
+      title: 'WHT on Comm',
+      dataIndex: 'paid',
       render: (_: any, item: any) => (
         <p>
           {item.currencyCode} {item.WHTonComm.toLocaleString()}
@@ -100,8 +100,8 @@ const CommissionPayble = () => {
       ),
     },
     {
-      title: "Paid Commission",
-      dataIndex: "paid",
+      title: 'Paid Commission',
+      dataIndex: 'paid',
       render: (_: any, item: any) => (
         <p>
           {item.currencyCode} {item.paidComm.toLocaleString()}
@@ -109,17 +109,17 @@ const CommissionPayble = () => {
       ),
     },
     {
-      title: "Net Comm Payable",
-      dataIndex: "paid",
+      title: 'Net Comm Payable',
+      dataIndex: 'paid',
       render: (_: any, item: any) => (
         <p>
-          {item.currencyCode}{" "}
+          {item.currencyCode}{' '}
           {Math.floor(item.commission - item.WHTonComm).toLocaleString()}
         </p>
       ),
     },
-  ];
-  const router = useRouter();
+  ]
+  const router = useRouter()
   return (
     <div>
       <div className="flex justify-between items-center">
@@ -136,7 +136,7 @@ const CommissionPayble = () => {
               <p className="text-[1.3rem] font-bold">
                 Total {currencyCode} {Math.floor(total).toLocaleString()}
               </p>
-            )
+            ),
           )}
         </div>
       </div>
@@ -145,10 +145,10 @@ const CommissionPayble = () => {
         theme={{
           components: {
             Table: {
-              headerBg: "#092332",
-              headerColor: "white",
-              padding: 2,
-              rowHoverBg: "#cb7529",
+              headerBg: '#092332',
+              headerColor: 'white',
+              padding: 10,
+              rowHoverBg: '#cb7529',
             },
           },
         }}
@@ -162,7 +162,7 @@ const CommissionPayble = () => {
         />
       </ConfigProvider>
     </div>
-  );
-};
+  )
+}
 
-export default CommissionPayble;
+export default CommissionPayble
