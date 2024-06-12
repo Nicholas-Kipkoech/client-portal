@@ -81,13 +81,16 @@ const Dashboard = () => {
     return (
       <Link
         href={`dashboard/${to}`}
-        className="h-[10rem] w-[20rem] text-[#000000] bg-[#FFFFFF] border flex flex-col items-center justify-center shadow-2xl rounded-md"
+        className="h-[10rem] w-[20rem] text-[#000000] bg-[#FFFFFF] border flex flex-col items-center justify-center shadow-2xl rounded-[20px] hover:scale-125 hover:border-[#cb7529] hover:border-2 transition-transform duration-300 ease-in-out"
       >
         <p className="flex justify-center text-[1.5rem] text-slate-600 ">
           {name}
         </p>
         <div className="flex justify-center">
-          <p className="font-bold text-[1.5rem] "> {count?.toLocaleString()}</p>
+          <p className="font-bold text-[1.5rem]  ">
+            {' '}
+            {count?.toLocaleString()}
+          </p>
         </div>
       </Link>
     )
@@ -154,7 +157,7 @@ const Dashboard = () => {
 
         <Link
           href={'dashboard/reports/commissionPayable'}
-          className={`h-[10rem] bg-white w-[20rem] flex flex-col justify-center border cursor-pointer shadow-2xl rounded-md  `}
+          className={`h-[10rem] bg-white w-[20rem] flex flex-col justify-center border cursor-pointer shadow-2xl rounded-[20px] hover:scale-125 hover:border-[#cb7529] hover:border-2 transition-transform duration-300 ease-in-out `}
         >
           <div className="flex gap-1 flex-col text-[14px] ">
             <p className="flex items-center justify-center text-[1.5rem] text-slate-600">
@@ -180,7 +183,7 @@ const Dashboard = () => {
         </Link>
 
         <div
-          className={`h-[10rem] bg-white w-[20rem] border flex flex-col justify-center cursor-pointer shadow-2xl rounded-md  `}
+          className={`h-[10rem] bg-white w-[20rem] flex flex-col justify-center border cursor-pointer shadow-2xl rounded-[20px] hover:scale-125 hover:border-[#cb7529] hover:border-2  transition-transform duration-300 ease-in-out  `}
         >
           <div className="flex gap-1 flex-col text-[14px] ">
             <p className="flex items-center justify-center text-[1.5rem] text-slate-600">
