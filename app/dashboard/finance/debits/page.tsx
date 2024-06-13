@@ -85,7 +85,12 @@ const Debits = () => {
           },
         }}
       >
-        <Table className="mt-2" columns={columns} dataSource={debits} />
+        <Table
+          className="mt-2"
+          columns={columns}
+          dataSource={debits}
+          scroll={{ x: 1200 }}
+        />
       </ConfigProvider>
     </div>
   )

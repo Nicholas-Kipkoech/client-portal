@@ -162,6 +162,7 @@ const ClaimsCreditNotes = () => {
               ? initialClaimCreditNotes
               : claimCreditNotes
           }
+          scroll={{ x: 12000 }}
         />
       </ConfigProvider>
     </div>
