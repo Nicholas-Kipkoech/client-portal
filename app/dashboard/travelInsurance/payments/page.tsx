@@ -1,5 +1,6 @@
 'use client'
 import { _API_URL } from '@/app/constants/database-connect'
+import { useContextApi } from '@/app/context/context'
 import CustomButton from '@/app/utils/CustomButtom'
 import CustomInput from '@/app/utils/CustomInput'
 import CustomSelect from '@/app/utils/CustomSelect'
@@ -11,6 +12,8 @@ import React, { useEffect, useState } from 'react'
 
 const Payments = () => {
   const router = useRouter()
+  const { user }: any = useContextApi()
+  console.log(user)
 
   const [customerDetails, setCustomerDetails] = useState({
     firstName: '',
@@ -70,6 +73,7 @@ const Payments = () => {
         token: payload.token,
         dob: payload.dob,
         coverCode: payload.coverCode,
+        brokerCode: `${user.intermediaryCode}${user.entityCode}`,
       },
     },
   }
