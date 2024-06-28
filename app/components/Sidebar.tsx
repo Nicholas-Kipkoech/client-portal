@@ -144,7 +144,7 @@ const Sidebar = () => {
       title: 'Travel Insurance',
       list: [
         {
-          title: 'Request Travel Quote',
+          title: 'Request Travel Policy',
           path: '/dashboard/travelInsurance/request-quote',
           icon: <LiaFileInvoiceSolid />,
         },

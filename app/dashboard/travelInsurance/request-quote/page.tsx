@@ -18,20 +18,20 @@ const Travel = () => {
   const [fromDate, setFromDate] = useState('')
   const [toDate, setToDate] = useState('')
   const [dob, setDOB] = useState('')
-  // const [token, setToken] = useState('')
+  const [token, setToken] = useState('')
 
-  // async function getToken() {
-  //   const response = await axios.post(`${_API_URL}/auth/generatetoken`, {
-  //     un: 'icon',
-  //     pw: 'B1MA',
-  //   })
-  //   setToken(response.data.value)
-  // }
-  // console.log(token)
+  async function getToken() {
+    const response = await axios.post(`${_API_URL}/auth/generatetoken`, {
+      un: 'icon',
+      pw: 'B1MA',
+    })
+    setToken(response.data.value)
+  }
+  console.log(token)
 
-  // useEffect(() => {
-  //   getToken()
-  // }, [])
+  useEffect(() => {
+    getToken()
+  }, [])
 
   function getDates() {
     let fmDate = ''
@@ -77,7 +77,7 @@ const Travel = () => {
         <div className="w-auto border  bg-white shadow-2xl rounded-md h-[35rem] flex items-center justify-center  flex-col p-5">
           <p className="text-[1.5rem] font-semibold">Fill in travel details</p>
           <CustomSelect
-            name="Country of Origin"
+            name="Country of Residence"
             options={formattedCountries}
             className="w-[30rem] "
             placeholder={'Select country...'}

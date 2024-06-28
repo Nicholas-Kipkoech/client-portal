@@ -1,23 +1,23 @@
 export const products = [
   {
-    CC_CODE: "093",
+    CC_CODE: "141",
     CC_NAME: "Schengen Medical",
   },
   {
-    CC_CODE: "093-1",
+    CC_CODE: "140",
     CC_NAME: "Budget",
   },
 
   {
-    CC_CODE: "093-3",
+    CC_CODE: "142",
     CC_NAME: "Global Basic",
   },
   {
-    CC_CODE: "093-4",
+    CC_CODE: "143",
     CC_NAME: "Global Plus",
   },
   {
-    CC_CODE: "093-5",
+    CC_CODE: "144",
     CC_NAME: "Global Extra",
   },
 ];
@@ -31,13 +31,9 @@ export const ProductOptions = products.map((product) => {
 
 const countriesOptions: any = {
   AF: "AFGHANISTAN",
-
   AX: "ALAND ISLANDS (FINLAND)",
-
   AL: "ALBANIA",
-
   DZ: "ALGERIA",
-
   AS: "AMERICAN SAMOA (USA)",
 
   AD: "ANDORRA",
