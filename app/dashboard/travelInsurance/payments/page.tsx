@@ -62,7 +62,7 @@ const Payments = () => {
       },
       policyDetails: {
         policyType: 'Quote',
-        policyProductCode: '093',
+        policyProductCode: payload.coverCode,
         policyCurrency: 'USD',
         policyFromDate: payload.policyFromDate,
         policyExpiryDate: payload.policyExpiryDate,

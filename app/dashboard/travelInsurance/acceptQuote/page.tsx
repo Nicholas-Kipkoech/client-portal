@@ -105,7 +105,7 @@ const AcceptQuote = () => {
               </div>
               <div className="flex gap-2 justify-between">
                 <p>Total: </p>
-                <p> {totalInUsd}</p>
+                <p> {Math.floor(totalInUsd)}</p>
               </div>
             </div>
           </div>
