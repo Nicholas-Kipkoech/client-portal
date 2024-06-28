@@ -27,7 +27,7 @@ const Travel = () => {
     })
     setToken(response.data.value)
   }
-  console.log(token)
+  console.log('access_token', token)
 
   useEffect(() => {
     getToken()
