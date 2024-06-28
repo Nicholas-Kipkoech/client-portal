@@ -140,6 +140,16 @@ const Sidebar = () => {
         },
       ],
     },
+    {
+      title: 'Travel Insurance',
+      list: [
+        {
+          title: 'Request Travel Quote',
+          path: '/dashboard/travelInsurance/request-quote',
+          icon: <LiaFileInvoiceSolid />,
+        },
+      ],
+    },
   ]
 
   return (
