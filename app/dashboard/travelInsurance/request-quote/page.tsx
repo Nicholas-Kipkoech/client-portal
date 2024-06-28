@@ -34,28 +34,57 @@ const Travel = () => {
   }, [])
 
   function getDates() {
-    let fmDate = ''
-    let _toDate = ''
-    let _dob = ''
+    let differenceInDays
+    let __dob
+    let age
+    let policyExpiryDate
+    let policyFromDate
+    if (fromDate !== '' || dob !== '' || toDate !== '') {
+      const _toDate: any = new Date(toDate)
+      const _fromDate: any = new Date(fromDate)
+      const differenceInMilliseconds = _toDate - _fromDate
+      const millisecondsPerDay = 1000 * 60 * 60 * 24
+      differenceInDays = differenceInMilliseconds / millisecondsPerDay + 1
 
-    if (fromDate !== '' && toDate !== '' && dob !== '') {
-      fmDate = formatDate(new Date(fromDate).toISOString())
-      _toDate = formatDate(new Date(toDate).toISOString())
-      _dob = formatDate(new Date(dob).toISOString())
+      const _dob: any = new Date(dob) // Replace 'dob' with the actual date of birth string
+      const today: any = new Date()
+      const differenceInMillisecondsYear = today - _dob
+
+      // Convert milliseconds to years
+      const millisecondsPerYear = 1000 * 60 * 60 * 24 * 365.25
+      age = differenceInMillisecondsYear / millisecondsPerYear
+
+      // Adjust the age to get an integer value
+      age = Math.floor(age)
+
+      __dob = formatDate(dob)
+      policyExpiryDate = formatDate(toDate)
+      policyFromDate = formatDate(fromDate)
     }
     return {
-      fmDate,
-      _toDate,
-      _dob,
+      differenceInDays,
+      age,
+      __dob,
+      policyExpiryDate,
+      policyFromDate,
     }
   }
-  const { _toDate, fmDate, _dob } = getDates()
+
+  const {
+    __dob,
+    age,
+    differenceInDays,
+    policyExpiryDate,
+    policyFromDate,
+  } = getDates()
   const payload = {
     destination: destination,
-    policyFromDate: fmDate,
-    policyExpiryDate: _toDate,
+    duration: differenceInDays,
+    policyFromDate: policyFromDate,
+    policyExpiryDate: policyExpiryDate,
+    age: age,
     token: '',
-    dob: _dob,
+    dob: __dob,
   }
 
   const handleGetQuote = () => {
