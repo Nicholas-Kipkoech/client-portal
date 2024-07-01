@@ -148,6 +148,11 @@ const Sidebar = () => {
           path: '/dashboard/travelInsurance/request-quote',
           icon: <LiaFileInvoiceSolid />,
         },
+        {
+          title: 'Issued Travel Certificates',
+          path: '/dashboard/travelInsurance/documents',
+          icon: <LiaFileInvoiceSolid />,
+        },
       ],
     },
   ]

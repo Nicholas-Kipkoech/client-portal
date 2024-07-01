@@ -237,7 +237,7 @@ const Payments = () => {
             />{' '}
             <div className="flex">
               <CustomButton
-                name={'Pay for quote'}
+                name={'Get Certificate'}
                 onClick={handlePayments}
                 className="w-full border mt-2 h-[2.5rem] rounded-md bg-[#cb7529] text-white"
               />
