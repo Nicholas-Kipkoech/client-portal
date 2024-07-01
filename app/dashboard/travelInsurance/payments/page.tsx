@@ -38,6 +38,7 @@ const Payments = () => {
     const total: any = localStorage.getItem('total')
     setTotal(total)
   }, [])
+  console.log(payload.token)
   const paymentPayload = {
     token: payload.token,
     paymentRequest: {
@@ -59,6 +60,7 @@ const Payments = () => {
         clientEmail: customerDetails.email,
         clientPostalAddress: customerDetails.postalAddress,
         clientPhysicalAddress: customerDetails.physicalAddress,
+        clientPassportNo: customerDetails.passportNo,
         clientFacebookUserID: '',
         clientTwitterHandle: '',
         token: payload.token,
@@ -74,15 +76,19 @@ const Payments = () => {
         token: payload.token,
         dob: payload.dob,
         coverCode: payload.coverCode,
+        age: String(payload.age),
+        duration: String(payload.duration),
+        destinationCountryCode: payload.destination,
       },
     },
   }
+  console.log('policyPayload', paymentPayload)
   async function handlePayments() {
     setLoading(true)
     try {
       setMessage('Processing....')
       const response = await axios.post(
-        `${_API_URL}/uw/create_quote_express`,
+        `${_API_URL}/uw/create_policy`,
         paymentPayload,
       )
       if (response.data.info === 'Success') {

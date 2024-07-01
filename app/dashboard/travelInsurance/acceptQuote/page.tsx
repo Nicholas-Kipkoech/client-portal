@@ -20,7 +20,7 @@ const AcceptQuote = () => {
     setProduct(JSON.parse(product))
   }, [])
   const total =
-    premiums.premiumLocal +
+    premiums?.premiumLocal +
     premiums.charges?.chargesLocal['Admin Fee'] +
     premiums.charges?.chargesLocal['P.H.C Fund'] +
     premiums.charges?.chargesLocal['Stamp Duty'] +
