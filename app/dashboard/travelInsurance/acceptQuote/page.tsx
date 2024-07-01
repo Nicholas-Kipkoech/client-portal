@@ -1,5 +1,5 @@
 'use client'
-import { benefitsData } from '@/app/travel/benefits'
+
 import CustomButton from '@/app/utils/CustomButtom'
 import { useRouter } from 'next/navigation'
 
@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react'
 import { IoArrowBackOutline } from 'react-icons/io5'
 
 import { MdDone } from 'react-icons/md'
+import { benefitsData } from '../benfitsData'
 
 const AcceptQuote = () => {
   const router = useRouter()

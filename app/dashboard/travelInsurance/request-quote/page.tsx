@@ -5,11 +5,11 @@ import { useRouter } from 'next/navigation'
 import { IoArrowBackOutline } from 'react-icons/io5'
 import axios from 'axios'
 import { _API_URL } from '@/app/constants/database-connect'
-import { formatDate } from '@/app/utils/helpers'
+import { formatDate, Months } from '@/app/utils/helpers'
 import CustomSelect from '@/app/utils/CustomSelect'
-import { formattedCountries } from '@/app/travel/travelUtils'
 import CustomInput from '@/app/utils/CustomInput'
 import CustomButton from '@/app/utils/CustomButtom'
+import { formattedCountries } from '../travelUtils'
 
 const Travel = () => {
   const router = useRouter()
@@ -32,6 +32,30 @@ const Travel = () => {
   useEffect(() => {
     getToken()
   }, [])
+
+  const handleToDate = (date: any, dateString: any) => {
+    const [day, month, year] = dateString.split('-')
+    let formattedMonth: any = ''
+    if (month < 10) {
+      formattedMonth = Months[month.toString().slice(1) - 1]
+    } else {
+      formattedMonth = Months[Number(month - 1)]
+    }
+    const formattedToDate = day + '-' + formattedMonth + '-' + year
+    setToDate(formattedToDate)
+  }
+
+  const handleFromDate = (date: any, dateString: any) => {
+    const [day, month, year] = dateString.split('-')
+    let formattedMonth: any = ''
+    if (month < 10) {
+      formattedMonth = Months[month.toString().slice(1) - 1]
+    } else {
+      formattedMonth = Months[Number(month - 1)]
+    }
+    const formattedToDate = day + '-' + formattedMonth + '-' + year
+    setFromDate(formattedToDate)
+  }
 
   function getDates() {
     let differenceInDays
