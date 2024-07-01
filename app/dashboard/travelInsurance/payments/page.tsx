@@ -9,6 +9,7 @@ import axios from 'axios'
 import { Kranky } from 'next/font/google'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
+import ProcessingModal from './processingModal'
 
 const Payments = () => {
   const router = useRouter()
@@ -109,146 +110,138 @@ const Payments = () => {
   return (
     <div className="flex items-center justify-center h-screen">
       <div className="border h-auto w-auto p-10 bg-white shadow-2xl rounded-md">
-        <p>{message}</p>
-        {loading ? (
-          <div className="h-[20rem] flex justify-center items-center w-[30rem] border">
-            <Spin size={'large'} />
-          </div>
-        ) : (
-          <>
-            <p className="text-[1.5rem]">Fill in your details</p>
-            <div className="flex gap-2">
-              <CustomInput
-                name={'First Name'}
-                value={customerDetails.firstName}
-                onChange={(e) =>
-                  setCustomerDetails({
-                    ...customerDetails,
-                    firstName: e.target.value,
-                  })
-                }
-                className="w-[15rem] border rounded-md"
-              />
-              <CustomInput
-                name={'Second Name'}
-                value={customerDetails.secondName}
-                onChange={(e) =>
-                  setCustomerDetails({
-                    ...customerDetails,
-                    secondName: e.target.value,
-                  })
-                }
-                className="w-[15rem] border rounded-md"
-              />
-            </div>
-            <div className="flex gap-2">
-              <CustomInput
-                name={'Phone Number'}
-                value={customerDetails.phoneNumber}
-                onChange={(e) =>
-                  setCustomerDetails({
-                    ...customerDetails,
-                    phoneNumber: e.target.value,
-                  })
-                }
-                className="w-[15rem] border rounded-md"
-              />
-              <CustomInput
-                name={'KRA PIN No'}
-                value={customerDetails.KraPinNo}
-                onChange={(e) =>
-                  setCustomerDetails({
-                    ...customerDetails,
-                    KraPinNo: e.target.value,
-                  })
-                }
-                className="w-[15rem] border rounded-md"
-              />
-            </div>
-            <div className="flex gap-2">
-              <CustomInput
-                name={'Postal Address'}
-                value={customerDetails.postalAddress}
-                onChange={(e) =>
-                  setCustomerDetails({
-                    ...customerDetails,
-                    postalAddress: e.target.value,
-                  })
-                }
-                className="w-[15rem] border rounded-md"
-              />
-              <CustomInput
-                name={'Physical Address'}
-                value={customerDetails.physicalAddress}
-                onChange={(e) =>
-                  setCustomerDetails({
-                    ...customerDetails,
-                    physicalAddress: e.target.value,
-                  })
-                }
-                className="w-[15rem] border rounded-md"
-              />
-            </div>
-            <CustomSelect
-              name="Gender"
-              onChange={(value: any) =>
-                setCustomerDetails({ ...customerDetails, gender: value.value })
-              }
-              options={[
-                { label: 'Male', value: 'Male' },
-                { label: 'Female', value: 'Female' },
-                { label: 'Other', value: 'Other' },
-              ]}
-            />
-            <div className="flex gap-2">
-              <CustomInput
-                name={'MPESA Phone Number'}
-                value={customerDetails.mpesaNo}
-                onChange={(e) =>
-                  setCustomerDetails({
-                    ...customerDetails,
-                    mpesaNo: e.target.value,
-                  })
-                }
-                className=" border rounded-md h-[2.4rem] w-[15rem]"
-              />{' '}
-              <CustomInput
-                name={'Email'}
-                value={customerDetails.email}
-                onChange={(e) =>
-                  setCustomerDetails({
-                    ...customerDetails,
-                    email: e.target.value,
-                  })
-                }
-                className=" border rounded-md h-[2.4rem] w-[15rem]"
-              />
-            </div>
-            <CustomInput
-              name={'Passport No'}
-              value={customerDetails.passportNo}
-              onChange={(e) =>
-                setCustomerDetails({
-                  ...customerDetails,
-                  passportNo: e.target.value,
-                })
-              }
-              className=" border rounded-md h-[2.4rem] w-[15rem]"
-            />{' '}
-            <div className="flex">
-              <CustomButton
-                name={'Get Certificate'}
-                onClick={handlePayments}
-                className="w-full border mt-2 h-[2.5rem] rounded-md bg-[#cb7529] text-white"
-              />
-              <CustomButton
-                name={'Cancel'}
-                onClick={() => router.back()}
-                className="w-full border mt-2 h-[2.5rem] rounded-md bg-red-500 text-white"
-              />
-            </div>
-          </>
-        )}
+        <p className="text-[1.5rem]">Fill in your details</p>
+        <div className="flex gap-2">
+          <CustomInput
+            name={'First Name'}
+            value={customerDetails.firstName}
+            onChange={(e) =>
+              setCustomerDetails({
+                ...customerDetails,
+                firstName: e.target.value,
+              })
+            }
+            className="w-[15rem] border rounded-md"
+          />
+          <CustomInput
+            name={'Second Name'}
+            value={customerDetails.secondName}
+            onChange={(e) =>
+              setCustomerDetails({
+                ...customerDetails,
+                secondName: e.target.value,
+              })
+            }
+            className="w-[15rem] border rounded-md"
+          />
+        </div>
+        <div className="flex gap-2">
+          <CustomInput
+            name={'Phone Number'}
+            value={customerDetails.phoneNumber}
+            onChange={(e) =>
+              setCustomerDetails({
+                ...customerDetails,
+                phoneNumber: e.target.value,
+              })
+            }
+            className="w-[15rem] border rounded-md"
+          />
+          <CustomInput
+            name={'KRA PIN No'}
+            value={customerDetails.KraPinNo}
+            onChange={(e) =>
+              setCustomerDetails({
+                ...customerDetails,
+                KraPinNo: e.target.value,
+              })
+            }
+            className="w-[15rem] border rounded-md"
+          />
+        </div>
+        <div className="flex gap-2">
+          <CustomInput
+            name={'Postal Address'}
+            value={customerDetails.postalAddress}
+            onChange={(e) =>
+              setCustomerDetails({
+                ...customerDetails,
+                postalAddress: e.target.value,
+              })
+            }
+            className="w-[15rem] border rounded-md"
+          />
+          <CustomInput
+            name={'Physical Address'}
+            value={customerDetails.physicalAddress}
+            onChange={(e) =>
+              setCustomerDetails({
+                ...customerDetails,
+                physicalAddress: e.target.value,
+              })
+            }
+            className="w-[15rem] border rounded-md"
+          />
+        </div>
+        <CustomSelect
+          name="Gender"
+          onChange={(value: any) =>
+            setCustomerDetails({ ...customerDetails, gender: value.value })
+          }
+          options={[
+            { label: 'Male', value: 'Male' },
+            { label: 'Female', value: 'Female' },
+            { label: 'Other', value: 'Other' },
+          ]}
+        />
+        <div className="flex gap-2">
+          <CustomInput
+            name={'MPESA Phone Number'}
+            value={customerDetails.mpesaNo}
+            onChange={(e) =>
+              setCustomerDetails({
+                ...customerDetails,
+                mpesaNo: e.target.value,
+              })
+            }
+            className=" border rounded-md h-[2.4rem] w-[15rem]"
+          />{' '}
+          <CustomInput
+            name={'Email'}
+            value={customerDetails.email}
+            onChange={(e) =>
+              setCustomerDetails({
+                ...customerDetails,
+                email: e.target.value,
+              })
+            }
+            className=" border rounded-md h-[2.4rem] w-[15rem]"
+          />
+        </div>
+        <CustomInput
+          name={'Passport No'}
+          value={customerDetails.passportNo}
+          onChange={(e) =>
+            setCustomerDetails({
+              ...customerDetails,
+              passportNo: e.target.value,
+            })
+          }
+          className=" border rounded-md h-[2.4rem] w-[15rem]"
+        />{' '}
+        <div className="flex">
+          <CustomButton
+            name={'Get Certificate'}
+            onClick={handlePayments}
+            className="w-full border mt-2 h-[2.5rem] rounded-md bg-[#cb7529] text-white"
+          />
+          <CustomButton
+            name={'Cancel'}
+            onClick={() => router.back()}
+            className="w-full border mt-2 h-[2.5rem] rounded-md bg-red-500 text-white"
+          />
+        </div>
+        <ProcessingModal />
       </div>
     </div>
   )
