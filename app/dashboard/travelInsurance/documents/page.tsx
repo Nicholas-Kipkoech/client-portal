@@ -13,6 +13,19 @@ const Documents = () => {
 
   const columns = [
     {
+      title: 'Travel Cert No',
+      dataIndex: 'travelCertNo',
+    },
+    {
+      title: 'Downloads',
+      dataIndex: 'insured',
+      render: (_: any, item: any) => (
+        <a href={item.travelCertUrl} target="_blank">
+          Download Cert
+        </a>
+      ),
+    },
+    {
       title: 'Policy No',
       dataIndex: 'policyNo',
     },
@@ -36,7 +49,11 @@ const Documents = () => {
     {
       title: 'Downloads',
       dataIndex: 'insured',
-      render: (_: any, item: any) => <a href="">Download Cert</a>,
+      render: (_: any, item: any) => (
+        <a href={item.travelCertUrl} target="_blank">
+          View Cert
+        </a>
+      ),
     },
   ]
 
@@ -63,8 +80,8 @@ const Documents = () => {
               headerBg: '#092332',
               headerColor: 'white',
               colorBgContainer: 'whitesmoke',
-              padding: 5,
               rowHoverBg: '#cb7529',
+              padding: 10,
             },
           },
         }}
@@ -73,7 +90,7 @@ const Documents = () => {
           columns={columns}
           dataSource={certificates}
           className=" hover:bg-none"
-          scroll={{ x: 1200 }}
+          scroll={{ x: 2000 }}
         />
       </ConfigProvider>
     </div>
