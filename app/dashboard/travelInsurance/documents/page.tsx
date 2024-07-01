@@ -42,19 +42,6 @@ const Documents = () => {
       title: 'Insured',
       dataIndex: 'insured',
     },
-    {
-      title: 'Travel Cert No',
-      dataIndex: 'travelCertNo',
-    },
-    {
-      title: 'Downloads',
-      dataIndex: 'insured',
-      render: (_: any, item: any) => (
-        <a href={item.travelCertUrl} target="_blank">
-          View Cert
-        </a>
-      ),
-    },
   ]
 
   return (
