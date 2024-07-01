@@ -83,7 +83,7 @@ const Travel = () => {
     policyFromDate: policyFromDate,
     policyExpiryDate: policyExpiryDate,
     age: age,
-    token: '',
+    token: token,
     dob: __dob,
   }
 
