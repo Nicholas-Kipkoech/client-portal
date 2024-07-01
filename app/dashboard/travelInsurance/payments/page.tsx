@@ -92,10 +92,13 @@ const Payments = () => {
         paymentPayload,
       )
       if (response.data.info === 'Success') {
-        localStorage.setItem('policyResponse', JSON.stringify(response.data))
-        setMessage('Success')
-        setLoading(false)
-        router.push('/dashboard/travelInsurance/documents')
+        if (response.data.mapfreResponse.responseCode === 'ERROR') {
+          setMessage(response.data.mapfreResponse.description)
+          setLoading(false)
+        } else {
+          localStorage.setItem('policyResponse', JSON.stringify(response.data))
+          router.push('/dashboard/travelInsurance/documents')
+        }
       }
     } catch (error) {
       setLoading(false)
@@ -106,10 +109,10 @@ const Payments = () => {
   return (
     <div className="flex items-center justify-center h-screen">
       <div className="border h-auto w-auto p-10 bg-white shadow-2xl rounded-md">
+        <p>{message}</p>
         {loading ? (
           <div className="h-[20rem] flex justify-center items-center w-[30rem] border">
             <Spin size={'large'} />
-            <p>{message}</p>
           </div>
         ) : (
           <>
