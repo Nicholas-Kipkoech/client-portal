@@ -7,9 +7,9 @@ import axios from 'axios'
 import { _API_URL } from '@/app/constants/database-connect'
 import { formatDate, Months } from '@/app/utils/helpers'
 import CustomSelect from '@/app/utils/CustomSelect'
-import CustomInput from '@/app/utils/CustomInput'
 import CustomButton from '@/app/utils/CustomButtom'
 import { formattedCountries } from '../travelUtils'
+import { DatePicker } from 'antd'
 
 const Travel = () => {
   const router = useRouter()
@@ -42,7 +42,20 @@ const Travel = () => {
       formattedMonth = Months[Number(month - 1)]
     }
     const formattedToDate = day + '-' + formattedMonth + '-' + year
+    console.log(formattedToDate)
     setToDate(formattedToDate)
+  }
+  const handleBirthDate = (date: any, dateString: any) => {
+    const [day, month, year] = dateString.split('-')
+    let formattedMonth: any = ''
+    if (month < 10) {
+      formattedMonth = Months[month.toString().slice(1) - 1]
+    } else {
+      formattedMonth = Months[Number(month - 1)]
+    }
+    const formattedToDate = day + '-' + formattedMonth + '-' + year
+
+    setDOB(formattedToDate)
   }
 
   const handleFromDate = (date: any, dateString: any) => {
@@ -143,27 +156,33 @@ const Travel = () => {
             placeholder={'Select Destination...'}
             onChange={(value: any) => setDestination(value.value)}
           />
-          <CustomInput
-            name="Travel Date"
-            type="date"
-            className={'border w-[30rem] h-[2.6rem] rounded-md'}
-            value={fromDate}
-            onChange={(e) => setFromDate(e.target.value)}
-          />
-          <CustomInput
-            name="Return Date"
-            type="date"
-            className={'border w-[30rem] h-[2.6rem] rounded-md'}
-            value={toDate}
-            onChange={(e) => setToDate(e.target.value)}
-          />
-          <CustomInput
-            name="Date of Birth"
-            type="date"
-            className={'border w-[30rem] h-[2.6rem] rounded-md'}
-            value={dob}
-            onChange={(e) => setDOB(e.target.value)}
-          />
+          <div className="flex flex-col mt-2">
+            <label>Travel Date</label>
+            <DatePicker
+              format={'DD-MM-YYYY'}
+              placeholder={'DD-MM-YYYY'}
+              className={'w-[30rem] h-[40px] border p-2 rounded-md'}
+              onChange={handleFromDate}
+            />
+          </div>
+          <div className="flex flex-col mt-2">
+            <label>Return Date</label>
+            <DatePicker
+              format={'DD-MM-YYYY'}
+              placeholder={'DD-MM-YYYY'}
+              className={'w-[30rem] h-[40px] border p-2 rounded-md'}
+              onChange={handleToDate}
+            />
+          </div>
+          <div className="flex flex-col mt-2">
+            <label>Date Of Birth</label>
+            <DatePicker
+              format={'DD-MM-YYYY'}
+              placeholder={'DD-MM-YYYY'}
+              className={'w-[30rem] h-[40px] border p-2 rounded-md'}
+              onChange={handleBirthDate}
+            />
+          </div>
           <CustomButton
             name={'Get Quote'}
             onClick={handleGetQuote}

@@ -7,8 +7,8 @@ import { useRouter } from 'next/navigation'
 import { IoArrowBackOutline } from 'react-icons/io5'
 import axios from 'axios'
 import { _API_URL } from '@/app/constants/database-connect'
-import { products } from '@/app/travel/travelUtils'
-import { benefitsData } from '@/app/travel/benefits'
+import { products } from '../travelUtils'
+import { benefitsData } from '../benfitsData'
 
 interface IProductCard {
   name: string
