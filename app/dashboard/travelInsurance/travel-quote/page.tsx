@@ -1,43 +1,43 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import { MdDone } from "react-icons/md";
-import { GrLinkNext } from "react-icons/gr";
-import { useRouter } from "next/navigation";
-import { IoArrowBackOutline } from "react-icons/io5";
-import axios from "axios";
-import { _API_URL } from "@/app/constants/database-connect";
-import { products } from "../travelUtils";
-import { benefitsData } from "../benfitsData";
-import { isChakraTheme } from "@chakra-ui/react";
+'use client'
+import React, { useEffect, useState } from 'react'
+import { MdDone } from 'react-icons/md'
+import { GrLinkNext } from 'react-icons/gr'
+import { useRouter } from 'next/navigation'
+import { IoArrowBackOutline } from 'react-icons/io5'
+import axios from 'axios'
+import { _API_URL } from '@/app/constants/database-connect'
+import { products } from '../travelUtils'
+import { benefitsData } from '../benfitsData'
+import { isChakraTheme } from '@chakra-ui/react'
 
 interface IProductCard {
-  name: string;
-  benefits?: any[];
-  code: string;
+  name: string
+  benefits?: any[]
+  code: string
 }
 
 const Products = () => {
-  const router = useRouter();
-  const [payload, setPayload] = useState<any>({});
+  const router = useRouter()
+  const [payload, setPayload] = useState<any>({})
 
   useEffect(() => {
-    const payload: any = localStorage.getItem("travelQuote");
-    setPayload(JSON.parse(payload));
-  }, []);
+    const payload: any = localStorage.getItem('travelQuote')
+    setPayload(JSON.parse(payload))
+  }, [])
 
   async function handleViewPricing(code: string, productName: string) {
-    localStorage.setItem("product", JSON.stringify({ code, productName }));
-    const updatedPayload = { ...payload, coverCode: code };
-    localStorage.setItem("travelQuote", JSON.stringify(updatedPayload));
-    const response = await axios.post(
-      `${_API_URL}/uw/calculate_cover_premium`,
-      updatedPayload
-    );
+    localStorage.setItem('product', JSON.stringify({ code, productName }))
+    const updatedPayload = { ...payload, coverCode: code }
+    localStorage.setItem('travelQuote', JSON.stringify(updatedPayload))
+    // const response = await axios.post(
+    //   `${_API_URL}/uw/calculate_cover_premium`,
+    //   updatedPayload,
+    // )
 
-    if (response.data) {
-      localStorage.setItem("quoteResponse", JSON.stringify(response.data));
-      router.push("/dashboard/travelInsurance/acceptQuote");
-    }
+    // if (response.data) {
+    // localStorage.setItem('quoteResponse', JSON.stringify(response.data))
+    router.push('/dashboard/travelInsurance/acceptQuote')
+    // }
   }
 
   const CustomProductCard = ({ name, benefits, code }: IProductCard) => {
@@ -48,9 +48,9 @@ const Products = () => {
         <div className="list-none">
           {benefits?.map((benefit) => {
             const matchingDetail = benefit.details.find(
-              (detail: { code: string }) => detail.code === code
-            );
-            const value = matchingDetail ? matchingDetail.value : 0;
+              (detail: { code: string }) => detail.code === code,
+            )
+            const value = matchingDetail ? matchingDetail.value : 0
             return (
               <div
                 key={benefit.name}
@@ -62,54 +62,54 @@ const Products = () => {
                 </div>
                 <p>${value.toLocaleString()}</p>
               </div>
-            );
+            )
           })}
         </div>
         <div
           onClick={() => handleViewPricing(code, name)}
           className="flex items-center mt-2 gap-1 h-[2.5rem] rounded-[20px] cursor-pointer bg-[#cb7529] text-white justify-center"
         >
-          <p>View Pricing</p>
+          <p>View Purchase</p>
           <GrLinkNext />
         </div>
       </div>
-    );
-  };
+    )
+  }
 
   const ShengenCountries = [
-    "BE",
-    "BG",
-    "CZ",
-    "DK",
-    "DE",
-    "EE",
-    "IE",
-    "GR",
-    "ES",
-    "FR",
-    "HR",
-    "IT",
-    "CY",
-    "LV",
-    "LT",
-    "LU",
-    "HU",
-    "MT",
-    "NL",
-    "AT",
-    "PL",
-    "PT",
-    "RO",
-    "SI",
-    "SK",
-    "FI",
-    "SE",
-    "UK",
-  ];
+    'BE',
+    'BG',
+    'CZ',
+    'DK',
+    'DE',
+    'EE',
+    'IE',
+    'GR',
+    'ES',
+    'FR',
+    'HR',
+    'IT',
+    'CY',
+    'LV',
+    'LT',
+    'LU',
+    'HU',
+    'MT',
+    'NL',
+    'AT',
+    'PL',
+    'PT',
+    'RO',
+    'SI',
+    'SK',
+    'FI',
+    'SE',
+    'UK',
+  ]
   const isDestinationInShengen = ShengenCountries.includes(
-    payload.destination //uk
-  );
-  console.log("isDestinationInShengen", isDestinationInShengen);
+    payload.destination, //uk
+  )
+  console.log('isDestinationInShengen', isDestinationInShengen)
   return (
     <div className="p-20 flex flex-col justify-center">
       <div
@@ -130,10 +130,10 @@ const Products = () => {
                     code={product.CC_CODE}
                     benefits={benefitsData}
                   />
-                );
+                )
               })
             : products
-                .filter((product) => product.CC_CODE !== "141")
+                .filter((product) => product.CC_CODE !== '141')
                 .map((product) => {
                   return (
                     <CustomProductCard
@@ -142,12 +142,12 @@ const Products = () => {
                       code={product.CC_CODE}
                       benefits={benefitsData}
                     />
-                  );
+                  )
                 })}
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Products;
+export default Products

@@ -143,7 +143,7 @@ const AcceptQuote = () => {
       </div>
       <div className="flex justify-center mt-2">
         <CustomButton
-          name={'Accept Quote'}
+          name={'Accept Purchase'}
           onClick={() => router.push('/dashboard/travelInsurance/payments')}
           className="h-[2.8rem] w-[30rem] rounded-[30px] bg-[#cb7529] text-white text-[1.3rem] border"
         />
