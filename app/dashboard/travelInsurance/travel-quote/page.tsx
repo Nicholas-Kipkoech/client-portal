@@ -1,42 +1,42 @@
-'use client'
-import React, { useEffect, useState } from 'react'
-import { MdDone } from 'react-icons/md'
-
-import { GrLinkNext } from 'react-icons/gr'
-import { useRouter } from 'next/navigation'
-import { IoArrowBackOutline } from 'react-icons/io5'
-import axios from 'axios'
-import { _API_URL } from '@/app/constants/database-connect'
-import { products } from '../travelUtils'
-import { benefitsData } from '../benfitsData'
+"use client";
+import React, { useEffect, useState } from "react";
+import { MdDone } from "react-icons/md";
+import { GrLinkNext } from "react-icons/gr";
+import { useRouter } from "next/navigation";
+import { IoArrowBackOutline } from "react-icons/io5";
+import axios from "axios";
+import { _API_URL } from "@/app/constants/database-connect";
+import { products } from "../travelUtils";
+import { benefitsData } from "../benfitsData";
+import { isChakraTheme } from "@chakra-ui/react";
 
 interface IProductCard {
-  name: string
-  benefits?: any[]
-  code: string
+  name: string;
+  benefits?: any[];
+  code: string;
 }
 
 const Products = () => {
-  const router = useRouter()
-  const [payload, setPayload] = useState<any>({})
+  const router = useRouter();
+  const [payload, setPayload] = useState<any>({});
 
   useEffect(() => {
-    const payload: any = localStorage.getItem('travelQuote')
-    setPayload(JSON.parse(payload))
-  }, [])
+    const payload: any = localStorage.getItem("travelQuote");
+    setPayload(JSON.parse(payload));
+  }, []);
 
   async function handleViewPricing(code: string, productName: string) {
-    localStorage.setItem('product', JSON.stringify({ code, productName }))
-    const updatedPayload = { ...payload, coverCode: code }
-    localStorage.setItem('travelQuote', JSON.stringify(updatedPayload))
+    localStorage.setItem("product", JSON.stringify({ code, productName }));
+    const updatedPayload = { ...payload, coverCode: code };
+    localStorage.setItem("travelQuote", JSON.stringify(updatedPayload));
     const response = await axios.post(
       `${_API_URL}/uw/calculate_cover_premium`,
-      updatedPayload,
-    )
+      updatedPayload
+    );
 
     if (response.data) {
-      localStorage.setItem('quoteResponse', JSON.stringify(response.data))
-      router.push('/dashboard/travelInsurance/acceptQuote')
+      localStorage.setItem("quoteResponse", JSON.stringify(response.data));
+      router.push("/dashboard/travelInsurance/acceptQuote");
     }
   }
 
@@ -44,15 +44,13 @@ const Products = () => {
     return (
       <div className="bg-[#F9FAFE] shadow-2xl border-gray-500 p-8 w-[25rem] rounded-[20px] h-auto border-1">
         <p className="text-[1.5rem] font-bold flex justify-center">{name}</p>
-
         <p className="text-[1.1rem] font-semibold">Product Benefits</p>
-
         <div className="list-none">
           {benefits?.map((benefit) => {
             const matchingDetail = benefit.details.find(
-              (detail: { code: string }) => detail.code === code,
-            )
-            const value = matchingDetail ? matchingDetail.value : 0
+              (detail: { code: string }) => detail.code === code
+            );
+            const value = matchingDetail ? matchingDetail.value : 0;
             return (
               <div
                 key={benefit.name}
@@ -64,7 +62,7 @@ const Products = () => {
                 </div>
                 <p>${value.toLocaleString()}</p>
               </div>
-            )
+            );
           })}
         </div>
         <div
@@ -75,32 +73,81 @@ const Products = () => {
           <GrLinkNext />
         </div>
       </div>
-    )
-  }
+    );
+  };
 
+  const ShengenCountries = [
+    "BE",
+    "BG",
+    "CZ",
+    "DK",
+    "DE",
+    "EE",
+    "IE",
+    "GR",
+    "ES",
+    "FR",
+    "HR",
+    "IT",
+    "CY",
+    "LV",
+    "LT",
+    "LU",
+    "HU",
+    "MT",
+    "NL",
+    "AT",
+    "PL",
+    "PT",
+    "RO",
+    "SI",
+    "SK",
+    "FI",
+    "SE",
+    "UK",
+  ];
+  const isDestinationInShengen = ShengenCountries.includes(
+    payload.destination //uk
+  );
+  console.log("isDestinationInShengen", isDestinationInShengen);
   return (
     <div className="p-20 flex flex-col justify-center">
       <div
         onClick={() => router.back()}
-        className="flex gap-2 items-center cursor-pointer  py-1 bg-yellow-950 text-white w-[6rem] mb-2 justify-center rounded-md"
+        className="flex gap-2 items-center cursor-pointer py-1 bg-yellow-950 text-white w-[6rem] mb-2 justify-center rounded-md"
       >
         <IoArrowBackOutline size={20} />
         <p>Back</p>
       </div>
       <div className="flex items-center justify-center">
         <div className="flex flex-wrap gap-2">
-          {products.map((product) => (
-            <CustomProductCard
-              key={product.CC_CODE}
-              name={product.CC_NAME}
-              code={product.CC_CODE}
-              benefits={benefitsData}
-            />
-          ))}
+          {isDestinationInShengen
+            ? products.map((product) => {
+                return (
+                  <CustomProductCard
+                    key={product.CC_CODE}
+                    name={product.CC_NAME}
+                    code={product.CC_CODE}
+                    benefits={benefitsData}
+                  />
+                );
+              })
+            : products
+                .filter((product) => product.CC_CODE !== "141")
+                .map((product) => {
+                  return (
+                    <CustomProductCard
+                      key={product.CC_CODE}
+                      name={product.CC_NAME}
+                      code={product.CC_CODE}
+                      benefits={benefitsData}
+                    />
+                  );
+                })}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Products
+export default Products;

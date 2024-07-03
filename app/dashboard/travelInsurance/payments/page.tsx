@@ -1,57 +1,57 @@
-'use client'
-import { _API_URL } from '@/app/constants/database-connect'
-import { useContextApi } from '@/app/context/context'
-import CustomButton from '@/app/utils/CustomButtom'
-import CustomInput from '@/app/utils/CustomInput'
-import CustomSelect from '@/app/utils/CustomSelect'
-import { Spin } from 'antd'
-import axios from 'axios'
-import { Kranky } from 'next/font/google'
-import { useRouter } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
-import ProcessingModal from './processingModal'
+"use client";
+import { _API_URL } from "@/app/constants/database-connect";
+import { useContextApi } from "@/app/context/context";
+import CustomButton from "@/app/utils/CustomButtom";
+import CustomInput from "@/app/utils/CustomInput";
+import CustomSelect from "@/app/utils/CustomSelect";
+import { Spin } from "antd";
+import axios from "axios";
+import { Kranky } from "next/font/google";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import ProcessingModal from "./processingModal";
 
 const Payments = () => {
-  const router = useRouter()
-  const { user }: any = useContextApi()
-  console.log(user)
+  const router = useRouter();
+  const { user, fetchUSerCerts }: any = useContextApi();
 
   const [customerDetails, setCustomerDetails] = useState({
-    firstName: '',
-    secondName: '',
-    phoneNumber: '',
-    KraPinNo: '',
-    postalAddress: '',
-    physicalAddress: '',
-    gender: '',
-    mpesaNo: '',
-    email: '',
-    passportNo: '',
-  })
-  const [payload, setPayload] = useState<any>({})
-  const [loading, setLoading] = useState(false)
-  const [total, setTotal] = useState(0)
-  const [message, setMessage] = useState('Processing')
+    firstName: "",
+    secondName: "",
+    phoneNumber: "",
+    KraPinNo: "",
+    postalAddress: "",
+    physicalAddress: "",
+    gender: "",
+    mpesaNo: "",
+    email: "",
+    passportNo: "",
+  });
+  const [payload, setPayload] = useState<any>({});
+  const [loading, setLoading] = useState(false);
+  const [total, setTotal] = useState(0);
+  const [message, setMessage] = useState("Processing");
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
-    const quotePayload: any = localStorage.getItem('travelQuote')
-    setPayload(JSON.parse(quotePayload))
-    const total: any = localStorage.getItem('total')
-    setTotal(total)
-  }, [])
-  console.log(payload.token)
+    const quotePayload: any = localStorage.getItem("travelQuote");
+    setPayload(JSON.parse(quotePayload));
+    const total: any = localStorage.getItem("total");
+    setTotal(total);
+  }, []);
+  console.log(payload.token);
   const paymentPayload = {
     token: payload.token,
     paymentRequest: {
-      phoneNumber: customerDetails.mpesaNo.replace(
+      phoneNumber: customerDetails.phoneNumber.replace(
         customerDetails.mpesaNo[0],
-        '254',
+        "254"
       ),
       accountReference: payload.coverCode,
       amount: Number(total),
     },
     policyPayload: {
-      requestSource: 'ClientPortal',
+      requestSource: "ClientPortal",
       clientPayload: {
         clientFirstName: customerDetails.firstName,
         clientSecondName: customerDetails.secondName,
@@ -62,17 +62,17 @@ const Payments = () => {
         clientPostalAddress: customerDetails.postalAddress,
         clientPhysicalAddress: customerDetails.physicalAddress,
         clientPassportNo: customerDetails.passportNo,
-        clientFacebookUserID: '',
-        clientTwitterHandle: '',
+        clientFacebookUserID: "",
+        clientTwitterHandle: "",
         token: payload.token,
       },
       policyDetails: {
-        policyType: 'Quote',
+        policyType: "Quote",
         policyProductCode: payload.coverCode,
-        policyCurrency: 'USD',
+        policyCurrency: "USD",
         policyFromDate: payload.policyFromDate,
         policyExpiryDate: payload.policyExpiryDate,
-        clientCode: '',
+        clientCode: "",
         intermediaryCode: `${user.intermediaryCode}${user.entityCode}`,
         token: payload.token,
         dob: payload.dob,
@@ -82,28 +82,37 @@ const Payments = () => {
         destinationCountryCode: payload.destination,
       },
     },
-  }
-  console.log('policyPayload', paymentPayload)
+  };
+  console.log("policyPayload", paymentPayload);
   async function handlePayments() {
-    setLoading(true)
+    setLoading(true);
     try {
-      setMessage('Processing....')
+      setOpenModal(true);
       const response = await axios.post(
         `${_API_URL}/uw/create_policy`,
-        paymentPayload,
-      )
-      if (response.data.info === 'Success') {
-        if (response.data.mapfreResponse.responseCode === 'ERROR') {
-          setMessage(response.data.mapfreResponse.description)
-          setLoading(false)
+        paymentPayload
+      );
+      if (response.data.info === "Success") {
+        if (response.data.mapfreResponse.responseCode === "ERROR") {
+          setMessage(response.data.mapfreResponse.description);
+          setTimeout(() => {
+            setOpenModal(false);
+          }, 2000);
         } else {
-          localStorage.setItem('policyResponse', JSON.stringify(response.data))
-          router.push('/dashboard/travelInsurance/documents')
+          fetchUSerCerts();
+          localStorage.setItem("policyResponse", JSON.stringify(response.data));
+          router.push("/dashboard/travelInsurance/documents");
+          setOpenModal(false);
+          setMessage("success!!!!");
         }
       }
-    } catch (error) {
-      setLoading(false)
-      console.error(error)
+    } catch (error: any) {
+      console.error(error);
+      setMessage(error?.message);
+
+      setTimeout(() => {
+        setOpenModal(false);
+      }, 2000);
     }
   }
 
@@ -113,7 +122,7 @@ const Payments = () => {
         <p className="text-[1.5rem]">Fill in your details</p>
         <div className="flex gap-2">
           <CustomInput
-            name={'First Name'}
+            name={"First Name"}
             value={customerDetails.firstName}
             onChange={(e) =>
               setCustomerDetails({
@@ -124,7 +133,7 @@ const Payments = () => {
             className="w-[15rem] border rounded-md"
           />
           <CustomInput
-            name={'Second Name'}
+            name={"Second Name"}
             value={customerDetails.secondName}
             onChange={(e) =>
               setCustomerDetails({
@@ -137,7 +146,7 @@ const Payments = () => {
         </div>
         <div className="flex gap-2">
           <CustomInput
-            name={'Phone Number'}
+            name={"Phone Number"}
             value={customerDetails.phoneNumber}
             onChange={(e) =>
               setCustomerDetails({
@@ -148,7 +157,7 @@ const Payments = () => {
             className="w-[15rem] border rounded-md"
           />
           <CustomInput
-            name={'KRA PIN No'}
+            name={"KRA PIN No"}
             value={customerDetails.KraPinNo}
             onChange={(e) =>
               setCustomerDetails({
@@ -161,7 +170,7 @@ const Payments = () => {
         </div>
         <div className="flex gap-2">
           <CustomInput
-            name={'Postal Address'}
+            name={"Postal Address"}
             value={customerDetails.postalAddress}
             onChange={(e) =>
               setCustomerDetails({
@@ -172,7 +181,7 @@ const Payments = () => {
             className="w-[15rem] border rounded-md"
           />
           <CustomInput
-            name={'Physical Address'}
+            name={"Physical Address"}
             value={customerDetails.physicalAddress}
             onChange={(e) =>
               setCustomerDetails({
@@ -189,25 +198,14 @@ const Payments = () => {
             setCustomerDetails({ ...customerDetails, gender: value.value })
           }
           options={[
-            { label: 'Male', value: 'Male' },
-            { label: 'Female', value: 'Female' },
-            { label: 'Other', value: 'Other' },
+            { label: "Male", value: "Male" },
+            { label: "Female", value: "Female" },
+            { label: "Other", value: "Other" },
           ]}
         />
         <div className="flex gap-2">
           <CustomInput
-            name={'MPESA Phone Number'}
-            value={customerDetails.mpesaNo}
-            onChange={(e) =>
-              setCustomerDetails({
-                ...customerDetails,
-                mpesaNo: e.target.value,
-              })
-            }
-            className=" border rounded-md h-[2.4rem] w-[15rem]"
-          />{' '}
-          <CustomInput
-            name={'Email'}
+            name={"Email"}
             value={customerDetails.email}
             onChange={(e) =>
               setCustomerDetails({
@@ -217,34 +215,39 @@ const Payments = () => {
             }
             className=" border rounded-md h-[2.4rem] w-[15rem]"
           />
+          <CustomInput
+            name={"Passport No"}
+            value={customerDetails.passportNo}
+            onChange={(e) =>
+              setCustomerDetails({
+                ...customerDetails,
+                passportNo: e.target.value,
+              })
+            }
+            className=" border rounded-md h-[2.4rem] w-[15rem]"
+          />{" "}
         </div>
-        <CustomInput
-          name={'Passport No'}
-          value={customerDetails.passportNo}
-          onChange={(e) =>
-            setCustomerDetails({
-              ...customerDetails,
-              passportNo: e.target.value,
-            })
-          }
-          className=" border rounded-md h-[2.4rem] w-[15rem]"
-        />{' '}
+
         <div className="flex">
           <CustomButton
-            name={'Get Certificate'}
+            name={"Get Certificate"}
             onClick={handlePayments}
             className="w-full border mt-2 h-[2.5rem] rounded-md bg-[#cb7529] text-white"
           />
           <CustomButton
-            name={'Cancel'}
+            name={"Cancel"}
             onClick={() => router.back()}
             className="w-full border mt-2 h-[2.5rem] rounded-md bg-red-500 text-white"
           />
         </div>
-        <ProcessingModal />
+        <ProcessingModal
+          open={openModal}
+          handleClose={() => setOpenModal(false)}
+          message={message}
+        />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Payments
+export default Payments;

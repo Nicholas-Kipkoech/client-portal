@@ -22,13 +22,6 @@ const HomePage = () => {
               "sm:h-[2.5rem] sm:rounded-[10px] sm:text-[1.2rem]  md:h-[3rem] bg-[#cb7529] md:rounded-[30px] sm:w-[15rem] md:w-[14rem] 2xl:w-[15rem] text-white sm:mt-2"
             }
           />
-          <CustomButton
-            name={"Get Travel Quote"}
-            onClick={() => router.push("/travel")}
-            className={
-              "sm:h-[2.5rem] sm:rounded-[10px] sm:text-[1.2rem]  md:h-[3rem] bg-[#cb7529] md:rounded-[30px] sm:w-[15rem] md:w-[14rem] 2xl:w-[15rem] text-white sm:mt-2"
-            }
-          />
         </div>
       </div>
 
