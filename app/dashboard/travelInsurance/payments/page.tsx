@@ -30,7 +30,7 @@ const Payments = () => {
   const [payload, setPayload] = useState<any>({})
   const [loading, setLoading] = useState(false)
   const [total, setTotal] = useState(0)
-  const [message, setMessage] = useState('Processing')
+  const [message, setMessage] = useState<string | any>('Processing')
   const [openModal, setOpenModal] = useState(false)
   const [addPerson, setAddPerson] = useState(false)
 
@@ -109,7 +109,7 @@ const Payments = () => {
       }
     } catch (error) {
       console.error(error)
-      setMessage(error?.message)
+      setMessage(error)
 
       setTimeout(() => {
         setOpenModal(false)
