@@ -101,24 +101,19 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
     fetchPremiums();
   }, [user, fromDate, toDate]);
 
-  async function fetchUSerCerts() {
-    if (Object.keys(user).length > 0) {
-      const response = await getTravelCertificatesService({
-        intermediaryCode: user?.intermediaryCode,
-        clientCode: user?.entityCode,
-      });
-
-      setCertificates(response.results);
-    }
-  }
-  fetchUSerCerts();
   useEffect(() => {
-    if (user) {
-      fetchUSerCerts();
-    }
-  }, [user]);
+    async function fetchUSerCerts() {
+      if (Object.keys(user).length > 0) {
+        const response = await getTravelCertificatesService({
+          intermediaryCode: user?.intermediaryCode,
+          clientCode: user?.entityCode,
+        });
 
-  console.log("certiciates", certificates);
+        setCertificates(response.results);
+      }
+    }
+    fetchUSerCerts();
+  }, [user]);
 
   useEffect(() => {
     async function fetchReceipts() {
@@ -197,7 +192,6 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
         fromDate,
         toDate,
         certificates,
-        fetchUSerCerts,
       }}
     >
       {children}
