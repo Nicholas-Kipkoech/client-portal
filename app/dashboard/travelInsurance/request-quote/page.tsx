@@ -142,6 +142,14 @@ const Travel = () => {
       <div className="flex items-center  gap-2 justify-center">
         <div className="w-auto border  bg-white shadow-2xl rounded-md h-[35rem] flex items-center justify-center  flex-col p-5">
           <p className="text-[1.5rem] font-semibold">Fill in travel details</p>
+
+          <CustomSelect
+            name="Country of Residence"
+            options={formattedCountries}
+            className="w-[30rem] "
+            placeholder={'Select country...'}
+            onChange={(value: any) => setDestination(value.value)}
+          />
           <div className="flex flex-col  w-[30rem]">
             <p>Are you a resident?</p>
             <div className="flex justify-evenly">
@@ -155,13 +163,6 @@ const Travel = () => {
               </label>
             </div>
           </div>
-          <CustomSelect
-            name="Country of Residence"
-            options={formattedCountries}
-            className="w-[30rem] "
-            placeholder={'Select country...'}
-            onChange={(value: any) => setDestination(value.value)}
-          />
           <CustomSelect
             name="Destination"
             options={formattedCountries}
