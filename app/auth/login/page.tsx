@@ -6,6 +6,7 @@ import { useCustomToast } from '@/app/constants/useToast'
 import { userLogin, userRegister } from '@/app/services/apiServices'
 import CustomInput from '@/app/utils/CustomInput'
 import CustomButton from '@/app/utils/CustomButtom'
+import { message as Message } from 'antd'
 
 const Login = () => {
   const router = useRouter()
@@ -29,6 +30,18 @@ const Login = () => {
   const [phoneNumber, setPhoneNumber] = useState('')
   const [address, setAddress] = useState('')
 
+  const [message, messageContext] = Message.useMessage()
+
+  const errorFn = (_message: string) => {
+    message
+      .open({
+        type: 'error',
+        content: 'Attempting to login...',
+        duration: 1,
+      })
+      .then(() => message.error(_message))
+  }
+
   const showToast = useCustomToast()
 
   const handleLogin = async () => {
@@ -39,10 +52,15 @@ const Login = () => {
         pw: loginDetails.password,
       })
       if (res.success === true) {
-        localStorage.setItem('accessToken', res.accessToken)
-        showToast('loggin successful')
-        router.push('/dashboard')
-        setIsLogging(false)
+        if (res.userPayload !== null) {
+          localStorage.setItem('accessToken', res.accessToken)
+          message.success('loggin successful')
+          router.push('/dashboard')
+          setIsLogging(false)
+        } else {
+          errorFn('Unauthorized login!!!')
+          setIsLogging(false)
+        }
       }
     } catch (error) {
       setIsLogging(false)
@@ -88,6 +106,7 @@ const Login = () => {
           <div className="p-10">
             <p className="text-[18px] font-bold flex justify-center">
               Login to your account to continue
+              {messageContext}
             </p>
             {error && <p className="text-[red] text-[14px]">{error}</p>}
             <div className="py-8">

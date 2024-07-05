@@ -54,7 +54,7 @@ const Sidebar = () => {
           icon: <GrOverview />,
         },
       ],
-      roles: ['travel'],
+      roles: ['bp_insights'],
     },
     {
       title: 'Policies',
@@ -171,7 +171,7 @@ const Sidebar = () => {
           icon: <LiaFileInvoiceSolid />,
         },
       ],
-      roles: ['travel'],
+      roles: ['bp_travel'],
     },
   ]
 

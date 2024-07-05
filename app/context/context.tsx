@@ -141,7 +141,7 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
         const response = await getUserRoles({
           user_code: user.userCode,
         })
-        setRoles(response.results.map((role: any) => role.roleName))
+        setRoles(response.results.map((role: any) => role.roleCode))
       }
     }
     fetchUserRoles()
