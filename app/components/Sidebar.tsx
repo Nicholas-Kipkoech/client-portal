@@ -70,7 +70,7 @@ const Sidebar = () => {
           icon: <LiaFileInvoiceSolid />,
         },
       ],
-      roles: [],
+      roles: ['bp_policies'],
     },
     {
       title: 'Claims',
@@ -91,7 +91,7 @@ const Sidebar = () => {
           icon: <LiaFileInvoiceSolid />,
         },
       ],
-      roles: [],
+      roles: ['bp_claims'],
     },
     {
       title: 'Reports',
@@ -117,7 +117,7 @@ const Sidebar = () => {
           icon: <LiaFileInvoiceSolid />,
         },
       ],
-      roles: [],
+      roles: ['bp_reports'],
     },
     {
       title: 'Downloads',
@@ -138,7 +138,7 @@ const Sidebar = () => {
           icon: <LiaFileInvoiceSolid />,
         },
       ],
-      roles: [],
+      roles: ['bp_downloads'],
     },
     {
       title: 'Risk Notes',
@@ -154,7 +154,7 @@ const Sidebar = () => {
           icon: <LiaFileInvoiceSolid />,
         },
       ],
-      roles: [],
+      roles: ['bp_risk_notes'],
     },
 
     {
