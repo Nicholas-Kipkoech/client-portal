@@ -13,7 +13,8 @@ import Image from 'next/image'
 
 const Sidebar = () => {
   const [showSubMenu, setShowSubMenu] = useState(0)
-  const { user }: any = useContextApi()
+  const { roles }: any = useContextApi()
+  console.info('user roles', roles)
   const MenuLink = ({ item }: any) => {
     const pathname = usePathname()
 
@@ -30,6 +31,15 @@ const Sidebar = () => {
     )
   }
 
+  //if user has a role then show based on role
+
+  const hasRequiredRoles = (itemRoles: string[]) => {
+    if (itemRoles.length === 0) return false
+    if (roles.length !== 0) {
+      return itemRoles.some((role) => roles?.includes(role.toUpperCase()))
+    }
+  }
+
   const handleShowMenu = (index: any) => {
     setShowSubMenu((prevIndex) => (prevIndex === index ? null : index))
   }
@@ -44,6 +54,7 @@ const Sidebar = () => {
           icon: <GrOverview />,
         },
       ],
+      roles: ['travel'],
     },
     {
       title: 'Policies',
@@ -59,6 +70,7 @@ const Sidebar = () => {
           icon: <LiaFileInvoiceSolid />,
         },
       ],
+      roles: [],
     },
     {
       title: 'Claims',
@@ -79,6 +91,7 @@ const Sidebar = () => {
           icon: <LiaFileInvoiceSolid />,
         },
       ],
+      roles: [],
     },
     {
       title: 'Reports',
@@ -104,6 +117,7 @@ const Sidebar = () => {
           icon: <LiaFileInvoiceSolid />,
         },
       ],
+      roles: [],
     },
     {
       title: 'Downloads',
@@ -124,6 +138,7 @@ const Sidebar = () => {
           icon: <LiaFileInvoiceSolid />,
         },
       ],
+      roles: [],
     },
     {
       title: 'Risk Notes',
@@ -139,7 +154,9 @@ const Sidebar = () => {
           icon: <LiaFileInvoiceSolid />,
         },
       ],
+      roles: [],
     },
+
     {
       title: 'Travel Insurance',
       list: [
@@ -154,6 +171,7 @@ const Sidebar = () => {
           icon: <LiaFileInvoiceSolid />,
         },
       ],
+      roles: ['travel'],
     },
   ]
 
@@ -164,27 +182,29 @@ const Sidebar = () => {
       </div>
       <div className="flex gap-2 flex-col pr-2 pt-2 pl-3">
         <ul className="list-none flex flex-col gap-2 ">
-          {menuItems.map((cat, index) => (
-            <li key={cat.title} className="text-white ">
-              <div
-                className="flex justify-between mx-2  cursor-pointer hover:bg-[#7a7ea9] h-[2rem] rounded-md px-2 items-center"
-                onClick={() => handleShowMenu(index)}
-              >
-                <span>{cat.title}</span>
-                <div>
-                  {showSubMenu === index ? (
-                    <FaChevronDown size={15} />
-                  ) : (
-                    <MdOutlineNavigateNext size={20} />
-                  )}
+          {menuItems
+            .filter((cat) => hasRequiredRoles(cat?.roles))
+            .map((cat, index) => (
+              <li key={cat.title} className="text-white ">
+                <div
+                  className="flex justify-between mx-2  cursor-pointer hover:bg-[#7a7ea9] h-[2rem] rounded-md px-2 items-center"
+                  onClick={() => handleShowMenu(index)}
+                >
+                  <span>{cat.title}</span>
+                  <div>
+                    {showSubMenu === index ? (
+                      <FaChevronDown size={15} />
+                    ) : (
+                      <MdOutlineNavigateNext size={20} />
+                    )}
+                  </div>
                 </div>
-              </div>
-              {showSubMenu === index &&
-                cat.list.map((item: any) => (
-                  <MenuLink item={item} key={item?.title} />
-                ))}
-            </li>
-          ))}
+                {showSubMenu === index &&
+                  cat.list.map((item: any) => (
+                    <MenuLink item={item} key={item?.title} />
+                  ))}
+              </li>
+            ))}
         </ul>
       </div>
     </div>

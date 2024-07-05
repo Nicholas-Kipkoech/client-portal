@@ -1,54 +1,58 @@
-"use client";
-import React, { useState } from "react";
+'use client'
+import React, { useState } from 'react'
 
-import { useRouter } from "next/navigation";
-import { useCustomToast } from "@/app/constants/useToast";
-import { userLogin, userRegister } from "@/app/services/apiServices";
-import CustomInput from "@/app/utils/CustomInput";
-import CustomButton from "@/app/utils/CustomButtom";
+import { useRouter } from 'next/navigation'
+import { useCustomToast } from '@/app/constants/useToast'
+import { userLogin, userRegister } from '@/app/services/apiServices'
+import CustomInput from '@/app/utils/CustomInput'
+import CustomButton from '@/app/utils/CustomButtom'
 
 const Login = () => {
-  const router = useRouter();
-  const [isLogin, setIsLogin] = useState(true);
-  const [isLogging, setIsLogging] = useState(false);
-  const [isRegistering, setIsRegistering] = useState(false);
-  const [password, setPassword] = useState("");
-  const [kraPIN, setKraPIN] = useState("");
-  const [email, setEmail] = useState("");
-  const [entCode, setEntCode] = useState("");
-  const [error, setError] = useState("");
+  const router = useRouter()
+  const [isLogin, setIsLogin] = useState(true)
+  const [isLogging, setIsLogging] = useState(false)
+  const [isRegistering, setIsRegistering] = useState(false)
+  const [password, setPassword] = useState('')
+  const [kraPIN, setKraPIN] = useState('')
+  const [email, setEmail] = useState('')
+
+  const [error, setError] = useState('')
+
+  const [loginDetails, setLoginDetails] = useState({
+    username: '',
+    password: '',
+  })
 
   //......//registration
 
-  const [fullName, setFullName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [address, setAddress] = useState("");
+  const [fullName, setFullName] = useState('')
+  const [phoneNumber, setPhoneNumber] = useState('')
+  const [address, setAddress] = useState('')
 
-  const showToast = useCustomToast();
+  const showToast = useCustomToast()
 
   const handleLogin = async () => {
     try {
-      setIsLogging(true);
+      setIsLogging(true)
       const res = await userLogin({
-        ent_code: entCode,
-      });
+        un: loginDetails.username,
+        pw: loginDetails.password,
+      })
       if (res.success === true) {
-        localStorage.setItem("accessToken", res.accessToken);
-        showToast("loggin successful");
-        router.push("/dashboard");
-        setIsLogging(false);
+        localStorage.setItem('accessToken', res.accessToken)
+        showToast('loggin successful')
+        router.push('/dashboard')
+        setIsLogging(false)
       }
-    } catch (error: any) {
-      setIsLogging(false);
-      console.error(error.response.data.message);
-      setError(error.response.data.message);
-      showToast(error.response.data.message, "error");
+    } catch (error) {
+      setIsLogging(false)
+      console.error(error)
     }
-  };
+  }
 
   const handleRegister = async () => {
     try {
-      setIsRegistering(true);
+      setIsRegistering(true)
       const payload = {
         address,
         email,
@@ -56,26 +60,26 @@ const Login = () => {
         password,
         phoneNumber,
         kraPIN,
-      };
-      const state = localStorage.getItem("state");
-      const existingQuotesJSON = localStorage.getItem("quotes");
+      }
+      const state = localStorage.getItem('state')
+      const existingQuotesJSON = localStorage.getItem('quotes')
       const existingQuotes = existingQuotesJSON
         ? JSON.parse(existingQuotesJSON)
-        : {};
+        : {}
       const updatedQuotes = {
         ...existingQuotes,
         ...payload,
-      };
-      if (state === "quote") {
-        localStorage.setItem("quotes", JSON.stringify(updatedQuotes));
-        router.push("/quote/payments");
       }
-    } catch (error: any) {
-      console.error(error);
-      setIsRegistering(false);
-      showToast("Something went wrong try again!", "error");
+      if (state === 'quote') {
+        localStorage.setItem('quotes', JSON.stringify(updatedQuotes))
+        router.push('/quote/payments')
+      }
+    } catch (error) {
+      console.error(error)
+      setIsRegistering(false)
+      showToast('Something went wrong try again!', 'error')
     }
-  };
+  }
 
   return (
     <div className="flex items-center h-screen justify-center">
@@ -88,25 +92,29 @@ const Login = () => {
             {error && <p className="text-[red] text-[14px]">{error}</p>}
             <div className="py-8">
               <CustomInput
-                name={"Username"}
+                name={'Username'}
                 className="h-[40px] border rounded-md"
-                value={entCode}
-                onChange={(e) => setEntCode(e.target.value)}
+                value={loginDetails.username}
+                onChange={(e) =>
+                  setLoginDetails({ ...loginDetails, username: e.target.value })
+                }
               />
               <CustomInput
-                name={"Password"}
-                value={entCode}
+                name={'Password'}
                 className="h-[40px] border rounded-md"
-                onChange={(e) => setEntCode(e.target.value)}
+                value={loginDetails.password}
+                onChange={(e) =>
+                  setLoginDetails({ ...loginDetails, password: e.target.value })
+                }
               />
             </div>
 
             <CustomButton
               onClick={handleLogin}
               disabled={isLogging}
-              name={isLogging ? "Logging in..." : "Login"}
+              name={isLogging ? 'Logging in...' : 'Login'}
               className={
-                "h-[40px] flex justify-center border items-center w-[100%] rounded-md bg-[#cb7529] text-white"
+                'h-[40px] flex justify-center border items-center w-[100%] rounded-md bg-[#cb7529] text-white'
               }
             />
             <div className="flex justify-center gap-1 py-2">
@@ -123,49 +131,49 @@ const Login = () => {
             </p>
             <div className="pt-4 px-10 flex flex-col gap-2 text-[14px]">
               <CustomInput
-                name={"Email"}
+                name={'Email'}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className={"h-[40px] border rounded-md"}
+                className={'h-[40px] border rounded-md'}
               />
               <CustomInput
-                name={"Full Name"}
+                name={'Full Name'}
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
-                className={"h-[40px] border rounded-md"}
+                className={'h-[40px] border rounded-md'}
               />
               <CustomInput
-                name={"KRA PIN"}
+                name={'KRA PIN'}
                 value={kraPIN}
                 onChange={(e) => setKraPIN(e.target.value)}
-                className={"h-[40px] border rounded-md"}
+                className={'h-[40px] border rounded-md'}
               />
               <CustomInput
-                name={"Phone Number"}
+                name={'Phone Number'}
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
-                className={"h-[40px] border rounded-md"}
+                className={'h-[40px] border rounded-md'}
               />
               <CustomInput
-                name={"Address"}
+                name={'Address'}
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
-                className={"h-[40px] border rounded-md"}
+                className={'h-[40px] border rounded-md'}
               />
               <CustomInput
-                name={"Password"}
+                name={'Password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className={"h-[40px]  border rounded-md"}
+                className={'h-[40px]  border rounded-md'}
               />
             </div>
             <div className="flex justify-center my-2">
               <CustomButton
-                name={isRegistering ? "Creating account...." : "Register"}
+                name={isRegistering ? 'Creating account....' : 'Register'}
                 disabled={isRegistering}
                 onClick={handleRegister}
                 className={
-                  "h-[40px] flex justify-center border items-center w-[85%] rounded-md bg-[#cb7529] text-white"
+                  'h-[40px] flex justify-center border items-center w-[85%] rounded-md bg-[#cb7529] text-white'
                 }
               />
             </div>
@@ -179,7 +187,7 @@ const Login = () => {
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

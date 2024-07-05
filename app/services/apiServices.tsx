@@ -12,9 +12,10 @@ export const createPolicy = async (data: any) => {
 }
 
 export const userLogin = async (data: any) => {
-  const res = await PrivateAxiosUtility.post(`/user/login`, data)
+  const res = await PrivateAxiosUtility.post(`/user/user-login`, data)
   return res.data
 }
+
 export const userRegister = async (data: any) => {
   const res = await PrivateAxiosUtility.post(`/user/register`, data)
   return res.data
@@ -70,5 +71,10 @@ export const getUpcomingRenewals = async (data: any) => {
 }
 export const getTravelCertificatesService = async (data: any) => {
   const res = await PrivateAxiosUtility.post(`/travel/travel-certs`, data)
+  return res.data
+}
+
+export const getUserRoles = async (data: any) => {
+  const res = await PrivateAxiosUtility.post(`/user/user-roles`, data)
   return res.data
 }

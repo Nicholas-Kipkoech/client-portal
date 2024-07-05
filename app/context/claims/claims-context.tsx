@@ -20,7 +20,7 @@ export const ClaimsContextProvider = ({
       const accessTokenJson: any = localStorage.getItem('accessToken')
       if (accessTokenJson) {
         const decodedToken: any = jwtDecode(accessTokenJson)
-        setUser(decodedToken.payload)
+        setUser(decodedToken)
       }
     }
   }, [])
@@ -30,8 +30,8 @@ export const ClaimsContextProvider = ({
       setLoadingClaims(true)
       if (Object.keys(user).length > 0) {
         const response = await getClaims({
-          intermediaryCode: user?.intermediaryCode,
-          clientCode: user?.entityCode,
+          intermediaryCode: user?.aentCode,
+          clientCode: user?.entCode,
         })
         setLoadingClaims(false)
         setClaims(response.results)

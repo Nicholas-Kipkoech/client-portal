@@ -74,7 +74,7 @@ const Payments = () => {
         policyFromDate: payload.policyFromDate,
         policyExpiryDate: payload.policyExpiryDate,
         clientCode: '',
-        intermediaryCode: `${user.intermediaryCode}${user.entityCode}`,
+        intermediaryCode: `${user.intermediaryCode}${user.entCode}`,
         token: payload.token,
         dob: payload.dob,
         coverCode: payload.coverCode,
