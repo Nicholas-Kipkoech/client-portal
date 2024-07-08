@@ -20,21 +20,7 @@ const AcceptQuote = () => {
     setPremiums(JSON.parse(quoteResponse))
     setProduct(JSON.parse(product))
   }, [])
-  const total =
-    premiums?.premiumLocal +
-    premiums.charges?.chargesLocal['Admin Fee'] +
-    premiums.charges?.chargesLocal['P.H.C Fund'] +
-    premiums.charges?.chargesLocal['Stamp Duty'] +
-    premiums.charges?.chargesLocal['Training Levy']
-  const totalInUsd =
-    premiums.premiumForeign +
-    premiums.charges?.chargeForeign['Admin Fee'] +
-    premiums.charges?.chargeForeign['P.H.C Fund'] +
-    premiums.charges?.chargeForeign['Stamp Duty'] +
-    premiums.charges?.chargeForeign['Training Levy']
-  if (typeof window !== 'undefined') {
-    localStorage.setItem('total', total)
-  }
+
   return (
     <div className="m-5">
       <div
@@ -83,61 +69,7 @@ const AcceptQuote = () => {
           </p>
           <div className="max-h-[20rem] flex flex-col justify-center items-end p-2 h-auto">
             <div className="text-[1.5rem]">Premiums in USD</div>
-            <div className="pl-4 mr-2  ">
-              <div className="flex gap-2 justify-between">
-                <p>Premiums: </p>
-                <p>{premiums.premiumForeign}</p>
-              </div>
-              <div className="flex gap-2 justify-between">
-                <p> Admin Fee: </p>
-                <p>{premiums.charges?.chargeForeign['Admin Fee']}</p>
-              </div>
-              <div className="flex gap-2 justify-between">
-                <p>P.H.C Fund : </p>
-                <p>{premiums.charges?.chargeForeign['P.H.C Fund']}</p>
-              </div>
-              <div className="flex gap-2 justify-between">
-                <p>Stamp Duty: </p>
-                <p>{premiums.charges?.chargeForeign['Stamp Duty']}</p>
-              </div>
-              <div className="flex gap-2 justify-between">
-                <p>Training Levy: </p>
-                <p> {premiums.charges?.chargeForeign['Training Levy']}</p>
-              </div>
-              <div className="flex gap-2 justify-between">
-                <p>Total: </p>
-                <p> {Math.floor(totalInUsd)}</p>
-              </div>
-            </div>
-          </div>
-          <div className="max-h-[20rem] flex flex-col justify-center items-end p-2 h-[15rem]">
-            <div className="text-[1.5rem]">Premiums in KSH</div>
-            <div className="pl-4 mr-2 ">
-              <div className="flex gap-2 justify-between">
-                <p>Premiums: </p>
-                <p>{premiums.premiumLocal}</p>
-              </div>
-              <div className="flex gap-2 justify-between">
-                <p> Admin Fee: </p>
-                <p>{premiums.charges?.chargesLocal['Admin Fee']}</p>
-              </div>
-              <div className="flex gap-2 justify-between">
-                <p>P.H.C Fund : </p>
-                <p>{premiums.charges?.chargesLocal['P.H.C Fund']}</p>
-              </div>
-              <div className="flex gap-2 justify-between">
-                <p>Stamp Duty: </p>
-                <p>{premiums.charges?.chargesLocal['Stamp Duty']}</p>
-              </div>
-              <div className="flex gap-2 justify-between">
-                <p>Training Levy: </p>
-                <p> {premiums.charges?.chargesLocal['Training Levy']}</p>
-              </div>
-              <div className="flex gap-2 justify-between">
-                <p>Total: </p>
-                <p> {total}</p>
-              </div>
-            </div>
+            <div className="pl-4 mr-2  "></div>
           </div>
         </div>
       </div>

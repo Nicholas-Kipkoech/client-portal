@@ -55,7 +55,6 @@ const Payments = () => {
     }
     setBeneficiaries([...beneficiaries, benObj])
   }
-
   const beneficiariesDOB = beneficiaries.map((benefiary) => benefiary.dob)
 
   console.log(payload)
@@ -65,7 +64,7 @@ const Payments = () => {
     policyExpiryDate: payload.policyExpiryDate,
     token: payload.token,
     coverCode: payload.coverCode,
-    dob: dob + ',' + beneficiariesDOB.join(','),
+    dob: customerDetails.dob + ',' + beneficiariesDOB.join(','),
   }
   console.log(calculatePremiumPayload)
 
@@ -125,6 +124,7 @@ const Payments = () => {
       calculatePremiumPayload,
     )
     if (response.data) {
+      localStorage.setItem('quoteResponse', JSON.stringify(response.data))
       router.push('/dashboard/travelInsurance/acceptQuote')
     }
   }
@@ -139,6 +139,18 @@ const Payments = () => {
     const formattedToDate = day + '-' + formattedMonth + '-' + year
 
     setDOB(formattedToDate)
+  }
+  const handleCustomerDOB = (date: any, dateString: any) => {
+    const [day, month, year] = dateString.split('-')
+    let formattedMonth: any = ''
+    if (month < 10) {
+      formattedMonth = Months[month.toString().slice(1) - 1]
+    } else {
+      formattedMonth = Months[Number(month - 1)]
+    }
+    const formattedToDate = day + '-' + formattedMonth + '-' + year
+
+    setCustomerDetails({ ...customerDetails, dob: formattedToDate })
   }
 
   return (
@@ -288,7 +300,7 @@ const Payments = () => {
               format={'DD-MM-YYYY'}
               placeholder={'DD-MM-YYYY'}
               className={'w-[20rem] h-[40px] border p-2 rounded-md'}
-              onChange={handleBirthDate}
+              onChange={handleCustomerDOB}
             />
           </div>
           <div className="flex justify-center items-center gap-2">
