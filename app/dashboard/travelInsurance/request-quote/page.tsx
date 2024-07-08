@@ -94,26 +94,18 @@ const Travel = () => {
       // Adjust the age to get an integer value
       age = Math.floor(age)
 
-      __dob = formatDate(dob)
       policyExpiryDate = formatDate(toDate)
       policyFromDate = formatDate(fromDate)
     }
     return {
       differenceInDays,
       age,
-      __dob,
       policyExpiryDate,
       policyFromDate,
     }
   }
 
-  const {
-    __dob,
-    age,
-    differenceInDays,
-    policyExpiryDate,
-    policyFromDate,
-  } = getDates()
+  const { age, differenceInDays, policyExpiryDate, policyFromDate } = getDates()
   const payload = {
     destination: destination,
     duration: differenceInDays,
@@ -121,7 +113,6 @@ const Travel = () => {
     policyExpiryDate: policyExpiryDate,
     age: age,
     token: token,
-    dob: __dob,
   }
 
   const handleGetQuote = () => {
@@ -186,15 +177,6 @@ const Travel = () => {
               placeholder={'DD-MM-YYYY'}
               className={'w-[30rem] h-[40px] border p-2 rounded-md'}
               onChange={handleToDate}
-            />
-          </div>
-          <div className="flex flex-col mt-2">
-            <label>Date Of Birth</label>
-            <DatePicker
-              format={'DD-MM-YYYY'}
-              placeholder={'DD-MM-YYYY'}
-              className={'w-[30rem] h-[40px] border p-2 rounded-md'}
-              onChange={handleBirthDate}
             />
           </div>
           <CustomButton

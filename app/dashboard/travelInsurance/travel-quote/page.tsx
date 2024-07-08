@@ -29,15 +29,15 @@ const Products = () => {
     localStorage.setItem('product', JSON.stringify({ code, productName }))
     const updatedPayload = { ...payload, coverCode: code }
     localStorage.setItem('travelQuote', JSON.stringify(updatedPayload))
-    const response = await axios.post(
-      `${_API_URL}/uw/calculate_cover_premium`,
-      updatedPayload,
-    )
+    // const response = await axios.post(
+    //   `${_API_URL}/uw/calculate_cover_premium`,
+    //   updatedPayload,
+    // )
 
-    if (response.data) {
-      localStorage.setItem('quoteResponse', JSON.stringify(response.data))
-      router.push('/dashboard/travelInsurance/payments')
-    }
+    // if (response.data) {
+    //   localStorage.setItem('quoteResponse', JSON.stringify(response.data))
+    router.push('/dashboard/travelInsurance/payments')
+    // }
   }
 
   const CustomProductCard = ({ name, benefits, code }: IProductCard) => {
