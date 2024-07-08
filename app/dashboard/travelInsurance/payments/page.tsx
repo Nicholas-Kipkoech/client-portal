@@ -27,6 +27,7 @@ const Payments = () => {
     mpesaNo: '',
     email: '',
     passportNo: '',
+    dob: '',
   })
   const [payload, setPayload] = useState<any>({})
   const [loading, setLoading] = useState(false)
@@ -35,6 +36,9 @@ const Payments = () => {
   const [openModal, setOpenModal] = useState(false)
   const [addPerson, setAddPerson] = useState(false)
   const [dob, setDOB] = useState('')
+  const [beneficiaryName, setBeneficiaryName] = useState('')
+  const [beneficiaryPassport, setBeneficiaryPassport] = useState('')
+  const [beneficiaries, setBeneficiaries] = useState<any[]>([])
 
   useEffect(() => {
     const quotePayload: any = localStorage.getItem('travelQuote')
@@ -42,7 +46,35 @@ const Payments = () => {
     const total: any = localStorage.getItem('total')
     setTotal(total)
   }, [])
-  console.log(payload.token)
+
+  function handleAddBeneficiary() {
+    const benObj = {
+      beneficiaryName,
+      beneficiaryPassport,
+      dob,
+    }
+    setBeneficiaries([...beneficiaries, benObj])
+  }
+
+  const beneficiariesDOB = beneficiaries.map((benefiary) => benefiary.dob)
+
+  console.log(payload)
+
+  const calculatePremiumPayload = {
+    policyFromDate: payload.policyFromDate,
+    policyExpiryDate: payload.policyExpiryDate,
+    token: payload.token,
+    coverCode: payload.coverCode,
+    dob: dob + ',' + beneficiariesDOB.join(','),
+  }
+  console.log(calculatePremiumPayload)
+
+  async function handleViewPricing(code: string, productName: string) {
+    localStorage.setItem('product', JSON.stringify({ code, productName }))
+    const updatedPayload = { ...payload, coverCode: code }
+    localStorage.setItem('travelQuote', JSON.stringify(updatedPayload))
+  }
+
   const paymentPayload = {
     token: payload.token,
     paymentRequest: {
@@ -78,7 +110,7 @@ const Payments = () => {
         clientCode: '',
         intermediaryCode: `${user.intermediaryCode}${user.entCode}`,
         token: payload.token,
-        dob: payload.dob,
+        dob: dob + ',' + beneficiariesDOB.join(','),
         coverCode: payload.coverCode,
         age: String(payload.age),
         duration: String(payload.duration),
@@ -86,36 +118,14 @@ const Payments = () => {
       },
     },
   }
-  console.log('policyPayload', paymentPayload)
+  // console.log('policyPayload', paymentPayload)
   async function handlePayments() {
-    setLoading(true)
-    try {
-      setOpenModal(true)
-      const response = await axios.post(
-        `${_API_URL}/uw/create_policy`,
-        paymentPayload,
-      )
-      if (response.data.info === 'Success') {
-        if (response.data.mapfreResponse.responseCode === 'ERROR') {
-          setMessage(response.data.mapfreResponse.description)
-          setTimeout(() => {
-            setOpenModal(false)
-          }, 2000)
-        } else {
-          localStorage.setItem('policyResponse', JSON.stringify(response.data))
-          router.push('/dashboard/travelInsurance/documents')
-          router.prefetch('/dashboard/travelInsurance/acceptQuote')
-          setOpenModal(false)
-          setMessage('success!!!!')
-        }
-      }
-    } catch (error) {
-      console.error(error)
-      setMessage(error)
-
-      setTimeout(() => {
-        setOpenModal(false)
-      }, 2000)
+    const response = await axios.post(
+      `${_API_URL}/uw/calculate_cover_premium`,
+      calculatePremiumPayload,
+    )
+    if (response.data) {
+      router.push('/dashboard/travelInsurance/acceptQuote')
     }
   }
   const handleBirthDate = (date: any, dateString: any) => {
@@ -296,12 +306,14 @@ const Payments = () => {
               <CustomInput
                 name="Name"
                 className="border rounded-md w-[20rem] "
-                value={''}
+                value={beneficiaryName}
+                onChange={(e) => setBeneficiaryName(e.target.value)}
               />
               <CustomInput
                 name="Passport No"
                 className="border rounded-md w-[20rem] "
-                value={''}
+                value={beneficiaryPassport}
+                onChange={(e) => setBeneficiaryPassport(e.target.value)}
               />
             </div>
             <div className="flex flex-col mt-2">
@@ -315,13 +327,14 @@ const Payments = () => {
             </div>
             <CustomButton
               name={'+ Add'}
+              onClick={handleAddBeneficiary}
               className="border mt-2 bg-[#cb7529] text-white   h-[2.5rem] w-[5rem] rounded-md "
             />
           </div>
         )}
         <div className="flex gap-2">
           <CustomButton
-            name={'Get Certificate'}
+            name={'Get Quote'}
             onClick={handlePayments}
             className="w-[20rem] border mt-2 h-[2.5rem] rounded-md bg-[#cb7529] text-white"
           />
