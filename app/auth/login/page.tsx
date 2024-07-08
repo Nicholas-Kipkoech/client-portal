@@ -65,6 +65,7 @@ const Login = () => {
     } catch (error) {
       setIsLogging(false)
       console.error(error)
+      errorFn(error?.response.data.error)
     }
   }
 

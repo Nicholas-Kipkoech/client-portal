@@ -38,16 +38,6 @@ const TestimonialCarousel = () => {
     })
   }
 
-  useEffect(() => {
-    const interval = window.setInterval(() => {
-      setCurrentIndex((index) => {
-        if (index === Testimonials.length - 1) return 0
-        return index + 1
-      })
-    }, 2000)
-    return () => clearInterval(interval)
-  }, [Testimonials.length])
-
   return (
     <div
       style={{

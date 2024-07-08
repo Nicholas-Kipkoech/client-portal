@@ -102,7 +102,7 @@ const Payments = () => {
         } else {
           localStorage.setItem('policyResponse', JSON.stringify(response.data))
           router.push('/dashboard/travelInsurance/documents')
-          router.prefetch('/dashboard/travelInsurance/documents')
+          router.prefetch('/dashboard/travelInsurance/acceptQuote')
           setOpenModal(false)
           setMessage('success!!!!')
         }

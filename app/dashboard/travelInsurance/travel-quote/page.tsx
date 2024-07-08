@@ -36,7 +36,7 @@ const Products = () => {
 
     if (response.data) {
       localStorage.setItem('quoteResponse', JSON.stringify(response.data))
-      router.push('/dashboard/travelInsurance/acceptQuote')
+      router.push('/dashboard/travelInsurance/payments')
     }
   }
 
