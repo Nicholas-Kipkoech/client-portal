@@ -15,7 +15,6 @@ const Context = createContext({})
 
 const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [page, setPage] = useState('Home')
-  const [quotes, setQuotes] = useState([])
   const [user, setUser] = useState<any>({})
   const [years, setYears] = useState<number[]>([])
   const [selectedQuote, setSelectedQuote] = useState({})
@@ -141,6 +140,7 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
         const response = await getUserRoles({
           user_code: user.userCode,
         })
+
         setRoles(response.results.map((role: any) => role.roleCode))
       }
     }

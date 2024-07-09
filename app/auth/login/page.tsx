@@ -16,6 +16,7 @@ const Login = () => {
   const [password, setPassword] = useState('')
   const [kraPIN, setKraPIN] = useState('')
   const [email, setEmail] = useState('')
+  const [passwordVisible, setPasswordVisible] = useState(false)
 
   const [error, setError] = useState('')
 
@@ -121,12 +122,20 @@ const Login = () => {
               />
               <CustomInput
                 name={'Password'}
+                type={passwordVisible ? 'text' : 'password'}
                 className="h-[40px] border rounded-md"
                 value={loginDetails.password}
                 onChange={(e) =>
                   setLoginDetails({ ...loginDetails, password: e.target.value })
                 }
               />
+              <div className="mt-2 flex items-center gap-1">
+                <input
+                  type="checkbox"
+                  onChange={() => setPasswordVisible((prev) => !prev)}
+                />
+                <label>Show password</label>
+              </div>
             </div>
 
             <CustomButton
