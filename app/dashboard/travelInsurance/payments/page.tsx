@@ -28,6 +28,7 @@ const Payments = () => {
     email: '',
     passportNo: '',
     dob: '',
+    currencyRate: '',
   })
   const [payload, setPayload] = useState<any>({})
   const [loading, setLoading] = useState(false)
@@ -271,6 +272,17 @@ const Payments = () => {
               { label: 'Nomura', value: 'Nomura' },
               { label: 'Bapa', value: 'Bapa' },
             ]}
+          />
+          <CustomInput
+            name={'Current Rate'}
+            value={customerDetails.currencyRate}
+            onChange={(e) =>
+              setCustomerDetails({
+                ...customerDetails,
+                currencyRate: e.target.value,
+              })
+            }
+            className=" border rounded-md h-[2.4rem] w-[20rem]"
           />
           <CustomInput
             name={'Email'}
