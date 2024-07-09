@@ -96,7 +96,7 @@ const Dashboard = () => {
     )
   }
   return (
-    <div className="py-4 ">
+    <div className="py-2 ">
       <div className="flex justify-center md:text-[1.5rem] font-bold">
         Running period: [{startDate} to {endDate}]
       </div>
