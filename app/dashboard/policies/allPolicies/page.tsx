@@ -12,9 +12,12 @@ import React, { useContext, useState } from 'react'
 import { GrDocumentPdf, GrPrevious } from 'react-icons/gr'
 import NotesModal from '../NotesModal'
 import CustomSelect from '@/app/utils/CustomSelect'
+import { useContextApi } from '@/app/context/context'
 
 const Policies = () => {
   const router = useRouter()
+  const { fromDate, toDate }: any = useContextApi()
+
   const {
     policies,
     loadingPolicies,
@@ -142,11 +145,14 @@ const Policies = () => {
 
   return (
     <div className="flex flex-col justify-center ">
+      <p className="flex justify-center font-bold">
+        Running Period [ {fromDate}-{toDate} ]
+      </p>
       <div
         onClick={() => router.back()}
-        className="flex justify-between  cursor-pointer"
+        className="flex justify-between cursor-pointer"
       >
-        <div className="flex items-center">
+        <div className="flex items-center  bg-slate-900 mt-2 px-2 text-white">
           <GrPrevious size={15} />
           <p>Back</p>
         </div>

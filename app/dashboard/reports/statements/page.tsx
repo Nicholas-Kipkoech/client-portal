@@ -1,110 +1,112 @@
-"use client";
-import { ConfigProvider, Spin, Table } from "antd";
-import React, { useContext } from "react";
-import { GrPrevious } from "react-icons/gr";
-import { useRouter } from "next/navigation";
-import { formatDate } from "@/app/utils/helpers";
-import { LoadingOutlined } from "@ant-design/icons";
-import CsvDownloader from "react-csv-downloader";
-import ReportsContext from "@/app/context/reports/reports-context";
+'use client'
+import { ConfigProvider, Spin, Table } from 'antd'
+import React, { useContext } from 'react'
+import { GrPrevious } from 'react-icons/gr'
+import { useRouter } from 'next/navigation'
+import { formatDate } from '@/app/utils/helpers'
+import { LoadingOutlined } from '@ant-design/icons'
+import CsvDownloader from 'react-csv-downloader'
+import ReportsContext from '@/app/context/reports/reports-context'
+import { useContextApi } from '@/app/context/context'
 
 const Statements = () => {
-  const { glStatements, loadingGl }: any = useContext(ReportsContext);
+  const { glStatements, loadingGl }: any = useContext(ReportsContext)
+  const { fromDate, toDate }: any = useContextApi()
 
   const columns = [
     {
-      title: "Issue Date",
-      dataIndex: "issueDate",
+      title: 'Issue Date',
+      dataIndex: 'issueDate',
       render: (_: any, item: any) => <p>{formatDate(item.issueDate)}</p>,
     },
     {
-      title: "Doc No",
-      dataIndex: "docNo",
+      title: 'Doc No',
+      dataIndex: 'docNo',
     },
     {
-      title: "End No",
-      dataIndex: "endNo",
+      title: 'End No',
+      dataIndex: 'endNo',
     },
     {
-      title: "Debit No",
-      dataIndex: "debitNo",
+      title: 'Debit No',
+      dataIndex: 'debitNo',
       render: (_: any, item: any) => (
         <p className="text-[13px]">{item.debitNo}</p>
       ),
     },
     {
-      title: "Vehicles",
-      dataIndex: "vehicles",
+      title: 'Vehicles',
+      dataIndex: 'vehicles',
       render: (_: any, item: any) => <p> {item.vehicles}</p>,
     },
     {
-      title: "Insured",
-      dataIndex: "insured",
+      title: 'Insured',
+      dataIndex: 'insured',
       render: (_: any, item: any) => <p>{item.insured}</p>,
     },
     {
-      title: "DR/DC",
-      dataIndex: "drCr",
+      title: 'DR/DC',
+      dataIndex: 'drCr',
       render: (_: any, item: any) => (
-        <p>{item.drCr === "D" ? "Debit" : "Credit"}</p>
+        <p>{item.drCr === 'D' ? 'Debit' : 'Credit'}</p>
       ),
     },
     {
-      title: "Currency",
-      dataIndex: "currency",
+      title: 'Currency',
+      dataIndex: 'currency',
       render: (_: any, item: any) => <p>{item.currency}</p>,
     },
     {
-      title: "Premium",
-      dataIndex: "premium",
+      title: 'Premium',
+      dataIndex: 'premium',
       render: (_: any, item: any) => (
         <p> KSH {item.premium.toLocaleString()}</p>
       ),
     },
 
     {
-      title: "PVT premium",
-      dataIndex: "PVTprem",
+      title: 'PVT premium',
+      dataIndex: 'PVTprem',
       render: (_: any, item: any) => (
         <p> KSH {item.PVTprem.toLocaleString()}</p>
       ),
     },
     {
-      title: "Stamp Duty",
-      dataIndex: "stampDuty",
+      title: 'Stamp Duty',
+      dataIndex: 'stampDuty',
       render: (_: any, item: any) => (
         <p>KSH {item.stampDuty.toLocaleString()}</p>
       ),
     },
     {
-      title: "Training Levy",
-      dataIndex: "trainingLevy",
+      title: 'Training Levy',
+      dataIndex: 'trainingLevy',
       render: (_: any, item: any) => (
         <p>KSH {item.trainingLevy.toLocaleString()}</p>
       ),
     },
     {
-      title: "PHC Fund",
-      dataIndex: "PHCfund",
+      title: 'PHC Fund',
+      dataIndex: 'PHCfund',
       render: (_: any, item: any) => <p>KSH {item.PHCfund.toLocaleString()}</p>,
     },
     {
-      title: "Comm",
-      dataIndex: "comm",
+      title: 'Comm',
+      dataIndex: 'comm',
       render: (_: any, item: any) => <p> KSH {item.comm.toLocaleString()}</p>,
     },
     {
-      title: "W Tax",
-      dataIndex: "Wtax",
+      title: 'W Tax',
+      dataIndex: 'Wtax',
       render: (_: any, item: any) => <p> KSH {item.Wtax.toLocaleString()}</p>,
     },
     {
-      title: "Policy Net",
-      dataIndex: "policyNet",
+      title: 'Policy Net',
+      dataIndex: 'policyNet',
       render: (_: any, item: any) => (
         <p>
-          {" "}
-          KSH{" "}
+          {' '}
+          KSH{' '}
           {(
             item.premium +
             item.PVTprem +
@@ -118,17 +120,17 @@ const Statements = () => {
       ),
     },
     {
-      title: "Credit Net",
-      dataIndex: "creditNet",
+      title: 'Credit Net',
+      dataIndex: 'creditNet',
     },
-  ];
+  ]
 
   const mappedColumns = columns.map((column) => {
     return {
       id: column.dataIndex,
       displayName: column.title,
-    };
-  });
+    }
+  })
 
   const mappedStatements = glStatements.map((statement: any) => {
     return {
@@ -138,7 +140,7 @@ const Statements = () => {
       debitNo: statement.debitNo,
       vehicles: statement.vehicles,
       insured: statement.insured,
-      drCr: statement.drCr === "D" ? "Debit" : "Credit",
+      drCr: statement.drCr === 'D' ? 'Debit' : 'Credit',
       currency: statement.currency,
       premium: statement.premium.toLocaleString(),
       PVTprem: statement.PVTprem.toLocaleString(),
@@ -154,18 +156,21 @@ const Statements = () => {
           statement.trainingLevy +
           statement.PHCfund +
           statement.Wtax -
-          statement.comm
+          statement.comm,
       ),
       creditNet: statement.creditNet,
       outstanding: 0,
-    };
-  });
+    }
+  })
 
-  const router = useRouter();
+  const router = useRouter()
   return (
     <div>
+      <p className="flex justify-center font-bold">
+        Running Period [ {fromDate}-{toDate} ]
+      </p>
       <div className="flex justify-between items-center">
-        <div className="flex items-center" onClick={() => router.back()}>
+        <div className="flex items-center  bg-slate-900 mt-2 px-2 text-white">
           <GrPrevious size={15} />
           <p>Back</p>
         </div>
@@ -190,7 +195,7 @@ const Statements = () => {
               <LoadingOutlined
                 style={{
                   fontSize: 25,
-                  color: "white",
+                  color: 'white',
                 }}
               />
             }
@@ -204,10 +209,10 @@ const Statements = () => {
         theme={{
           components: {
             Table: {
-              headerBg: "#092332",
-              headerColor: "white",
+              headerBg: '#092332',
+              headerColor: 'white',
               padding: 2,
-              rowHoverBg: "#cb7529",
+              rowHoverBg: '#cb7529',
             },
           },
         }}
@@ -221,7 +226,7 @@ const Statements = () => {
         />
       </ConfigProvider>
     </div>
-  );
-};
+  )
+}
 
-export default Statements;
+export default Statements

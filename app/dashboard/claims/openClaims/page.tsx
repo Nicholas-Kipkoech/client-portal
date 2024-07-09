@@ -8,9 +8,11 @@ import { formatDate } from '@/app/utils/helpers'
 import CustomInput from '@/app/utils/CustomInput'
 import CustomButton from '@/app/utils/CustomButtom'
 import ClaimsContext from '@/app/context/claims/claims-context'
+import { useContextApi } from '@/app/context/context'
 
 const OpenClaims = () => {
   const { openClaims, loadingClaims }: any = useContext(ClaimsContext)
+  const { fromDate, toDate }: any = useContextApi()
 
   const [initialClaims, setInitialClaims] = useState([])
   const [searchParams, setSearchParams] = useState<any>({
@@ -97,8 +99,11 @@ const OpenClaims = () => {
   const router = useRouter()
   return (
     <div>
+      <p className="flex justify-center font-bold">
+        Running Period [ {fromDate}-{toDate} ]
+      </p>
       <div className="flex justify-between items-center">
-        <div className="flex items-center" onClick={() => router.back()}>
+        <div className="flex items-center  bg-slate-900 mt-2 px-2 text-white">
           <GrPrevious size={15} />
           <p>Back</p>
         </div>

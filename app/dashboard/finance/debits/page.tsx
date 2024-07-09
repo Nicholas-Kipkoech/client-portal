@@ -1,11 +1,54 @@
 'use client'
+import { useContextApi } from '@/app/context/context'
 import FinanceContext from '@/app/context/finance/finance-context'
+import CustomButton from '@/app/utils/CustomButtom'
+import CustomInput from '@/app/utils/CustomInput'
 import { formatDate } from '@/app/utils/helpers'
 import { ConfigProvider, Table } from 'antd'
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 
 const Debits = () => {
   const { debits }: any = useContext(FinanceContext)
+  const { fromDate, toDate }: any = useContextApi()
+
+  const [initialDebits, setDebits] = useState([])
+  const [searchParams, setSearchParams] = useState({
+    insured: '',
+    carRegNo: '',
+    policyNumber: '',
+    debitNo: '',
+    endNo: '',
+  })
+
+  const handleSearch = () => {
+    const filteredClaims = debits.filter((claim: any) => {
+      for (const key in searchParams) {
+        if (searchParams[key]) {
+          // Check if the search param is not empty
+          const fieldValue = claim[key]?.toLowerCase() // Get the field value of the policy (if exists)
+          const searchTerm = searchParams[key].toLowerCase() // Get the search term
+          if (fieldValue && fieldValue.includes(searchTerm)) {
+            return true // Include policy if field value matches the search term
+          }
+        }
+      }
+      return false
+    })
+    setDebits(filteredClaims)
+  }
+  console.log(debits)
+
+  const handleReset = () => {
+    setSearchParams({
+      insured: '',
+      carRegNo: '',
+      policyNumber: '',
+      debitNo: '',
+      endNo: '',
+    })
+    setDebits(debits)
+  }
+
   const columns = [
     {
       title: 'Action',
@@ -71,6 +114,64 @@ const Debits = () => {
   ]
   return (
     <div>
+      <p className="flex justify-center font-bold">
+        Running Period [ {fromDate}-{toDate} ]
+      </p>
+      <div className="md:flex md:flex-wrap sm:flex-nowrap sm:flex-col md:flex-row gap-[0.2rem] my-2 md:items-center">
+        <CustomInput
+          name="Debit No"
+          className="border md:w-[15rem] p-2 sm:w-full"
+          value={searchParams.debitNo}
+          onChange={(e) =>
+            setSearchParams({ ...searchParams, debitNo: e.target.value })
+          }
+        />
+        <CustomInput
+          name="Insured"
+          onChange={(e) =>
+            setSearchParams({ ...searchParams, insured: e.target.value })
+          }
+          className="border md:w-[15rem]  p-2 sm:w-full"
+          value={searchParams.insured}
+        />
+        <CustomInput
+          name="Vehicle Reg No"
+          className="border md:w-[10rem] p-2 sm:w-full"
+          value={searchParams.carRegNo}
+          onChange={(e) =>
+            setSearchParams({ ...searchParams, carRegNo: e.target.value })
+          }
+        />
+        <CustomInput
+          name="Policy No"
+          className="border md:w-[15rem] p-2 sm:w-full"
+          value={searchParams.policyNumber}
+          onChange={(e) =>
+            setSearchParams({ ...searchParams, policyNumber: e.target.value })
+          }
+        />
+        <CustomInput
+          name="End No"
+          className="border md:w-[15rem] p-2 sm:w-full"
+          value={searchParams.endNo}
+          onChange={(e) =>
+            setSearchParams({ ...searchParams, endNo: e.target.value })
+          }
+        />
+
+        <div className="sm:flex  gap-2">
+          <CustomButton
+            onClick={handleSearch}
+            name="Search"
+            className="border h-[2.2rem] bg-slate-800 text-white sm:w-full md:w-[15rem] mt-7"
+          />
+          <CustomButton
+            onClick={handleReset}
+            name="Reset"
+            className="border h-[2.2rem] bg-red-600 text-white  sm:w-full md:w-[15rem] mt-7"
+          />
+        </div>
+      </div>
       <ConfigProvider
         theme={{
           components: {
@@ -85,12 +186,7 @@ const Debits = () => {
           },
         }}
       >
-        <Table
-          className="mt-2"
-          columns={columns}
-          dataSource={debits}
-          scroll={{ x: 1200 }}
-        />
+        <Table className="mt-2" columns={columns} dataSource={debits} />
       </ConfigProvider>
     </div>
   )

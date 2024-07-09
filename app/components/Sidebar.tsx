@@ -75,11 +75,11 @@ const Sidebar = () => {
     {
       title: 'Claims',
       list: [
-        {
-          title: 'File claim',
-          path: '/dashboard/claims/file-claim',
-          icon: <LiaFileInvoiceSolid />,
-        },
+        // {
+        //   title: 'File claim',
+        //   path: '/dashboard/claims/file-claim',
+        //   icon: <LiaFileInvoiceSolid />,
+        // },
         {
           title: 'Open claims',
           path: '/dashboard/claims/openClaims',

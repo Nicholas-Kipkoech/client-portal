@@ -183,17 +183,22 @@ const Navbar = () => {
         <div className="border h-auto p-2 rounded-md  sm:hidden md:block bg-white w-auto flex items-center justify-center flex-col">
           <div className="flex items-center gap-2">
             <div className="p-3  border rounded-[50%] text-bold bg-slate-900 text-white items-center flex justify-center">
-              {formatName(user?.entName)}
+              {formatName(user?.userDesc)}
             </div>
             <div className="flex gap-2 items-center">
               <div>
-                <p className="font-bold text-[0.8rem] ">{user.entName}</p>
-                <p className="font-bold text-[0.8rem] ">
-                  Category [{user.aentCode === '70' ? 'Broker' : 'Client'}]
-                </p>
-                <p className="font-bold text-[0.8rem] ">
-                  Code [{user.aentCode}]
-                </p>
+                <p className="font-bold text-[0.8rem] ">{user.userDesc}</p>
+
+                {user.entName === '' && (
+                  <>
+                    <p className="font-bold text-[0.8rem] ">
+                      Category [{user.aentCode === '70' ? 'Broker' : 'Client'}]
+                    </p>
+                    <p className="font-bold text-[0.8rem] ">
+                      Code [{user.aentCode}]
+                    </p>
+                  </>
+                )}
               </div>
 
               <Menu>
@@ -210,9 +215,11 @@ const Navbar = () => {
                     <p className="font-bold text-[0.8rem] ">
                       Phone No [{user.userPhone ? user.userPhone : 'N/A'}]
                     </p>
-                    <p className="font-bold text-[0.8rem] ">
-                      Type [{user.orgType}]
-                    </p>
+                    {user.entName === '' && (
+                      <p className="font-bold text-[0.8rem] ">
+                        Type [{user.orgType}]
+                      </p>
+                    )}
                   </div>
                 </MenuList>
               </Menu>

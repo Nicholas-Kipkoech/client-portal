@@ -1,4 +1,5 @@
 'use client'
+import { useContextApi } from '@/app/context/context'
 import FinanceContext from '@/app/context/finance/finance-context'
 import CustomButton from '@/app/utils/CustomButtom'
 import CustomInput from '@/app/utils/CustomInput'
@@ -11,6 +12,7 @@ import { GrPrevious } from 'react-icons/gr'
 const ClaimsCreditNotes = () => {
   const { claimCreditNotes }: any = useContext(FinanceContext)
   const router = useRouter()
+  const { fromDate, toDate }: any = useContextApi()
 
   const [initialClaimCreditNotes, setInitialCreditNotes] = useState([])
 
@@ -101,6 +103,9 @@ const ClaimsCreditNotes = () => {
   ]
   return (
     <div>
+      <p className="flex justify-center font-bold">
+        Running Period [ {fromDate}-{toDate} ]
+      </p>
       <div className="flex justify-between items-center">
         <div className="flex items-center" onClick={() => router.back()}>
           <GrPrevious size={15} />
@@ -162,7 +167,7 @@ const ClaimsCreditNotes = () => {
               ? initialClaimCreditNotes
               : claimCreditNotes
           }
-          scroll={{ x: 12000 }}
+          scroll={{ x: 1200 }}
         />
       </ConfigProvider>
     </div>

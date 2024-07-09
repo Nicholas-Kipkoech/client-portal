@@ -12,6 +12,8 @@ import { GrPrevious } from 'react-icons/gr'
 const Receipts = () => {
   const router = useRouter()
   const { receiptsData, user }: any = useContext(FinanceContext)
+  const { fromDate, toDate }: any = useContextApi()
+
   const [initialReceipt, setInitialReceipt] = useState([])
   const [searchParams, setSearchParams] = useState<any>({
     from: '',
@@ -98,6 +100,9 @@ const Receipts = () => {
   ]
   return (
     <div>
+      <p className="flex justify-center font-bold">
+        Running Period [ {fromDate}-{toDate} ]
+      </p>
       <div className="flex justify-between items-center">
         <div className="flex items-center" onClick={() => router.back()}>
           <GrPrevious size={15} />

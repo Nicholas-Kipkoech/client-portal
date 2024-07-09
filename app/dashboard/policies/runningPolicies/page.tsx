@@ -11,9 +11,12 @@ import { useRouter } from 'next/navigation'
 import React, { useContext, useState } from 'react'
 import { GrDocumentPdf, GrPrevious } from 'react-icons/gr'
 import NotesModal from '../NotesModal'
+import { useContextApi } from '@/app/context/context'
 
 const Policies = () => {
   const router = useRouter()
+  const { fromDate, toDate }: any = useContextApi()
+
   const {
     filteredPolicies: runningPolicies,
     loadingPolicies,
@@ -136,8 +139,14 @@ const Policies = () => {
 
   return (
     <div className="flex flex-col justify-center ">
+      <p className="flex justify-center font-bold">
+        Running Period [ {fromDate}-{toDate} ]
+      </p>
       <div className="flex justify-between">
-        <div className="flex items-center" onClick={() => router.back()}>
+        <div
+          onClick={() => router.back()}
+          className="flex items-center  bg-slate-900 mt-2 px-2 text-white"
+        >
           <GrPrevious size={15} />
           <p>Back</p>
         </div>

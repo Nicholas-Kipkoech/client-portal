@@ -1,87 +1,92 @@
-"use client";
-import { ConfigProvider, Table } from "antd";
-import React, { useContext } from "react";
-import { GrPrevious } from "react-icons/gr";
-import { useRouter } from "next/navigation";
-import { format3months, formatDate } from "@/app/utils/helpers";
-import ReportsContext from "@/app/context/reports/reports-context";
+'use client'
+import { ConfigProvider, Table } from 'antd'
+import React, { useContext } from 'react'
+import { GrPrevious } from 'react-icons/gr'
+import { useRouter } from 'next/navigation'
+import { format3months, formatDate } from '@/app/utils/helpers'
+import ReportsContext from '@/app/context/reports/reports-context'
+import { useContextApi } from '@/app/context/context'
 
 const UpcomingRenewals = () => {
-  const { upcomingRenewals }: any = useContext(ReportsContext);
-  const { next3Month, systemDate } = format3months();
+  const { upcomingRenewals }: any = useContext(ReportsContext)
+  const { next3Month, systemDate } = format3months()
+  const { fromDate, toDate }: any = useContextApi()
 
   const columns = [
     {
-      title: "Policy No",
-      dataIndex: "policyNo",
+      title: 'Policy No',
+      dataIndex: 'policyNo',
     },
     {
-      title: "Insured",
-      dataIndex: "insured",
+      title: 'Insured',
+      dataIndex: 'insured',
     },
     {
-      title: "Intermediary",
-      dataIndex: "intermediary",
+      title: 'Intermediary',
+      dataIndex: 'intermediary',
     },
     {
-      title: "Product",
-      dataIndex: "product",
+      title: 'Product',
+      dataIndex: 'product',
     },
     {
-      title: "Expiry Date",
-      dataIndex: "lossDate",
+      title: 'Expiry Date',
+      dataIndex: 'lossDate',
       render: (_: any, item: any) => <p> {formatDate(item.expiryDate)}</p>,
     },
     {
-      title: "Sum Insured",
-      dataIndex: "intimationDate",
+      title: 'Sum Insured',
+      dataIndex: 'intimationDate',
       render: (_: any, item: any) => <p>{item.sumInsured.toLocaleString()}</p>,
     },
     {
-      title: "Current Premium",
-      dataIndex: "currency",
+      title: 'Current Premium',
+      dataIndex: 'currency',
       render: (_: any, item: any) => (
         <p>{item.currentPremium.toLocaleString()}</p>
       ),
     },
     {
-      title: "Renewal Premium",
-      dataIndex: "currency",
+      title: 'Renewal Premium',
+      dataIndex: 'currency',
       render: (_: any, item: any) => (
         <p>{item.renewalPremium.toLocaleString()}</p>
       ),
     },
     {
-      title: "Loss Ratio",
-      dataIndex: "total",
+      title: 'Loss Ratio',
+      dataIndex: 'total',
       render: (_: any, item: any) => <p> {item.lossRatio}/%</p>,
     },
 
     {
-      title: "Branch",
-      dataIndex: "branch",
+      title: 'Branch',
+      dataIndex: 'branch',
     },
     {
-      title: "Phone No",
-      dataIndex: "phoneNo",
+      title: 'Phone No',
+      dataIndex: 'phoneNo',
     },
     {
-      title: "Email",
-      dataIndex: "email",
+      title: 'Email',
+      dataIndex: 'email',
     },
     {
-      title: "Reason",
-      dataIndex: "paid",
+      title: 'Reason',
+      dataIndex: 'paid',
       render: (_: any, item: any) => (
-        <p> {item.reason ? item.reason : "null"}</p>
+        <p> {item.reason ? item.reason : 'null'}</p>
       ),
     },
-  ];
-  const router = useRouter();
+  ]
+  const router = useRouter()
   return (
     <div>
+      <p className="flex justify-center font-bold">
+        Running Period [ {fromDate}-{toDate} ]
+      </p>
       <div className="flex justify-between items-center">
-        <div className="flex items-center" onClick={() => router.back()}>
+        <div className="flex items-center  bg-slate-900 mt-2 px-2 text-white">
           <GrPrevious size={15} />
           <p>Back</p>
         </div>
@@ -95,10 +100,10 @@ const UpcomingRenewals = () => {
         theme={{
           components: {
             Table: {
-              headerBg: "#092332",
-              headerColor: "white",
+              headerBg: '#092332',
+              headerColor: 'white',
               padding: 2,
-              rowHoverBg: "#cb7529",
+              rowHoverBg: '#cb7529',
             },
           },
         }}
@@ -112,7 +117,7 @@ const UpcomingRenewals = () => {
         />
       </ConfigProvider>
     </div>
-  );
-};
+  )
+}
 
-export default UpcomingRenewals;
+export default UpcomingRenewals

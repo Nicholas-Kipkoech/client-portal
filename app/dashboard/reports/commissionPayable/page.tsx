@@ -4,6 +4,7 @@ import React, { useContext } from 'react'
 import { GrPrevious } from 'react-icons/gr'
 import { useRouter } from 'next/navigation'
 import ReportsContext from '@/app/context/reports/reports-context'
+import { useContextApi } from '@/app/context/context'
 
 const CommissionPayble = () => {
   function calculatePercentage(num1: number, num2: number): any {
@@ -11,6 +12,7 @@ const CommissionPayble = () => {
     const absNum2 = Math.abs(num2)
     return Math.floor(100 / (absNum1 / absNum2))
   }
+  const { fromDate, toDate }: any = useContextApi()
 
   const {
     filteredCommissionPayable,
@@ -122,8 +124,11 @@ const CommissionPayble = () => {
   const router = useRouter()
   return (
     <div>
+      <p className="flex justify-center font-bold">
+        Running Period [ {fromDate}-{toDate} ]
+      </p>
       <div className="flex justify-between items-center">
-        <div className="flex items-center" onClick={() => router.back()}>
+        <div className="flex items-center  bg-slate-900 mt-2 px-2 text-white">
           <GrPrevious size={15} />
           <p>Back</p>
         </div>

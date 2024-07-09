@@ -1,66 +1,68 @@
-"use client";
-import { ConfigProvider, Table } from "antd";
-import React, { useContext, useState } from "react";
+'use client'
+import { ConfigProvider, Table } from 'antd'
+import React, { useContext, useState } from 'react'
 
-import { GrPrevious } from "react-icons/gr";
-import { useRouter } from "next/navigation";
-import { formatDate } from "@/app/utils/helpers";
-import CustomInput from "@/app/utils/CustomInput";
-import CustomButton from "@/app/utils/CustomButtom";
-import ClaimsContext from "@/app/context/claims/claims-context";
+import { GrPrevious } from 'react-icons/gr'
+import { useRouter } from 'next/navigation'
+import { formatDate } from '@/app/utils/helpers'
+import CustomInput from '@/app/utils/CustomInput'
+import CustomButton from '@/app/utils/CustomButtom'
+import ClaimsContext from '@/app/context/claims/claims-context'
+import { useContextApi } from '@/app/context/context'
 
 const AllClaim = () => {
-  const { claims, loadingClaims }: any = useContext(ClaimsContext);
+  const { claims, loadingClaims }: any = useContext(ClaimsContext)
+  const { fromDate, toDate }: any = useContextApi()
 
-  const [initialClaims, setInitialClaims] = useState([]);
+  const [initialClaims, setInitialClaims] = useState([])
 
   const [searchParams, setSearchParams] = useState<any>({
-    insured: "",
-    carRegNo: "",
-    policyNumber: "",
-  });
+    insured: '',
+    carRegNo: '',
+    policyNumber: '',
+  })
 
   const handleSearch = () => {
     const filteredClaims = claims.filter((claim: any) => {
       for (const key in searchParams) {
         if (searchParams[key]) {
           // Check if the search param is not empty
-          const fieldValue = claim[key]?.toLowerCase(); // Get the field value of the policy (if exists)
-          const searchTerm = searchParams[key].toLowerCase(); // Get the search term
+          const fieldValue = claim[key]?.toLowerCase() // Get the field value of the policy (if exists)
+          const searchTerm = searchParams[key].toLowerCase() // Get the search term
           if (fieldValue && fieldValue.includes(searchTerm)) {
-            return true; // Include policy if field value matches the search term
+            return true // Include policy if field value matches the search term
           }
         }
       }
-      return false;
-    });
-    setInitialClaims(filteredClaims);
-  };
+      return false
+    })
+    setInitialClaims(filteredClaims)
+  }
 
   const handleReset = () => {
     setSearchParams({
-      insured: "",
-      carRegNo: "",
-      policyNumber: "",
-      lossDate: "",
-    });
-    setInitialClaims(claims);
-  };
+      insured: '',
+      carRegNo: '',
+      policyNumber: '',
+      lossDate: '',
+    })
+    setInitialClaims(claims)
+  }
 
   const columns = [
     {
-      title: "Claim No",
-      dataIndex: "claimNumber",
+      title: 'Claim No',
+      dataIndex: 'claimNumber',
     },
     {
-      title: "Status",
-      dataIndex: "status",
+      title: 'Status',
+      dataIndex: 'status',
       render: (_: any, item: any) => (
         <div
           className={`${
-            item.status === "Open"
-              ? "bg-blue-400 text-black"
-              : "bg-red-400 text-white"
+            item.status === 'Open'
+              ? 'bg-blue-400 text-black'
+              : 'bg-red-400 text-white'
           } w-[6rem] h-[2rem] rounded-md flex items-center justify-center`}
         >
           {item.status}
@@ -68,12 +70,12 @@ const AllClaim = () => {
       ),
     },
     {
-      title: "Policy No",
-      dataIndex: "policyNumber",
+      title: 'Policy No',
+      dataIndex: 'policyNumber',
     },
     {
-      title: "Insured",
-      dataIndex: "invoiceNumber",
+      title: 'Insured',
+      dataIndex: 'invoiceNumber',
       render: (_: any, item: any) => (
         <div>
           <p className="text-[13px] font-bold">{item.insured}</p>
@@ -84,35 +86,38 @@ const AllClaim = () => {
       ),
     },
     {
-      title: "Loss Date",
-      dataIndex: "lossDate",
+      title: 'Loss Date',
+      dataIndex: 'lossDate',
       render: (_: any, item: any) => <p>{formatDate(item.lossDate)}</p>,
     },
     {
-      title: "Intimation Date",
-      dataIndex: "intimationDate",
+      title: 'Intimation Date',
+      dataIndex: 'intimationDate',
       render: (_: any, item: any) => <p>{formatDate(item.intimationDate)}</p>,
     },
     {
-      title: "Currency",
-      dataIndex: "currency",
+      title: 'Currency',
+      dataIndex: 'currency',
     },
     {
-      title: "Outstanding",
-      dataIndex: "total",
+      title: 'Outstanding',
+      dataIndex: 'total',
       render: (_: any, item: any) => <p>{item.total.toLocaleString()}</p>,
     },
     {
-      title: "Paid",
-      dataIndex: "paid",
+      title: 'Paid',
+      dataIndex: 'paid',
       render: (_: any, item: any) => <p>{item.paid.toLocaleString()}</p>,
     },
-  ];
-  const router = useRouter();
+  ]
+  const router = useRouter()
   return (
     <div>
+      <p className="flex justify-center font-bold">
+        Running Period [ {fromDate}-{toDate} ]
+      </p>
       <div className="flex justify-between items-center">
-        <div className="flex items-center" onClick={() => router.back()}>
+        <div className="flex items-center  bg-slate-900 mt-2 px-2 text-white">
           <GrPrevious size={15} />
           <p>Back</p>
         </div>
@@ -163,10 +168,10 @@ const AllClaim = () => {
         theme={{
           components: {
             Table: {
-              headerBg: "#092332",
-              headerColor: "white",
+              headerBg: '#092332',
+              headerColor: 'white',
               padding: 2,
-              rowHoverBg: "#cb7529",
+              rowHoverBg: '#cb7529',
             },
           },
         }}
@@ -180,7 +185,7 @@ const AllClaim = () => {
         />
       </ConfigProvider>
     </div>
-  );
-};
+  )
+}
 
-export default AllClaim;
+export default AllClaim

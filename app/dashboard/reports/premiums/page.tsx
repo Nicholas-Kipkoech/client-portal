@@ -167,6 +167,9 @@ const Premiums = () => {
 
   return (
     <div className="flex flex-col items-center justify-center md:mt-[6rem] sm:mt-[2rem]">
+      <p className="flex justify-center font-bold">
+        Running Period [ {fromDate}-{toDate} ]
+      </p>
       <div className="md:w-[60%] sm:w-full flex flex-col gap-2 border p-2">
         <div className="flex sm:flex-col md:flex-row items-center justify-center gap-2">
           <div className="flex flex-col md:mt-2 sm:mt-1">
