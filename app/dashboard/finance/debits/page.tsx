@@ -5,45 +5,48 @@ import CustomButton from '@/app/utils/CustomButtom'
 import CustomInput from '@/app/utils/CustomInput'
 import { formatDate } from '@/app/utils/helpers'
 import { ConfigProvider, Table } from 'antd'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 const Debits = () => {
   const { debits }: any = useContext(FinanceContext)
+
   const { fromDate, toDate }: any = useContextApi()
 
   const [initialDebits, setDebits] = useState([])
-  const [searchParams, setSearchParams] = useState({
+  const [searchParams, setSearchParams] = useState<any>({
     insured: '',
-    carRegNo: '',
-    policyNumber: '',
-    debitNo: '',
+    vehicleNo: '',
+    policyNo: '',
+    docNumber: '',
     endNo: '',
   })
+  useEffect(() => {
+    setDebits(debits)
+  }, [debits])
 
   const handleSearch = () => {
-    const filteredClaims = debits.filter((claim: any) => {
+    const filteredDebits = debits.filter((debit: any) => {
+      console.log(debit)
       for (const key in searchParams) {
-        if (searchParams[key]) {
-          // Check if the search param is not empty
-          const fieldValue = claim[key]?.toLowerCase() // Get the field value of the policy (if exists)
-          const searchTerm = searchParams[key].toLowerCase() // Get the search term
+        if (searchParams[key] && debit[key]) {
+          const fieldValue = debit[key].toString().toLowerCase()
+          const searchTerm = searchParams[key].toLowerCase()
           if (fieldValue && fieldValue.includes(searchTerm)) {
-            return true // Include policy if field value matches the search term
+            return true // Exclude if any term doesn't match
           }
         }
       }
-      return false
+      return false // Include if all terms match
     })
-    setDebits(filteredClaims)
+    setDebits(filteredDebits)
   }
-  console.log(debits)
 
   const handleReset = () => {
     setSearchParams({
       insured: '',
-      carRegNo: '',
-      policyNumber: '',
-      debitNo: '',
+      vehicleNo: '',
+      policyNo: '',
+      docNumber: '',
       endNo: '',
     })
     setDebits(debits)
@@ -121,9 +124,9 @@ const Debits = () => {
         <CustomInput
           name="Debit No"
           className="border md:w-[15rem] p-2 sm:w-full"
-          value={searchParams.debitNo}
+          value={searchParams.docNumber}
           onChange={(e) =>
-            setSearchParams({ ...searchParams, debitNo: e.target.value })
+            setSearchParams({ ...searchParams, docNumber: e.target.value })
           }
         />
         <CustomInput
@@ -137,17 +140,17 @@ const Debits = () => {
         <CustomInput
           name="Vehicle Reg No"
           className="border md:w-[10rem] p-2 sm:w-full"
-          value={searchParams.carRegNo}
+          value={searchParams.vehicleNo}
           onChange={(e) =>
-            setSearchParams({ ...searchParams, carRegNo: e.target.value })
+            setSearchParams({ ...searchParams, vehicleNo: e.target.value })
           }
         />
         <CustomInput
           name="Policy No"
           className="border md:w-[15rem] p-2 sm:w-full"
-          value={searchParams.policyNumber}
+          value={searchParams.policyNo}
           onChange={(e) =>
-            setSearchParams({ ...searchParams, policyNumber: e.target.value })
+            setSearchParams({ ...searchParams, policyNo: e.target.value })
           }
         />
         <CustomInput
@@ -186,7 +189,12 @@ const Debits = () => {
           },
         }}
       >
-        <Table className="mt-2" columns={columns} dataSource={debits} />
+        <Table
+          className="mt-2"
+          columns={columns}
+          dataSource={initialDebits}
+          scroll={{ x: 1200 }}
+        />
       </ConfigProvider>
     </div>
   )
