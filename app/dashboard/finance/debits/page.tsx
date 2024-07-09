@@ -26,9 +26,8 @@ const Debits = () => {
 
   const handleSearch = () => {
     const filteredDebits = debits.filter((debit: any) => {
-      console.log(debit)
       for (const key in searchParams) {
-        if (searchParams[key] && debit[key]) {
+        if (searchParams[key]) {
           const fieldValue = debit[key].toString().toLowerCase()
           const searchTerm = searchParams[key].toLowerCase()
           if (fieldValue && fieldValue.includes(searchTerm)) {
