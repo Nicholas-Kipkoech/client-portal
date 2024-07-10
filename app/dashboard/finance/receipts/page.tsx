@@ -167,6 +167,7 @@ const Receipts = () => {
           className="mt-2"
           columns={columns}
           dataSource={initialReceipt.length > 0 ? initialReceipt : receiptsData}
+          scroll={{ x: 2000 }}
         />
       </ConfigProvider>
     </div>
