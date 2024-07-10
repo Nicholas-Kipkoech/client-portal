@@ -187,17 +187,14 @@ const Navbar = () => {
             </div>
             <div className="flex gap-2 items-center">
               <div>
-                <p className="font-bold text-[0.8rem] ">{user.userDesc}</p>
-                {user.entName === '' && (
-                  <>
-                    <p className="font-bold text-[0.8rem] ">
-                      Category [{user.aentCode === '70' ? 'Broker' : 'Client'}]
-                    </p>
-                    <p className="font-bold text-[0.8rem] ">
-                      Code [{user.aentCode}]
-                    </p>
-                  </>
-                )}
+                <p className="font-bold text-[0.8rem] ">{user.entName}</p>
+                <p className="font-bold text-[0.6rem] ">{user.userDesc}</p>
+                <p className="font-bold text-[0.6rem] ">
+                  Category [{user.aentCode === '70' ? 'Broker' : 'Client'}]
+                </p>
+                <p className="font-bold text-[0.6rem] ">
+                  Code [{user.aentCode}]
+                </p>
               </div>
 
               <Menu>
