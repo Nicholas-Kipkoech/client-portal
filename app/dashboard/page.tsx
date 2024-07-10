@@ -152,91 +152,100 @@ const Dashboard = () => {
             />
           </div>
           <div className="pt-2 flex flex-wrap gap-2 justify-center ">
-            <CustomCard
-              name="Running Policies"
-              count={filteredPolicies.length}
-              to="policies/runningPolicies"
-            />
-            <CustomCard
-              name="Open Claims"
-              count={openClaims.length}
-              to="claims/openClaims"
-            />
-            <CustomCard
-              name="Debits"
-              count={debits.length}
-              to="finance/debits"
-            />
-            <CustomCard
-              name="Claim Credit Notes"
-              count={claimCreditNotes.length}
-              to="finance/claimCreditNotes"
-            />
-            <CustomCard
-              name="Premium Booked"
-              count={totalPremium}
-              to="reports/premiums"
-              currency={true}
-            />
-            <CustomCard
-              name="Commission Earned"
-              count={totalCommission}
-              to=""
-              currency={true}
-            />
+            {hasRequiredRoles(['bp_policies']) && (
+              <CustomCard
+                name="Running Policies"
+                count={filteredPolicies.length}
+                to="policies/runningPolicies"
+              />
+            )}
+            {hasRequiredRoles(['bp_claims']) && (
+              <>
+                <CustomCard
+                  name="Open Claims"
+                  count={openClaims.length}
+                  to="claims/openClaims"
+                />
+              </>
+            )}
+            {hasRequiredRoles(['bp_downloads']) && (
+              <>
+                <CustomCard
+                  name="Debits"
+                  count={debits.length}
+                  to="finance/debits"
+                />
+                <CustomCard
+                  name="Claim Credit Notes"
+                  count={claimCreditNotes.length}
+                  to="finance/claimCreditNotes"
+                />
+              </>
+            )}
+            {hasRequiredRoles(['bp_reports']) && (
+              <>
+                <CustomCard
+                  name="Premium Booked"
+                  count={totalPremium}
+                  to="reports/premiums"
+                  currency={true}
+                />
+                <CustomCard
+                  name="Commission Earned"
+                  count={totalCommission}
+                  to=""
+                  currency={true}
+                />
+              </>
+            )}
+            {hasRequiredRoles(['bp_reports']) && (
+              <Link
+                href={'dashboard/reports/commissionPayable'}
+                className={`h-[10rem] bg-white w-[20rem] flex flex-col justify-center border cursor-pointer shadow-2xl rounded-[20px] hover:scale-105 hover:border-[#cb7529] hover:border-2 transition-transform duration-300 ease-in-out `}
+              >
+                <div className="flex gap-1 flex-col text-[14px] ">
+                  <p className="flex items-center justify-center text-[1.2rem] text-slate-600">
+                    Commision Payable
+                  </p>
+                  {Object.entries(commPayableResults).map(
+                    ([currencyCode, { total, count }]: any, key) => (
+                      <div className="justify-between flex px-2" key={key}>
+                        <p className="text-[1.5rem] font-bold flex justify-start items-start">
+                          {currencyCode} {total.toLocaleString()}
+                        </p>
+                        <p className="text-[20px] font-bold flex justify-start items-start">
+                          {count.toLocaleString()}
+                        </p>
+                      </div>
+                    ),
+                  )}
+                </div>
+              </Link>
+            )}
+            {hasRequiredRoles(['bp_downloads']) && (
+              <div
+                className={`h-[10rem] bg-white w-[20rem] flex flex-col justify-center border cursor-pointer shadow-2xl rounded-[20px] hover:scale-105 hover:border-[#cb7529] hover:border-2  transition-transform duration-300 ease-in-out  `}
+              >
+                <div className="flex gap-1 flex-col text-[14px] ">
+                  <p className="flex items-center justify-center text-[1.2rem] text-slate-600">
+                    Receipts
+                  </p>
 
-            <Link
-              href={'dashboard/reports/commissionPayable'}
-              className={`h-[10rem] bg-white w-[20rem] flex flex-col justify-center border cursor-pointer shadow-2xl rounded-[20px] hover:scale-105 hover:border-[#cb7529] hover:border-2 transition-transform duration-300 ease-in-out `}
-            >
-              <div className="flex gap-1 flex-col text-[14px] ">
-                <p className="flex items-center justify-center text-[1.2rem] text-slate-600">
-                  Commision Payable
-                </p>
-                {/* <div className="justify-between flex font-bold px-2">
-      <p>Amount</p>
-      <p>Count</p>
-    </div> */}
-                {Object.entries(commPayableResults).map(
-                  ([currencyCode, { total, count }]: any, key) => (
-                    <div className="justify-between flex px-2" key={key}>
-                      <p className="text-[1.5rem] font-bold flex justify-start items-start">
-                        {currencyCode} {total.toLocaleString()}
-                      </p>
-                      <p className="text-[20px] font-bold flex justify-start items-start">
-                        {count.toLocaleString()}
-                      </p>
-                    </div>
-                  ),
-                )}
+                  {Object.entries(receiptResults).map(
+                    ([currencyCode, { total, count }]: any, key) => (
+                      <div className="justify-between flex px-2" key={key}>
+                        <p className="text-[1.5rem] font-bold flex justify-start items-start">
+                          {currencyCode} {total.toLocaleString()}
+                        </p>
+                        <p className="text-[20px] font-bold flex justify-start items-start">
+                          {count.toLocaleString()}
+                        </p>
+                      </div>
+                    ),
+                  )}
+                </div>
               </div>
-            </Link>
-
-            <div
-              className={`h-[10rem] bg-white w-[20rem] flex flex-col justify-center border cursor-pointer shadow-2xl rounded-[20px] hover:scale-105 hover:border-[#cb7529] hover:border-2  transition-transform duration-300 ease-in-out  `}
-            >
-              <div className="flex gap-1 flex-col text-[14px] ">
-                <p className="flex items-center justify-center text-[1.2rem] text-slate-600">
-                  Receipts
-                </p>
-                {/* <div className="justify-between flex font-bold px-2">
-      <p>Amount</p>
-      <p>Count</p>
-    </div> */}
-                {Object.entries(receiptResults).map(
-                  ([currencyCode, { total, count }]: any, key) => (
-                    <div className="justify-between flex px-2" key={key}>
-                      <p className="text-[1.5rem] font-bold flex justify-start items-start">
-                        {currencyCode} {total.toLocaleString()}
-                      </p>
-                      <p className="text-[20px] font-bold flex justify-start items-start">
-                        {count.toLocaleString()}
-                      </p>
-                    </div>
-                  ),
-                )}
-              </div>
-            </div>
+            )}
           </div>
         </>
       )}
