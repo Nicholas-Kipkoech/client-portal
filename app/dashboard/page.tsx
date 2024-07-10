@@ -118,7 +118,7 @@ const Dashboard = () => {
       {!hasRequiredRoles(preferredRoles) ? (
         <div className="flex justify-center h-[80vh] items-center flex-col">
           <p className="text-[2rem] text-red-600 font-bold">
-            You have not be assigned to broker or agent!! Contact administrator.
+            You have not be assigned to broker or agent!! Contact Administrator.
           </p>
         </div>
       ) : (
