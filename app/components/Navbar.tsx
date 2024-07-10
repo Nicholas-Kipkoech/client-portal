@@ -188,7 +188,6 @@ const Navbar = () => {
             <div className="flex gap-2 items-center">
               <div>
                 <p className="font-bold text-[0.8rem] ">{user.userDesc}</p>
-
                 {user.entName === '' && (
                   <>
                     <p className="font-bold text-[0.8rem] ">
