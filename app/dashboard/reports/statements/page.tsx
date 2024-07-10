@@ -10,18 +10,10 @@ import { useContextApi } from '@/app/context/context'
 import CustomSelect from '@/app/utils/CustomSelect'
 
 const Statements = () => {
-  const {
-    premiumReports,
-    setFromDate,
-    setToDate,
-    loadingPremiumReports,
-    fromDate,
-    toDate: _toDate,
-  }: any = useContext(ReportsContext)
   const { user }: any = useContextApi()
 
-  const [fmDate, setFmDate] = useState('')
-  const [toDate, setTdDate] = useState('')
+  const [fromDate, setFromDate] = useState('1-Jan-2024')
+  const [toDate, setToDate] = useState('31-Dec-2024')
   const [currency, setCurrency] = useState('KSH')
 
   const handleToDate = (date: any, dateString: any) => {
@@ -33,7 +25,7 @@ const Statements = () => {
       formattedMonth = Months[Number(month - 1)]
     }
     const formattedToDate = day + '-' + formattedMonth + '-' + year
-    setTdDate(formattedToDate)
+    setToDate(formattedToDate)
   }
 
   const handleFromDate = (date: any, dateString: any) => {
@@ -45,14 +37,14 @@ const Statements = () => {
       formattedMonth = Months[Number(month - 1)]
     }
     const formattedToDate = day + '-' + formattedMonth + '-' + year
-    setFmDate(formattedToDate)
+    setFromDate(formattedToDate)
   }
-  const checkDate = fmDate.split('-').join('') === 'undefinedundefined'
+  const checkDate = fromDate.split('-').join('') === 'undefinedundefined'
   const handleRunReports = () => {
     if (checkDate === true) {
       alert('Please select from date and to date')
     } else {
-      setFromDate(fmDate)
+      setFromDate(fromDate)
       setToDate(toDate)
     }
   }
@@ -71,12 +63,12 @@ const Statements = () => {
     }
   })
 
-  let statementsPdfUrl = `http://192.168.1.112:8001/icon/reports?p_module_name=GL_STATEMENT&destype=cache&desformat=PDF&rep_param1=&rep_param2=&rep_param3=&rep_param4=&rep_param5=&rep_param6=&rep_param7=&rep_param8=&rep_param9=&rep_doc_index=&rep_doc_org=50&rep_doc_no=&p_role_code=GL.MGR&p_org_code=50&p_menu_code=GL000013&p_grp_code=GL.MGR&p_os_code=01&p_user_code=1000000&p_user_name=ICON,%20Admin%20&p_report_title=CUSTOMER%20STATEMENT&P_ORG_CODE=50&P_CURRENCY=${currency}&P_BRANCH=&P_CATEGORY=${user.aentCode}&P_INTERMEDIARY=${user.entCode}&P_FM_DT=${fromDate}&P_TO_DT=${_toDate}&P_PRODUCT_SORT=Y&P_SHOW_AGEING=Y`
-  let statementExcelUrl = `http://192.168.1.112:8001/icon/reports?p_module_name=GL_STATEMENT&destype=cache&desformat=SPREADSHEET&rep_param1=&rep_param2=&rep_param3=&rep_param4=&rep_param5=&rep_param6=&rep_param7=&rep_param8=&rep_param9=&rep_doc_index=&rep_doc_org=50&rep_doc_no=&p_role_code=GL.MGR&p_org_code=50&p_menu_code=GL000013&p_grp_code=GL.MGR&p_os_code=01&p_user_code=1000000&p_user_name=ICON,%20Admin%20&p_report_title=CUSTOMER%20STATEMENT&P_ORG_CODE=50&P_CURRENCY=${currency}&P_BRANCH=&P_CATEGORY=${user.aentCode}&P_INTERMEDIARY=${user.entCode}&P_FM_DT=${fromDate}&P_TO_DT=${_toDate}&P_PRODUCT_SORT=Y&P_SHOW_AGEING=Y`
+  let statementsPdfUrl = `http://192.168.1.112:8001/icon/reports?p_module_name=GL_STATEMENT&destype=cache&desformat=PDF&rep_param1=&rep_param2=&rep_param3=&rep_param4=&rep_param5=&rep_param6=&rep_param7=&rep_param8=&rep_param9=&rep_doc_index=&rep_doc_org=50&rep_doc_no=&p_role_code=GL.MGR&p_org_code=50&p_menu_code=GL000013&p_grp_code=GL.MGR&p_os_code=01&p_user_code=1000000&p_user_name=ICON,%20Admin%20&p_report_title=CUSTOMER%20STATEMENT&P_ORG_CODE=50&P_CURRENCY=${currency}&P_BRANCH=&P_CATEGORY=${user.aentCode}&P_INTERMEDIARY=${user.entCode}&P_FM_DT=${fromDate}&P_TO_DT=${toDate}&P_PRODUCT_SORT=Y&P_SHOW_AGEING=Y`
+  let statementExcelUrl = `http://192.168.1.112:8001/icon/reports?p_module_name=GL_STATEMENT&destype=cache&desformat=SPREADSHEET&rep_param1=&rep_param2=&rep_param3=&rep_param4=&rep_param5=&rep_param6=&rep_param7=&rep_param8=&rep_param9=&rep_doc_index=&rep_doc_org=50&rep_doc_no=&p_role_code=GL.MGR&p_org_code=50&p_menu_code=GL000013&p_grp_code=GL.MGR&p_os_code=01&p_user_code=1000000&p_user_name=ICON,%20Admin%20&p_report_title=CUSTOMER%20STATEMENT&P_ORG_CODE=50&P_CURRENCY=${currency}&P_BRANCH=&P_CATEGORY=${user.aentCode}&P_INTERMEDIARY=${user.entCode}&P_FM_DT=${fromDate}&P_TO_DT=${toDate}&P_PRODUCT_SORT=Y&P_SHOW_AGEING=Y`
   return (
     <div className="flex flex-col items-center justify-center md:mt-[6rem] sm:mt-[2rem]">
       <p className="flex justify-center font-bold">
-        Running Period [ {fromDate}-{_toDate} ]
+        Running Period [ {fromDate}-{toDate} ]
       </p>
       <div className="flex flex-col gap-2 border w-auto p-2">
         <div className="flex sm:flex-col md:flex-row items-center justify-center gap-2">
@@ -101,19 +93,19 @@ const Statements = () => {
             <label>To date</label>
             <DatePicker
               format={'DD-MM-YYYY'}
-              placeholder={_toDate}
+              placeholder={toDate}
               className={'w-[250px] h-[40px] border p-2 rounded-md'}
               onChange={handleToDate}
             />
           </div>
           <CustomButton
-            name={loadingPremiumReports ? 'Running...' : 'Run'}
+            name={'Run'}
             onClick={handleRunReports}
             className="border h-[40px] w-[15rem] bg-slate-800 text-white rounded-md md:mt-8 sm:mt-4"
           />
         </div>
         <p className="md:text-[1.5rem] sm:text-[0.8rem] font-bold flex justify-center">
-          [ {fmDate ? fmDate : fromDate} to {toDate ? toDate : _toDate}]
+          [ {fromDate} to {toDate}]
         </p>
         <div className="flex justify-center gap-2">
           <div className=" flex justify-center">
