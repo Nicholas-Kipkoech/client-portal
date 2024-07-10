@@ -73,6 +73,23 @@ const Dashboard = () => {
     }
   }
 
+  const preferredRoles = [
+    'bp_insights',
+    'bp_policies',
+    'bp_claims',
+    'bp_reports',
+    'bp_downloads',
+    'bp_risk_notes',
+    'bp_travel',
+  ]
+
+  const hasRequiredRoles = (itemRoles: string[]) => {
+    if (itemRoles.length === 0) return false
+    if (roles.length !== 0) {
+      return itemRoles.some((role) => roles?.includes(role.toUpperCase()))
+    }
+  }
+
   const CustomCard = ({
     name,
     count,
@@ -98,7 +115,7 @@ const Dashboard = () => {
   }
   return (
     <div className="py-2 ">
-      {roles.length === 0 ? (
+      {!hasRequiredRoles(preferredRoles) ? (
         <div className="flex justify-center h-[80vh] items-center flex-col">
           <p className="text-[2rem] text-red-600 font-bold">
             You have not be assigned to broker or agent!! Contact administrator.
