@@ -1,230 +1,146 @@
 'use client'
-import { ConfigProvider, Spin, Table } from 'antd'
-import React, { useContext } from 'react'
-import { GrPrevious } from 'react-icons/gr'
-import { useRouter } from 'next/navigation'
-import { formatDate } from '@/app/utils/helpers'
-import { LoadingOutlined } from '@ant-design/icons'
 import CsvDownloader from 'react-csv-downloader'
+import React, { useContext, useState } from 'react'
+import { formatDate, Months } from '@/app/utils/helpers'
+import { DatePicker, Spin } from 'antd'
+import CustomButton from '@/app/utils/CustomButtom'
+import { LoadingOutlined } from '@ant-design/icons'
 import ReportsContext from '@/app/context/reports/reports-context'
 import { useContextApi } from '@/app/context/context'
+import CustomSelect from '@/app/utils/CustomSelect'
 
 const Statements = () => {
-  const { glStatements, loadingGl }: any = useContext(ReportsContext)
-  const { fromDate, toDate }: any = useContextApi()
+  const {
+    premiumReports,
+    setFromDate,
+    setToDate,
+    loadingPremiumReports,
+    fromDate,
+    toDate: _toDate,
+  }: any = useContext(ReportsContext)
+  const { user }: any = useContextApi()
 
-  const columns = [
-    {
-      title: 'Issue Date',
-      dataIndex: 'issueDate',
-      render: (_: any, item: any) => <p>{formatDate(item.issueDate)}</p>,
-    },
-    {
-      title: 'Doc No',
-      dataIndex: 'docNo',
-    },
-    {
-      title: 'End No',
-      dataIndex: 'endNo',
-    },
-    {
-      title: 'Debit No',
-      dataIndex: 'debitNo',
-      render: (_: any, item: any) => (
-        <p className="text-[13px]">{item.debitNo}</p>
-      ),
-    },
-    {
-      title: 'Vehicles',
-      dataIndex: 'vehicles',
-      render: (_: any, item: any) => <p> {item.vehicles}</p>,
-    },
-    {
-      title: 'Insured',
-      dataIndex: 'insured',
-      render: (_: any, item: any) => <p>{item.insured}</p>,
-    },
-    {
-      title: 'DR/DC',
-      dataIndex: 'drCr',
-      render: (_: any, item: any) => (
-        <p>{item.drCr === 'D' ? 'Debit' : 'Credit'}</p>
-      ),
-    },
-    {
-      title: 'Currency',
-      dataIndex: 'currency',
-      render: (_: any, item: any) => <p>{item.currency}</p>,
-    },
-    {
-      title: 'Premium',
-      dataIndex: 'premium',
-      render: (_: any, item: any) => (
-        <p> KSH {item.premium.toLocaleString()}</p>
-      ),
-    },
+  const [fmDate, setFmDate] = useState('')
+  const [toDate, setTdDate] = useState('')
+  const [currency, setCurrency] = useState('KSH')
 
-    {
-      title: 'PVT premium',
-      dataIndex: 'PVTprem',
-      render: (_: any, item: any) => (
-        <p> KSH {item.PVTprem.toLocaleString()}</p>
-      ),
-    },
-    {
-      title: 'Stamp Duty',
-      dataIndex: 'stampDuty',
-      render: (_: any, item: any) => (
-        <p>KSH {item.stampDuty.toLocaleString()}</p>
-      ),
-    },
-    {
-      title: 'Training Levy',
-      dataIndex: 'trainingLevy',
-      render: (_: any, item: any) => (
-        <p>KSH {item.trainingLevy.toLocaleString()}</p>
-      ),
-    },
-    {
-      title: 'PHC Fund',
-      dataIndex: 'PHCfund',
-      render: (_: any, item: any) => <p>KSH {item.PHCfund.toLocaleString()}</p>,
-    },
-    {
-      title: 'Comm',
-      dataIndex: 'comm',
-      render: (_: any, item: any) => <p> KSH {item.comm.toLocaleString()}</p>,
-    },
-    {
-      title: 'W Tax',
-      dataIndex: 'Wtax',
-      render: (_: any, item: any) => <p> KSH {item.Wtax.toLocaleString()}</p>,
-    },
-    {
-      title: 'Policy Net',
-      dataIndex: 'policyNet',
-      render: (_: any, item: any) => (
-        <p>
-          {' '}
-          KSH{' '}
-          {(
-            item.premium +
-            item.PVTprem +
-            item.stampDuty +
-            item.Wtax +
-            item.trainingLevy +
-            item.PHCfund -
-            item.comm
-          ).toLocaleString()}
-        </p>
-      ),
-    },
-    {
-      title: 'Credit Net',
-      dataIndex: 'creditNet',
-    },
-  ]
+  const handleToDate = (date: any, dateString: any) => {
+    const [day, month, year] = dateString.split('-')
+    let formattedMonth: any = ''
+    if (month < 10) {
+      formattedMonth = Months[month.toString().slice(1) - 1]
+    } else {
+      formattedMonth = Months[Number(month - 1)]
+    }
+    const formattedToDate = day + '-' + formattedMonth + '-' + year
+    setTdDate(formattedToDate)
+  }
 
-  const mappedColumns = columns.map((column) => {
+  const handleFromDate = (date: any, dateString: any) => {
+    const [day, month, year] = dateString.split('-')
+    let formattedMonth: any = ''
+    if (month < 10) {
+      formattedMonth = Months[month.toString().slice(1) - 1]
+    } else {
+      formattedMonth = Months[Number(month - 1)]
+    }
+    const formattedToDate = day + '-' + formattedMonth + '-' + year
+    setFmDate(formattedToDate)
+  }
+  const checkDate = fmDate.split('-').join('') === 'undefinedundefined'
+  const handleRunReports = () => {
+    if (checkDate === true) {
+      alert('Please select from date and to date')
+    } else {
+      setFromDate(fmDate)
+      setToDate(toDate)
+    }
+  }
+
+  const currencies: any = {
+    KSH: 'Kenya Shilling',
+    USD: 'US Dollar',
+    EURO: 'Euros',
+    GBP: 'British Pound',
+    YEN: 'Japanese Yen',
+  }
+  const currencyOptions = Object.keys(currencies).map((currency) => {
     return {
-      id: column.dataIndex,
-      displayName: column.title,
+      value: currency,
+      label: currencies[currency],
     }
   })
 
-  const mappedStatements = glStatements.map((statement: any) => {
-    return {
-      issueDate: formatDate(statement.issueDate),
-      docNo: statement.docNo,
-      endNo: statement.endNo,
-      debitNo: statement.debitNo,
-      vehicles: statement.vehicles,
-      insured: statement.insured,
-      drCr: statement.drCr === 'D' ? 'Debit' : 'Credit',
-      currency: statement.currency,
-      premium: statement.premium.toLocaleString(),
-      PVTprem: statement.PVTprem.toLocaleString(),
-      stampDuty: statement.stampDuty.toLocaleString(),
-      trainingLevy: statement.trainingLevy.toLocaleString(),
-      PHCfund: statement.PHCfund.toLocaleString(),
-      comm: statement.comm.toLocaleString(),
-      Wtax: statement.Wtax.toLocaleString(),
-      policyNet: Math.floor(
-        statement.premium +
-          statement.PVTprem +
-          statement.stampDuty +
-          statement.trainingLevy +
-          statement.PHCfund +
-          statement.Wtax -
-          statement.comm,
-      ),
-      creditNet: statement.creditNet,
-      outstanding: 0,
-    }
-  })
-
-  const router = useRouter()
+  let statementsPdfUrl = `http://192.168.1.112:8001/icon/reports?p_module_name=GL_STATEMENT&destype=cache&desformat=PDF&rep_param1=&rep_param2=&rep_param3=&rep_param4=&rep_param5=&rep_param6=&rep_param7=&rep_param8=&rep_param9=&rep_doc_index=&rep_doc_org=50&rep_doc_no=&p_role_code=GL.MGR&p_org_code=50&p_menu_code=GL000013&p_grp_code=GL.MGR&p_os_code=01&p_user_code=1000000&p_user_name=ICON,%20Admin%20&p_report_title=CUSTOMER%20STATEMENT&P_ORG_CODE=50&P_CURRENCY=${currency}&P_BRANCH=&P_CATEGORY=${user.aentCode}&P_INTERMEDIARY=${user.entCode}&P_FM_DT=${fromDate}&P_TO_DT=${_toDate}&P_PRODUCT_SORT=Y&P_SHOW_AGEING=Y`
+  let statementExcelUrl = `http://192.168.1.112:8001/icon/reports?p_module_name=GL_STATEMENT&destype=cache&desformat=SPREADSHEET&rep_param1=&rep_param2=&rep_param3=&rep_param4=&rep_param5=&rep_param6=&rep_param7=&rep_param8=&rep_param9=&rep_doc_index=&rep_doc_org=50&rep_doc_no=&p_role_code=GL.MGR&p_org_code=50&p_menu_code=GL000013&p_grp_code=GL.MGR&p_os_code=01&p_user_code=1000000&p_user_name=ICON,%20Admin%20&p_report_title=CUSTOMER%20STATEMENT&P_ORG_CODE=50&P_CURRENCY=${currency}&P_BRANCH=&P_CATEGORY=${user.aentCode}&P_INTERMEDIARY=${user.entCode}&P_FM_DT=${fromDate}&P_TO_DT=${_toDate}&P_PRODUCT_SORT=Y&P_SHOW_AGEING=Y`
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center md:mt-[6rem] sm:mt-[2rem]">
       <p className="flex justify-center font-bold">
-        Running Period [ {fromDate}-{toDate} ]
+        Running Period [ {fromDate}-{_toDate} ]
       </p>
-      <div className="flex justify-between items-center">
-        <div className="flex items-center  bg-slate-900 mt-2 px-2 text-white">
-          <GrPrevious size={15} />
-          <p>Back</p>
-        </div>
-        <p className="md:text-[1.8rem] sm:text-[1.2rem] font-bold">
-          GL Statements
-        </p>
-        <p></p>
-      </div>
-
-      <CsvDownloader
-        disabled={loadingGl}
-        filename={`GL Statements ${new Date(Date.now())}`}
-        extension=".csv"
-        columns={mappedColumns}
-        datas={mappedStatements}
-        className="bg-[#cb7529] h-[3rem] rounded-sm text-white border w-[18rem] m-2 p-2 flex justify-center items-center"
-      >
-        {loadingGl ? (
-          <Spin
-            spinning={loadingGl}
-            indicator={
-              <LoadingOutlined
-                style={{
-                  fontSize: 25,
-                  color: 'white',
-                }}
-              />
-            }
+      <div className="flex flex-col gap-2 border w-auto p-2">
+        <div className="flex sm:flex-col md:flex-row items-center justify-center gap-2">
+          <CustomSelect
+            name={'Currency'}
+            placeholder="select currency"
+            options={currencyOptions}
+            defaultValue={currencyOptions[0]}
+            onChange={(value: any) => setCurrency(value.value)}
+            className="w-[180px]"
           />
-        ) : (
-          `Export to Excel ${mappedStatements.length} records`
-        )}
-      </CsvDownloader>
-
-      <ConfigProvider
-        theme={{
-          components: {
-            Table: {
-              headerBg: '#092332',
-              headerColor: 'white',
-              padding: 2,
-              rowHoverBg: '#cb7529',
-            },
-          },
-        }}
-      >
-        <Table
-          columns={columns}
-          loading={loadingGl}
-          dataSource={glStatements}
-          scroll={{ x: 1800 }}
-          pagination={{ pageSize: 20 }}
-        />
-      </ConfigProvider>
+          <div className="flex flex-col md:mt-2 sm:mt-1">
+            <label>From date</label>
+            <DatePicker
+              format={'DD-MM-YYYY'}
+              placeholder={fromDate}
+              className={'w-[250px] h-[40px] border p-2 rounded-md'}
+              onChange={handleFromDate}
+            />
+          </div>
+          <div className="flex flex-col md:mt-2 sm:mt-1">
+            <label>To date</label>
+            <DatePicker
+              format={'DD-MM-YYYY'}
+              placeholder={_toDate}
+              className={'w-[250px] h-[40px] border p-2 rounded-md'}
+              onChange={handleToDate}
+            />
+          </div>
+          <CustomButton
+            name={loadingPremiumReports ? 'Running...' : 'Run'}
+            onClick={handleRunReports}
+            className="border h-[40px] w-[15rem] bg-slate-800 text-white rounded-md md:mt-8 sm:mt-4"
+          />
+        </div>
+        <p className="md:text-[1.5rem] sm:text-[0.8rem] font-bold flex justify-center">
+          [ {fmDate ? fmDate : fromDate} to {toDate ? toDate : _toDate}]
+        </p>
+        <div className="flex justify-center gap-2">
+          <div className=" flex justify-center">
+            <div className="border h-[40px] flex items-center justify-center w-[15rem] bg-slate-800 text-white rounded-md md:mt-8 sm:mt-4">
+              <a
+                href={statementExcelUrl}
+                target="__blank"
+                className="flex justify-center items-center"
+              >
+                Download Excel
+              </a>
+            </div>
+          </div>
+          <div className=" flex justify-center">
+            <div className="border h-[40px] w-[15rem] items-center justify-center bg-slate-800 text-white rounded-md md:mt-8 sm:mt-4">
+              <a
+                href={statementsPdfUrl}
+                download
+                target="__blank"
+                className="flex justify-center items-center"
+              >
+                Download PDF
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
