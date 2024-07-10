@@ -46,6 +46,7 @@ const Receipts = () => {
     })
     setInitialReceipt(receiptsData)
   }
+  console.log(receiptsData)
   const columns = [
     {
       title: 'Action',
@@ -63,7 +64,7 @@ const Receipts = () => {
       ),
     },
     {
-      title: 'Reeeipt NO',
+      title: 'Receipt NO',
       dataIndex: 'policyNo',
       render: (_: any, item: any) => <p>{item.receiptNo}</p>,
     },
@@ -75,12 +76,7 @@ const Receipts = () => {
     {
       title: 'Intermediary',
       dataIndex: 'endNo',
-      render: (_: any, item: any) => <p>{user.entityName}</p>,
-    },
-    {
-      title: 'Narration',
-      dataIndex: 'product',
-      render: (_: any, item: any) => <p>{item.narration}</p>,
+      render: (_: any, item: any) => <p>{user.entName}</p>,
     },
     {
       title: 'Amount',
@@ -96,6 +92,13 @@ const Receipts = () => {
       title: 'Receipt Mode',
       dataIndex: 'status',
       render: (_: any, item: any) => <p>{item.receiptMode}</p>,
+    },
+    {
+      title: 'Narration',
+      dataIndex: 'product',
+      render: (_: any, item: any) => (
+        <p className="truncate">{item.narration}</p>
+      ),
     },
   ]
   return (
@@ -167,7 +170,7 @@ const Receipts = () => {
           className="mt-2"
           columns={columns}
           dataSource={initialReceipt.length > 0 ? initialReceipt : receiptsData}
-          scroll={{ x: 2000 }}
+          scroll={{ x: 1800 }}
         />
       </ConfigProvider>
     </div>
