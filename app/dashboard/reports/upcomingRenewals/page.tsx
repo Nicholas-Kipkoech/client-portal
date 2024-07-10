@@ -82,9 +82,6 @@ const UpcomingRenewals = () => {
   const router = useRouter()
   return (
     <div>
-      <p className="flex justify-center font-bold">
-        Running Period [ {fromDate}-{toDate} ]
-      </p>
       <div className="flex justify-between items-center">
         <div className="flex items-center  bg-slate-900 mt-2 px-2 text-white">
           <GrPrevious size={15} />

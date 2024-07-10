@@ -39,6 +39,7 @@ const Debits = () => {
     })
     setDebits(filteredDebits)
   }
+  //after reset initialize the debits to the initial debits
 
   const handleReset = () => {
     setSearchParams({
@@ -48,6 +49,7 @@ const Debits = () => {
       docNumber: '',
       endNo: '',
     })
+    //set the debits to the fetched debits
     setDebits(debits)
   }
 
