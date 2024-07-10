@@ -103,3 +103,26 @@ function formatDateWithTime(date) {
 function getMonthName(monthIndex) {
   return Months[monthIndex];
 }
+
+function formatDateToDDMMYYYY(date) {
+  let day = date.getDate().toString().padStart(2, "0");
+  let month = date.getMonth();
+  let year = date.getFullYear();
+  return `${day}-${Months[month]}-${year}`;
+}
+
+export function getDates() {
+  const currentDate = new Date();
+  const startDate = new Date(currentDate.getFullYear(), 0, 1);
+
+  const formattedStartDate = formatDateToDDMMYYYY(startDate);
+  const formattedCurrentDate = formatDateToDDMMYYYY(currentDate);
+
+  console.log(`From Date: ${formattedStartDate}`);
+  console.log(`To Date: ${formattedCurrentDate}`);
+
+  return {
+    startDate: formattedStartDate,
+    endDate: formattedCurrentDate,
+  };
+}

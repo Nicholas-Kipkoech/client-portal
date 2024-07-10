@@ -9,7 +9,7 @@ import {
   getUpcomingRenewals,
   getUserRoles,
 } from '../services/apiServices'
-import { format3months, formatYearly } from '../utils/helpers'
+import { format3months, formatYearly, getDates } from '../utils/helpers'
 
 const Context = createContext({})
 
@@ -36,7 +36,7 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [roles, setRoles] = useState([])
 
   useEffect(() => {
-    const { startDate, endDate } = formatYearly('2024')
+    const { startDate, endDate } = getDates()
     setFromDate(startDate)
     setToDate(endDate)
   }, [])
