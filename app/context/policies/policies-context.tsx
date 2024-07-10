@@ -1,5 +1,6 @@
 'use client'
 import { getPolicies, getProducts } from '@/app/services/apiServices'
+import { getDates } from '@/app/utils/helpers'
 import { jwtDecode } from 'jwt-decode'
 import React, { createContext, useEffect, useState } from 'react'
 
@@ -15,6 +16,15 @@ export const PolicyContextProvider = ({
   const [loadingPolicies, setLoadingPolices] = useState(false)
   const [policyDocuments, setPolicyDocuments] = useState(null)
   const [user, setUser] = useState<any>({})
+
+  const [fromDate, setFromDate] = useState('')
+  const [toDate, setToDate] = useState('')
+
+  useEffect(() => {
+    const { startDate, endDate } = getDates()
+    setFromDate(startDate)
+    setToDate(endDate)
+  }, [])
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -41,13 +51,15 @@ export const PolicyContextProvider = ({
         const response = await getPolicies({
           intermediaryCode: user?.aentCode,
           clientCode: user?.entCode,
+          fromDate: fromDate,
+          toDate: toDate,
         })
         setLoadingPolices(false)
         setPolicies(response.results)
       }
     }
     fetchPolicies()
-  }, [user])
+  }, [user, fromDate, toDate])
 
   const currentYear = new Date(Date.now()).getFullYear()
   const nextYear = currentYear + 1
@@ -66,6 +78,8 @@ export const PolicyContextProvider = ({
         products,
         policyDocuments,
         setPolicyDocuments,
+        setFromDate,
+        setToDate,
       }}
     >
       {children}

@@ -1,8 +1,10 @@
 'use client'
 import { getClaims } from '@/app/services/apiServices'
+import { getDates } from '@/app/utils/helpers'
 import { ThemeContext } from '@emotion/react'
 import { jwtDecode } from 'jwt-decode'
 import React, { createContext, useEffect, useState } from 'react'
+import { useContextApi } from '../context'
 
 const ClaimsContext = createContext({})
 
@@ -14,6 +16,8 @@ export const ClaimsContextProvider = ({
   const [claims, setClaims] = useState([])
   const [loadingClaims, setLoadingClaims] = useState(false)
   const [user, setUser] = useState<any>({})
+
+  const { fromDate, toDate }: any = useContextApi()
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -32,6 +36,8 @@ export const ClaimsContextProvider = ({
         const response = await getClaims({
           intermediaryCode: user?.aentCode,
           clientCode: user?.entCode,
+          fromDate,
+          toDate,
         })
         setLoadingClaims(false)
         setClaims(response.results)

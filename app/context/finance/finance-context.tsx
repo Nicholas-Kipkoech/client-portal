@@ -4,6 +4,7 @@ import {
   getClaimDebits,
   getReceipts,
 } from '@/app/services/apiServices'
+import { getDates } from '@/app/utils/helpers'
 import { jwtDecode } from 'jwt-decode'
 import React, { createContext, useEffect, useState } from 'react'
 
@@ -18,6 +19,13 @@ export const FinanceContextProvider = ({
   const [debits, setDebits] = useState([])
   const [receiptsData, setReceiptsData] = useState([])
 
+  const [fromDate, setFromDate] = useState('')
+  const [toDate, setToDate] = useState('')
+  useEffect(() => {
+    const { startDate, endDate } = getDates()
+    setFromDate(startDate)
+    setToDate(endDate)
+  }, [])
   const [user, setUser] = useState<any>({})
 
   useEffect(() => {
@@ -62,6 +70,8 @@ export const FinanceContextProvider = ({
         const response = await getReceipts({
           intermediaryCode: user?.aentCode,
           clientCode: user?.entCode,
+          fromDate,
+          toDate,
         })
         setReceiptsData(response.results)
       }

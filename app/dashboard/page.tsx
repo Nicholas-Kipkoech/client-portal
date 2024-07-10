@@ -31,7 +31,11 @@ const Dashboard = () => {
     receiptResults,
   }: any = useContextApi()
 
-  const { filteredPolicies }: any = useContext(PolicyContext)
+  const {
+    filteredPolicies,
+    setFromDate: setPolicyFrom,
+    setToDate: setPolicyTo,
+  }: any = useContext(PolicyContext)
   const { openClaims }: any = useContext(ClaimsContext)
   const { debits, claimCreditNotes }: any = useContext(FinanceContext)
   const { commPayableResults }: any = useContext(ReportsContext)
@@ -62,6 +66,7 @@ const Dashboard = () => {
     }
     const formattedToDate = day + '-' + formattedMonth + '-' + year
     setFmDate(formattedToDate)
+    setPolicyFrom(formattedToDate)
   }
   const checkDate = fmDate.split('-').join('') === 'undefinedundefined'
   const handleRunReports = () => {
@@ -70,6 +75,8 @@ const Dashboard = () => {
     } else {
       setFromDate(fmDate)
       setToDate(toDate)
+      setPolicyFrom(fmDate)
+      setPolicyTo(fmDate)
     }
   }
 
