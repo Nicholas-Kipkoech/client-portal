@@ -9,7 +9,7 @@ import axios from 'axios'
 import { Kranky } from 'next/font/google'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
-import ProcessingModal from './processingModal'
+import ProcessingModal from '../acceptQuote/processingModal'
 import { Months } from '@/app/utils/helpers'
 
 const Payments = () => {
@@ -29,17 +29,19 @@ const Payments = () => {
     passportNo: '',
     dob: '',
     currencyRate: '',
+    currency: '',
   })
   const [payload, setPayload] = useState<any>({})
   const [loading, setLoading] = useState(false)
   const [total, setTotal] = useState(0)
-  const [message, setMessage] = useState<string | any>('Processing')
-  const [openModal, setOpenModal] = useState(false)
+
   const [addPerson, setAddPerson] = useState(false)
   const [dob, setDOB] = useState('')
-  const [beneficiaryName, setBeneficiaryName] = useState('')
-  const [beneficiaryPassport, setBeneficiaryPassport] = useState('')
-  const [beneficiaries, setBeneficiaries] = useState<any[]>([])
+  const [travellersFirstName, setTravellersFirstName] = useState('')
+  const [travellersLastName, setTravellersLastName] = useState('')
+  const [travellerPassport, setTravellersPassport] = useState('')
+  const [travellerPhoneNumber, setTravellerPhoneNumber] = useState('')
+  const [travellers, setTravellers] = useState<any[]>([])
 
   useEffect(() => {
     const quotePayload: any = localStorage.getItem('travelQuote')
@@ -50,16 +52,16 @@ const Payments = () => {
 
   function handleAddBeneficiary() {
     const benObj = {
-      beneficiaryName,
-      beneficiaryPassport,
-      dob,
+      firstName: travellersFirstName,
+      lastName: travellersLastName,
+      phoneNumber: travellerPhoneNumber,
+      passportNo: travellerPassport,
+      dob: dob,
     }
-    setBeneficiaries([...beneficiaries, benObj])
+    setTravellers([...travellers, benObj])
   }
-  const beneficiariesDOB = beneficiaries.map((benefiary) => benefiary.dob)
-
-  console.log(payload)
-
+  const beneficiariesDOB = travellers.map((benefiary) => benefiary.dob)
+  console.log(beneficiariesDOB)
   const calculatePremiumPayload = {
     policyFromDate: payload.policyFromDate,
     policyExpiryDate: payload.policyExpiryDate,
@@ -68,12 +70,27 @@ const Payments = () => {
     dob: customerDetails.dob + ',' + beneficiariesDOB.join(','),
   }
   console.log(calculatePremiumPayload)
-
   async function handleViewPricing(code: string, productName: string) {
     localStorage.setItem('product', JSON.stringify({ code, productName }))
     const updatedPayload = { ...payload, coverCode: code }
     localStorage.setItem('travelQuote', JSON.stringify(updatedPayload))
   }
+
+  function getClientAge() {
+    let age
+    const _dob: any = new Date(dob) // Replace 'dob' with the actual date of birth string
+    const today: any = new Date()
+    const differenceInMillisecondsYear = today - _dob
+
+    // Convert milliseconds to years
+    const millisecondsPerYear = 1000 * 60 * 60 * 24 * 365.25
+    age = differenceInMillisecondsYear / millisecondsPerYear
+
+    // Adjust the age to get an integer value
+    age = Math.floor(age)
+    return { age }
+  }
+  const { age } = getClientAge()
 
   const paymentPayload = {
     token: payload.token,
@@ -104,21 +121,22 @@ const Payments = () => {
       policyDetails: {
         policyType: 'Quote',
         policyProductCode: payload.coverCode,
-        policyCurrency: 'USD',
+        policyCurrency: customerDetails.currency,
         policyFromDate: payload.policyFromDate,
         policyExpiryDate: payload.policyExpiryDate,
         clientCode: '',
-        intermediaryCode: `${user.intermediaryCode}${user.entCode}`,
+        intermediaryCode: `${user.aentCode}${user.entCode}`,
         token: payload.token,
-        dob: dob + ',' + beneficiariesDOB.join(','),
+        dob: customerDetails.dob,
         coverCode: payload.coverCode,
-        age: String(payload.age),
+        age: String(age),
         duration: String(payload.duration),
         destinationCountryCode: payload.destination,
+        otherTravellers: travellers,
       },
     },
   }
-  // console.log('policyPayload', paymentPayload)
+
   async function handlePayments() {
     const response = await axios.post(
       `${_API_URL}/uw/calculate_cover_premium`,
@@ -126,6 +144,7 @@ const Payments = () => {
     )
     if (response.data) {
       localStorage.setItem('quoteResponse', JSON.stringify(response.data))
+      localStorage.setItem('travelPayload', JSON.stringify(paymentPayload))
       router.push('/dashboard/travelInsurance/acceptQuote')
     }
   }
@@ -244,7 +263,7 @@ const Payments = () => {
             name="Paying Currency"
             className="w-[20rem] "
             onChange={(value: any) =>
-              setCustomerDetails({ ...customerDetails, gender: value.value })
+              setCustomerDetails({ ...customerDetails, currency: value.value })
             }
             options={[
               { label: 'KSH', value: 'KSH' },
@@ -272,17 +291,6 @@ const Payments = () => {
               { label: 'Nomura', value: 'Nomura' },
               { label: 'Bapa', value: 'Bapa' },
             ]}
-          />
-          <CustomInput
-            name={'Current Rate'}
-            value={customerDetails.currencyRate}
-            onChange={(e) =>
-              setCustomerDetails({
-                ...customerDetails,
-                currencyRate: e.target.value,
-              })
-            }
-            className=" border rounded-md h-[2.4rem] w-[20rem]"
           />
           <CustomInput
             name={'Email'}
@@ -316,28 +324,44 @@ const Payments = () => {
             />
           </div>
           <div className="flex justify-center items-center gap-2">
-            <label>Add beneficiary?</label>
-            <input type="checkbox" onChange={() => setAddPerson(!addPerson)} />
+            <label>Are you travelling with someone?</label>
+
+            <label>Yes</label>
+            <input type="checkbox" onChange={() => setAddPerson(true)} />
+            <label>No</label>
+            <input type="checkbox" onChange={() => setAddPerson(false)} />
           </div>
         </div>
 
         {addPerson && (
           <div className="mt-2 border p-2 rounded-md">
             <p className="text-[1.2rem] font-bold flex items-center justify-center">
-              Beneficiary's Details
+              Traveller's Details
             </p>
-            <div className="flex gap-2">
+            <div className="grid grid-cols-2 gap-2">
               <CustomInput
-                name="Name"
+                name="First Name"
                 className="border rounded-md w-[20rem] "
-                value={beneficiaryName}
-                onChange={(e) => setBeneficiaryName(e.target.value)}
+                value={travellersFirstName}
+                onChange={(e) => setTravellersFirstName(e.target.value)}
+              />
+              <CustomInput
+                name="Last Name"
+                className="border rounded-md w-[20rem] "
+                value={travellersLastName}
+                onChange={(e) => setTravellersLastName(e.target.value)}
               />
               <CustomInput
                 name="Passport No"
                 className="border rounded-md w-[20rem] "
-                value={beneficiaryPassport}
-                onChange={(e) => setBeneficiaryPassport(e.target.value)}
+                value={travellerPassport}
+                onChange={(e) => setTravellersPassport(e.target.value)}
+              />
+              <CustomInput
+                name="Phone Number"
+                className="border rounded-md w-[20rem] "
+                value={travellerPhoneNumber}
+                onChange={(e) => setTravellerPhoneNumber(e.target.value)}
               />
             </div>
             <div className="flex flex-col mt-2">
@@ -349,6 +373,13 @@ const Payments = () => {
                 onChange={handleBirthDate}
               />
             </div>
+            {travellers.map((beneficiary) => (
+              <div className="flex border justify-between mt-2 p-2">
+                <p>{beneficiary.firstName}</p>
+                <p>{beneficiary.passportNo}</p>
+                <p>{beneficiary.dob}</p>
+              </div>
+            ))}
             <CustomButton
               name={'+ Add'}
               onClick={handleAddBeneficiary}
@@ -369,11 +400,6 @@ const Payments = () => {
           />
         </div>
       </div>
-      <ProcessingModal
-        open={openModal}
-        handleClose={() => setOpenModal(false)}
-        message={message}
-      />
     </div>
   )
 }

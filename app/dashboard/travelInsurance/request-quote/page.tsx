@@ -45,18 +45,6 @@ const Travel = () => {
     console.log(formattedToDate)
     setToDate(formattedToDate)
   }
-  const handleBirthDate = (date: any, dateString: any) => {
-    const [day, month, year] = dateString.split('-')
-    let formattedMonth: any = ''
-    if (month < 10) {
-      formattedMonth = Months[month.toString().slice(1) - 1]
-    } else {
-      formattedMonth = Months[Number(month - 1)]
-    }
-    const formattedToDate = day + '-' + formattedMonth + '-' + year
-
-    setDOB(formattedToDate)
-  }
 
   const handleFromDate = (date: any, dateString: any) => {
     const [day, month, year] = dateString.split('-')
@@ -142,7 +130,7 @@ const Travel = () => {
             onChange={(value: any) => setDestination(value.value)}
           />
           <div className="flex flex-col  w-[30rem]">
-            <p>Are you a resident?</p>
+            <p>Are you a resident of selected country ?</p>
             <div className="flex justify-evenly">
               <label className="flex items-center gap-2">
                 <p>Yes</p>
