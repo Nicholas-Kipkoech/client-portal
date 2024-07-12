@@ -109,7 +109,7 @@ const Statements = () => {
         </p>
         <div className="flex justify-center gap-2">
           <div className=" flex justify-center">
-            <div className="border h-[40px] flex items-center justify-center w-[15rem] bg-slate-800 text-white rounded-md md:mt-8 sm:mt-4">
+            <div className="border h-[40px] flex items-center justify-center w-[15rem] bg-[#cb7529] text-white rounded-md md:mt-8 sm:mt-4">
               <a
                 href={statementExcelUrl}
                 target="__blank"
@@ -120,7 +120,7 @@ const Statements = () => {
             </div>
           </div>
           <div className=" flex justify-center">
-            <div className="border h-[40px] w-[15rem] items-center justify-center bg-slate-800 text-white rounded-md md:mt-8 sm:mt-4">
+            <div className="border h-[40px] w-[15rem] items-center justify-center bg-[#cb7529] text-white rounded-md md:mt-8 sm:mt-4">
               <a
                 href={statementsPdfUrl}
                 download

@@ -230,7 +230,8 @@ const Dashboard = () => {
               </Link>
             )}
             {hasRequiredRoles(['bp_downloads']) && (
-              <div
+              <Link
+                href={'dashboard/finance/receipts'}
                 className={`h-[10rem] bg-white w-[20rem] flex flex-col justify-center border cursor-pointer shadow-2xl rounded-[20px] hover:scale-105 hover:border-[#cb7529] hover:border-2  transition-transform duration-300 ease-in-out  `}
               >
                 <div className="flex gap-1 flex-col text-[14px] ">
@@ -251,7 +252,7 @@ const Dashboard = () => {
                     ),
                   )}
                 </div>
-              </div>
+              </Link>
             )}
           </div>
         </>

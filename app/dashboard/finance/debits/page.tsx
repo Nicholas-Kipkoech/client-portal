@@ -5,7 +5,9 @@ import CustomButton from '@/app/utils/CustomButtom'
 import CustomInput from '@/app/utils/CustomInput'
 import { formatDate } from '@/app/utils/helpers'
 import { ConfigProvider, Table } from 'antd'
+import { useRouter } from 'next/navigation'
 import React, { useContext, useEffect, useState } from 'react'
+import { GrPrevious } from 'react-icons/gr'
 
 const Debits = () => {
   const { debits }: any = useContext(FinanceContext)
@@ -116,11 +118,23 @@ const Debits = () => {
       ),
     },
   ]
+  const router = useRouter()
   return (
     <div>
       <p className="flex justify-center font-bold">
         Running Period [ {fromDate}-{toDate} ]
       </p>
+      <div className="flex justify-between items-center">
+        <div
+          className="flex items-center  bg-slate-900 mt-2 px-2 text-white"
+          onClick={() => router.back()}
+        >
+          <GrPrevious size={15} />
+          <p>Back</p>
+        </div>
+        <p className="md:text-[1.8rem] sm:text-[1.2rem] font-bold">Debits</p>
+        <p></p>
+      </div>
       <div className="md:flex md:flex-wrap sm:flex-nowrap sm:flex-col md:flex-row gap-[0.2rem] my-2 md:items-center">
         <CustomInput
           name="Debit No"
@@ -194,7 +208,7 @@ const Debits = () => {
           className="mt-2"
           columns={columns}
           dataSource={initialDebits}
-          scroll={{ x: 1200 }}
+          scroll={{ x: 1500 }}
           pagination={{ pageSize: 20 }}
         />
       </ConfigProvider>
