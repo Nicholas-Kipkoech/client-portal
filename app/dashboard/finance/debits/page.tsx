@@ -118,6 +118,11 @@ const Debits = () => {
       ),
     },
   ]
+  const onKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleSearch()
+    }
+  }
   const router = useRouter()
   return (
     <div>
@@ -137,6 +142,7 @@ const Debits = () => {
       </div>
       <div className="md:flex md:flex-wrap sm:flex-nowrap sm:flex-col md:flex-row gap-[0.2rem] my-2 md:items-center">
         <CustomInput
+          onKeyUp={onKeyUp}
           name="Debit No"
           className="border md:w-[15rem] p-2 sm:w-full"
           value={searchParams.docNumber}
@@ -145,6 +151,7 @@ const Debits = () => {
           }
         />
         <CustomInput
+          onKeyUp={onKeyUp}
           name="Insured"
           onChange={(e) =>
             setSearchParams({ ...searchParams, insured: e.target.value })
@@ -153,6 +160,7 @@ const Debits = () => {
           value={searchParams.insured}
         />
         <CustomInput
+          onKeyUp={onKeyUp}
           name="Vehicle Reg No"
           className="border md:w-[10rem] p-2 sm:w-full"
           value={searchParams.vehicleNo}
@@ -161,6 +169,7 @@ const Debits = () => {
           }
         />
         <CustomInput
+          onKeyUp={onKeyUp}
           name="Policy No"
           className="border md:w-[15rem] p-2 sm:w-full"
           value={searchParams.policyNo}
@@ -169,6 +178,7 @@ const Debits = () => {
           }
         />
         <CustomInput
+          onKeyUp={onKeyUp}
           name="End No"
           className="border md:w-[15rem] p-2 sm:w-full"
           value={searchParams.endNo}

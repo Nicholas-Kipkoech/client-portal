@@ -101,6 +101,11 @@ const ClaimsCreditNotes = () => {
       render: (_: any, item: any) => <p>{item.narration}</p>,
     },
   ]
+  const onKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleSearch()
+    }
+  }
   return (
     <div>
       <p className="flex justify-center font-bold">
@@ -121,6 +126,7 @@ const ClaimsCreditNotes = () => {
       </div>
       <div className="flex flex-wrap sm:flex-col md:flex-row  gap-[0.2rem] my-2 md:items-center">
         <CustomInput
+          onKeyUp={onKeyUp}
           name="Insured Name"
           onChange={(e) =>
             setSearchParams({ ...searchParams, insured: e.target.value })
@@ -129,6 +135,7 @@ const ClaimsCreditNotes = () => {
           value={searchParams.insured}
         />
         <CustomInput
+          onKeyUp={onKeyUp}
           name="Journal No"
           onChange={(e) =>
             setSearchParams({ ...searchParams, journalNo: e.target.value })

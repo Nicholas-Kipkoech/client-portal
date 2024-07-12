@@ -46,7 +46,12 @@ const Receipts = () => {
     })
     setInitialReceipt(receiptsData)
   }
-  console.log(receiptsData)
+
+  const onKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleSearch()
+    }
+  }
   const columns = [
     {
       title: 'Action',
@@ -119,6 +124,7 @@ const Receipts = () => {
       </div>
       <div className="flex md:flex-wrap sm:flex-col md:flex-row gap-[0.2rem] my-2 md:items-center">
         <CustomInput
+          onKeyUp={onKeyUp}
           name="Insured Name"
           onChange={(e) =>
             setSearchParams({ ...searchParams, from: e.target.value })
@@ -127,6 +133,7 @@ const Receipts = () => {
           value={searchParams.from}
         />
         <CustomInput
+          onKeyUp={onKeyUp}
           name="Receipt No"
           className="border md:w-[10rem] sm:w-full p-2"
           value={searchParams.receiptNo}
@@ -135,6 +142,7 @@ const Receipts = () => {
           }
         />
         <CustomInput
+          onKeyUp={onKeyUp}
           name="Amount"
           className="border md:w-[10rem] sm:w-full p-2"
           value={searchParams.amount}

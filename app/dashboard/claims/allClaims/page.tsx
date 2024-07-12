@@ -111,13 +111,21 @@ const AllClaim = () => {
     },
   ]
   const router = useRouter()
+  const onKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleSearch()
+    }
+  }
   return (
     <div>
       <p className="flex justify-center font-bold">
         Running Period [ {fromDate}-{toDate} ]
       </p>
       <div className="flex justify-between items-center">
-        <div className="flex items-center  bg-slate-900 mt-2 px-2 text-white">
+        <div
+          className="flex items-center  bg-slate-900 mt-2 px-2 text-white"
+          onClick={() => router.back()}
+        >
           <GrPrevious size={15} />
           <p>Back</p>
         </div>

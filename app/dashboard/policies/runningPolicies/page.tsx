@@ -152,6 +152,11 @@ const Policies = () => {
       ),
     },
   ]
+  const onKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleSearch()
+    }
+  }
 
   return (
     <div className="flex flex-col justify-center ">
@@ -174,6 +179,7 @@ const Policies = () => {
 
       <div className="md:flex md:flex-wrap sm:flex-nowrap sm:flex-col md:flex-row gap-[0.2rem] my-2 md:items-center">
         <CustomInput
+          onKeyUp={onKeyUp}
           name="Insured"
           onChange={(e) =>
             setSearchParams({ ...searchParams, client: e.target.value })
@@ -182,6 +188,7 @@ const Policies = () => {
           value={searchParams.client}
         />
         <CustomInput
+          onKeyUp={onKeyUp}
           name="Vehicle Reg No"
           className="border md:w-[10rem] p-2 sm:w-full"
           value={searchParams.carRegNo}
@@ -190,6 +197,7 @@ const Policies = () => {
           }
         />
         <CustomInput
+          onKeyUp={onKeyUp}
           name="Policy No"
           className="border md:w-[15rem] p-2 sm:w-full"
           value={searchParams.policyNo}
@@ -198,6 +206,7 @@ const Policies = () => {
           }
         />
         <CustomInput
+          onKeyUp={onKeyUp}
           name="End No"
           className="border md:w-[15rem] p-2 sm:w-full"
           value={searchParams.endNo}
@@ -206,6 +215,7 @@ const Policies = () => {
           }
         />
         <CustomInput
+          onKeyUp={onKeyUp}
           name="Product Name"
           className="border md:w-[15rem] p-2 sm:w-full"
           value={searchParams.product}

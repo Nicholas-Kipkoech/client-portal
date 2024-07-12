@@ -97,13 +97,21 @@ const OpenClaims = () => {
     },
   ]
   const router = useRouter()
+  const onKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleSearch()
+    }
+  }
   return (
     <div>
       <p className="flex justify-center font-bold">
         Running Period [ {fromDate}-{toDate} ]
       </p>
       <div className="flex justify-between items-center">
-        <div className="flex items-center  bg-slate-900 mt-2 px-2 text-white" onClick={()=>router.back()}>
+        <div
+          className="flex items-center  bg-slate-900 mt-2 px-2 text-white"
+          onClick={() => router.back()}
+        >
           <GrPrevious size={15} />
           <p>Back</p>
         </div>
@@ -114,6 +122,7 @@ const OpenClaims = () => {
       </div>
       <div className="flex flex-wrap gap-[0.2rem] sm:flex-col md:flex-row my-2 md:items-center">
         <CustomInput
+          onKeyUp={onKeyUp}
           name="Policy No"
           onChange={(e) =>
             setSearchParams({ ...searchParams, policyNumber: e.target.value })
@@ -122,6 +131,7 @@ const OpenClaims = () => {
           value={searchParams.policyNumber}
         />
         <CustomInput
+          onKeyUp={onKeyUp}
           name="Insured Name"
           onChange={(e) =>
             setSearchParams({ ...searchParams, insured: e.target.value })
@@ -130,6 +140,7 @@ const OpenClaims = () => {
           value={searchParams.insured}
         />
         <CustomInput
+          onKeyUp={onKeyUp}
           name="Vehicle Reg No"
           className="border md:w-[10rem] sm:w-full  p-2"
           value={searchParams.carRegNo}
