@@ -60,21 +60,37 @@ const Policies = () => {
     setInitialPolicies(runningPolicies)
   }
 
-  const content = (items: any) => {
+  const content = (items: any, endNo: any) => {
     return (
       <div className="flex flex-col gap-2">
-        <div className="flex items-center gap-2">
-          <GrDocumentPdf />
-          <a target="_blank" href={items?.policyUrl} download>
-            Policy Document
-          </a>
-        </div>
+        {endNo === 'New' && (
+          <div className="flex items-center gap-2">
+            <GrDocumentPdf />
+            <a target="_blank" href={items?.policyUrl} download>
+              Policy Document
+            </a>
+          </div>
+        )}
         <div className="flex items-center gap-2">
           <GrDocumentPdf />
           <a target="_blank" href={items?.debitOrCreditUrl} download>
             Debit Or CreditNote
           </a>
         </div>
+        <div className="flex items-center gap-2">
+          <GrDocumentPdf />
+          <a target="_blank" href={items?.taxInvoiceUrl} download>
+            Tax Invoice
+          </a>
+        </div>
+        {endNo !== 'New' && (
+          <div className="flex items-center gap-2">
+            <GrDocumentPdf />
+            <a target="_blank" href={items?.endAdvice} download>
+              Endorsement Advice
+            </a>
+          </div>
+        )}
       </div>
     )
   }
@@ -86,7 +102,7 @@ const Policies = () => {
       render: (_: any, item: any) => (
         <Popover
           className="cursor-pointer"
-          content={() => content(item.reportUrl)}
+          content={() => content(item.reportUrl, item.endNo)}
           title={'Downloads'}
           trigger={'click'}
         >
