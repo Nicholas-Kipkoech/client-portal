@@ -97,7 +97,7 @@ const Sidebar = () => {
       title: 'Reports',
       list: [
         {
-          title: 'View Premiums',
+          title: 'View Premium Register',
           path: '/dashboard/reports/premiums',
           icon: <LiaFileInvoiceSolid />,
         },

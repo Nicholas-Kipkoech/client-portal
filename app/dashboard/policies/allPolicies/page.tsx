@@ -253,6 +253,7 @@ const Policies = () => {
           loading={loadingPolicies}
           columns={columns}
           scroll={{ x: 1500 }}
+          pagination={{ pageSize: 20 }}
         />
         ;
       </ConfigProvider>

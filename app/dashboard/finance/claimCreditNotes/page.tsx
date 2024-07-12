@@ -56,7 +56,7 @@ const ClaimsCreditNotes = () => {
             href={item.receiptUrl}
             className="p-[4px] border cursor-pointer bg-slate-700 text-white rounded-md"
           >
-            Download 
+            Download
           </a>{' '}
         </div>
       ),
@@ -168,6 +168,7 @@ const ClaimsCreditNotes = () => {
               : claimCreditNotes
           }
           scroll={{ x: 1200 }}
+          pagination={{ pageSize: 20 }}
         />
       </ConfigProvider>
     </div>

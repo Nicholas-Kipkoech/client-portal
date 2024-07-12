@@ -84,7 +84,12 @@ const RiskNotes = () => {
           },
         }}
       >
-        <Table dataSource={riskNotes} columns={columns} scroll={{ x: 1200 }} />
+        <Table
+          dataSource={riskNotes}
+          columns={columns}
+          scroll={{ x: 1200 }}
+          pagination={{ pageSize: 20 }}
+        />
       </ConfigProvider>
       <RiskNoteModal
         open={openModal}

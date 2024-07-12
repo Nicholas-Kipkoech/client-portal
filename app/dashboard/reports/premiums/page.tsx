@@ -1,11 +1,11 @@
-"use client";
-import CsvDownloader from "react-csv-downloader";
-import React, { useContext, useState } from "react";
-import { formatDate, Months } from "@/app/utils/helpers";
-import { DatePicker, Spin } from "antd";
-import CustomButton from "@/app/utils/CustomButtom";
-import { LoadingOutlined } from "@ant-design/icons";
-import ReportsContext from "@/app/context/reports/reports-context";
+'use client'
+import CsvDownloader from 'react-csv-downloader'
+import React, { useContext, useState } from 'react'
+import { formatDate, Months } from '@/app/utils/helpers'
+import { DatePicker, Spin } from 'antd'
+import CustomButton from '@/app/utils/CustomButtom'
+import { LoadingOutlined } from '@ant-design/icons'
+import ReportsContext from '@/app/context/reports/reports-context'
 
 const Premiums = () => {
   const {
@@ -15,94 +15,90 @@ const Premiums = () => {
     loadingPremiumReports,
     fromDate,
     toDate: _toDate,
-  }: any = useContext(ReportsContext);
+  }: any = useContext(ReportsContext)
 
   const columns = [
     {
-      id: "policyNo",
-      displayName: "Policy Number",
+      id: 'policyNo',
+      displayName: 'Policy Number',
     },
     {
-      id: "endNo",
-      displayName: "Endorsement Number",
+      id: 'endNo',
+      displayName: 'Endorsement Number',
     },
     {
-      id: "sumInsured",
-      displayName: "Sum Insured",
+      id: 'sumInsured',
+      displayName: 'Sum Insured',
     },
     {
-      id: "premClass",
-      displayName: "Class",
+      id: 'premClass',
+      displayName: 'Class',
     },
     {
-      id: "premSubClass",
-      displayName: "Sub Class",
+      id: 'premSubClass',
+      displayName: 'Sub Class',
     },
     {
-      id: "insuredName",
-      displayName: "Insured Name",
+      id: 'insuredName',
+      displayName: 'Insured Name',
     },
     {
-      id: "issueDate",
-      displayName: "Issue Date",
+      id: 'issueDate',
+      displayName: 'Issue Date',
     },
     {
-      id: "start",
-      displayName: "Start Date",
+      id: 'start',
+      displayName: 'Start Date',
     },
     {
-      id: "expiry",
-      displayName: "Expiry",
+      id: 'expiry',
+      displayName: 'Expiry',
     },
     {
-      id: "premium",
-      displayName: "Premium",
+      id: 'premium',
+      displayName: 'Premium',
     },
     {
-      id: "earthQuake",
-      displayName: "EarthQuake",
+      id: 'earthQuake',
+      displayName: 'EarthQuake',
     },
     {
-      id: "pvt",
-      displayName: "PVT",
+      id: 'pvt',
+      displayName: 'PVT',
     },
     {
-      id: "stamp",
-      displayName: "Stamp",
+      id: 'stamp',
+      displayName: 'Stamp',
     },
     {
-      id: "PHCfund",
-      displayName: "PHC Fund",
+      id: 'PHCfund',
+      displayName: 'PHC Fund',
     },
     {
-      id: "traningLevy",
-      displayName: "Training Levy",
+      id: 'traningLevy',
+      displayName: 'Training Levy',
     },
     {
-      id: "PTACharge",
-      displayName: "PTA Charge",
+      id: 'PTACharge',
+      displayName: 'PTA Charge',
     },
     {
-      id: "AACharge",
-      displayName: "AA Charge",
+      id: 'AACharge',
+      displayName: 'AA Charge',
     },
     {
-      id: "brokerComm",
-      displayName: "Broker Commission",
+      id: 'witHoldingTax',
+      displayName: 'WitHolding Tax',
     },
     {
-      id: "witHoldingTax",
-      displayName: "WitHolding Tax",
+      id: 'brokerCommNet',
+      displayName: 'Broker Commission Net',
     },
     {
-      id: "brokerCommNet",
-      displayName: "Broker Commission Net",
+      id: 'netPremium',
+      displayName: 'Net premium',
     },
-    {
-      id: "netPremium",
-      displayName: "Net premium",
-    },
-  ];
+  ]
 
   const mappedPremiums = premiumReports.map((premium: any) => {
     return {
@@ -123,47 +119,56 @@ const Premiums = () => {
       traningLevy: premium.traningLevy,
       PTACharge: premium.PTACharge,
       AACharge: premium.AACharge,
-      brokerComm: premium.brokerComm,
       witHoldingTax: premium.witHoldingTax,
       brokerCommNet: premium.brokerCommNet,
-      netPremium: premium.netPremium,
-    };
-  });
-  const [fmDate, setFmDate] = useState("");
-  const [toDate, setTdDate] = useState("");
+      netPremium:
+        premium.premium +
+        premium.pvt +
+        premium.stamp +
+        premium.earthQuake +
+        premium.PHCfund +
+        premium.traningLevy +
+        premium.PTACharge +
+        premium.AACharge +
+        premium.brokerCommNet -
+        premium.witHoldingTax,
+    }
+  })
+  const [fmDate, setFmDate] = useState('')
+  const [toDate, setTdDate] = useState('')
 
   const handleToDate = (date: any, dateString: any) => {
-    const [day, month, year] = dateString.split("-");
-    let formattedMonth: any = "";
+    const [day, month, year] = dateString.split('-')
+    let formattedMonth: any = ''
     if (month < 10) {
-      formattedMonth = Months[month.toString().slice(1) - 1];
+      formattedMonth = Months[month.toString().slice(1) - 1]
     } else {
-      formattedMonth = Months[Number(month - 1)];
+      formattedMonth = Months[Number(month - 1)]
     }
-    const formattedToDate = day + "-" + formattedMonth + "-" + year;
-    setTdDate(formattedToDate);
-  };
+    const formattedToDate = day + '-' + formattedMonth + '-' + year
+    setTdDate(formattedToDate)
+  }
 
   const handleFromDate = (date: any, dateString: any) => {
-    const [day, month, year] = dateString.split("-");
-    let formattedMonth: any = "";
+    const [day, month, year] = dateString.split('-')
+    let formattedMonth: any = ''
     if (month < 10) {
-      formattedMonth = Months[month.toString().slice(1) - 1];
+      formattedMonth = Months[month.toString().slice(1) - 1]
     } else {
-      formattedMonth = Months[Number(month - 1)];
+      formattedMonth = Months[Number(month - 1)]
     }
-    const formattedToDate = day + "-" + formattedMonth + "-" + year;
-    setFmDate(formattedToDate);
-  };
-  const checkDate = fmDate.split("-").join("") === "undefinedundefined";
+    const formattedToDate = day + '-' + formattedMonth + '-' + year
+    setFmDate(formattedToDate)
+  }
+  const checkDate = fmDate.split('-').join('') === 'undefinedundefined'
   const handleRunReports = () => {
     if (checkDate === true) {
-      alert("Please select from date and to date");
+      alert('Please select from date and to date')
     } else {
-      setFromDate(fmDate);
-      setToDate(toDate);
+      setFromDate(fmDate)
+      setToDate(toDate)
     }
-  };
+  }
 
   return (
     <div className="flex flex-col items-center justify-center md:mt-[6rem] sm:mt-[2rem]">
@@ -175,23 +180,23 @@ const Premiums = () => {
           <div className="flex flex-col md:mt-2 sm:mt-1">
             <label>From date</label>
             <DatePicker
-              format={"DD-MM-YYYY"}
+              format={'DD-MM-YYYY'}
               placeholder={fromDate}
-              className={"w-[250px] h-[40px] border p-2 rounded-md"}
+              className={'w-[250px] h-[40px] border p-2 rounded-md'}
               onChange={handleFromDate}
             />
           </div>
           <div className="flex flex-col md:mt-2 sm:mt-1">
             <label>To date</label>
             <DatePicker
-              format={"DD-MM-YYYY"}
-              placeholder={toDate}
-              className={"w-[250px] h-[40px] border p-2 rounded-md"}
+              format={'DD-MM-YYYY'}
+              placeholder={_toDate}
+              className={'w-[250px] h-[40px] border p-2 rounded-md'}
               onChange={handleToDate}
             />
           </div>
           <CustomButton
-            name={loadingPremiumReports ? "Running..." : "Run"}
+            name={loadingPremiumReports ? 'Running...' : 'Run'}
             onClick={handleRunReports}
             className="border h-[40px] w-[15rem] bg-slate-800 text-white rounded-md md:mt-8 sm:mt-4"
           />
@@ -214,7 +219,7 @@ const Premiums = () => {
                 <LoadingOutlined
                   style={{
                     fontSize: 25,
-                    color: "white",
+                    color: 'white',
                   }}
                 />
               }
@@ -225,7 +230,7 @@ const Premiums = () => {
         </CsvDownloader>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Premiums;
+export default Premiums
