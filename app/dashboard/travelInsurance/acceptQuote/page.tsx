@@ -12,6 +12,7 @@ import axios from 'axios'
 import { _API_URL } from '@/app/constants/database-connect'
 import ProcessingModal from './processingModal'
 import { message as MessageAPi } from 'antd'
+import { revalidatePath } from 'next/cache'
 
 const AcceptQuote = () => {
   const router = useRouter()
@@ -41,16 +42,18 @@ const AcceptQuote = () => {
         if (response.data.mapfreResponse.responseCode === 'ERROR') {
           router.push('/dashboard/travelInsurance/documents')
           MessageAPi.success(response.data.mapfreResponse.description)
-          message(response.data.mapfreResponse.description)
+          MessageAPi.error(response.data.mapfreResponse.description)
           setOpenModal(false)
-        } else {
+          window.location.reload()
+        } else if (response.data.mapfreResponse.responseCode === 'OK') {
           router.push('/dashboard/travelInsurance/documents')
           setOpenModal(false)
+          window.location.reload()
         }
       }
     } catch (error) {
       setOpenModal(false)
-      MessageAPi.error('Something went wrong!!!', 1)
+      console.error(error)
     }
   }
 

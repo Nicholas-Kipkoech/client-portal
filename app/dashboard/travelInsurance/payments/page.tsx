@@ -42,7 +42,7 @@ const Payments = () => {
   const [travellerPassport, setTravellersPassport] = useState('')
   const [travellerPhoneNumber, setTravellerPhoneNumber] = useState('')
   const [travellers, setTravellers] = useState<any[]>([])
-  const [userId, setUserId] = useState(0) // Manage userId with state
+  const [userId, setUserId] = useState(1) // Manage userId with state
 
   useEffect(() => {
     const quotePayload: any = localStorage.getItem('travelQuote')
@@ -50,6 +50,15 @@ const Payments = () => {
     const total: any = localStorage.getItem('total')
     setTotal(total)
   }, [])
+
+  const principalUser = {
+    userId: 0,
+    firstName: customerDetails.firstName,
+    lastName: customerDetails.secondName,
+    phoneNumber: customerDetails.phoneNumber,
+    passportNo: customerDetails.passportNo,
+    dob: customerDetails.dob,
+  }
 
   function handleAddBeneficiary() {
     const newUserId = userId + 1
@@ -62,10 +71,15 @@ const Payments = () => {
       passportNo: travellerPassport,
       dob: dob,
     }
+
     setTravellers((prevTravellers) => [...prevTravellers, benObj])
   }
+
+  const benefiariesArray = travellers.slice()
+  benefiariesArray.unshift(principalUser)
+
   const beneficiariesDOB = travellers.map((benefiary) => benefiary.dob)
-  console.log(beneficiariesDOB)
+
   const calculatePremiumPayload = {
     policyFromDate: payload.policyFromDate,
     policyExpiryDate: payload.policyExpiryDate,
@@ -79,6 +93,8 @@ const Payments = () => {
     const updatedPayload = { ...payload, coverCode: code }
     localStorage.setItem('travelQuote', JSON.stringify(updatedPayload))
   }
+
+  console.log(travellers)
 
   function getClientAge() {
     let age
@@ -238,9 +254,14 @@ const Payments = () => {
       render: (_: any, item: any) => (
         <button
           className="text-red-500"
+          disabled={item.userId === 0}
           onClick={() => handleRemoveTraveller(item)}
         >
-          X
+          {item.userId === 0 ? (
+            <p className="text-blue-950 font-bold text-[1rem]">*</p>
+          ) : (
+            'X'
+          )}
         </button>
       ),
     },
@@ -471,17 +492,17 @@ const Payments = () => {
                 onChange={handleBirthDate}
               />
             </div>
-
-            <div className="mt-2">
-              <Table dataSource={travellers} columns={columns} />
-            </div>
-
             <CustomButton
               name={'+ Add'}
               disabled={isTravellersFieldEmpty()}
               onClick={handleAddBeneficiary}
               className="border mt-2 bg-[#cb7529] text-white   h-[2.5rem] w-[5rem] rounded-md "
             />
+            {travellers.length > 0 && (
+              <div className="mt-2">
+                <Table dataSource={benefiariesArray} columns={columns} />
+              </div>
+            )}
           </div>
         )}
         <div className="flex gap-2">
