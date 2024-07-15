@@ -45,7 +45,6 @@ const AcceptQuote = () => {
             setOpenModal(false)
             router.push('/dashboard/travelInsurance/documents')
           }, 10000)
-          MessageAPi.error(response.data.mapfreResponse.description)
         } else if (response.data.mapfreResponse.responseCode === 'OK') {
           setTimeout(() => {
             setOpenModal(false)
