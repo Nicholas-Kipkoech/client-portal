@@ -40,14 +40,19 @@ const AcceptQuote = () => {
       console.log(response.data)
       if (response.data.info === 'Success') {
         if (response.data.mapfreResponse.responseCode === 'ERROR') {
+          setTimeout(() => {
+            setOpenModal(false)
+          }, 5000)
           router.push('/dashboard/travelInsurance/documents')
           MessageAPi.success(response.data.mapfreResponse.description)
           MessageAPi.error(response.data.mapfreResponse.description)
-          setOpenModal(false)
           window.location.reload()
         } else if (response.data.mapfreResponse.responseCode === 'OK') {
+          setTimeout(() => {
+            setOpenModal(false)
+          }, 5000)
           router.push('/dashboard/travelInsurance/documents')
-          setOpenModal(false)
+
           window.location.reload()
         }
       }
