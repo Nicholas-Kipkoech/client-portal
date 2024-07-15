@@ -175,6 +175,10 @@ const Travel = () => {
               onChange={handleToDate}
             />
           </div>
+
+          {differenceInDays && !isNaN(differenceInDays) && (
+            <p>{differenceInDays} days</p>
+          )}
           <CustomButton
             name={'Get Quote'}
             onClick={handleGetQuote}

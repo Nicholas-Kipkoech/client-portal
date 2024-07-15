@@ -77,6 +77,7 @@ const Documents = () => {
           columns={columns}
           dataSource={certificates}
           className=" hover:bg-none"
+          scroll={{ x: 1200 }}
         />
       </ConfigProvider>
     </div>

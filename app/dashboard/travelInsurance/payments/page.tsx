@@ -9,7 +9,8 @@ import axios from 'axios'
 import { Kranky } from 'next/font/google'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
-import ProcessingModal from '../acceptQuote/processingModal'
+import { MdDeleteForever } from 'react-icons/md'
+
 import { Months } from '@/app/utils/helpers'
 
 const Payments = () => {
@@ -61,7 +62,7 @@ const Payments = () => {
   }
 
   function handleAddBeneficiary() {
-    const newUserId = userId + 1
+    const newUserId = userId + 2
     setUserId(newUserId) // Update userId state
     const benObj = {
       userId: userId,
@@ -94,7 +95,7 @@ const Payments = () => {
     localStorage.setItem('travelQuote', JSON.stringify(updatedPayload))
   }
 
-  console.log(travellers)
+  console.log(benefiariesArray)
 
   function getClientAge() {
     let age
@@ -260,7 +261,7 @@ const Payments = () => {
           {item.userId === 0 ? (
             <p className="text-blue-950 font-bold text-[1rem]">*</p>
           ) : (
-            'X'
+            <MdDeleteForever size={20} />
           )}
         </button>
       ),
@@ -379,10 +380,11 @@ const Payments = () => {
             options={[
               { label: 'Broker', value: 'Broker' },
               { label: 'Direct', value: 'Direct' },
+              { label: 'Agents', value: 'Agents' },
             ]}
           />
           <CustomSelect
-            name="Broker"
+            name="Intermediary"
             className="w-[20rem] "
             onChange={(value: any) =>
               setCustomerDetails({ ...customerDetails, gender: value.value })
@@ -505,7 +507,7 @@ const Payments = () => {
             )}
           </div>
         )}
-        <div className="flex gap-2">
+        <div className="flex justify-between w-full">
           <CustomButton
             name={'Get Quote'}
             disabled={isPrimaryFieldsEmpty()}
