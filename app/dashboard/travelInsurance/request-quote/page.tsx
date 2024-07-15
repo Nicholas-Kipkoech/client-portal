@@ -123,6 +123,7 @@ const Travel = () => {
           <p className="text-[1.5rem] font-semibold">Fill in travel details</p>
 
           <CustomSelect
+            required
             name="Country of Residence"
             options={formattedCountries}
             className="w-[30rem] "
@@ -143,6 +144,7 @@ const Travel = () => {
             </div>
           </div>
           <CustomSelect
+            required
             name="Destination"
             options={formattedCountries}
             className="w-[30rem] "
@@ -150,7 +152,10 @@ const Travel = () => {
             onChange={(value: any) => setDestination(value.value)}
           />
           <div className="flex flex-col mt-2">
-            <label>Travel Date</label>
+            <div className="flex gap-1 items-center">
+              <label>Travel Date</label>
+              <p className="text-red-500">*</p>
+            </div>
             <DatePicker
               format={'DD-MM-YYYY'}
               placeholder={'DD-MM-YYYY'}
@@ -159,7 +164,10 @@ const Travel = () => {
             />
           </div>
           <div className="flex flex-col mt-2">
-            <label>Return Date</label>
+            <div className="flex gap-1 items-center">
+              <label>Return Date</label>
+              <p className="text-red-500">*</p>
+            </div>
             <DatePicker
               format={'DD-MM-YYYY'}
               placeholder={'DD-MM-YYYY'}

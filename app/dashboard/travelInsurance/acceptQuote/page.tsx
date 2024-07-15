@@ -115,11 +115,13 @@ const AcceptQuote = () => {
                   )}
                   <p className="text-[1.2rem] font-bold">
                     Total:{' '}
-                    {premiums.premiumForeign +
+                    {(
+                      premiums.premiumForeign +
                       Object.values(premiums.charges?.chargeForeign).reduce(
                         (sum: any, value: any) => Number(sum) + Number(value),
                         0,
-                      )}
+                      )
+                    ).toFixed(2)}
                   </p>
                 </div>
                 <>

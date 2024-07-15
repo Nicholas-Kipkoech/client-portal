@@ -9,6 +9,7 @@ interface Input {
   type?: string
   placeholder?: string
   onKeyUp?: (e: React.KeyboardEvent<HTMLInputElement>) => void
+  required?: boolean
 }
 
 const CustomInput = ({
@@ -20,10 +21,14 @@ const CustomInput = ({
   type,
   placeholder,
   onKeyUp,
+  required,
 }: Input) => {
   return (
     <div className="flex flex-col gap-1 mt-1">
-      <label htmlFor={name}>{name}</label>
+      <div className="flex gap-1 items-center">
+        <label htmlFor={name}>{name}</label>
+        {required && <p className="text-red-500">*</p>}
+      </div>
       <input
         onKeyUp={onKeyUp}
         name={name}

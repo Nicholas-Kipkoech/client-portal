@@ -4,7 +4,7 @@ import { useContextApi } from '@/app/context/context'
 import CustomButton from '@/app/utils/CustomButtom'
 import CustomInput from '@/app/utils/CustomInput'
 import CustomSelect from '@/app/utils/CustomSelect'
-import { DatePicker, Spin } from 'antd'
+import { DatePicker, Spin, Table } from 'antd'
 import axios from 'axios'
 import { Kranky } from 'next/font/google'
 import { useRouter } from 'next/navigation'
@@ -42,6 +42,7 @@ const Payments = () => {
   const [travellerPassport, setTravellersPassport] = useState('')
   const [travellerPhoneNumber, setTravellerPhoneNumber] = useState('')
   const [travellers, setTravellers] = useState<any[]>([])
+  const [userId, setUserId] = useState(0) // Manage userId with state
 
   useEffect(() => {
     const quotePayload: any = localStorage.getItem('travelQuote')
@@ -51,14 +52,17 @@ const Payments = () => {
   }, [])
 
   function handleAddBeneficiary() {
+    const newUserId = userId + 1
+    setUserId(newUserId) // Update userId state
     const benObj = {
+      userId: userId,
       firstName: travellersFirstName,
       lastName: travellersLastName,
       phoneNumber: travellerPhoneNumber,
       passportNo: travellerPassport,
       dob: dob,
     }
-    setTravellers([...travellers, benObj])
+    setTravellers((prevTravellers) => [...prevTravellers, benObj])
   }
   const beneficiariesDOB = travellers.map((benefiary) => benefiary.dob)
   console.log(beneficiariesDOB)
@@ -173,6 +177,75 @@ const Payments = () => {
     setCustomerDetails({ ...customerDetails, dob: formattedToDate })
   }
 
+  function handleRemoveTraveller(item: any) {
+    const filteredTraveller = travellers.filter(
+      (traveller) => traveller.userId !== item.userId,
+    )
+    setTravellers(filteredTraveller)
+  }
+
+  function isPrimaryFieldsEmpty() {
+    // check fields if they are empty
+    const items = [
+      customerDetails.KraPinNo,
+      customerDetails.dob,
+      customerDetails.firstName,
+      customerDetails.gender,
+      customerDetails.currency,
+      customerDetails.email,
+      customerDetails.phoneNumber,
+    ]
+
+    for (const field of items) {
+      if (!field || field.trim() === '') {
+        return true
+      }
+    }
+    return false
+  }
+  function isTravellersFieldEmpty() {
+    // check fields if they are empty
+    const items = [travellerPassport, travellersFirstName, dob]
+
+    for (const field of items) {
+      if (!field || field.trim() === '') {
+        return true
+      }
+    }
+    return false
+  }
+
+  const columns = [
+    {
+      title: 'Name',
+      dataIndex: 'firstName',
+      key: 'firstName',
+    },
+    {
+      title: 'Last Name',
+      dataIndex: 'passportNo',
+      key: 'passportNo',
+    },
+    {
+      title: 'DOB',
+      dataIndex: 'dob',
+      key: 'dob',
+    },
+    {
+      title: 'Action',
+      dataIndex: 'dob',
+      key: 'dob',
+      render: (_: any, item: any) => (
+        <button
+          className="text-red-500"
+          onClick={() => handleRemoveTraveller(item)}
+        >
+          X
+        </button>
+      ),
+    },
+  ]
+
   return (
     <div className="flex items-center justify-center h-auto">
       <div className="border h-auto w-auto p-10 flex flex-col items-center m-10 bg-white shadow-2xl rounded-md">
@@ -180,6 +253,7 @@ const Payments = () => {
         <div className="grid grid-cols-2 gap-2">
           <CustomInput
             name={'First Name'}
+            required
             value={customerDetails.firstName}
             onChange={(e) =>
               setCustomerDetails({
@@ -191,6 +265,7 @@ const Payments = () => {
           />
           <CustomInput
             name={'Last Name'}
+            required
             value={customerDetails.secondName}
             onChange={(e) =>
               setCustomerDetails({
@@ -202,6 +277,7 @@ const Payments = () => {
           />
 
           <CustomInput
+            required
             name={'Phone Number'}
             value={customerDetails.phoneNumber}
             onChange={(e) =>
@@ -213,6 +289,7 @@ const Payments = () => {
             className="w-[20rem]  border rounded-md"
           />
           <CustomInput
+            required
             name={'KRA PIN No'}
             value={customerDetails.KraPinNo}
             onChange={(e) =>
@@ -248,6 +325,7 @@ const Payments = () => {
           />
 
           <CustomSelect
+            required
             className="w-[20rem]"
             name="Gender"
             onChange={(value: any) =>
@@ -260,6 +338,7 @@ const Payments = () => {
             ]}
           />
           <CustomSelect
+            required
             name="Paying Currency"
             className="w-[20rem] "
             onChange={(value: any) =>
@@ -293,6 +372,7 @@ const Payments = () => {
             ]}
           />
           <CustomInput
+            required
             name={'Email'}
             value={customerDetails.email}
             onChange={(e) =>
@@ -304,6 +384,7 @@ const Payments = () => {
             className=" border rounded-md h-[2.4rem] w-[20rem]"
           />
           <CustomInput
+            required
             name={'Passport No'}
             value={customerDetails.passportNo}
             onChange={(e) =>
@@ -315,7 +396,10 @@ const Payments = () => {
             className=" border rounded-md h-[2.4rem] w-[20rem] "
           />
           <div className="flex flex-col mt-2">
-            <label>Date Of Birth</label>
+            <div className="flex gap-1 items-center">
+              <label>Date of Birth</label>
+              <p className="text-red-500">*</p>
+            </div>
             <DatePicker
               format={'DD-MM-YYYY'}
               placeholder={'DD-MM-YYYY'}
@@ -327,9 +411,17 @@ const Payments = () => {
             <label>Are you travelling with someone?</label>
 
             <label>Yes</label>
-            <input type="checkbox" onChange={() => setAddPerson(true)} />
+            <input
+              type="checkbox"
+              checked={addPerson === true}
+              onChange={() => setAddPerson(true)}
+            />
             <label>No</label>
-            <input type="checkbox" onChange={() => setAddPerson(false)} />
+            <input
+              type="checkbox"
+              checked={addPerson === false}
+              onChange={() => setAddPerson(false)}
+            />
           </div>
         </div>
 
@@ -340,18 +432,21 @@ const Payments = () => {
             </p>
             <div className="grid grid-cols-2 gap-2">
               <CustomInput
+                required
                 name="First Name"
                 className="border rounded-md w-[20rem] "
                 value={travellersFirstName}
                 onChange={(e) => setTravellersFirstName(e.target.value)}
               />
               <CustomInput
+                required
                 name="Last Name"
                 className="border rounded-md w-[20rem] "
                 value={travellersLastName}
                 onChange={(e) => setTravellersLastName(e.target.value)}
               />
               <CustomInput
+                required
                 name="Passport No"
                 className="border rounded-md w-[20rem] "
                 value={travellerPassport}
@@ -365,7 +460,10 @@ const Payments = () => {
               />
             </div>
             <div className="flex flex-col mt-2">
-              <label>Date Of Birth</label>
+              <div className="flex gap-1 items-center">
+                <label>Date of Birth</label>
+                <p className="text-red-500">*</p>
+              </div>
               <DatePicker
                 format={'DD-MM-YYYY'}
                 placeholder={'DD-MM-YYYY'}
@@ -373,15 +471,14 @@ const Payments = () => {
                 onChange={handleBirthDate}
               />
             </div>
-            {travellers.map((beneficiary) => (
-              <div className="flex border justify-between mt-2 p-2">
-                <p>{beneficiary.firstName}</p>
-                <p>{beneficiary.passportNo}</p>
-                <p>{beneficiary.dob}</p>
-              </div>
-            ))}
+
+            <div className="mt-2">
+              <Table dataSource={travellers} columns={columns} />
+            </div>
+
             <CustomButton
               name={'+ Add'}
+              disabled={isTravellersFieldEmpty()}
               onClick={handleAddBeneficiary}
               className="border mt-2 bg-[#cb7529] text-white   h-[2.5rem] w-[5rem] rounded-md "
             />
@@ -390,6 +487,7 @@ const Payments = () => {
         <div className="flex gap-2">
           <CustomButton
             name={'Get Quote'}
+            disabled={isPrimaryFieldsEmpty()}
             onClick={handlePayments}
             className="w-[20rem] border mt-2 h-[2.5rem] rounded-md bg-[#cb7529] text-white"
           />
