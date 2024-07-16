@@ -44,10 +44,13 @@ const AcceptQuote = () => {
             router.push('/dashboard/travelInsurance/documents')
           }, 10000)
         } else if (response.data.mapfreResponse.responseCode === 'OK') {
+          setMessage(
+            'Insurance successfully purchased wait for a period of 5 seconds ',
+          )
           setTimeout(() => {
             setOpenModal(false)
             router.push('/dashboard/travelInsurance/documents')
-          }, 10000)
+          }, 5000)
         }
       }
     } catch (error) {
