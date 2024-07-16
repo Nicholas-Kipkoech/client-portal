@@ -11,8 +11,6 @@ import { benefitsData } from '../benfitsData'
 import axios from 'axios'
 import { _API_URL } from '@/app/constants/database-connect'
 import ProcessingModal from './processingModal'
-import { message as MessageAPi } from 'antd'
-import { revalidatePath } from 'next/cache'
 
 const AcceptQuote = () => {
   const router = useRouter()
