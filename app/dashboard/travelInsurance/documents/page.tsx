@@ -33,11 +33,6 @@ const Documents = () => {
       title: 'Endorsement No',
       dataIndex: 'endNo',
     },
-
-    {
-      title: 'Intermediary',
-      dataIndex: 'intermediary',
-    },
     {
       title: 'Insured',
       dataIndex: 'insured',

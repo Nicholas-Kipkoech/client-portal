@@ -33,8 +33,7 @@ const Payments = () => {
     currency: '',
   })
   const [payload, setPayload] = useState<any>({})
-  const [loading, setLoading] = useState(false)
-  const [total, setTotal] = useState(0)
+  const [userDetails, setUserDetails] = useState<any>({})
 
   const [addPerson, setAddPerson] = useState(false)
   const [dob, setDOB] = useState('')
@@ -46,11 +45,46 @@ const Payments = () => {
   const [userId, setUserId] = useState(1) // Manage userId with state
 
   useEffect(() => {
-    const quotePayload: any = localStorage.getItem('travelQuote')
-    setPayload(JSON.parse(quotePayload))
-    const total: any = localStorage.getItem('total')
-    setTotal(total)
+    const userDetailsString = localStorage.getItem('travelPayload')
+    if (userDetailsString) {
+      const userDetails = JSON.parse(userDetailsString)
+      setUserDetails(userDetails)
+    }
   }, [])
+  /**
+   *    clientFirstName: customerDetails.firstName,
+        clientSecondName: customerDetails.secondName,
+        clientCellphone: customerDetails.phoneNumber,
+        clientTaxNo: customerDetails.KraPinNo,
+        clientGender: customerDetails.gender,
+        clientEmail: customerDetails.email,
+        clientPostalAddress: customerDetails.postalAddress,
+        clientPhysicalAddress: customerDetails.physicalAddress,
+        clientPassportNo: customerDetails.passportNo,
+        clientFacebookUserID: '',
+        clientTwitterHandle: '',
+        token: payload.token,
+   */
+
+  useEffect(() => {
+    if (Object.keys(userDetails).length > 0) {
+      setCustomerDetails((prevDetails) => ({
+        ...prevDetails,
+        KraPinNo: userDetails.policyPayload.clientPayload.clientTaxNo,
+        phoneNumber: userDetails.policyPayload.clientPayload.clientCellphone,
+        secondName: userDetails.policyPayload.clientPayload.clientSecondName,
+        firstName: userDetails.policyPayload.clientPayload.clientFirstName,
+        email: userDetails.policyPayload.clientPayload.clientEmail,
+        passportNo: userDetails.policyPayload.clientPayload.clientPassportNo,
+        dob: userDetails.policyPayload.policyDetails.dob,
+        postalAddress:
+          userDetails.policyPayload.clientPayload.clientPostalAddress,
+        physicalAddress:
+          userDetails.policyPayload.clientPayload.clientPhysicalAddress,
+      }))
+      setTravellers(userDetails.policyPayload.policyDetails.otherTravellers)
+    }
+  }, [userDetails])
 
   const principalUser = {
     userId: 0,
@@ -95,8 +129,6 @@ const Payments = () => {
     localStorage.setItem('travelQuote', JSON.stringify(updatedPayload))
   }
 
-  console.log(benefiariesArray)
-
   function getClientAge() {
     let age
     const _dob: any = new Date(dob) // Replace 'dob' with the actual date of birth string
@@ -121,7 +153,7 @@ const Payments = () => {
         '254',
       ),
       accountReference: payload.coverCode,
-      amount: Number(total),
+      amount: 0,
     },
     policyPayload: {
       requestSource: 'ClientPortal',
@@ -159,13 +191,13 @@ const Payments = () => {
   }
 
   async function handlePayments() {
+    localStorage.setItem('travelPayload', JSON.stringify(paymentPayload))
     const response = await axios.post(
       `${_API_URL}/uw/calculate_cover_premium`,
       calculatePremiumPayload,
     )
     if (response.data) {
       localStorage.setItem('quoteResponse', JSON.stringify(response.data))
-      localStorage.setItem('travelPayload', JSON.stringify(paymentPayload))
       router.push('/dashboard/travelInsurance/acceptQuote')
     }
   }

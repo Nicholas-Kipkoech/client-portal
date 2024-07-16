@@ -31,6 +31,8 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [loadingUwData, setLoadingUwData] = useState(false)
   const [certificates, setCertificates] = useState([])
 
+  const [userDetails, setUserDetails] = useState({})
+
   //user roles
 
   const [roles, setRoles] = useState([])
@@ -210,6 +212,8 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
         toDate,
         certificates,
         roles,
+        userDetails,
+        setUserDetails,
       }}
     >
       {children}

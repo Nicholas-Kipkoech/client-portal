@@ -1,7 +1,7 @@
 export const products = [
   {
     CC_CODE: "141",
-    CC_NAME: "Schengen Medical",
+    CC_NAME: "Schengen (Europe)",
   },
   {
     CC_CODE: "140",
