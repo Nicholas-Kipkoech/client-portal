@@ -36,7 +36,7 @@ const AcceptQuote = () => {
         `${_API_URL}/uw/create_policy`,
         JSON.parse(payload),
       )
-      MessageAPi.loading('Processing.....')
+      setMessage('Processing.... This takes less than 2 minutes! Please wait.')
       console.log(response.data)
       if (response.data.info === 'Success') {
         if (response.data.mapfreResponse.responseCode === 'ERROR') {
