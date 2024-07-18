@@ -109,6 +109,8 @@ const Travel = () => {
     localStorage.setItem('travelQuote', JSON.stringify(payload))
   }
 
+  const days = fromDate.length > 0 || toDate.length > 0 ? differenceInDays : 0
+
   return (
     <div className="m-5">
       <div
@@ -179,9 +181,7 @@ const Travel = () => {
 
           <CustomInput
             name={'Number of days'}
-            value={
-              fromDate.length > 0 || (toDate.length > 0 && differenceInDays)
-            }
+            value={days}
             className="w-[30rem] h-[40px] border p-2 rounded-md"
             disabled
           />
