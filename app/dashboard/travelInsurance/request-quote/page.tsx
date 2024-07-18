@@ -179,7 +179,9 @@ const Travel = () => {
 
           <CustomInput
             name={'Number of days'}
-            value={differenceInDays}
+            value={
+              fromDate.length > 0 || (toDate.length > 0 && differenceInDays)
+            }
             className="w-[30rem] h-[40px] border p-2 rounded-md"
             disabled
           />
