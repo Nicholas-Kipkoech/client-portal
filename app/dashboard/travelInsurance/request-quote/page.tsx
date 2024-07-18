@@ -109,7 +109,7 @@ const Travel = () => {
     localStorage.setItem('travelQuote', JSON.stringify(payload))
   }
 
-  const days = fromDate.length > 0 || toDate.length > 0 ? differenceInDays : 0
+  const days = toDate.length > 0 ? differenceInDays : 0
 
   return (
     <div className="m-5">
