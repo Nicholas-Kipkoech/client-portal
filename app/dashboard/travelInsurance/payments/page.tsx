@@ -518,7 +518,7 @@ const Payments = () => {
             </div>
             <CustomButton
               name={'+ Add'}
-              disabled={isTravellersFieldEmpty() || travellers.length > 9}
+              disabled={isTravellersFieldEmpty() || travellers.length > 7}
               onClick={handleAddBeneficiary}
               className="border mt-2 bg-[#cb7529] text-white   h-[2.5rem] w-[5rem] rounded-md "
             />
