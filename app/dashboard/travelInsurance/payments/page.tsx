@@ -51,20 +51,10 @@ const Payments = () => {
       setUserDetails(userDetails)
     }
   }, [])
-  /**
-   *    clientFirstName: customerDetails.firstName,
-        clientSecondName: customerDetails.secondName,
-        clientCellphone: customerDetails.phoneNumber,
-        clientTaxNo: customerDetails.KraPinNo,
-        clientGender: customerDetails.gender,
-        clientEmail: customerDetails.email,
-        clientPostalAddress: customerDetails.postalAddress,
-        clientPhysicalAddress: customerDetails.physicalAddress,
-        clientPassportNo: customerDetails.passportNo,
-        clientFacebookUserID: '',
-        clientTwitterHandle: '',
-        token: payload.token,
-   */
+  useEffect(() => {
+    const travelQuote: any = localStorage.getItem('travelQuote')
+    setPayload(JSON.parse(travelQuote))
+  }, [])
 
   useEffect(() => {
     if (Object.keys(userDetails).length > 0) {
