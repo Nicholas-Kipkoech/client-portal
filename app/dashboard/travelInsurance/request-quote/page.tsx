@@ -10,6 +10,7 @@ import CustomSelect from '@/app/utils/CustomSelect'
 import CustomButton from '@/app/utils/CustomButtom'
 import { formattedCountries } from '../travelUtils'
 import { DatePicker } from 'antd'
+import CustomInput from '@/app/utils/CustomInput'
 
 const Travel = () => {
   const router = useRouter()
@@ -176,9 +177,13 @@ const Travel = () => {
             />
           </div>
 
-          {differenceInDays && !isNaN(differenceInDays) && (
-            <p>{differenceInDays} days</p>
-          )}
+          <CustomInput
+            name={'Number of days'}
+            value={differenceInDays}
+            className="w-[30rem] h-[40px] border p-2 rounded-md"
+            disabled
+          />
+
           <CustomButton
             name={'Get Quote'}
             onClick={handleGetQuote}
