@@ -43,6 +43,7 @@ const Dashboard = () => {
 
   const [fmDate, setFmDate] = useState('')
   const [toDate, setTdDate] = useState('')
+  const [loading, setLoading] = useState(true)
 
   const handleToDate = (date: any, dateString: any) => {
     const [day, month, year] = dateString.split('-')
@@ -120,6 +121,15 @@ const Dashboard = () => {
       </Link>
     )
   }
+
+  setTimeout(() => {
+    setLoading(false)
+  }, 3000)
+
+  if (loading) {
+    return <div>Loading page....</div>
+  }
+
   return (
     <div className="py-2 ">
       {!hasRequiredRoles(preferredRoles) ? (
