@@ -16,7 +16,9 @@ const AcceptQuote = () => {
   const router = useRouter()
   const [product, setProduct] = useState<any>({})
   const [premiums, setPremiums] = useState<any>({})
-  const [message, setMessage] = useState<string | any>('Processing')
+  const [message, setMessage] = useState<string | any>(
+    'Processing.... This takes less than 2 minutes! Please wait.',
+  )
   const [openModal, setOpenModal] = useState(false)
 
   useEffect(() => {
@@ -34,7 +36,6 @@ const AcceptQuote = () => {
         `${_API_URL}/uw/create_policy`,
         JSON.parse(payload),
       )
-      setMessage('Processing.... This takes less than 2 minutes! Please wait.')
       console.log(response.data)
       if (response.data.info === 'Success') {
         if (response.data.mapfreResponse.responseCode === 'ERROR') {
