@@ -98,6 +98,11 @@ const Payments = () => {
     }
 
     setTravellers((prevTravellers) => [...prevTravellers, benObj])
+    setTravellerPhoneNumber('')
+    setTravellersFirstName('')
+    setTravellersPassport('')
+    setTravellersLastName('')
+    setDOB('')
   }
 
   const benefiariesArray = travellers.slice()
@@ -113,11 +118,6 @@ const Payments = () => {
     dob: customerDetails.dob + ',' + beneficiariesDOB.join(','),
   }
   console.log(calculatePremiumPayload)
-  async function handleViewPricing(code: string, productName: string) {
-    localStorage.setItem('product', JSON.stringify({ code, productName }))
-    const updatedPayload = { ...payload, coverCode: code }
-    localStorage.setItem('travelQuote', JSON.stringify(updatedPayload))
-  }
 
   function getClientAge() {
     let age
@@ -180,12 +180,31 @@ const Payments = () => {
     },
   }
 
+  function handleClearCustomerDetails() {
+    setCustomerDetails({
+      firstName: '',
+      secondName: '',
+      phoneNumber: '',
+      KraPinNo: '',
+      postalAddress: '',
+      physicalAddress: '',
+      gender: '',
+      mpesaNo: '',
+      email: '',
+      passportNo: '',
+      dob: '',
+      currencyRate: '',
+      currency: '',
+    })
+  }
+
   async function handlePayments() {
     localStorage.setItem('travelPayload', JSON.stringify(paymentPayload))
     const response = await axios.post(
       `${_API_URL}/uw/calculate_cover_premium`,
       calculatePremiumPayload,
     )
+    handleClearCustomerDetails() //clear customer details
     if (response.data) {
       localStorage.setItem('quoteResponse', JSON.stringify(response.data))
       router.push('/dashboard/travelInsurance/acceptQuote')
@@ -281,7 +300,7 @@ const Payments = () => {
           onClick={() => handleRemoveTraveller(item)}
         >
           {item.userId === 0 ? (
-            <p className="text-blue-950 font-bold text-[1rem]">*</p>
+            <MdDeleteForever size={20} color="blue" />
           ) : (
             <MdDeleteForever size={20} />
           )}
@@ -518,7 +537,7 @@ const Payments = () => {
             </div>
             <CustomButton
               name={'+ Add'}
-              disabled={isTravellersFieldEmpty() || travellers.length > 7}
+              disabled={isTravellersFieldEmpty() || travellers.length > 8}
               onClick={handleAddBeneficiary}
               className="border mt-2 bg-[#cb7529] text-white   h-[2.5rem] w-[5rem] rounded-md "
             />
