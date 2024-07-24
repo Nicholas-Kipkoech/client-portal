@@ -36,7 +36,7 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   //user roles
 
   const [roles, setRoles] = useState([])
-
+  const [loadingRoles, setLoadingRoles] = useState(false)
   useEffect(() => {
     const { startDate, endDate } = getDates()
     setFromDate(startDate)
@@ -138,12 +138,14 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     async function fetchUserRoles() {
+      setLoadingRoles(true)
       if (Object.keys(user).length > 0) {
         const response = await getUserRoles({
           user_code: user.userCode,
         })
 
         setRoles(response.results.map((role: any) => role.roleCode))
+        setLoadingRoles(false)
       }
     }
     fetchUserRoles()
@@ -212,6 +214,7 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
         toDate,
         certificates,
         roles,
+        loadingRoles,
         userDetails,
         setUserDetails,
       }}

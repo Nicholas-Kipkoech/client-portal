@@ -39,12 +39,10 @@ const Dashboard = () => {
   const { openClaims }: any = useContext(ClaimsContext)
   const { debits, claimCreditNotes }: any = useContext(FinanceContext)
   const { commPayableResults }: any = useContext(ReportsContext)
-  const { roles }: any = useContextApi()
+  const { roles, loadingRoles }: any = useContextApi()
 
   const [fmDate, setFmDate] = useState('')
   const [toDate, setTdDate] = useState('')
-  const [loading, setLoading] = useState(true)
-
   const handleToDate = (date: any, dateString: any) => {
     const [day, month, year] = dateString.split('-')
     let formattedMonth: any = ''
@@ -122,12 +120,12 @@ const Dashboard = () => {
     )
   }
 
-  setTimeout(() => {
-    setLoading(false)
-  }, 3000)
-
-  if (loading) {
-    return <div>Loading page....</div>
+  if (loadingRoles) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        Loading page....
+      </div>
+    )
   }
 
   return (
