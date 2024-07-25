@@ -28,7 +28,6 @@ const Travel = () => {
     })
     setToken(response.data.value)
   }
-  console.log('access_token', token)
 
   useEffect(() => {
     getToken()
@@ -113,86 +112,96 @@ const Travel = () => {
 
   return (
     <div className="m-5">
-      <div
-        onClick={() => router.back()}
-        className="flex gap-2 items-center cursor-pointer  py-1 bg-yellow-950 text-white w-[6rem] mb-2 justify-center rounded-md"
-      >
-        <IoArrowBackOutline size={20} />
-        <p>Back</p>
+      <div className="flex justify-between">
+        <div
+          onClick={() => router.back()}
+          className="flex gap-2 items-center cursor-pointer  py-1 bg-[#092332] text-white w-[6rem] mb-2 justify-center rounded-md"
+        >
+          <IoArrowBackOutline size={20} />
+          <p>Back</p>
+        </div>
+        <p className="text-[1.5rem] font-semibold">Fill in travel details</p>
+        <p></p>
       </div>
 
       <div className="flex items-center  gap-2 justify-center">
-        <div className="w-auto border  bg-white shadow-2xl rounded-md h-[35rem] flex items-center justify-center  flex-col p-5">
-          <p className="text-[1.5rem] font-semibold">Fill in travel details</p>
+        <div className="w-full border  bg-white shadow-sm rounded-md h-auto flex   flex-col p-5">
+          <div className="flex grid-cols-2 gap-4 justify-center">
+            <CustomSelect
+              required
+              name="Country of Residence"
+              options={formattedCountries}
+              className="w-[25rem]"
+              placeholder={'Select country...'}
+              onChange={(value: any) => setDestination(value.value)}
+            />
 
-          <CustomSelect
-            required
-            name="Country of Residence"
-            options={formattedCountries}
-            className="w-[30rem] "
-            placeholder={'Select country...'}
-            onChange={(value: any) => setDestination(value.value)}
-          />
-          <div className="flex flex-col  w-[30rem]">
-            <p>Are you a resident of selected country ?</p>
-            <div className="flex justify-evenly">
-              <label className="flex items-center gap-2">
-                <p>Yes</p>
-                <input type="radio" />
-              </label>
-              <label className="flex items-center gap-2">
-                <p>No</p>
-                <input type="radio" />
-              </label>
-            </div>
-          </div>
-          <CustomSelect
-            required
-            name="Destination"
-            options={formattedCountries}
-            className="w-[30rem] "
-            placeholder={'Select Destination...'}
-            onChange={(value: any) => setDestination(value.value)}
-          />
-          <div className="flex flex-col mt-2">
-            <div className="flex gap-1 items-center">
-              <label>Travel Date</label>
-              <p className="text-red-500">*</p>
-            </div>
-            <DatePicker
-              format={'DD-MM-YYYY'}
-              placeholder={'DD-MM-YYYY'}
-              className={'w-[30rem] h-[40px] border p-2 rounded-md'}
-              onChange={handleFromDate}
+            <CustomSelect
+              required
+              name="Destination"
+              options={formattedCountries}
+              className="w-[25rem]"
+              placeholder={'Select Destination...'}
+              onChange={(value: any) => setDestination(value.value)}
             />
           </div>
-          <div className="flex flex-col mt-2">
-            <div className="flex gap-1 items-center">
-              <label>Return Date</label>
-              <p className="text-red-500">*</p>
+          <div className="flex grid-cols-2 gap-4 justify-center">
+            <div className="flex flex-col mt-2">
+              <div className="flex gap-1 items-center">
+                <label>Travel Date</label>
+                <p className="text-red-500">*</p>
+              </div>
+              <DatePicker
+                format={'DD-MM-YYYY'}
+                placeholder={'DD-MM-YYYY'}
+                className={' h-[40px] w-[25rem] border p-2 rounded-md'}
+                onChange={handleFromDate}
+              />
             </div>
-            <DatePicker
-              format={'DD-MM-YYYY'}
-              placeholder={'DD-MM-YYYY'}
-              className={'w-[30rem] h-[40px] border p-2 rounded-md'}
-              onChange={handleToDate}
+            <div className="flex flex-col mt-2">
+              <div className="flex gap-1 items-center">
+                <label>Return Date</label>
+                <p className="text-red-500">*</p>
+              </div>
+              <DatePicker
+                format={'DD-MM-YYYY'}
+                placeholder={'DD-MM-YYYY'}
+                className={' h-[40px] w-[25rem] border p-2 rounded-md'}
+                onChange={handleToDate}
+              />
+            </div>
+          </div>
+          <div className="flex grid-cols-2 gap-4 items-center justify-center">
+            <CustomInput
+              name={'Number of days'}
+              value={days}
+              className="w-[25rem] h-[40px] border p-2 rounded-md"
+              disabled
             />
+            <div className="w-[25rem]">
+              <p>Are you a resident of a selected country?</p>
+              <div className="flex gap-2">
+                <div className="flex items-center gap-1">
+                  <label>Yes</label>
+                  <input type="radio" />
+                </div>
+                <div className="flex items-center gap-1">
+                  <label>No</label>
+                  <input type="radio" />
+                </div>
+              </div>
+            </div>
           </div>
 
-          <CustomInput
-            name={'Number of days'}
-            value={days}
-            className="w-[30rem] h-[40px] border p-2 rounded-md"
-            disabled
-          />
-
-          <CustomButton
-            name={'Get Quote'}
-            onClick={handleGetQuote}
-            className={
-              'bg-[#cb7229] text-white w-[30rem] my-5 h-[2.5rem] rounded-[30px] text-[1.2rem]'
-            }
-          />
+          <div className="flex justify-center">
+            <CustomButton
+              name={'Get Quote'}
+              onClick={handleGetQuote}
+              className={
+                'bg-[#cb7229] text-white w-[20rem] my-5 h-[2.5rem] rounded-md text-[1.2rem]'
+              }
+            />
+          </div>
         </div>
       </div>
     </div>

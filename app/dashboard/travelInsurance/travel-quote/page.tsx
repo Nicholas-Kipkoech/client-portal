@@ -42,7 +42,7 @@ const Products = () => {
 
   const CustomProductCard = ({ name, benefits, code }: IProductCard) => {
     return (
-      <div className="bg-[#F9FAFE] shadow-2xl border-gray-500 p-8 w-[25rem] rounded-[20px] h-auto border-1">
+      <div className="bg-[#F9FAFE] shadow-2xl border-gray-500 p-8 w-[26rem] rounded-[20px] h-auto border-1">
         <p className="text-[1.5rem] font-bold flex justify-center">{name}</p>
         <p className="text-[1.1rem] font-semibold">Product Benefits</p>
         <div className="list-none">
@@ -54,7 +54,7 @@ const Products = () => {
             return (
               <div
                 key={benefit.name}
-                className="flex items-center justify-between gap-[0.3rem]"
+                className="flex font-bold items-center justify-between gap-[0.3rem]"
               >
                 <div className="flex gap-[0.3rem]">
                   <MdDone size={20} color="blue" />
@@ -114,7 +114,7 @@ const Products = () => {
     <div className="p-20 flex flex-col justify-center">
       <div
         onClick={() => router.back()}
-        className="flex gap-2 items-center cursor-pointer py-1 bg-yellow-950 text-white w-[6rem] mb-2 justify-center rounded-md"
+        className="flex gap-2 items-center cursor-pointer py-1  bg-[#092332] text-white w-[6rem] mb-2 justify-center rounded-md"
       >
         <IoArrowBackOutline size={20} />
         <p>Back</p>
