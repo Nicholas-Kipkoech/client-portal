@@ -311,7 +311,7 @@ const Payments = () => {
 
   return (
     <div className="flex items-center justify-center h-auto">
-      <div className="border h-auto w-auto p-10 flex flex-col items-center m-10 bg-white shadow-2xl rounded-md">
+      <div className="border h-auto w-[90%] p-10 flex flex-col items-center m-10 bg-white shadow-2xl rounded-md">
         <p className="text-[1.5rem] font-bold">Fill in client details</p>
         <div className="grid grid-cols-2 gap-2">
           <CustomInput
@@ -548,7 +548,7 @@ const Payments = () => {
             )}
           </div>
         )}
-        <div className="flex justify-between w-full">
+        <div className="flex justify-center gap-4">
           <CustomButton
             name={'Get Quote'}
             disabled={isPrimaryFieldsEmpty()}

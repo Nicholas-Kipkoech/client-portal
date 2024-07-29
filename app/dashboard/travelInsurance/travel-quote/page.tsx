@@ -42,7 +42,7 @@ const Products = () => {
 
   const CustomProductCard = ({ name, benefits, code }: IProductCard) => {
     return (
-      <div className="bg-[#F9FAFE] shadow-2xl border-gray-500 p-8 w-[26rem] rounded-[20px] h-auto border-1">
+      <div className="bg-[#F9FAFE] shadow-2xl border-[#cb7529] p-8 w-[26rem] rounded-[20px] h-auto border-[0.1rem]">
         <p className="text-[1.5rem] font-bold flex justify-center">{name}</p>
         <p className="text-[1.1rem] font-semibold">Product Benefits</p>
         <div className="list-none">
@@ -60,7 +60,7 @@ const Products = () => {
                   <MdDone size={20} color="blue" />
                   <p className="text-ellipsis text-[8px]">{benefit.name}</p>
                 </div>
-                <p>${value.toLocaleString()}</p>
+                <p className="text-[0.8rem]">${value.toLocaleString()}</p>
               </div>
             )
           })}
