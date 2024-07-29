@@ -490,7 +490,7 @@ const Payments = () => {
         </div>
 
         {addPerson && (
-          <div className="mt-2 border p-2 rounded-md">
+          <div className="mt-2 border p-5  rounded-md">
             <p className="text-[1.2rem] font-bold flex items-center justify-center">
               Traveller's Details
             </p>
