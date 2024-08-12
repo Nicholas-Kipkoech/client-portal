@@ -83,7 +83,7 @@ const UpcomingRenewals = () => {
     },
     {
       displayName: 'Renewal Premium',
-      id: 'currency',
+      id: 'renewalPremium',
     },
     {
       displayName: 'Loss Ratio',

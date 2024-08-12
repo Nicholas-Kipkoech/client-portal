@@ -1,6 +1,7 @@
 'use client'
 import { ConfigProvider, Table } from 'antd'
 import React, { useContext, useState } from 'react'
+import CsvDownloader from 'react-csv-downloader'
 
 import { GrPrevious } from 'react-icons/gr'
 import { useRouter } from 'next/navigation'
@@ -75,7 +76,7 @@ const AllClaim = () => {
     },
     {
       title: 'Insured',
-      dataIndex: 'invoiceNumber',
+      dataIndex: 'insured',
       render: (_: any, item: any) => (
         <div>
           <p className="text-[13px] font-bold">{item.insured}</p>
@@ -110,6 +111,13 @@ const AllClaim = () => {
       render: (_: any, item: any) => <p>{item.paid.toLocaleString()}</p>,
     },
   ]
+
+  const formattedColumns = columns.map((column) => {
+    return {
+      id: column.dataIndex,
+      displayName: column.title,
+    }
+  })
   const router = useRouter()
   const onKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
@@ -171,6 +179,15 @@ const AllClaim = () => {
             className="border h-[2.2rem] bg-red-600 text-white md:w-[5rem] sm:w-full mt-7"
           />
         </div>
+        <CsvDownloader
+          filename={`All Claims [${fromDate}] - [${toDate}]`}
+          extension=".csv"
+          columns={formattedColumns}
+          datas={initialClaims.length > 0 ? initialClaims : claims}
+          className="bg-[#cb7529] h-[38px] rounded-md text-white border w-auto p-2 flex justify-center items-center mt-5"
+        >
+          Download CSV
+        </CsvDownloader>
       </div>
       <ConfigProvider
         theme={{

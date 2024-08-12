@@ -5,25 +5,51 @@ import CustomButton from '@/app/utils/CustomButtom'
 import CustomInput from '@/app/utils/CustomInput'
 import { formatDate } from '@/app/utils/helpers'
 import { ConfigProvider, Popover, Table } from 'antd'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
 import React, { useContext, useState } from 'react'
 import { GrDocumentPdf, GrPrevious } from 'react-icons/gr'
 import NotesModal from '../NotesModal'
 import CustomSelect from '@/app/utils/CustomSelect'
+import CsvDownloader from 'react-csv-downloader'
+
 import { useContextApi } from '@/app/context/context'
 
+export const PolicyColumns = [
+  {
+    displayName: 'Policy No',
+    id: 'policyNo',
+  },
+  {
+    displayName: 'End No',
+    id: 'endNo',
+  },
+  {
+    displayName: 'Product',
+    id: 'product',
+  },
+  {
+    displayName: 'Period From',
+    id: 'periodFrom',
+  },
+  {
+    displayName: 'Period To',
+    id: 'periodTo',
+  },
+  {
+    displayName: 'Intermediary',
+    id: 'intermediary',
+  },
+  {
+    displayName: 'Client',
+    id: 'client',
+  },
+]
 const Policies = () => {
   const router = useRouter()
   const { fromDate, toDate }: any = useContextApi()
 
-  const {
-    policies,
-    loadingPolicies,
-    policyDocuments,
-    setPolicyDocuments,
-  }: any = useContext(PolicyContext)
+  const { policies, loadingPolicies }: any = useContext(PolicyContext)
   const [initialPolicies, setInitialPolicies] = useState([])
   const [openModal, setOpenModal] = useState(false)
 
@@ -133,7 +159,7 @@ const Policies = () => {
     {
       title: 'Engagement',
       dataIndex: 'status',
-      render: (_: any, item: any) => (
+      render: (_: any) => (
         <CustomButton
           name={'Add note'}
           onClick={() => setOpenModal(true)}
@@ -167,7 +193,7 @@ const Policies = () => {
         </p>
         <p></p>
       </div>
-      <div className="md:flex md:flex-wrap sm:flex-nowrap sm:flex-col md:flex-row gap-[0.2rem] my-2 md:items-center">
+      <div className="flex md:flex-wrap sm:flex-nowrap sm:flex-col md:flex-row gap-[0.2rem] my-2 items-center">
         <CustomInput
           onKeyUp={onKeyUp}
           name="Insured"
@@ -243,6 +269,15 @@ const Policies = () => {
             className="border h-[2.2rem] bg-red-600 text-white  sm:w-full md:w-[15rem] mt-7"
           />
         </div>
+        <CsvDownloader
+          filename={`All Policies [${fromDate}] - [${toDate}]`}
+          extension=".csv"
+          columns={PolicyColumns}
+          datas={initialPolicies.length > 0 ? initialPolicies : policies}
+          className="bg-[#cb7529] h-[40px] rounded-md text-white border w-auto p-2 flex justify-center items-center"
+        >
+          Download CSV
+        </CsvDownloader>
       </div>
 
       <ConfigProvider

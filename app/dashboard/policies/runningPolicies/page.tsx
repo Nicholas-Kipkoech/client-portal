@@ -12,6 +12,8 @@ import React, { useContext, useState } from 'react'
 import { GrDocumentPdf, GrPrevious } from 'react-icons/gr'
 import NotesModal from '../NotesModal'
 import { useContextApi } from '@/app/context/context'
+import { PolicyColumns } from '../allPolicies/page'
+import CsvDownloader from 'react-csv-downloader'
 
 const Policies = () => {
   const router = useRouter()
@@ -177,7 +179,7 @@ const Policies = () => {
         <p></p>
       </div>
 
-      <div className="md:flex md:flex-wrap sm:flex-nowrap sm:flex-col md:flex-row gap-[0.2rem] my-2 md:items-center">
+      <div className="flex md:flex-wrap sm:flex-nowrap sm:flex-col md:flex-row gap-[0.2rem] my-2 items-center">
         <CustomInput
           onKeyUp={onKeyUp}
           name="Insured"
@@ -235,6 +237,15 @@ const Policies = () => {
             className="border h-[2.2rem] bg-red-600 text-white  sm:w-full md:w-[15rem] mt-7"
           />
         </div>
+        <CsvDownloader
+          filename={`All Policies [${fromDate}] - [${toDate}]`}
+          extension=".csv"
+          columns={PolicyColumns}
+          datas={initialPolicies.length > 0 ? initialPolicies : runningPolicies}
+          className="bg-[#cb7529] h-[38px] rounded-md text-white border w-auto p-2 flex justify-center items-center mt-5"
+        >
+          Download CSV
+        </CsvDownloader>
       </div>
 
       <ConfigProvider
