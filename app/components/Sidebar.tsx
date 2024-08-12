@@ -116,12 +116,6 @@ const Sidebar = () => {
           path: '/dashboard/reports/commissionPayable',
           icon: <LiaFileInvoiceSolid />,
         },
-      ],
-      roles: ['bp_reports'],
-    },
-    {
-      title: 'Downloads',
-      list: [
         {
           title: 'Receipts Download',
           path: '/dashboard/finance/receipts',
@@ -138,7 +132,7 @@ const Sidebar = () => {
           icon: <LiaFileInvoiceSolid />,
         },
       ],
-      roles: ['bp_downloads'],
+      roles: ['bp_reports'],
     },
     {
       title: 'Risk Notes',
