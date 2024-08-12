@@ -1,9 +1,9 @@
 'use client'
-import { ConfigProvider, Table } from 'antd'
+import { ConfigProvider, Popover, Table } from 'antd'
 import React, { useContext, useState } from 'react'
 import CsvDownloader from 'react-csv-downloader'
 
-import { GrPrevious } from 'react-icons/gr'
+import { GrDocumentPdf, GrPrevious } from 'react-icons/gr'
 import { useRouter } from 'next/navigation'
 import { formatDate } from '@/app/utils/helpers'
 import CustomInput from '@/app/utils/CustomInput'
@@ -38,7 +38,6 @@ const OpenClaims = () => {
     })
     setInitialClaims(filteredClaims)
   }
-  console.log(initialClaims)
 
   const handleReset = () => {
     setSearchParams({
@@ -49,11 +48,36 @@ const OpenClaims = () => {
     })
     setInitialClaims(openClaims)
   }
+  const content = (item: any, dvStatus: any) => {
+    let url = `http://192.168.1.112:8001/icon/reports?p_module_name=CM_DV&destype=cache&desformat=PDF&rep_param1=&rep_param2=&rep_param3=&rep_param4=&rep_param5=&rep_param6=&rep_param7=&rep_param8=&rep_param9=&rep_doc_index=${item.cm_index}&rep_doc_org=50&rep_doc_no=${item.dv_no}&p_role_code=CM.MGR&p_org_code=50&p_menu_code=100013&p_grp_code=CM.MGR&p_os_code=01&p_user_code=1000000&p_user_name=ICON,%20Admin%20&p_report_title=CLAIMS%20DISCHARGE%20VOUCHER&p_cm_index_fm=${item.cm_index}&p_ce_index_fm=${item.dv_ce_index}&`
+    return (
+      <div className="flex flex-col gap-2">
+        {dvStatus === 'Sent' && (
+          <div className="flex items-center gap-2">
+            <GrDocumentPdf />
+            <a target="_blank" href={url} download>
+              Discharge Voucher
+            </a>
+          </div>
+        )}
+      </div>
+    )
+  }
 
   const columns = [
     {
       title: 'Claim No',
       dataIndex: 'claimNumber',
+      render: (_: any, item: any) => (
+        <Popover
+          className="cursor-pointer"
+          content={() => content(item, item.dv_status)}
+          title={'Downloads'}
+          trigger={'click'}
+        >
+          {item.claimNumber}
+        </Popover>
+      ),
     },
 
     {

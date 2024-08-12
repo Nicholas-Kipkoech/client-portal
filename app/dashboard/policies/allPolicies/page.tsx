@@ -52,6 +52,7 @@ const Policies = () => {
   const { policies, loadingPolicies }: any = useContext(PolicyContext)
   const [initialPolicies, setInitialPolicies] = useState([])
   const [openModal, setOpenModal] = useState(false)
+  console.log(policies)
 
   const [searchParams, setSearchParams] = useState<any>({
     client: '',
@@ -130,6 +131,11 @@ const Policies = () => {
       title: 'End No',
       dataIndex: 'endNo',
       render: (_: any, item: any) => <p>{item.endNo}</p>,
+    },
+    {
+      title: 'End Type',
+      dataIndex: 'endName',
+      render: (_: any, item: any) => <p>{item.endName}</p>,
     },
     {
       title: 'Product',

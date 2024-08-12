@@ -23,6 +23,7 @@ const Policies = () => {
     filteredPolicies: runningPolicies,
     loadingPolicies,
   }: any = useContext(PolicyContext)
+
   const [initialPolicies, setInitialPolicies] = useState([])
   const [openModal, setOpenModal] = useState(false)
 
@@ -116,6 +117,11 @@ const Policies = () => {
       title: 'End No',
       dataIndex: 'endNo',
       render: (_: any, item: any) => <p>{item.endNo}</p>,
+    },
+    {
+      title: 'End Type',
+      dataIndex: 'endName',
+      render: (_: any, item: any) => <p>{item.endName}</p>,
     },
     {
       title: 'Product',
