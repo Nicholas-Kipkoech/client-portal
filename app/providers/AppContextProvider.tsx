@@ -5,7 +5,9 @@ import { ReportsContextProvider } from '../context/reports/reports-context'
 import { FinanceContextProvider } from '../context/finance/finance-context'
 import { PolicyContextProvider } from '../context/policies/policies-context'
 
-const AppContextProvider = ({ children }: { children: React.ReactNode }) => {
+const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   return (
     <ContextProvider>
       <ClaimsContextProvider>

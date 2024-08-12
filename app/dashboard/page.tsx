@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useContextApi } from '../context/context'
 import CustomInput from '../utils/CustomInput'
 import CustomButton from '../utils/CustomButtom'
@@ -10,6 +10,8 @@ import PolicyContext from '../context/policies/policies-context'
 import ClaimsContext from '../context/claims/claims-context'
 import FinanceContext from '../context/finance/finance-context'
 import ReportsContext from '../context/reports/reports-context'
+import { jwtDecode } from 'jwt-decode'
+import { useRouter } from 'next/navigation'
 
 interface CustomCardProps {
   name: string
@@ -29,7 +31,23 @@ const Dashboard = () => {
     setToDate,
     loadingUwData,
     receiptResults,
+    isUserAuthenticated,
   }: any = useContextApi()
+
+  const router = useRouter()
+  useEffect(() => {
+    const checkAuth = () => {
+      if (typeof window !== 'undefined') {
+        const currentTime = Math.floor(Date.now() / 1000)
+        const accessToken: string | any = localStorage.getItem('accessToken')
+        const decodedToken: any | string = jwtDecode(accessToken)
+        if (!isUserAuthenticated() || currentTime > decodedToken.exp) {
+          router.push('/')
+        }
+      }
+    }
+    checkAuth()
+  }, [isUserAuthenticated, router])
 
   const {
     filteredPolicies,
