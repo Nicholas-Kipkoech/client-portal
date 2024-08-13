@@ -1,33 +1,33 @@
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
-import CustomButton from "../utils/CustomButtom";
+import React from 'react'
+import CustomButton from '../utils/CustomButtom'
 
 interface IProduct {
-  image: string;
-  name: string;
-  content: string;
+  image: string
+  name: string
+  content: string
 }
 
 const ProductsData = [
   {
-    name: "Homeowner",
+    name: 'Homeowner',
     image:
-      "https://images.unsplash.com/photo-1592890288564-76628a30a657?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      'https://images.unsplash.com/photo-1592890288564-76628a30a657?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     content: `Protect your home and family from the worst disasters. Up to $500,000 in home value, personal property, and other structures. You deserve to be protected.`,
   },
   {
-    name: "Renter",
+    name: 'Renter',
     image:
-      "https://images.unsplash.com/photo-1592890288564-76628a30a657?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      'https://images.unsplash.com/photo-1592890288564-76628a30a657?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     content: `Protect your family and belongings from what life might throw at you. You have collected a lifetime of treasures. Renters insurance helps you get back on your feet.`,
   },
   {
-    name: "Landlord",
+    name: 'Landlord',
     image:
-      "https://images.unsplash.com/photo-1592890288564-76628a30a657?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      'https://images.unsplash.com/photo-1592890288564-76628a30a657?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     content: `You worked hard for your investment. With landlord insurance, you can protect hard earned assets and avoid litigation. Flexible options maximize your return and budget.`,
   },
-];
+]
 
 const CustomProduct = ({ image, name, content }: IProduct) => {
   // eslint-disable-next-line @next/next/no-img-element
@@ -46,15 +46,15 @@ const CustomProduct = ({ image, name, content }: IProduct) => {
 
       <div>
         <CustomButton
-          name={"Apply now"}
+          name={'Apply now'}
           className={
-            "h-[2.5rem] w-[10rem] 2xl:h-[3rem] 2xl:w-[14rem] rounded-[20px] 2xl:rounded-[30px] mx-2 my-2 text-white bg-[#cb7529] shadow-md"
+            'h-[2.5rem] w-[10rem] 2xl:h-[3rem] 2xl:w-[14rem] rounded-[20px] 2xl:rounded-[30px] mx-2 my-2 text-white bg-[#cb7529] shadow-md'
           }
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
 const Products = () => {
   return (
@@ -74,7 +74,7 @@ const Products = () => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Products;
+export default Products
