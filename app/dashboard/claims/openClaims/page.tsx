@@ -68,16 +68,19 @@ const OpenClaims = () => {
     {
       title: 'Claim No',
       dataIndex: 'claimNumber',
-      render: (_: any, item: any) => (
-        <Popover
-          className="cursor-pointer"
-          content={() => content(item, item.dv_status)}
-          title={'Downloads'}
-          trigger={'click'}
-        >
-          {item.claimNumber}
-        </Popover>
-      ),
+      render: (_: any, item: any) =>
+        item.dv_status === 'sent' ? (
+          <Popover
+            className="cursor-pointer"
+            content={() => content(item, item.dv_status)}
+            title={'Downloads'}
+            trigger={'click'}
+          >
+            {item.claimNumber}
+          </Popover>
+        ) : (
+          <span>{item.claimNumber}</span>
+        ),
     },
 
     {
