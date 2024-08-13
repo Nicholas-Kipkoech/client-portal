@@ -22,6 +22,7 @@ const AllClaim = () => {
   const [initialClaims, setInitialClaims] = useState<any[]>([])
 
   const [searchParams, setSearchParams] = useState<any>({
+    claimNumber: '',
     insured: '',
     carRegNo: '',
     policyNumber: '',
@@ -46,10 +47,10 @@ const AllClaim = () => {
 
   const handleReset = () => {
     setSearchParams({
+      claimNumber: '',
       insured: '',
       carRegNo: '',
       policyNumber: '',
-      lossDate: '',
     })
     setInitialClaims(uniqueClaims)
   }
@@ -177,6 +178,16 @@ const AllClaim = () => {
       </div>
       <div className="flex flex-wrap gap-[0.2rem] sm:flex-col md:flex-row my-2 md:items-center">
         <CustomInput
+          onKeyUp={onKeyUp}
+          name="Claim No"
+          onChange={(e) =>
+            setSearchParams({ ...searchParams, claimNumber: e.target.value })
+          }
+          className="border md:w-[15rem] sm:w-full p-2"
+          value={searchParams.claimNumber}
+        />
+        <CustomInput
+          onKeyUp={onKeyUp}
           name="Policy No"
           onChange={(e) =>
             setSearchParams({ ...searchParams, policyNumber: e.target.value })
@@ -185,6 +196,7 @@ const AllClaim = () => {
           value={searchParams.policyNumber}
         />
         <CustomInput
+          onKeyUp={onKeyUp}
           name="Insured Name"
           onChange={(e) =>
             setSearchParams({ ...searchParams, insured: e.target.value })
@@ -193,6 +205,7 @@ const AllClaim = () => {
           value={searchParams.insured}
         />
         <CustomInput
+          onKeyUp={onKeyUp}
           name="Vehicle Reg No"
           className="border md:w-[10rem] sm:w-full  p-2"
           value={searchParams.carRegNo}

@@ -23,6 +23,7 @@ const OpenClaims = () => {
 
   const [initialClaims, setInitialClaims] = useState<any[]>([])
   const [searchParams, setSearchParams] = useState<any>({
+    claimNumber: '',
     insured: '',
     carRegNo: '',
     policyNumber: '',
@@ -47,10 +48,10 @@ const OpenClaims = () => {
 
   const handleReset = () => {
     setSearchParams({
+      claimNumber: '',
       insured: '',
       carRegNo: '',
       policyNumber: '',
-      lossDate: '',
     })
     setInitialClaims(uniqueClaims)
   }
@@ -161,6 +162,15 @@ const OpenClaims = () => {
         <p></p>
       </div>
       <div className="flex flex-wrap gap-[0.2rem] sm:flex-col md:flex-row my-2 md:items-center">
+        <CustomInput
+          onKeyUp={onKeyUp}
+          name="Claim No"
+          onChange={(e) =>
+            setSearchParams({ ...searchParams, claimNumber: e.target.value })
+          }
+          className="border md:w-[15rem] sm:w-full p-2"
+          value={searchParams.claimNumber}
+        />
         <CustomInput
           onKeyUp={onKeyUp}
           name="Policy No"
