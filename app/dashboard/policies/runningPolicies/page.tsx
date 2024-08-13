@@ -12,10 +12,40 @@ import React, { useContext, useState } from 'react'
 import { GrDocumentPdf, GrPrevious } from 'react-icons/gr'
 import NotesModal from '../NotesModal'
 import { useContextApi } from '@/app/context/context'
-import { PolicyColumns } from '../allPolicies/page'
+
 import CsvDownloader from 'react-csv-downloader'
 
 const Policies = () => {
+  const PolicyColumns = [
+    {
+      displayName: 'Policy No',
+      id: 'policyNo',
+    },
+    {
+      displayName: 'End No',
+      id: 'endNo',
+    },
+    {
+      displayName: 'Product',
+      id: 'product',
+    },
+    {
+      displayName: 'Period From',
+      id: 'periodFrom',
+    },
+    {
+      displayName: 'Period To',
+      id: 'periodTo',
+    },
+    {
+      displayName: 'Intermediary',
+      id: 'intermediary',
+    },
+    {
+      displayName: 'Client',
+      id: 'client',
+    },
+  ]
   const router = useRouter()
   const { fromDate, toDate }: any = useContextApi()
 

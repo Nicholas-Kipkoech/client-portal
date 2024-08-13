@@ -15,44 +15,44 @@ import CsvDownloader from 'react-csv-downloader'
 
 import { useContextApi } from '@/app/context/context'
 
-export const PolicyColumns = [
-  {
-    displayName: 'Policy No',
-    id: 'policyNo',
-  },
-  {
-    displayName: 'End No',
-    id: 'endNo',
-  },
-  {
-    displayName: 'Product',
-    id: 'product',
-  },
-  {
-    displayName: 'Period From',
-    id: 'periodFrom',
-  },
-  {
-    displayName: 'Period To',
-    id: 'periodTo',
-  },
-  {
-    displayName: 'Intermediary',
-    id: 'intermediary',
-  },
-  {
-    displayName: 'Client',
-    id: 'client',
-  },
-]
 const Policies = () => {
+  const PolicyColumns = [
+    {
+      displayName: 'Policy No',
+      id: 'policyNo',
+    },
+    {
+      displayName: 'End No',
+      id: 'endNo',
+    },
+    {
+      displayName: 'Product',
+      id: 'product',
+    },
+    {
+      displayName: 'Period From',
+      id: 'periodFrom',
+    },
+    {
+      displayName: 'Period To',
+      id: 'periodTo',
+    },
+    {
+      displayName: 'Intermediary',
+      id: 'intermediary',
+    },
+    {
+      displayName: 'Client',
+      id: 'client',
+    },
+  ]
+
   const router = useRouter()
   const { fromDate, toDate }: any = useContextApi()
 
   const { policies, loadingPolicies }: any = useContext(PolicyContext)
   const [initialPolicies, setInitialPolicies] = useState([])
   const [openModal, setOpenModal] = useState(false)
-  console.log(policies)
 
   const [searchParams, setSearchParams] = useState<any>({
     client: '',

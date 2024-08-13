@@ -8,10 +8,23 @@ import ReportsContext from '@/app/context/reports/reports-context'
 import { useContextApi } from '@/app/context/context'
 import CsvDownloader from 'react-csv-downloader'
 import CustomSelect from '@/app/utils/CustomSelect'
-import { currencyOptions } from '../premiums/page'
+
 import CustomButton from '@/app/utils/CustomButtom'
 
 const UpcomingRenewals = () => {
+  const currencies: any = {
+    KSH: 'Kenya Shilling',
+    USD: 'US Dollar',
+    EURO: 'Euros',
+    GBP: 'British Pound',
+    YEN: 'Japanese Yen',
+  }
+  const currencyOptions = Object.keys(currencies).map((currency) => {
+    return {
+      value: currency,
+      label: currencies[currency],
+    }
+  })
   const { upcomingRenewals }: any = useContext(ReportsContext)
   const { next3Month, systemDate } = format3months()
   const { fromDate, toDate, setFromDate, setToDate }: any = useContextApi()

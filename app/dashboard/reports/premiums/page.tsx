@@ -11,21 +11,20 @@ import { useRouter } from 'next/navigation'
 import { useContextApi } from '@/app/context/context'
 import CustomSelect from '@/app/utils/CustomSelect'
 
-export const currencies: any = {
-  KSH: 'Kenya Shilling',
-  USD: 'US Dollar',
-  EURO: 'Euros',
-  GBP: 'British Pound',
-  YEN: 'Japanese Yen',
-}
-export const currencyOptions = Object.keys(currencies).map((currency) => {
-  return {
-    value: currency,
-    label: currencies[currency],
-  }
-})
-
 const Premiums = () => {
+  const currencies: any = {
+    KSH: 'Kenya Shilling',
+    USD: 'US Dollar',
+    EURO: 'Euros',
+    GBP: 'British Pound',
+    YEN: 'Japanese Yen',
+  }
+  const currencyOptions = Object.keys(currencies).map((currency) => {
+    return {
+      value: currency,
+      label: currencies[currency],
+    }
+  })
   const {
     premiumReports,
     setFromDate,
