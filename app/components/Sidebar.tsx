@@ -112,6 +112,11 @@ const Sidebar = () => {
           icon: <LiaFileInvoiceSolid />,
         },
         {
+          title: 'Expected Renewals',
+          path: '/dashboard/reports/expectedRenewals',
+          icon: <LiaFileInvoiceSolid />,
+        },
+        {
           title: 'Commision Payable',
           path: '/dashboard/reports/commissionPayable',
           icon: <LiaFileInvoiceSolid />,

@@ -3,7 +3,7 @@ import { DatePicker } from 'antd'
 import React, { useContext, useState } from 'react'
 import { GrPrevious } from 'react-icons/gr'
 import { useRouter } from 'next/navigation'
-import { format3months, Months } from '@/app/utils/helpers'
+import { Months } from '@/app/utils/helpers'
 import ReportsContext from '@/app/context/reports/reports-context'
 import { useContextApi } from '@/app/context/context'
 import CsvDownloader from 'react-csv-downloader'
@@ -15,7 +15,7 @@ export interface ICurrencies {
   [k: string]: string
 }
 
-const UpcomingRenewals = () => {
+const ExpectedRenewals = () => {
   const currencies: ICurrencies = {
     KSH: 'Kenya Shilling',
     USD: 'US Dollar',
@@ -30,11 +30,11 @@ const UpcomingRenewals = () => {
     }
   })
   const {
-    upcomingRenewals,
-    fetchUpcomingRenewals,
-    loadingUpcomingRenewals,
+    expectedRenewals,
+    loadingExpectedRenewals,
+    fetchExpectedRenewals,
   }: any = useContext(ReportsContext)
-  const { next3Month, systemDate } = format3months()
+
   const { user }: any = useContextApi()
   console.log(user)
   const [fromDate, setFmDate] = useState('')
@@ -69,7 +69,7 @@ const UpcomingRenewals = () => {
     if (checkDate === true) {
       alert('Please select from date and to date')
     } else {
-      await fetchUpcomingRenewals(fromDate, toDate)
+      await fetchExpectedRenewals(fromDate, toDate)
     }
   }
 
@@ -123,13 +123,9 @@ const UpcomingRenewals = () => {
       displayName: 'Email',
       id: 'email',
     },
-    {
-      displayName: 'Reason',
-      id: 'reason',
-    },
   ]
   const router = useRouter()
-  let url = `http://192.168.1.112:8001/icon/reports?p_module_name=UW_EXP_REN_POL&destype=cache&desformat=PDF&rep_param1=&rep_param2=&rep_param3=&rep_param4=&rep_param5=&rep_param6=&rep_param7=&rep_param8=&rep_param9=&rep_doc_index=&rep_doc_org=50&rep_doc_no=&p_role_code=UW.ADF&p_org_code=50&p_menu_code=UW000056&p_grp_code=UW.ADF&p_os_code=01&p_user_code=1000000&p_user_name=ICON,%20Admin%20&p_report_title=EXPECTED%20RENEWABLE%20POLICIES%20REPORT&P_ORG_CODE=50&P_BRANCH=&P_BRANCH_GROUP=&P_CLASS=&P_SUBCLASS=&P_CATEGORY=${user.aentCode}&P_AGENT=${user.entCode}&P_CLIENT=&P_FM_DT=${fromDate}&P_TO_DT=${toDate}&P_CATEGORY_FILTER=All`
+  let url = `http://192.168.1.112:8001/icon/reports?p_module_name=UW_UNRENEWED_POLICIES&destype=cache&desformat=PDF&rep_param1=&rep_param2=&rep_param3=&rep_param4=&rep_param5=&rep_param6=&rep_param7=&rep_param8=&rep_param9=&rep_doc_index=&rep_doc_org=50&rep_doc_no=&p_role_code=UW.ADF&p_org_code=50&p_menu_code=UW000056&p_grp_code=UW.ADF&p_os_code=01&p_user_code=1000000&p_user_name=ICON,%20Admin%20&p_report_title=UNRENEWED%20POLICIES%20REPORT&P_ORG_CODE=50&P_BRANCH=&P_BRANCH_GROUP=&P_CLASS=&P_SUBCLASS=&P_CATEGORY=${user.aentCode}&P_AGENT=${user.entCode}&P_CLIENT=&P_CATEGORY_FILTER=&P_FM_DT=${fromDate}&P_TO_DT=${toDate}`
   return (
     <div>
       <div className="flex justify-between items-center">
@@ -141,7 +137,7 @@ const UpcomingRenewals = () => {
           <p>Back</p>
         </div>
         <p className="md:text-[1rem] sm:text-[0.6rem] font-bold">
-          Upcoming Renewals [{fromDate} to {toDate}]
+          Expected Renewals [{fromDate} to {toDate}]
         </p>
         <p></p>
       </div>
@@ -176,7 +172,7 @@ const UpcomingRenewals = () => {
               />
             </div>
             <CustomButton
-              name={loadingUpcomingRenewals ? 'Running...' : 'Run'}
+              name={loadingExpectedRenewals ? 'Running...' : 'Run'}
               onClick={handleRunReports}
               className="border h-[40px] w-[15rem] bg-slate-800 text-white rounded-md md:mt-8 sm:mt-4"
             />
@@ -186,14 +182,14 @@ const UpcomingRenewals = () => {
           </p>
           <div className="flex items-center justify-center">
             <CsvDownloader
-              filename={`Upcoming renewals [${fromDate}] - [${toDate}]`}
+              filename={`Expected renewals [${fromDate}] - [${toDate}]`}
               extension=".csv"
-              disabled={loadingUpcomingRenewals}
+              disabled={loadingExpectedRenewals}
               columns={columns}
-              datas={upcomingRenewals}
+              datas={expectedRenewals}
               className="bg-[#cb7529] h-[40px] rounded-md text-white border w-auto p-2 flex justify-center items-center"
             >
-              Download CSV {upcomingRenewals.length} records
+              Download CSV {expectedRenewals.length} records
             </CsvDownloader>
             <div className=" flex justify-center">
               <div className="border h-[40px] w-[15rem] flex items-center justify-center bg-[#cb7529] text-white rounded-md">
@@ -214,4 +210,4 @@ const UpcomingRenewals = () => {
   )
 }
 
-export default UpcomingRenewals
+export default ExpectedRenewals

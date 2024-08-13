@@ -1,6 +1,7 @@
 'use client'
 import {
   getCommissionPayable,
+  getExpectedRenewals,
   getGLStatements,
   getPolicies,
   getPremiumReports,
@@ -24,6 +25,7 @@ export const ReportsContextProvider = ({
   const [fromDate, setFromDate] = useState('')
   const [toDate, setToDate] = useState('')
   const [upcomingRenewals, setUpcomingRenewals] = useState([])
+  const [expectedRenewals, setExpectedRenewals] = useState([])
   const [fromMonthDate, setFromMonthDate] = useState('1-Apr-2024')
   const [toMonthDate, setToMonthDate] = useState('30-Apr-2024')
 
@@ -31,6 +33,7 @@ export const ReportsContextProvider = ({
   const [loadingGl, setLoadingGl] = useState(false)
   const [user, setUser] = useState<any>({})
   const [loadingUpcomingRenewals, setLoadingUpcomingRenewals] = useState(false)
+  const [loadingExpectedRenewals, setLoadingExpectedRenewals] = useState(false)
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -109,6 +112,21 @@ export const ReportsContextProvider = ({
     }
   }
 
+  async function fetchExpectedRenewals(fromDate: string, toDate: string) {
+    setLoadingExpectedRenewals(true)
+    if (Object.keys(user).length > 0) {
+      const response = await getExpectedRenewals({
+        fromDate: fromDate,
+        toDate: toDate,
+        intermediaryCode: user?.aentCode,
+        clientCode: user?.entCode,
+      })
+
+      setExpectedRenewals(response.results)
+      setLoadingExpectedRenewals(false)
+    }
+  }
+
   useEffect(() => {
     const { startDate, endDate } = formatYearly('2024')
     setFromDate(startDate)
@@ -159,6 +177,9 @@ export const ReportsContextProvider = ({
         commPayableResults,
         fetchUpcomingRenewals,
         loadingUpcomingRenewals,
+        expectedRenewals,
+        loadingExpectedRenewals,
+        fetchExpectedRenewals,
       }}
     >
       {children}

@@ -69,6 +69,11 @@ export const getUpcomingRenewals = async (data: any) => {
   const res = await PrivateAxiosUtility.post(`/upcomingRenewals/fetch`, data)
   return res.data
 }
+export const getExpectedRenewals = async (data: any) => {
+  const res = await PrivateAxiosUtility.post(`/expectedRenewals/fetch`, data)
+  return res.data
+}
+
 export const getTravelCertificatesService = async (data: any) => {
   const res = await PrivateAxiosUtility.post(`/travel/travel-certs`, data)
   return res.data
