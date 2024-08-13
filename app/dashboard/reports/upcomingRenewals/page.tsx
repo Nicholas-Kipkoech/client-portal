@@ -29,9 +29,20 @@ const UpcomingRenewals = () => {
       label: currencies[currency],
     }
   })
-  const { upcomingRenewals }: any = useContext(ReportsContext)
+  const {
+    upcomingRenewals,
+    fetchUpcomingRenewals,
+    loadingUpcomingRenewals,
+  }: any = useContext(ReportsContext)
   const { next3Month, systemDate } = format3months()
-  const { fromDate, toDate, setFromDate, setToDate }: any = useContextApi()
+  const {
+    fromDate,
+    toDate,
+    setFromDate,
+    setToDate,
+    user,
+  }: any = useContextApi()
+  console.log(user)
   const [fmDate, setFmDate] = useState('')
   const [_toDate, setTdDate] = useState('')
   const [currency, setCurrency] = useState('KSH')
@@ -60,12 +71,11 @@ const UpcomingRenewals = () => {
     setFmDate(formattedToDate)
   }
   const checkDate = fmDate.split('-').join('') === 'undefinedundefined'
-  const handleRunReports = () => {
+  const handleRunReports = async () => {
     if (checkDate === true) {
       alert('Please select from date and to date')
     } else {
-      setFromDate(fmDate)
-      setToDate(_toDate)
+      await fetchUpcomingRenewals(fromDate, toDate)
     }
   }
 
@@ -125,6 +135,7 @@ const UpcomingRenewals = () => {
     },
   ]
   const router = useRouter()
+  let url = `http://192.168.1.112:8001/icon/reports?p_module_name=UW_EXP_REN_POL&destype=cache&desformat=PDF&rep_param1=&rep_param2=&rep_param3=&rep_param4=&rep_param5=&rep_param6=&rep_param7=&rep_param8=&rep_param9=&rep_doc_index=&rep_doc_org=50&rep_doc_no=&p_role_code=UW.ADF&p_org_code=50&p_menu_code=UW000056&p_grp_code=UW.ADF&p_os_code=01&p_user_code=1000000&p_user_name=ICON,%20Admin%20&p_report_title=EXPECTED%20RENEWABLE%20POLICIES%20REPORT&P_ORG_CODE=50&P_BRANCH=&P_BRANCH_GROUP=&P_CLASS=&P_SUBCLASS=&P_CATEGORY=${user.aentCode}&P_AGENT=${user.entCode}&P_CLIENT=&P_FM_DT=${fromDate}&P_TO_DT=${toDate}&P_CATEGORY_FILTER=All`
   return (
     <div>
       <div className="flex justify-between items-center">
@@ -171,7 +182,7 @@ const UpcomingRenewals = () => {
               />
             </div>
             <CustomButton
-              name={'Run'}
+              name={loadingUpcomingRenewals ? 'Running...' : 'Run'}
               onClick={handleRunReports}
               className="border h-[40px] w-[15rem] bg-slate-800 text-white rounded-md md:mt-8 sm:mt-4"
             />
@@ -183,6 +194,7 @@ const UpcomingRenewals = () => {
             <CsvDownloader
               filename={`Upcoming renewals [${fromDate}] - [${toDate}]`}
               extension=".csv"
+              disabled={loadingUpcomingRenewals}
               columns={columns}
               datas={upcomingRenewals}
               className="bg-[#cb7529] h-[40px] rounded-md text-white border w-auto p-2 flex justify-center items-center"
@@ -192,7 +204,7 @@ const UpcomingRenewals = () => {
             <div className=" flex justify-center">
               <div className="border h-[40px] w-[15rem] flex items-center justify-center bg-[#cb7529] text-white rounded-md">
                 <a
-                  href={''}
+                  href={url}
                   download
                   target="__blank"
                   className="flex justify-center items-center"

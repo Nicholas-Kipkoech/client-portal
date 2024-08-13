@@ -30,6 +30,7 @@ export const ReportsContextProvider = ({
   const [glStatements, setGLstatements] = useState([])
   const [loadingGl, setLoadingGl] = useState(false)
   const [user, setUser] = useState<any>({})
+  const [loadingUpcomingRenewals, setLoadingUpcomingRenewals] = useState(false)
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -92,22 +93,21 @@ export const ReportsContextProvider = ({
     }
     fetchPremiumReports()
   }, [user, fromDate, toDate])
-  const { systemDate, next3Month } = format3months()
-  useEffect(() => {
-    async function fetchUpcomingRenewals() {
-      if (Object.keys(user).length > 0) {
-        const response = await getUpcomingRenewals({
-          fromDate: systemDate,
-          toDate: next3Month,
-          intermediaryCode: user?.aentCode,
-          clientCode: user?.entCode,
-        })
 
-        setUpcomingRenewals(response.results)
-      }
+  async function fetchUpcomingRenewals(fromDate: string, toDate: string) {
+    setLoadingUpcomingRenewals(true)
+    if (Object.keys(user).length > 0) {
+      const response = await getUpcomingRenewals({
+        fromDate: fromDate,
+        toDate: toDate,
+        intermediaryCode: user?.aentCode,
+        clientCode: user?.entCode,
+      })
+
+      setUpcomingRenewals(response.results)
+      setLoadingUpcomingRenewals(false)
     }
-    fetchUpcomingRenewals()
-  }, [user, systemDate, next3Month])
+  }
 
   useEffect(() => {
     const { startDate, endDate } = formatYearly('2024')
@@ -157,6 +157,8 @@ export const ReportsContextProvider = ({
         glStatements,
         upcomingRenewals,
         commPayableResults,
+        fetchUpcomingRenewals,
+        loadingUpcomingRenewals,
       }}
     >
       {children}
