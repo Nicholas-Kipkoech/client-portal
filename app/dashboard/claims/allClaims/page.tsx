@@ -1,6 +1,6 @@
 'use client'
 import { ConfigProvider, Popover, Table } from 'antd'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import CsvDownloader from 'react-csv-downloader'
 
 import { GrDocumentPdf, GrPrevious } from 'react-icons/gr'
@@ -15,7 +15,11 @@ const AllClaim = () => {
   const { claims, loadingClaims }: any = useContext(ClaimsContext)
   const { fromDate, toDate }: any = useContextApi()
 
-  const [initialClaims, setInitialClaims] = useState([])
+  const uniqueClaims = Array.from(
+    new Map(claims.map((claim: any) => [claim.claimNumber, claim])).values(),
+  )
+
+  const [initialClaims, setInitialClaims] = useState<any[]>([])
 
   const [searchParams, setSearchParams] = useState<any>({
     insured: '',
@@ -24,7 +28,7 @@ const AllClaim = () => {
   })
 
   const handleSearch = () => {
-    const filteredClaims = claims.filter((claim: any) => {
+    const filteredClaims = uniqueClaims.filter((claim: any) => {
       for (const key in searchParams) {
         if (searchParams[key]) {
           // Check if the search param is not empty
@@ -47,8 +51,9 @@ const AllClaim = () => {
       policyNumber: '',
       lossDate: '',
     })
-    setInitialClaims(claims)
+    setInitialClaims(uniqueClaims)
   }
+
   const content = (item: any, dvStatus: any) => {
     let url = `http://192.168.1.112:8001/icon/reports?p_module_name=CM_DV&destype=cache&desformat=PDF&rep_param1=&rep_param2=&rep_param3=&rep_param4=&rep_param5=&rep_param6=&rep_param7=&rep_param8=&rep_param9=&rep_doc_index=${item.cm_index}&rep_doc_org=50&rep_doc_no=${item.dv_no}&p_role_code=CM.MGR&p_org_code=50&p_menu_code=100013&p_grp_code=CM.MGR&p_os_code=01&p_user_code=1000000&p_user_name=ICON,%20Admin%20&p_report_title=CLAIMS%20DISCHARGE%20VOUCHER&p_cm_index_fm=${item.cm_index}&p_ce_index_fm=${item.dv_ce_index}&`
     return (
@@ -211,7 +216,7 @@ const AllClaim = () => {
           filename={`All Claims [${fromDate}] - [${toDate}]`}
           extension=".csv"
           columns={formattedColumns}
-          datas={initialClaims.length > 0 ? initialClaims : claims}
+          datas={initialClaims.length > 0 ? initialClaims : uniqueClaims}
           className="bg-[#cb7529] h-[38px] rounded-md text-white border w-auto p-2 flex justify-center items-center mt-5"
         >
           Download CSV
@@ -232,7 +237,7 @@ const AllClaim = () => {
         <Table
           columns={columns}
           loading={loadingClaims}
-          dataSource={initialClaims.length > 0 ? initialClaims : claims}
+          dataSource={initialClaims.length > 0 ? initialClaims : uniqueClaims}
           scroll={{ x: 1500 }}
           pagination={{ pageSize: 20 }}
         />

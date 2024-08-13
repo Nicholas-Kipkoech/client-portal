@@ -45,6 +45,7 @@ export const ClaimsContextProvider = ({
     }
     fetchClaims()
   }, [user])
+
   const openClaims = claims.filter((claim: any) => {
     return claim.status === 'Open'
   })
