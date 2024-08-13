@@ -11,8 +11,12 @@ import CustomSelect from '@/app/utils/CustomSelect'
 
 import CustomButton from '@/app/utils/CustomButtom'
 
+export interface ICurrencies {
+  [k: string]: string
+}
+
 const UpcomingRenewals = () => {
-  const currencies: any = {
+  const currencies: ICurrencies = {
     KSH: 'Kenya Shilling',
     USD: 'US Dollar',
     EURO: 'Euros',

@@ -8,6 +8,7 @@ import { LoadingOutlined } from '@ant-design/icons'
 import ReportsContext from '@/app/context/reports/reports-context'
 import { useContextApi } from '@/app/context/context'
 import CustomSelect from '@/app/utils/CustomSelect'
+import { ICurrencies } from '../upcomingRenewals/page'
 
 const Statements = () => {
   const { user }: any = useContextApi()
@@ -49,7 +50,7 @@ const Statements = () => {
     }
   }
 
-  const currencies: any = {
+  const currencies: ICurrencies = {
     KSH: 'Kenya Shilling',
     USD: 'US Dollar',
     EURO: 'Euros',
