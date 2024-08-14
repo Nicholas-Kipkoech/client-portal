@@ -112,7 +112,7 @@ const Sidebar = () => {
           icon: <LiaFileInvoiceSolid />,
         },
         {
-          title: 'Expected Renewals',
+          title: 'Unrenewed Policies',
           path: '/dashboard/reports/expectedRenewals',
           icon: <LiaFileInvoiceSolid />,
         },
