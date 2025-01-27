@@ -47,7 +47,7 @@ export const ClaimsContextProvider = ({
   }, [user])
 
   const openClaims = claims.filter((claim: any) => {
-    return claim.status === 'Open'
+    return claim.status === 'Open' ||claim.cmTag!=="Normal"
   })
   return (
     <ClaimsContext.Provider value={{ claims, loadingClaims, openClaims }}>

@@ -1,111 +1,113 @@
-'use client'
-import { createContext, useContext, useEffect, useState } from 'react'
-import { jwtDecode } from 'jwt-decode'
+"use client";
+import { createContext, useContext, useEffect, useState } from "react";
+import { jwtDecode } from "jwt-decode";
 import {
   getPremiumReports,
   getPremiumsAndCommission,
   getReceiptsData,
+  getSystemCodes,
   getTravelCertificatesService,
   getUpcomingRenewals,
   getUserRoles,
-} from '../services/apiServices'
-import { format3months, formatYearly, getDates } from '../utils/helpers'
+} from "../services/apiServices";
+import { format3months, formatYearly, getDates } from "../utils/helpers";
 
-const Context = createContext({})
+const Context = createContext({});
 
 const ContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const [page, setPage] = useState('Home')
-  const [user, setUser] = useState<any>({})
-  const [years, setYears] = useState<number[]>([])
-  const [selectedQuote, setSelectedQuote] = useState({})
-  const [isMobile, setIsMobile] = useState(false)
+  const [page, setPage] = useState("Home");
+  const [user, setUser] = useState<any>({});
+  const [years, setYears] = useState<number[]>([]);
+  const [selectedQuote, setSelectedQuote] = useState({});
+  const [isMobile, setIsMobile] = useState(false);
 
-  const [acceptedQuotes, setAcceptedQuotes] = useState(false)
+  const [acceptedQuotes, setAcceptedQuotes] = useState(false);
 
-  const [fromDate, setFromDate] = useState('')
-  const [toDate, setToDate] = useState('')
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
 
-  const [uwData, setUwData] = useState([])
-  const [receipts, setReceipts] = useState([])
+  const [uwData, setUwData] = useState([]);
+  const [receipts, setReceipts] = useState([]);
 
-  const [loadingUwData, setLoadingUwData] = useState(false)
-  const [certificates, setCertificates] = useState([])
+  const [loadingUwData, setLoadingUwData] = useState(false);
+  const [certificates, setCertificates] = useState([]);
 
-  const [userDetails, setUserDetails] = useState({})
+  const [userDetails, setUserDetails] = useState({});
 
-  //user roles
+  const [roles, setRoles] = useState([]);
+  const [loadingRoles, setLoadingRoles] = useState(false);
 
-  const [roles, setRoles] = useState([])
-  const [loadingRoles, setLoadingRoles] = useState(false)
-  useEffect(() => {
-    const { startDate, endDate } = getDates()
-    setFromDate(startDate)
-    setToDate(endDate)
-  }, [])
+  const [systemCodes, setSystemCodes] = useState([]);
 
   useEffect(() => {
-    const years: number[] = []
-    const currentYear = new Date(Date.now()).getFullYear()
+    const { startDate, endDate } = getDates();
+    setFromDate(startDate);
+    setToDate(endDate);
+  }, []);
+
+  useEffect(() => {
+    const years: number[] = [];
+    const currentYear = new Date(Date.now()).getFullYear();
 
     function getYears() {
       for (let i = currentYear - 15; i <= currentYear; i++) {
-        years.push(i)
+        years.push(i);
       }
     }
-    setYears(years)
-    getYears()
-  }, [])
+    setYears(years);
+    getYears();
+  }, []);
 
   function isUserAuthenticated(): boolean {
-    if (typeof window !== 'undefined') {
-      const accessTokenJson = localStorage.getItem('accessToken')
-      if (!accessTokenJson) return false
-      const decodedToken: any = jwtDecode(accessTokenJson)
-      const currentTime = Date.now() / 1000
+    if (typeof window !== "undefined") {
+      const accessTokenJson = localStorage.getItem("accessToken");
+      if (!accessTokenJson) return false;
+      const decodedToken: any = jwtDecode(accessTokenJson);
+      const currentTime = Date.now() / 1000;
       if (currentTime >= decodedToken?.exp) {
-        return false
+        return false;
       }
     }
-    return true
+    return true;
   }
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const accessTokenJson: any = localStorage.getItem('accessToken')
+    if (typeof window !== "undefined") {
+      const accessTokenJson: any = localStorage.getItem("accessToken");
       if (accessTokenJson) {
-        const decodedToken: any = jwtDecode(accessTokenJson)
-        setUser(decodedToken)
+        const decodedToken: any = jwtDecode(accessTokenJson);
+        setUser(decodedToken);
       }
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768)
-    }
-    window.addEventListener('resize', handleResize)
+      setIsMobile(window.innerWidth <= 768);
+    };
+    window.addEventListener("resize", handleResize);
 
-    handleResize()
+    handleResize();
 
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     async function fetchPremiums() {
-      setLoadingUwData(true)
+      setLoadingUwData(true);
       if (Object.keys(user).length > 0) {
         const response = await getPremiumsAndCommission({
           fromDate: fromDate,
           toDate: toDate,
           intermediaryCode: user?.aentCode,
           clientCode: user?.entCode,
-        })
-        setLoadingUwData(false)
-        setUwData(response.results)
+        });
+        setLoadingUwData(false);
+        setUwData(response.results);
       }
     }
-    fetchPremiums()
-  }, [user, fromDate, toDate])
+    fetchPremiums();
+  }, [user, fromDate, toDate]);
 
   useEffect(() => {
     async function fetchUSerCerts() {
@@ -113,13 +115,13 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
         const response = await getTravelCertificatesService({
           intermediaryCode: user?.aentCode,
           clientCode: user?.entCode,
-        })
+        });
 
-        setCertificates(response.results)
+        setCertificates(response.results);
       }
     }
-    fetchUSerCerts()
-  }, [user])
+    fetchUSerCerts();
+  }, [user]);
 
   useEffect(() => {
     async function fetchReceipts() {
@@ -129,27 +131,35 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
           toDate: toDate,
           intermediaryCode: user?.aentCode,
           clientCode: user?.entCode,
-        })
-        setReceipts(response.results)
+        });
+        setReceipts(response.results);
       }
     }
-    fetchReceipts()
-  }, [user, fromDate, toDate])
+    fetchReceipts();
+  }, [user, fromDate, toDate]);
 
   useEffect(() => {
     async function fetchUserRoles() {
-      setLoadingRoles(true)
+      setLoadingRoles(true);
       if (Object.keys(user).length > 0) {
         const response = await getUserRoles({
           user_code: user.userCode,
-        })
+        });
 
-        setRoles(response.results.map((role: any) => role.roleCode))
-        setLoadingRoles(false)
+        setRoles(response.results.map((role: any) => role.roleCode));
+        setLoadingRoles(false);
       }
     }
-    fetchUserRoles()
-  }, [user])
+    fetchUserRoles();
+  }, [user]);
+
+  useEffect(() => {
+    async function fetchSystemCodes() {
+      const response = await getSystemCodes();
+      setSystemCodes(response.results);
+    }
+    fetchSystemCodes();
+  }, []);
 
   const calculateUwData = (uwData: any[]) => {
     const totalPremium = uwData.reduce((total: number, uw) => {
@@ -161,35 +171,35 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
         uw.additional +
         uw.facin +
         uw.commission
-      )
-    }, 0)
+      );
+    }, 0);
     const totalCommission = uwData.reduce((total: number, uw) => {
-      return total + uw.commission
-    }, 0)
-    return { totalPremium, totalCommission }
-  }
-  const { totalPremium, totalCommission } = calculateUwData(uwData)
+      return total + uw.commission;
+    }, 0);
+    return { totalPremium, totalCommission };
+  };
+  const { totalPremium, totalCommission } = calculateUwData(uwData);
 
   const calculateTotalByCurrency = (receipts: any[]) => {
     return receipts.reduce((acc: any, curr) => {
-      const { currencyCode, receiptAmount } = curr
+      const { currencyCode, receiptAmount } = curr;
       // Check if the currency code already exists in the accumulator object
       if (acc[currencyCode]) {
         // If exists, add the current receipt amount to the existing total
-        acc[currencyCode].total += receiptAmount
+        acc[currencyCode].total += receiptAmount;
         // Increment the count for the currency code
-        acc[currencyCode].count++
+        acc[currencyCode].count++;
       } else {
         // If currency code doesn't exist, create a new entry
         acc[currencyCode] = {
           total: receiptAmount,
           count: 1,
-        }
+        };
       }
-      return acc
-    }, {})
-  }
-  const receiptResults = calculateTotalByCurrency(receipts)
+      return acc;
+    }, {});
+  };
+  const receiptResults = calculateTotalByCurrency(receipts);
 
   return (
     <Context.Provider
@@ -217,12 +227,13 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
         loadingRoles,
         userDetails,
         setUserDetails,
+        systemCodes,
       }}
     >
       {children}
     </Context.Provider>
-  )
-}
+  );
+};
 
-export const useContextApi = () => useContext(Context)
-export default ContextProvider
+export const useContextApi = () => useContext(Context);
+export default ContextProvider;

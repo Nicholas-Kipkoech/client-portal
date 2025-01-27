@@ -1,79 +1,84 @@
-'use client'
-import React, { useEffect, useState } from 'react'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { GrOverview } from 'react-icons/gr'
-import { LiaFileInvoiceSolid } from 'react-icons/lia'
-import { VscOrganization } from 'react-icons/vsc'
-import { MdOutlineNavigateNext } from 'react-icons/md'
-import { FaChevronDown } from 'react-icons/fa6'
-import { useContextApi } from '../context/context'
-import iconLogo from '../assets/iconLogo.png'
-import Image from 'next/image'
+"use client";
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { GrOverview } from "react-icons/gr";
+import { LiaFileInvoiceSolid } from "react-icons/lia";
+import { VscOrganization } from "react-icons/vsc";
+import { MdOutlineNavigateNext } from "react-icons/md";
+import { FaChevronDown } from "react-icons/fa6";
+import { useContextApi } from "../context/context";
+import iconLogo from "../assets/iconLogo.png";
+import Image from "next/image";
 
 const Sidebar = () => {
-  const [showSubMenu, setShowSubMenu] = useState(0)
-  const { roles }: any = useContextApi()
-  console.info('user roles', roles)
+  const [showSubMenu, setShowSubMenu] = useState(0);
+  const { roles }: any = useContextApi();
+
   const MenuLink = ({ item }: any) => {
-    const pathname = usePathname()
+    const pathname = usePathname();
 
     return (
       <Link
         href={item.path}
         className={`p-[5px] flex items-center  pl-6 gap-[5px] text-[13px] text-white hover:bg-[#2e2f3b] hover:text-white m-[2px] rounded-[10px] ${
-          pathname === item.path && 'bg-[#995224]'
+          pathname === item.path && "bg-[#995224]"
         }`}
       >
         {item.icon}
         {item.title}
       </Link>
-    )
-  }
+    );
+  };
 
   //if user has a role then show based on role
 
   const hasRequiredRoles = (itemRoles: string[]) => {
-    if (itemRoles.length === 0) return false
+    if (itemRoles.length === 0) return false;
     if (roles.length !== 0) {
-      return itemRoles.some((role) => roles?.includes(role.toUpperCase()))
+      return itemRoles.some((role) => roles?.includes(role.toUpperCase()));
     }
-  }
+  };
 
   const handleShowMenu = (index: any) => {
-    setShowSubMenu((prevIndex) => (prevIndex === index ? null : index))
-  }
+    setShowSubMenu((prevIndex) => (prevIndex === index ? null : index));
+  };
 
   const menuItems = [
     {
-      title: 'Insights',
+      title: "Insights",
       list: [
         {
-          title: 'Overview',
-          path: '/dashboard',
+          title: "Overview",
+          path: "/dashboard",
           icon: <GrOverview />,
         },
       ],
-      roles: ['bp_insights'],
+      roles: ["bp_insights"],
     },
     {
-      title: 'Policies',
+      title: "Policies",
       list: [
         {
-          title: 'View Running policies',
-          path: '/dashboard/policies/runningPolicies',
+          title: "Create New Policy",
+          path: "/dashboard/policies/createPolicy",
           icon: <LiaFileInvoiceSolid />,
         },
         {
-          title: 'View All policies',
-          path: '/dashboard/policies/allPolicies',
+          title: "View Running policies",
+          path: "/dashboard/policies/runningPolicies",
+          icon: <LiaFileInvoiceSolid />,
+        },
+        {
+          title: "View All policies",
+          path: "/dashboard/policies/allPolicies",
           icon: <LiaFileInvoiceSolid />,
         },
       ],
-      roles: ['bp_policies'],
+      roles: ["bp_policies"],
     },
     {
-      title: 'Claims',
+      title: "Claims",
       list: [
         // {
         //   title: 'File claim',
@@ -81,98 +86,98 @@ const Sidebar = () => {
         //   icon: <LiaFileInvoiceSolid />,
         // },
         {
-          title: 'Open claims',
-          path: '/dashboard/claims/openClaims',
+          title: "Open claims",
+          path: "/dashboard/claims/openClaims",
           icon: <LiaFileInvoiceSolid />,
         },
         {
-          title: 'View All claims',
-          path: '/dashboard/claims/allClaims',
+          title: "View All claims",
+          path: "/dashboard/claims/allClaims",
           icon: <LiaFileInvoiceSolid />,
         },
       ],
-      roles: ['bp_claims'],
+      roles: ["bp_claims"],
     },
     {
-      title: 'Reports',
+      title: "Reports",
       list: [
         {
-          title: 'View Premium Register',
-          path: '/dashboard/reports/premiums',
+          title: "View Premium Register",
+          path: "/dashboard/reports/premiums",
           icon: <LiaFileInvoiceSolid />,
         },
         {
-          title: 'View Statements',
-          path: '/dashboard/reports/statements',
+          title: "View Statements",
+          path: "/dashboard/reports/statements",
           icon: <LiaFileInvoiceSolid />,
         },
         {
-          title: 'Upcoming Renewals',
-          path: '/dashboard/reports/upcomingRenewals',
+          title: "Upcoming Renewals",
+          path: "/dashboard/reports/upcomingRenewals",
           icon: <LiaFileInvoiceSolid />,
         },
         {
-          title: 'Unrenewed Policies',
-          path: '/dashboard/reports/expectedRenewals',
+          title: "Unrenewed Policies",
+          path: "/dashboard/reports/expectedRenewals",
           icon: <LiaFileInvoiceSolid />,
         },
         {
-          title: 'Commision Payable',
-          path: '/dashboard/reports/commissionPayable',
+          title: "Commision Payable",
+          path: "/dashboard/reports/commissionPayable",
           icon: <LiaFileInvoiceSolid />,
         },
         {
-          title: 'Receipts Download',
-          path: '/dashboard/finance/receipts',
+          title: "Receipts Download",
+          path: "/dashboard/finance/receipts",
           icon: <LiaFileInvoiceSolid />,
         },
         {
-          title: 'Claim Credit Notes',
-          path: '/dashboard/finance/claimCreditNotes',
+          title: "Claim Credit Notes",
+          path: "/dashboard/finance/claimCreditNotes",
           icon: <LiaFileInvoiceSolid />,
         },
         {
-          title: 'Debits',
-          path: '/dashboard/finance/debits',
+          title: "Debits",
+          path: "/dashboard/finance/debits",
           icon: <LiaFileInvoiceSolid />,
         },
       ],
-      roles: ['bp_reports'],
+      roles: ["bp_reports"],
     },
     {
-      title: 'Risk Notes',
+      title: "Risk Notes",
       list: [
         {
-          title: 'Submit Risk Notes',
-          path: '/dashboard/risk-notes/submit-note',
+          title: "Submit Risk Notes",
+          path: "/dashboard/risk-notes/submit-note",
           icon: <LiaFileInvoiceSolid />,
         },
         {
-          title: 'View Risk Notes',
-          path: '/dashboard/risk-notes/view-risk-notes',
+          title: "View Risk Notes",
+          path: "/dashboard/risk-notes/view-risk-notes",
           icon: <LiaFileInvoiceSolid />,
         },
       ],
-      roles: ['bp_risk_notes'],
+      roles: ["bp_risk_notes"],
     },
 
     {
-      title: 'Travel Insurance',
+      title: "Travel Insurance",
       list: [
         {
-          title: 'Request Travel Policy',
-          path: '/dashboard/travelInsurance/request-quote',
+          title: "Request Travel Policy",
+          path: "/dashboard/travelInsurance/request-quote",
           icon: <LiaFileInvoiceSolid />,
         },
         {
-          title: 'Issued Travel Certificates',
-          path: '/dashboard/travelInsurance/documents',
+          title: "Issued Travel Certificates",
+          path: "/dashboard/travelInsurance/documents",
           icon: <LiaFileInvoiceSolid />,
         },
       ],
-      roles: ['bp_travel'],
+      roles: ["bp_travel"],
     },
-  ]
+  ];
 
   return (
     <div className="h-screen bg-[#092332] overflow-y-auto">
@@ -207,7 +212,7 @@ const Sidebar = () => {
         </ul>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;

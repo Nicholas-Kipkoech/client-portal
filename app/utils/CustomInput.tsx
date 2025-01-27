@@ -1,15 +1,15 @@
-import React from 'react'
+import React from "react";
 
 interface Input {
-  name: string
-  disabled?: boolean
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
-  value: string | number | any
-  className: string
-  type?: string
-  placeholder?: string
-  onKeyUp?: (e: React.KeyboardEvent<HTMLInputElement>) => void
-  required?: boolean
+  name: string;
+  disabled?: boolean;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value: string | number | any;
+  className: string;
+  type?: string;
+  placeholder?: string;
+  onKeyUp?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  required?: boolean;
 }
 
 const CustomInput = ({
@@ -27,7 +27,11 @@ const CustomInput = ({
     <div className="flex flex-col gap-1 mt-1">
       <div className="flex gap-1 items-center">
         <label htmlFor={name}>{name}</label>
-        {required && <p className="text-red-500">*</p>}
+        {required ? (
+          <p className="text-red-600 font-bold">*</p>
+        ) : (
+          <p className="text-slate-400 text-[12px]">(optional)</p>
+        )}
       </div>
       <input
         onKeyUp={onKeyUp}
@@ -40,7 +44,7 @@ const CustomInput = ({
         placeholder={placeholder}
       />
     </div>
-  )
-}
+  );
+};
 
-export default CustomInput
+export default CustomInput;
