@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const ClientDetails = () => {
-  const { systemCodes, user }: any = useContextApi();
+  const { systemCodes, user, clients }: any = useContextApi();
 
   const systemCodesOptions = systemCodes
     .filter((item: any) => item.SYS_TYPE === "Institutional_Sector")
@@ -32,6 +32,13 @@ const ClientDetails = () => {
     },
   ];
 
+  const clientOptions = clients.map((client: any) => {
+    return {
+      label: client.ENT_NAME,
+      value: client.ENT_CODE,
+    };
+  });
+
   const router = useRouter();
 
   const [clientDetails, setClientDetails] = useState({
@@ -51,6 +58,7 @@ const ClientDetails = () => {
 
   const [messageApi, contextHolder] = message.useMessage();
   const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [activeTab, setActiveTab] = useState<"select" | "create">("select");
 
   useEffect(() => {
     if (clientDetails.full_name !== "" || clientDetails.email !== "") {
@@ -90,86 +98,137 @@ const ClientDetails = () => {
       <p className="text-[1.3rem] flex justify-center font-bold">
         Client Details Form
       </p>
-      <div className="grid grid-cols-2 gap-4">
-        <CustomInput
-          required
-          name="Full Name"
-          className="w-full border rounded-md"
-          value={clientDetails.full_name}
-          onChange={(e) =>
-            setClientDetails({ ...clientDetails, full_name: e.target.value })
-          }
-        />
-        <CustomInput
-          name="Email"
-          type="email"
-          required
-          className=" w-full border rounded-md"
-          value={clientDetails.email}
-          onChange={(e) =>
-            setClientDetails({ ...clientDetails, email: e.target.value })
-          }
-        />
-        <CustomInput
-          name="Phone Number"
-          required
-          className=" w-full border rounded-md"
-          value={clientDetails.phoneNumber}
-          onChange={(e) =>
-            setClientDetails({ ...clientDetails, phoneNumber: e.target.value })
-          }
-        />
-        <CustomSelect
-          name="Client Type"
-          defaultValue={systemCodesOptions[0]}
-          options={systemCodesOptions}
-          onChange={(value: any) =>
-            setClientDetails({ ...clientDetails, client_type: value.value })
-          }
-        />
 
-        <CustomSelect
-          name="Gender"
-          defaultValue={genderOptions[0]}
-          options={genderOptions}
-          onChange={(value: any) =>
-            setClientDetails({ ...clientDetails, gender: value.value })
-          }
+      <div className="w-full flex justify-center gap-2 mb-2">
+        <CustomButton
+          name="Select existing client"
+          onClick={() => setActiveTab("select")}
+          className={`px-2  ${
+            activeTab === "select" ? "bg-[#092332] text-white" : "bg-gray-200"
+          } w-full`}
         />
-
-        <CustomInput
-          name="ID Number"
-          required={clientDetails.client_type.includes("INDIV")}
-          className=" w-full border rounded-md"
-          value={clientDetails.clientIDNo}
-          onChange={(e) =>
-            setClientDetails({ ...clientDetails, clientIDNo: e.target.value })
-          }
-        />
-        <CustomInput
-          name="Tax Number"
-          className=" w-full border rounded-md"
-          required={clientDetails.client_type.includes("GOV")}
-          value={clientDetails.tax_no}
-          onChange={(e) =>
-            setClientDetails({ ...clientDetails, tax_no: e.target.value })
-          }
+        <CustomButton
+          name="Create new client"
+          onClick={() => setActiveTab("create")}
+          className={`px-2  ${
+            activeTab === "create" ? "bg-[#092332] text-white" : "bg-gray-200"
+          } w-full`}
         />
       </div>
 
-      <div className="mt-5 flex justify-center gap-[2rem]">
-        <CustomButton
-          name="Back"
-          className="border bg-[#092332] text-white w-[8rem] h-[2.2rem] rounded-md"
-          onClick={() => handleActionBtn("back")}
-        />
-        <CustomButton
-          name="Next"
-          disabled={buttonDisabled}
-          className="border bg-[#092332] text-white w-[8rem] h-[2.2rem] rounded-md"
-          onClick={handleCreateClient}
-        />
-      </div>
+      {activeTab === "select" ? (
+        <div className="flex gap-2 flex-col">
+          <div>
+            <CustomSelect
+              name="Select client"
+              className=""
+              options={clientOptions}
+              onChange={(value: any) => {
+                localStorage.setItem("clientEntCode", value.value);
+                messageApi.info(`${value.label} selected`);
+              }}
+            />
+          </div>
+          <div className="flex justify-end">
+            <CustomButton
+              name="Next"
+              className="border bg-[#092332] text-white w-[8rem] h-[2.2rem] rounded-md"
+              onClick={() => handleActionBtn("next")}
+            />
+          </div>
+        </div>
+      ) : (
+        <>
+          <div className="grid grid-cols-2 gap-4">
+            <CustomInput
+              required
+              name="Full Name"
+              className="w-full border rounded-md"
+              value={clientDetails.full_name}
+              onChange={(e) =>
+                setClientDetails({
+                  ...clientDetails,
+                  full_name: e.target.value,
+                })
+              }
+            />
+            <CustomInput
+              name="Email"
+              type="email"
+              required
+              className=" w-full border rounded-md"
+              value={clientDetails.email}
+              onChange={(e) =>
+                setClientDetails({ ...clientDetails, email: e.target.value })
+              }
+            />
+            <CustomInput
+              name="Phone Number"
+              required
+              className=" w-full border rounded-md"
+              value={clientDetails.phoneNumber}
+              onChange={(e) =>
+                setClientDetails({
+                  ...clientDetails,
+                  phoneNumber: e.target.value,
+                })
+              }
+            />
+            <CustomSelect
+              name="Client Type"
+              defaultValue={systemCodesOptions[0]}
+              options={systemCodesOptions}
+              onChange={(value: any) =>
+                setClientDetails({ ...clientDetails, client_type: value.value })
+              }
+            />
+
+            <CustomSelect
+              name="Gender"
+              defaultValue={genderOptions[0]}
+              options={genderOptions}
+              onChange={(value: any) =>
+                setClientDetails({ ...clientDetails, gender: value.value })
+              }
+            />
+
+            <CustomInput
+              name="ID Number"
+              required={clientDetails.client_type.includes("INDIV")}
+              className=" w-full border rounded-md"
+              value={clientDetails.clientIDNo}
+              onChange={(e) =>
+                setClientDetails({
+                  ...clientDetails,
+                  clientIDNo: e.target.value,
+                })
+              }
+            />
+            <CustomInput
+              name="Tax Number"
+              className=" w-full border rounded-md"
+              required={clientDetails.client_type.includes("GOV")}
+              value={clientDetails.tax_no}
+              onChange={(e) =>
+                setClientDetails({ ...clientDetails, tax_no: e.target.value })
+              }
+            />
+          </div>
+          <div className="mt-5 flex justify-center gap-[2rem]">
+            <CustomButton
+              name="Back"
+              className="border bg-[#092332] text-white w-[8rem] h-[2.2rem] rounded-md"
+              onClick={() => handleActionBtn("back")}
+            />
+            <CustomButton
+              name="Next"
+              disabled={buttonDisabled}
+              className="border bg-[#092332] text-white w-[8rem] h-[2.2rem] rounded-md"
+              onClick={handleCreateClient}
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 };

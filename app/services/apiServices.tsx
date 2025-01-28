@@ -108,3 +108,7 @@ export const createClientPolicy = async (data: any) => {
   const res = await PrivateAxiosUtility.post("/policy/createPolicy", data);
   return res.data;
 };
+export const fetchAllEntities = async (data: any) => {
+  const res = await PrivateAxiosUtility.post("/user/clients", data);
+  return res.data;
+};

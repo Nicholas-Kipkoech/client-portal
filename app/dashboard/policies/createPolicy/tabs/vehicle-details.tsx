@@ -6,10 +6,12 @@ import CustomInput from "@/app/utils/CustomInput";
 import CustomSelect from "@/app/utils/CustomSelect";
 import Creatable from "react-select/creatable";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { message } from "antd";
+import { createClientPolicy } from "@/app/services/apiServices";
 
 const VehicleDetails = () => {
-  const { systemCodes, branches }: any = useContextApi();
+  const { systemCodes, branches, user }: any = useContextApi();
 
   const vehicleTypesOptions = systemCodes
     .filter((item: any) => item.SYS_TYPE === "AD_VEHICLE_TYPE")
@@ -53,47 +55,73 @@ const VehicleDetails = () => {
     },
   ];
 
+  const [messageApi, contextHolder] = message.useMessage();
+
   const [policyDetails, setPolicyDetails] = useState({
-    p_pr_code: "0700",
-    p_int_aent_code: "70",
-    p_int_ent_code: "11179",
+    p_pr_code: "",
+    p_int_aent_code: "",
+    p_int_ent_code: "",
     p_assr_aent_code: "10",
-    p_assr_ent_code: "J-1208",
-    p_os_code: "02",
-    p_fm_dt: "2025-01-01",
-    p_to_dt: "2025-12-31",
-    p_user_code: "sl3xvm0rio2s",
-    p_created_ip: "192.168.1.1",
-    p_make: "Test",
-    p_model: "Corolla",
-    p_regn_no: "ABC1234",
-    p_vehicle_use: "Commercial Use",
-    p_color: "Blue",
-    p_engine_no: "ENG123456789",
-    p_chassis_no: "CHASSIS987654321",
-    p_yom: "2023",
-    p_cc: "1500",
-    p_seating_cap: "5",
-    p_value: "20000",
-    p_windscreen_value: "500",
-    p_radio_value: "100",
-    p_premium: "1500",
-    p_vat: "180",
-    p_cover_type: "TP",
-    p_vehicle_type: "AD.VH.64",
+    p_assr_ent_code: "",
+    p_os_code: "",
+    p_fm_dt: "",
+    p_to_dt: "",
+    p_user_code: "",
+    p_created_ip: "",
+    p_make: "",
+    p_model: "",
+    p_regn_no: "",
+    p_vehicle_use: "",
+    p_color: "",
+    p_engine_no: "",
+    p_chassis_no: "",
+    p_yom: "",
+    p_cc: "",
+    p_seating_cap: "",
+    p_value: "",
+    p_windscreen_value: "",
+    p_radio_value: "",
+    p_premium: "",
+    p_vat: "",
+    p_cover_type: "",
+    p_vehicle_type: "",
   });
+
+  useEffect(() => {
+    const clientCode = localStorage.getItem("clientEntCode") as string;
+    policyDetails.p_assr_ent_code = clientCode;
+    policyDetails.p_user_code = user.userCode;
+    policyDetails.p_int_ent_code = user.entCode;
+    policyDetails.p_int_aent_code = user.aentCode;
+    if (policyDetails.p_vehicle_use.includes("Commercial Use")) {
+      policyDetails.p_pr_code = "0700";
+    } else if (policyDetails.p_vehicle_use.includes("Private")) {
+      policyDetails.p_pr_code = "0800";
+    }
+  }, [user, policyDetails]);
 
   const router = useRouter();
   const handleActionBtn = (action: "back" | "next") => {
     if (action === "back") {
       router.push("?tab=client-details");
-    } else {
-      router.push(`?tab=cover-details`);
     }
   };
 
+  async function handleCreatePolicy() {
+    try {
+      const response = await createClientPolicy(policyDetails);
+      if (response.success === true) {
+        messageApi.success(response.message);
+      }
+    } catch (error) {
+      console.error("error", error);
+      messageApi.error("error while trying to create a policy, try again!");
+    }
+  }
+
   return (
     <div className="w-full">
+      {contextHolder}
       <div className="border p-5 rounded-md">
         <p className="text-[1.3rem] flex justify-center font-bold">
           Vehicle Details
@@ -313,7 +341,7 @@ const VehicleDetails = () => {
           <CustomButton
             name="Submit"
             className="border bg-[#092332] text-white w-[8rem] h-[2.2rem] rounded-md"
-            onClick={() => handleActionBtn("next")}
+            onClick={handleCreatePolicy}
           />
         </div>
       </div>
