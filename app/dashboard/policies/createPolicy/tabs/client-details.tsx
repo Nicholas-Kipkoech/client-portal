@@ -1,14 +1,16 @@
 "use client";
 
 import { useContextApi } from "@/app/context/context";
+import { createClient } from "@/app/services/apiServices";
 import CustomButton from "@/app/utils/CustomButtom";
 import CustomInput from "@/app/utils/CustomInput";
 import CustomSelect from "@/app/utils/CustomSelect";
+import { message } from "antd";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 
 const ClientDetails = () => {
-  const { systemCodes }: any = useContextApi();
+  const { systemCodes, user }: any = useContextApi();
 
   const systemCodesOptions = systemCodes
     .filter((item: any) => item.SYS_TYPE === "Institutional_Sector")
@@ -19,7 +21,51 @@ const ClientDetails = () => {
       };
     });
 
+  const genderOptions = [
+    {
+      label: "Female",
+      value: "F",
+    },
+    {
+      label: "Male",
+      value: "M",
+    },
+  ];
+
   const router = useRouter();
+
+  const [clientDetails, setClientDetails] = useState({
+    full_name: "",
+    p_user: "",
+    p_created_ip: "",
+    client_type: "",
+    gender: "",
+    tax_no: "",
+    phoneNumber: "",
+    branch_code: "",
+    email: "",
+    clientIDNo: "",
+  });
+
+  clientDetails.p_user = user.userCode;
+
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const handleCreateClient = async () => {
+    try {
+      const response = await createClient(clientDetails);
+      console.log("response", response.success);
+      if (response.success === true) {
+        messageApi.success(response.message);
+        localStorage.setItem("clientEntCode", response.data.p_ent_code);
+        handleActionBtn("next");
+      }
+    } catch (error: any) {
+      console.error("error", error);
+      messageApi.error("Something went wrong try again!", error.error);
+    }
+  };
+
   const handleActionBtn = (action: "back" | "next") => {
     if (action === "back") {
       router.push("/dashboard");
@@ -30,59 +76,74 @@ const ClientDetails = () => {
 
   return (
     <div className="w-full">
+      {contextHolder}
       <p className="text-[1.3rem] flex justify-center font-bold">
         Client Details Form
       </p>
       <div className="grid grid-cols-2 gap-4">
         <CustomInput
           required
-          name="First Name"
-          className="w-full border-2 rounded-md"
-          value={""}
-          onChange={() => {}}
-        />
-        <CustomInput
-          name="Second Name"
-          className=" w-full border-2 rounded-md"
-          value={""}
-          required
-          onChange={() => {}}
+          name="Full Name"
+          className="w-full border rounded-md"
+          value={clientDetails.full_name}
+          onChange={(e) =>
+            setClientDetails({ ...clientDetails, full_name: e.target.value })
+          }
         />
         <CustomInput
           name="Email"
           type="email"
           required
-          className=" w-full border-2 rounded-md"
-          value={""}
-          onChange={() => {}}
+          className=" w-full border rounded-md"
+          value={clientDetails.email}
+          onChange={(e) =>
+            setClientDetails({ ...clientDetails, email: e.target.value })
+          }
         />
         <CustomInput
           name="Phone Number"
           required
-          className=" w-full border-2 rounded-md"
-          value={""}
-          onChange={() => {}}
+          className=" w-full border rounded-md"
+          value={clientDetails.phoneNumber}
+          onChange={(e) =>
+            setClientDetails({ ...clientDetails, phoneNumber: e.target.value })
+          }
         />
         <CustomSelect
           name="Client Type"
           defaultValue={systemCodesOptions[0]}
           options={systemCodesOptions}
-          onChange={() => {}}
+          onChange={(value: any) =>
+            setClientDetails({ ...clientDetails, client_type: value.value })
+          }
+        />
+
+        <CustomSelect
+          name="Gender"
+          defaultValue={genderOptions[0]}
+          options={genderOptions}
+          onChange={(value: any) =>
+            setClientDetails({ ...clientDetails, gender: value.value })
+          }
         />
 
         <CustomInput
           name="ID Number"
-          required={false}
-          className=" w-full border-2 rounded-md"
-          value={""}
-          onChange={() => {}}
+          required={clientDetails.client_type.includes("INDIV")}
+          className=" w-full border rounded-md"
+          value={clientDetails.clientIDNo}
+          onChange={(e) =>
+            setClientDetails({ ...clientDetails, clientIDNo: e.target.value })
+          }
         />
         <CustomInput
           name="Tax Number"
-          className=" w-full border-2 rounded-md"
-          value={""}
-          required={false}
-          onChange={() => {}}
+          className=" w-full border rounded-md"
+          required={clientDetails.client_type.includes("GOV")}
+          value={clientDetails.tax_no}
+          onChange={(e) =>
+            setClientDetails({ ...clientDetails, tax_no: e.target.value })
+          }
         />
       </div>
 
@@ -95,7 +156,7 @@ const ClientDetails = () => {
         <CustomButton
           name="Next"
           className="border bg-[#092332] text-white w-[8rem] h-[2.2rem] rounded-md"
-          onClick={() => handleActionBtn("next")}
+          onClick={handleCreateClient}
         />
       </div>
     </div>

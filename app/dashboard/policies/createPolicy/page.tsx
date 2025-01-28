@@ -4,7 +4,6 @@ import React from "react";
 import ClientDetails from "./tabs/client-details";
 import { useSearchParams } from "next/navigation";
 import VehicleDetails from "./tabs/vehicle-details";
-import CoverDetails from "./tabs/cover-details";
 
 const CreatePolicy = () => {
   const renderTabContent = () => {
@@ -16,8 +15,6 @@ const CreatePolicy = () => {
         return <ClientDetails />;
       case "vehicle-details":
         return <VehicleDetails />;
-      case "cover-details":
-        return <CoverDetails />;
       default:
         return <ClientDetails />;
     }

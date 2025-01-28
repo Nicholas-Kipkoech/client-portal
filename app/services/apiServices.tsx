@@ -88,3 +88,17 @@ export const getSystemCodes = async () => {
   const res = await PrivateAxiosUtility.get(`/policy/getSystemCodes`);
   return res.data;
 };
+export const getCoverProducts = async () => {
+  const res = await PrivateAxiosUtility.get(`/policy/getCoverProducts`);
+  return res.data;
+};
+
+export const createClient = async (data: any) => {
+  const res = await PrivateAxiosUtility.post("/policy/createClient", data);
+  return res.data;
+};
+
+export const createClientPolicy = async (data: any) => {
+  const res = await PrivateAxiosUtility.post("/policy/createPolicy", data);
+  return res.data;
+};

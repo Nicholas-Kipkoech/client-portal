@@ -26,7 +26,7 @@ const CustomSelect = ({
   required,
 }: ICustomSelect) => {
   return (
-    <div className="flex flex-col mt-1">
+    <div className="flex flex-col">
       <div className="flex items-center mt-2 gap-1">
         <label className="flex gap-x-0.5">{name}</label>
         {required && <p className="text-red-600">*</p>}
