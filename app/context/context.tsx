@@ -3,6 +3,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import {
   getCoverProducts,
+  getOrganizationBranches,
   getPremiumReports,
   getPremiumsAndCommission,
   getReceiptsData,
@@ -40,6 +41,7 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
 
   const [systemCodes, setSystemCodes] = useState([]);
   const [coverProducts, setCoverProducts] = useState([]);
+  const [branches, setBranches] = useState([]);
 
   useEffect(() => {
     const { startDate, endDate } = getDates();
@@ -171,6 +173,14 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
     fetchCoverProducts();
   }, []);
 
+  useEffect(() => {
+    async function fetchBranches() {
+      const response = await getOrganizationBranches();
+      setBranches(response.results);
+    }
+    fetchBranches();
+  }, []);
+
   const calculateUwData = (uwData: any[]) => {
     const totalPremium = uwData.reduce((total: number, uw) => {
       return (
@@ -239,6 +249,7 @@ const ContextProvider = ({ children }: { children: React.ReactNode }) => {
         setUserDetails,
         systemCodes,
         coverProducts,
+        branches,
       }}
     >
       {children}

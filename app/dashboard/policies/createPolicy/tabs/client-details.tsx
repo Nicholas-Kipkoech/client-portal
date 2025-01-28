@@ -7,7 +7,7 @@ import CustomInput from "@/app/utils/CustomInput";
 import CustomSelect from "@/app/utils/CustomSelect";
 import { message } from "antd";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const ClientDetails = () => {
   const { systemCodes, user }: any = useContextApi();
@@ -23,12 +23,12 @@ const ClientDetails = () => {
 
   const genderOptions = [
     {
-      label: "Female",
-      value: "F",
-    },
-    {
       label: "Male",
       value: "M",
+    },
+    {
+      label: "Female",
+      value: "F",
     },
   ];
 
@@ -50,20 +50,30 @@ const ClientDetails = () => {
   clientDetails.p_user = user.userCode;
 
   const [messageApi, contextHolder] = message.useMessage();
+  const [buttonDisabled, setButtonDisabled] = useState(true);
+
+  useEffect(() => {
+    if (clientDetails.full_name !== "" || clientDetails.email !== "") {
+      setButtonDisabled(false);
+    } else {
+      setButtonDisabled(true);
+    }
+  }, [clientDetails.full_name, clientDetails.email]);
 
   const handleCreateClient = async () => {
-    try {
-      const response = await createClient(clientDetails);
-      console.log("response", response.success);
-      if (response.success === true) {
-        messageApi.success(response.message);
-        localStorage.setItem("clientEntCode", response.data.p_ent_code);
-        handleActionBtn("next");
-      }
-    } catch (error: any) {
-      console.error("error", error);
-      messageApi.error("Something went wrong try again!", error.error);
-    }
+    // try {
+    //   const response = await createClient(clientDetails);
+    //   console.log("response", response.success);
+    //   if (response.success === true) {
+    //     messageApi.success(response.message);
+    //     localStorage.setItem("clientEntCode", response.data.p_ent_code);
+    //     handleActionBtn("next");
+    //   }
+    // } catch (error: any) {
+    //   console.error("error", error);
+    //   messageApi.error("Something went wrong try again!", error.error);
+    // }
+    handleActionBtn("next");
   };
 
   const handleActionBtn = (action: "back" | "next") => {
@@ -155,6 +165,7 @@ const ClientDetails = () => {
         />
         <CustomButton
           name="Next"
+          disabled={buttonDisabled}
           className="border bg-[#092332] text-white w-[8rem] h-[2.2rem] rounded-md"
           onClick={handleCreateClient}
         />
