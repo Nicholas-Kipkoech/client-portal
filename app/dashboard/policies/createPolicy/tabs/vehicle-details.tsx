@@ -57,7 +57,7 @@ const VehicleDetails = () => {
 
   const [messageApi, contextHolder] = message.useMessage();
 
-  const [policyDetails, setPolicyDetails] = useState({
+  const defaultPolicyDetails = {
     p_pr_code: "",
     p_int_aent_code: "",
     p_int_ent_code: "",
@@ -85,20 +85,32 @@ const VehicleDetails = () => {
     p_vat: "",
     p_cover_type: "",
     p_vehicle_type: "",
+  };
+
+  const [policyDetails, setPolicyDetails] = useState(() => {
+    if (typeof window !== "undefined") {
+      const savedData = localStorage.getItem("policyDetails");
+      return savedData ? JSON.parse(savedData) : defaultPolicyDetails;
+    }
+    return defaultPolicyDetails;
   });
 
   useEffect(() => {
-    const clientCode = localStorage.getItem("clientEntCode") as string;
-    policyDetails.p_assr_ent_code = clientCode;
-    policyDetails.p_user_code = user.userCode;
-    policyDetails.p_int_ent_code = user.entCode;
-    policyDetails.p_int_aent_code = user.aentCode;
-    if (policyDetails.p_vehicle_use.includes("Commercial Use")) {
-      policyDetails.p_pr_code = "0700";
-    } else if (policyDetails.p_vehicle_use.includes("Private")) {
-      policyDetails.p_pr_code = "0800";
-    }
-  }, [user, policyDetails]);
+    setPolicyDetails((prevDetails: any) => ({
+      ...prevDetails,
+      p_assr_ent_code: localStorage.getItem("clientEntCode") || "",
+      p_user_code: user?.userCode || "",
+      p_int_ent_code: user?.entCode || "",
+      p_int_aent_code: user?.aentCode || "",
+      p_pr_code: prevDetails.p_vehicle_use.includes("Commercial Use")
+        ? "0700"
+        : "0800",
+    }));
+  }, [user]);
+
+  useEffect(() => {
+    localStorage.setItem("policyDetails", JSON.stringify(policyDetails));
+  }, [policyDetails]);
 
   const router = useRouter();
   const handleActionBtn = (action: "back" | "next") => {
@@ -174,6 +186,10 @@ const VehicleDetails = () => {
             <Creatable
               isClearable
               options={vehicleTypesOptions}
+              value={vehicleTypesOptions.find(
+                (detail: any) =>
+                  detail.SYS_CODE === policyDetails.p_vehicle_type
+              )}
               onChange={(value: any) =>
                 setPolicyDetails({
                   ...policyDetails,
@@ -286,14 +302,6 @@ const VehicleDetails = () => {
               })
             }
           />
-
-          {/* <CustomInput
-            name="Log Book No"
-            className=" w-full border rounded-md"
-            value={""}
-            required={false}
-            onChange={() => {}}
-          /> */}
         </div>
       </div>
       <div className="border p-5 rounded-md mt-10">
